@@ -26,5 +26,9 @@
   },
 */
 window.MATERIAIS = {
+  "luce-cambui": {
+    fotos: 16,
+    book:  { url: "materiais/luce-cambui/book.pdf", titulo: "Book Luce Cambuí" },
+  },
 
 };

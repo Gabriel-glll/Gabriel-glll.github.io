@@ -164,6 +164,17 @@ select{height:42px;border:1px solid var(--line-strong);border-radius:11px;backgr
 .tab .dot{width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
 .tab .dot.on{background:var(--ok)}
 .panel{padding:20px 0 50px}
+.endereco{margin:0 0 14px;color:var(--muted)}
+.endereco a{color:var(--accent-text);font-weight:700}
+.sobre{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.sobre h4{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ficha{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:14px}
+.ficha dt{color:var(--muted)}
+.ficha dd{margin:0;font-weight:600}
+.lazer{margin:0;padding:0;list-style:none;columns:2;column-gap:18px;font-size:14px}
+.lazer li{padding:3px 0 3px 16px;position:relative;break-inside:avoid}
+.lazer li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+@media (max-width:760px){ .sobre{grid-template-columns:1fr} .lazer{columns:1} }
 .box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
 .dgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
 .facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px 18px}
@@ -355,7 +366,7 @@ function parseVagas(v){
 const temSuite = l => l.suite != null ? l.suite : (l.su ? true : null);
 DATA.forEach(l => {
   l.slug = slugify(l.n);
-  l._q = norm([l.n, l.c, l.b, TIPO[l.t], l.tip || "", l.obs || ""].join(" "));
+  l._q = norm([l.n, l.c, l.b, TIPO[l.t], l.tip || "", l.obs || "", l.end || ""].join(" "));
   l._vg = parseVagas(l.v);
 });
 const BY_SLUG = Object.fromEntries(DATA.map(l => [l.slug, l]));
@@ -563,7 +574,7 @@ function setFiltros(on){ filtrosAbertos = on; $("#side").classList.toggle("open"
 
 function vagasLabel(l){
   if (!l.v) return "—";
-  const vc = { coberta: " coberta", descoberta: " descoberta", ambas: " (cob./desc.)" }[l.vc] || "";
+  const vc = { coberta: " · cobertas", descoberta: " · descobertas", ambas: " · cobertas e descobertas" }[l.vc] || "";
   return l.v + vc;
 }
 function fotosDe(l){
@@ -676,6 +687,17 @@ function resumoHTML(l){
         ${TABS.slice(1).map(t => `<a href="#/p/${l.slug}/${t.k}" style="display:flex;justify-content:space-between;text-decoration:none;padding:8px 10px;border:1px solid var(--line);border-radius:10px">
           <span>${t.t}</span><span class="tag ${hasMat(l, t.k) ? "ok" : ""}">${hasMat(l, t.k) ? matList(l, t.k).length + " disponível" : "ainda não"}</span></a>`).join("")}
       </div>
+    </div>
+  </div>${sobreHTML(l)}`;
+}
+function sobreHTML(l){
+  if (!l.end && !l.ficha && !l.lazer) return "";
+  return `<div class="box" style="margin-top:14px">
+    <h3>Sobre o empreendimento</h3>
+    ${l.end ? `<p class="endereco">📍 ${esc(l.end)} · <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.end + ", Campinas - SP")}" target="_blank" rel="noopener">ver no mapa</a></p>` : ""}
+    <div class="sobre">
+      ${l.ficha ? `<div><h4>Ficha técnica</h4><dl class="ficha">${l.ficha.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></div>` : ""}
+      ${l.lazer ? `<div><h4>Lazer e diferenciais</h4><ul class="lazer">${l.lazer.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
     </div>
   </div>`;
 }

@@ -9,6 +9,7 @@
     p  = preços médios: [[m², valor em R$ mil | null = esgotado], ...]  (m² null = valor geral)
     vis = "stand_dec" | "stand" | "torre" | "imovel" | "dec" | "virtual" | "nenhum"
     vo = observação da visita            tip = tipologia extra   obs = observações
+    end = endereço   ficha = [["rótulo","valor"], ...]   lazer = ["item", ...]   (seção "Sobre o empreendimento")
 
   CAMPOS QUE O PDF NÃO TRAZ (preencha quando souber; sem o campo = "não informado"):
     vc    = tipo de vaga: "coberta" | "descoberta" | "ambas"
@@ -55,7 +56,11 @@ window.LANCAMENTOS = [
   { n:"The Mark", c:"Plaenge", b:"Cambuí", t:"apto", m:[133,193], d:[3,4], su:true, v:"2 a 4", e:"2026-03", p:[[null,2400]], vis:"stand" },
   { n:"Pininfarina", c:"Plaenge", b:"Cambuí", t:"apto", m:[240,348], d:[3,4], su:true, v:"3 e 4", e:"2029-05", p:[[null,7000]], vis:"stand" },
   { n:"Autentic", c:"Plaenge", b:"Cambuí", t:"apto", m:[155], d:[3,3], su:true, v:"3", e:"2028-03", p:[[null,3000]], vis:"stand" },
-  { n:"Luce", c:"Tegra", b:"Cambuí", t:"apto", m:[87,112], d:[2,3], v:"2", e:"2026-11", p:[[87,1100],[112,1450]], vis:"torre" },
+  { n:"Luce Cambuí", c:"Tegra", b:"Cambuí", t:"apto", m:[85,110], d:[2,3], suite:true, v:"2 + depósito", vc:"coberta", e:"2026-11", p:[[85,1100],[110,1450]], vis:"torre",
+    tip:"85 m²: 3 dorms (1 suíte) ou 2 suítes · 110 m²: 3 suítes · cada unidade com depósito privativo de 2 m² (87 e 112 m² no total)",
+    end:"Rua Américo Brasiliense, 443 — Cambuí",
+    ficha:[["Unidades","136 em 2 torres (Clari e Lumi)"],["85 m²","66 unidades · 3 dorms (1 suíte) ou 2 suítes"],["110 m²","70 unidades · 3 suítes"],["Vagas","2 cobertas + 1 depósito privativo, vinculados"],["Terreno","3.382,71 m²"],["Arquitetura","Primi & Appoloni"],["Decoração","Debora Aguiar Arquitetos"],["Paisagismo","Neusa Nakata"],["Certificação","AQUA-HQE (sustentabilidade)"]],
+    lazer:["Piscina com vista elevada","Fitness com sala de pilates","Family Space externo com churrasqueira e piscina","Family Space interno gourmet","Salão de festas","Salão de jogos","Brinquedoteca","Playground","Praça central com paisagismo","Bicicletário decorado","Delivery space","Carregador de carro elétrico","Portaria blindada e controle de acesso","Lazer em dois níveis"] },
   { n:"Ateliê", c:"ACT", b:"Cambuí", t:"apto", m:[43], d:[1,1], v:"1", e:"2025-12", p:[[null,600]], vis:"nenhum" },
   { n:"Yard", c:"Tegra", b:"Cambuí", t:"apto", m:[126], d:[3,3], su:true, v:"2", e:"pronto", p:[[null,1400]], vis:"torre" },
   { n:"Vestra", c:"Setin", b:"Cambuí", t:"apto", m:[139], d:[3,3], su:true, v:"2", e:"pronto", p:[[null,1650]], vis:"torre" },
