@@ -243,6 +243,12 @@ function money(v){
   return "R$ " + v.toLocaleString("pt-BR") + " mil";
 }
 function entregaKey(l){ if (l.e === "pronto") return 0; const [y, m] = l.e.split("-").map(Number); return y * 100 + m; }
+const MESES_EXT = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+function entregaLonga(l){
+  if (l.e === "pronto") return "Pronto";
+  if (l.el) return l.el + " (mês não informado)";
+  const [y, m] = l.e.split("-").map(Number); return MESES_EXT[m - 1] + " de " + y;
+}
 function entregaLabel(l){
   if (l.e === "pronto") return "Pronto";
   if (l.el) return l.el;
@@ -626,7 +632,7 @@ function fichaTexto(l){
     `📍 ${l.b} · ${TIPO[l.t]}`,
     `📐 ${m2Label(l)}${l.d ? " · " + dormLabel(l) : ""}${l.v ? " · " + l.v + " vaga(s)" : ""}`,
     l.tip ? `🏠 ${l.tip}` : "",
-    `🗓️ Entrega: ${entregaLabel(l)}`,
+    `🗓️ Entrega: ${entregaLonga(l)}`,
     `💰 Preço médio: ` + (l.p.length > 1 && l.p[0][0] ? l.p.map(([m, v]) => `${m} m² ${money(v)}`).join(" | ") : precoLabel(l)),
     `👀 ${visLabel(l)}`,
   ].filter(Boolean);
@@ -657,7 +663,7 @@ function resumoHTML(l){
         <div><span>Tem suíte</span><b>${temSuite(l) == null ? "Não informado" : simNao(temSuite(l))}</b></div>
         <div><span>Aceita FGTS</span><b>${l.fgts == null ? "Não informado" : simNao(l.fgts)}</b></div>
         <div><span>Ótimo p/ investimento</span><b>${l.inv == null ? "Não informado" : simNao(l.inv)}</b></div>
-        <div><span>Entrega</span><b${l.e === "pronto" ? ' style="color:var(--ok)"' : ""}>${esc(entregaLabel(l))}</b></div>
+        <div><span>Entrega</span><b${l.e === "pronto" ? ' style="color:var(--ok)"' : ""}>${esc(entregaLonga(l))}</b></div>
         <div><span>Visita</span><b>${esc(visLabel(l))}</b></div>
         ${l.tip && l.d ? `<div style="grid-column:1/-1"><span>Tipologia</span><b>${esc(l.tip)}</b></div>` : ""}
       </div>
@@ -710,7 +716,7 @@ function renderDetail(slug, tab){
           <span class="tag ${VIS[l.vis].cls}">${esc(visLabel(l))}</span>
         </div>
         <h1>${esc(l.n)}</h1>
-        <div class="by">${esc(l.c === "Não informada" ? "Construtora não informada" : "Construtora " + l.c)} · ${esc(m2Label(l))} · Entrega ${esc(entregaLabel(l))}</div>
+        <div class="by">${esc(l.c === "Não informada" ? "Construtora não informada" : "Construtora " + l.c)} · ${esc(m2Label(l))} · Entrega ${esc(entregaLonga(l))}</div>
       </div>
       <div class="dprice"><small>Preço médio</small><b>${esc(precoLabel(l))}</b></div>
     </div>
