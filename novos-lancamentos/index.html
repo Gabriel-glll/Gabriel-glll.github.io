@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novos Lançamentos · ZFF</title>
+<meta name="description" content="Todos os lançamentos de Campinas e região, com filtros, book, vídeos, tabela e fluxo — para os corretores da ZFF Realty.">
+<link rel="icon" href="assets/zff-logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f4f2; --panel:#ffffff; --panel-2:#f0efec; --line:rgba(20,22,26,.09); --line-strong:rgba(20,22,26,.18);
+  --text:#16181d; --muted:#626873; --accent:#d9631f; --accent-soft:rgba(217,99,31,.11); --accent-text:#b84f12;
+  --ok:#2f8a57; --ok-soft:rgba(47,138,87,.12); --warn:#a86a00; --warn-soft:rgba(200,130,0,.13);
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 24px rgba(0,0,0,.05);
+  --r:16px; --maxw:1240px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1d22; --panel:#25282f; --panel-2:#2c3038; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+    --text:#eef0f3; --muted:#9aa1ab; --accent:#ec7a35; --accent-soft:rgba(236,122,53,.14); --accent-text:#f39a62;
+    --ok:#5cc28a; --ok-soft:rgba(92,194,138,.13); --warn:#e0a83a; --warn-soft:rgba(224,168,58,.13);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1d22; --panel:#25282f; --panel-2:#2c3038; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+  --text:#eef0f3; --muted:#9aa1ab; --accent:#ec7a35; --accent-soft:rgba(236,122,53,.14); --accent-text:#f39a62;
+  --ok:#5cc28a; --ok-soft:rgba(92,194,138,.13); --warn:#e0a83a; --warn-soft:rgba(224,168,58,.13);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+.brand img{width:38px;height:38px;border-radius:10px;object-fit:cover}
+.brand b{font:600 20px/1 Oswald,sans-serif;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+.brand span{display:block;font-size:12px;color:var(--muted);margin-top:3px;white-space:nowrap}
+.top .sp{flex:1}
+.iconbtn{border:1px solid var(--line-strong);background:var(--panel);border-radius:10px;height:36px;min-width:36px;padding:0 10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600}
+.iconbtn:hover{border-color:var(--accent)}
+
+/* Hero */
+.hero{padding:28px 0 8px}
+.hero h1{font:600 clamp(28px,4.6vw,44px)/1.05 Oswald,sans-serif;text-transform:uppercase;margin:0;letter-spacing:.01em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);margin:8px 0 0;max-width:680px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 6px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font:600 24px/1.1 Oswald,sans-serif}
+.stat span{font-size:12px;color:var(--muted)}
+
+/* Filters */
+.filters{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:16px 0;box-shadow:var(--shadow)}
+.frow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.frow + .frow{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.search{flex:1 1 260px;position:relative}
+.search input{width:100%;height:42px;border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:0 12px 0 38px}
+.search svg{position:absolute;left:12px;top:12px;width:18px;height:18px;color:var(--muted)}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+select{height:42px;border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:0 10px;max-width:100%}
+.flabel{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line-strong);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.fgroup{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.resbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.resbar .count{font-weight:700}
+.resbar .count small{color:var(--muted);font-weight:500}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:7px 12px;cursor:pointer;font-size:13px;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+.linkbtn{background:none;border:0;color:var(--accent-text);font-weight:700;cursor:pointer;padding:4px}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;padding-bottom:40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .15s,transform .15s;text-align:left;width:100%}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card .hd{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card h3{margin:0;font:600 21px/1.15 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.card .by{font-size:13px;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--panel-2);color:var(--muted);white-space:nowrap}
+.tag.bairro{background:var(--accent-soft);color:var(--accent-text)}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13.5px}
+.specs div{display:flex;flex-direction:column}
+.specs span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.price{display:flex;align-items:baseline;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:10px;margin-top:auto}
+.price b{font:600 22px/1 Oswald,sans-serif;color:var(--accent-text)}
+.price small{font-size:12px;color:var(--muted)}
+.mats{display:flex;gap:5px;flex-wrap:wrap}
+.mat{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;border:1px solid var(--line-strong);color:var(--muted)}
+.mat.on{border-color:var(--ok);color:var(--ok)}
+
+/* Table view */
+.tablewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:40px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:900px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);position:sticky;top:0;background:var(--panel);cursor:pointer;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--panel-2)}
+td.nm{font-weight:700}
+td.num{white-space:nowrap}
+
+.empty{padding:60px 16px;text-align:center;color:var(--muted)}
+
+/* Layout com painel de filtros */
+.layout{display:grid;grid-template-columns:290px 1fr;gap:20px;align-items:start;margin-top:18px}
+.main{min-width:0}
+.side{position:sticky;top:76px;max-height:calc(100vh - 92px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.side-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.side-h b{font:600 17px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.side-h .linkbtn{margin-left:auto}
+.side-x,.side-f{display:none}
+.side-body{overflow-y:auto;padding:4px 16px 16px;overscroll-behavior:contain}
+.fsec{padding:13px 0;border-bottom:1px solid var(--line)}
+.fsec:last-child{border-bottom:0}
+.fsec-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:9px}
+.nainfo{font-size:10.5px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--warn)}
+.sub{font-size:12px;color:var(--muted);font-weight:600;margin:10px 0 6px}
+.range{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center}
+.range span{font-size:12px;color:var(--muted)}
+.range select,.range input{width:100%;min-width:0;height:38px;font-size:13.5px}
+.range input,.cfind{border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:0 10px}
+.cfind{width:100%;height:36px;margin-bottom:8px;font-size:13.5px}
+.checklist{display:flex;flex-direction:column;gap:1px;max-height:230px;overflow-y:auto;margin:0 -6px;padding:0 6px}
+.checklist label{display:flex;align-items:center;gap:9px;padding:5px 6px;border-radius:8px;cursor:pointer;font-size:14px}
+.checklist label:hover{background:var(--panel-2)}
+.checklist input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+.checklist span{flex:1}
+.checklist em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.toolbar{display:flex;gap:10px;align-items:center}
+.abrir-filtros{display:none;height:42px;white-space:nowrap;flex:none}
+.badge{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px}
+.badge[hidden]{display:none}
+.resbar{margin-top:12px}
+.layout .grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+body.noscroll{overflow:hidden}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;margin-top:8px}
+  .abrir-filtros{display:inline-flex}
+  .side{position:fixed;inset:0;top:0;max-height:none;border-radius:0;z-index:40;transform:translateX(-100%);transition:transform .22s ease;visibility:hidden}
+  .side.open{transform:none;visibility:visible}
+  .side-x{display:inline-flex}
+  .side-f{display:block;padding:12px 16px;border-top:1px solid var(--line)}
+}
+
+/* Detail page */
+.back{display:inline-flex;align-items:center;gap:6px;margin:20px 0 10px;font-weight:700;color:var(--muted);text-decoration:none;font-size:14px}
+.back:hover{color:var(--accent-text)}
+.dhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:16px}
+.dhead h1{font:600 clamp(30px,5vw,48px)/1 Oswald,sans-serif;text-transform:uppercase;margin:6px 0 6px}
+.dhead .by{color:var(--muted)}
+.dprice{text-align:right}
+.dprice b{display:block;font:600 32px/1 Oswald,sans-serif;color:var(--accent-text)}
+.dprice small{color:var(--muted);font-size:12px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line-strong);overflow-x:auto;scrollbar-width:none;position:sticky;top:62px;background:var(--bg);z-index:10}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:none;padding:12px 14px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:inline-flex;gap:7px;align-items:center}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+.tab .dot{width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
+.tab .dot.on{background:var(--ok)}
+.panel{padding:20px 0 50px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.dgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px 18px}
+.facts div span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:2px}
+.facts div b{font-size:16px}
+.box h3{margin:0 0 12px;font:600 16px/1.2 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.03em}
+.ptable{width:100%;min-width:0;font-size:14px}
+.ptable td{padding:8px 4px}
+.ptable td:last-child{text-align:right;font-weight:700}
+.note{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--warn-soft);color:var(--warn);font-size:13px;font-weight:600}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:7px;border-radius:11px;padding:10px 14px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid var(--line-strong);background:var(--panel);text-decoration:none}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.media{display:flex;flex-direction:column;gap:16px}
+.mitem{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.mitem .mbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mitem .mbar b{font-size:14px}
+.mitem .mbar .actions{margin:0}
+.mitem .mbar .btn{padding:7px 11px;font-size:13px}
+.mitem iframe,.mitem video{display:block;width:100%;border:0;background:#000}
+.mitem iframe.doc{height:min(80vh,900px);background:var(--panel-2)}
+.mitem .vid{aspect-ratio:16/9;height:auto}
+.mitem img{display:block;width:100%;height:auto}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
+.vazio{text-align:center;padding:50px 20px;border:2px dashed var(--line-strong);border-radius:var(--r);color:var(--muted)}
+.vazio b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
+.vazio code{background:var(--panel-2);padding:2px 6px;border-radius:6px;font-size:12.5px;color:var(--text)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:12.5px}
+
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .dgrid{grid-template-columns:1fr}
+  .dprice{text-align:left}
+  .vgrid{grid-template-columns:1fr}
+  .brand span{display:none}
+  .grid{grid-template-columns:1fr}
+  .filters .fgroup select{flex:1}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/">
+      <img src="assets/zff-logo.jpeg" alt="ZFF Realty">
+      <div><b>Novos Lançamentos</b><span>Campinas e região · ZFF Realty</span></div>
+    </a>
+    <div class="sp"></div>
+    <button class="iconbtn" id="themeBtn" title="Alternar tema" aria-label="Alternar tema">◐</button>
+  </div>
+</header>
+
+<main id="app" class="wrap"></main>
+
+<footer>
+  <div class="wrap">
+    Uso interno dos corretores ZFF Realty. Fonte: <i>Lançamentos Campinas 2026 — atualizado</i> (<span id="upd"></span>). Preços médios de referência — sempre confirmar valores, disponibilidade e prazos com a construtora antes de passar ao cliente.
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script src="dados.js"></script>
+<script src="materiais.js"></script>
+<script>
+(() => {
+"use strict";
+const DATA = (window.LANCAMENTOS || []);
+const MAT = (window.MATERIAIS || {});
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const slugify = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const norm = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+/* ---------- theme ---------- */
+const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+const savedTheme = store.get("nl-theme"); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+$("#themeBtn").onclick = () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const nxt = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = nxt; store.set("nl-theme", nxt);
+};
+$("#upd").textContent = window.ATUALIZADO_EM || "";
+
+/* ---------- formatting ---------- */
+const MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+const now = new Date(); const NOW_KEY = now.getFullYear() * 100 + (now.getMonth() + 1);
+function money(v){
+  if (v == null) return "Esgotado";
+  if (v >= 1000) return "R$ " + (v / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 2 }) + " mi";
+  return "R$ " + v.toLocaleString("pt-BR") + " mil";
+}
+function entregaKey(l){ if (l.e === "pronto") return 0; const [y, m] = l.e.split("-").map(Number); return y * 100 + m; }
+function entregaLabel(l){
+  if (l.e === "pronto") return "Pronto";
+  if (l.el) return l.el;
+  const [y, m] = l.e.split("-").map(Number); return MESES[m - 1] + "/" + y;
+}
+function entregaVencida(l){ return l.e !== "pronto" && entregaKey(l) < NOW_KEY; }
+function m2Label(l){ const m = l.m; return m.length === 1 ? m[0] + " m²" : m.length === 2 ? m[0] + " e " + m[1] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; }
+function m2Range(l){ return Math.min(...l.m) === Math.max(...l.m) ? l.m[0] + " m²" : Math.min(...l.m) + "–" + Math.max(...l.m) + " m²"; }
+function dormLabel(l){
+  if (!l.d) return l.tip || "—";
+  const w = l.su ? "suíte" : "dorm";
+  const [a, b] = l.d; return (a === b ? a : a + " e " + b) + " " + w + (b > 1 ? "s" : "");
+}
+function precosValidos(l){ return l.p.map(x => x[1]).filter(v => v != null); }
+function precoMin(l){ const v = precosValidos(l); return v.length ? Math.min(...v) : null; }
+function precoMax(l){ const v = precosValidos(l); return v.length ? Math.max(...v) : null; }
+function precoLabel(l){
+  const a = precoMin(l), b = precoMax(l);
+  if (a == null) return "Esgotado";
+  return a === b ? money(a) : money(a) + " a " + money(b);
+}
+const VIS = {
+  stand_dec: { t: "Stand e decorado", cls: "ok" },
+  stand:     { t: "Só stand (sem decorado)", cls: "" },
+  torre:     { t: "Decorado na torre", cls: "ok" },
+  imovel:    { t: "Visita no imóvel", cls: "ok" },
+  dec:       { t: "Tem decorado", cls: "ok" },
+  virtual:   { t: "Stand + decorado virtual", cls: "" },
+  nenhum:    { t: "Sem stand nem decorado", cls: "warn" },
+};
+const visLabel = l => l.vo || VIS[l.vis].t;
+const TIPO = { apto: "Apartamento", casa: "Casa" };
+
+/* ---------- materials ---------- */
+const TABS = [
+  { k: "resumo", t: "Resumo" },
+  { k: "book",   t: "Book" },
+  { k: "videos", t: "Vídeos" },
+  { k: "tabela", t: "Tabela" },
+  { k: "fluxo",  t: "Fluxo de pagamento" },
+];
+function matList(l, k){
+  const raw = (MAT[l.slug] || {})[k];
+  if (!raw) return [];
+  return (Array.isArray(raw) ? raw : [raw]).filter(Boolean).map((x, i) => typeof x === "string" ? { url: x, titulo: "" } : { url: x.url, titulo: x.titulo || "" });
+}
+const hasMat = (l, k) => matList(l, k).length > 0;
+
+function mediaKind(url){
+  const u = url.toLowerCase();
+  if (/youtu\.be\/|youtube\.com\//.test(u)) return "youtube";
+  if (/vimeo\.com\//.test(u)) return "vimeo";
+  if (/drive\.google\.com\//.test(u)) return "drive";
+  if (/\.(mp4|webm|mov|m4v)(\?|#|$)/.test(u)) return "video";
+  if (/\.(png|jpe?g|webp|gif)(\?|#|$)/.test(u)) return "image";
+  if (/\.pdf(\?|#|$)/.test(u)) return "pdf";
+  return "link";
+}
+function embedUrl(url, kind){
+  if (kind === "youtube"){
+    const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{6,})/);
+    return m ? "https://www.youtube-nocookie.com/embed/" + m[1] : url;
+  }
+  if (kind === "vimeo"){ const m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/); return m ? "https://player.vimeo.com/video/" + m[1] : url; }
+  if (kind === "drive"){
+    const m = url.match(/\/d\/([\w-]+)/) || url.match(/[?&]id=([\w-]+)/);
+    return m ? "https://drive.google.com/file/d/" + m[1] + "/preview" : url;
+  }
+  return url;
+}
+function mediaHTML(item, idx, tabKey, l){
+  const kind = mediaKind(item.url);
+  const nome = item.titulo || (TABS.find(t => t.k === tabKey).t + (idx ? " " + (idx + 1) : ""));
+  const isVid = tabKey === "videos";
+  let body;
+  if (kind === "image") body = `<img src="${esc(item.url)}" alt="${esc(nome)} — ${esc(l.n)}" loading="lazy">`;
+  else if (kind === "video") body = `<video class="vid" src="${esc(item.url)}" controls preload="metadata"></video>`;
+  else if (kind === "youtube" || kind === "vimeo") body = `<iframe class="vid" src="${esc(embedUrl(item.url, kind))}" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy" title="${esc(nome)}"></iframe>`;
+  else if (kind === "drive") body = `<iframe class="${isVid ? "vid" : "doc"}" src="${esc(embedUrl(item.url, kind))}" allow="fullscreen" allowfullscreen loading="lazy" title="${esc(nome)}"></iframe>`;
+  else if (kind === "pdf") body = `<iframe class="doc" src="${esc(item.url)}#view=FitH" loading="lazy" title="${esc(nome)}"></iframe>`;
+  else body = `<div class="vazio" style="border:0"><b>Link externo</b>Abra pelo botão acima.</div>`;
+  const dl = (kind === "pdf" || kind === "image" || kind === "video") ? `<a class="btn" href="${esc(item.url)}" download>⬇ Baixar</a>` : "";
+  return `<div class="mitem">
+    <div class="mbar"><b>${esc(nome)}</b>
+      <div class="actions"><a class="btn" href="${esc(item.url)}" target="_blank" rel="noopener">↗ Abrir em nova aba</a>${dl}</div>
+    </div>${body}</div>`;
+}
+
+/* ---------- enrich data ---------- */
+function parseVagas(v){
+  if (!v) return null;
+  const n = (v.match(/\d+/g) || []).map(Number);
+  if (/\d+\s*a\s*\d+/.test(v) && n.length >= 2){ const r = []; for (let i = n[0]; i <= n[1]; i++) r.push(i); return r; }
+  if (/até/i.test(v)) return [0, ...n];
+  return n.length ? n : null;
+}
+const temSuite = l => l.suite != null ? l.suite : (l.su ? true : null);
+DATA.forEach(l => {
+  l.slug = slugify(l.n);
+  l._q = norm([l.n, l.c, l.b, TIPO[l.t], l.tip || "", l.obs || ""].join(" "));
+  l._vg = parseVagas(l.v);
+});
+const BY_SLUG = Object.fromEntries(DATA.map(l => [l.slug, l]));
+const BAIRROS = [...new Set(DATA.map(l => l.b))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+const CONSTRUTORAS = [...new Set(DATA.map(l => l.c))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+
+/* ---------- semesters ---------- */
+const semKey = l => { if (l.e === "pronto") return 0; const [y, m] = l.e.split("-").map(Number); return y * 10 + (m <= 6 ? 1 : 2); };
+const semLabel = k => k === 0 ? "Pronto" : (k % 10) + "º sem/" + Math.floor(k / 10);
+const SEMS = [...new Set(DATA.map(semKey))].sort((a, b) => a - b);
+
+/* ---------- filter state (synced to URL query) ---------- */
+const DEF = {
+  q: "", bairro: [], pmin: "", pmax: "", sde: "", sate: "", dorms: [], vagas: [], vc: "", fgts: "",
+  mmin: "", mmax: "", inv: "", c: [], tipo: "", suite: "", mat: false, ord: "preco", view: "cards",
+};
+let F = loadState();
+function loadState(){
+  const s = JSON.parse(JSON.stringify(DEF));
+  const h = location.hash.split("?")[1]; if (!h) return s;
+  const p = new URLSearchParams(h);
+  for (const k of Object.keys(DEF)){
+    if (!p.has(k)) continue;
+    const v = p.get(k);
+    if (Array.isArray(DEF[k])) s[k] = v ? v.split("|") : [];
+    else if (typeof DEF[k] === "boolean") s[k] = v === "1";
+    else s[k] = v;
+  }
+  return s;
+}
+function stateQuery(){
+  const p = new URLSearchParams();
+  for (const k of Object.keys(DEF)){
+    const v = F[k], d = DEF[k];
+    if (Array.isArray(d)){ if (v.length) p.set(k, v.join("|")); }
+    else if (typeof d === "boolean"){ if (v) p.set(k, "1"); }
+    else if (v !== d) p.set(k, v);
+  }
+  const s = p.toString(); return s ? "?" + s : "";
+}
+function syncUrl(){ history.replaceState(null, "", "#/" + stateQuery()); }
+const ativos = () => ["bairro","dorms","vagas","c"].filter(k => F[k].length).length
+  + ["vc","fgts","inv","tipo","suite"].filter(k => F[k]).length
+  + (F.pmin || F.pmax ? 1 : 0) + (F.sde || F.sate ? 1 : 0) + (F.mmin || F.mmax ? 1 : 0) + (F.mat ? 1 : 0);
+
+const PRECO_OPTS = [250,300,350,400,450,500,550,600,700,800,900,1000,1200,1400,1600,1800,2000,2500,3000,4000,5000,7000];
+const triMatch = (val, f) => !f || (f === "sim" ? val === true : val === false);
+
+function passa(l, skip){
+  const sk = k => skip === k;
+  if (F.q){ const terms = norm(F.q).split(/\s+/).filter(Boolean); if (!terms.every(t => l._q.includes(t))) return false; }
+  if (!sk("bairro") && F.bairro.length && !F.bairro.includes(l.b)) return false;
+  const pmn = precoMin(l), pmx = precoMax(l);
+  if (F.pmin && (pmx == null || pmx < +F.pmin)) return false;
+  if (F.pmax && (pmn == null || pmn > +F.pmax)) return false;
+  const sk2 = semKey(l);
+  if (F.sde !== "" && sk2 < +F.sde) return false;
+  if (F.sate !== "" && sk2 > +F.sate) return false;
+  if (!sk("dorms") && F.dorms.length){
+    if (!l.d) return false;
+    const [a, b] = l.d;
+    if (!F.dorms.some(d => d === "4" ? b >= 4 : (+d >= a && +d <= b))) return false;
+  }
+  if (!sk("vagas") && F.vagas.length){
+    if (!l._vg) return false;
+    if (!F.vagas.some(v => v === "4" ? l._vg.some(x => x >= 4) : l._vg.includes(+v))) return false;
+  }
+  if (F.vc && !(l.vc === F.vc || l.vc === "ambas")) return false;
+  if (!triMatch(l.fgts, F.fgts)) return false;
+  if (F.mmin && Math.max(...l.m) < +F.mmin) return false;
+  if (F.mmax && Math.min(...l.m) > +F.mmax) return false;
+  if (!triMatch(l.inv, F.inv)) return false;
+  if (!sk("c") && F.c.length && !F.c.includes(l.c)) return false;
+  if (F.tipo && l.t !== F.tipo) return false;
+  if (!triMatch(temSuite(l), F.suite)) return false;
+  if (F.mat && !TABS.slice(1).some(t => hasMat(l, t.k))) return false;
+  return true;
+}
+const ORD = {
+  preco:  (a, b) => (precoMin(a) ?? 1e9) - (precoMin(b) ?? 1e9),
+  precod: (a, b) => (precoMin(b) ?? -1) - (precoMin(a) ?? -1),
+  entrega:(a, b) => entregaKey(a) - entregaKey(b),
+  m2:     (a, b) => Math.max(...b.m) - Math.max(...a.m),
+  nome:   (a, b) => a.n.localeCompare(b.n, "pt-BR"),
+  bairro: (a, b) => a.b.localeCompare(b.b, "pt-BR") || a.n.localeCompare(b.n, "pt-BR"),
+};
+
+/* ---------- list view ---------- */
+function chips(name, opts, multi = true){
+  return `<div class="chips" data-chips="${name}">` + opts.map(([v, t]) => {
+    const on = multi ? F[name].includes(v) : F[name] === v;
+    return `<button type="button" class="chip" data-v="${esc(v)}" aria-pressed="${on}">${esc(t)}</button>`;
+  }).join("") + `</div>`;
+}
+function opt(v, t, cur){ return `<option value="${esc(v)}"${String(cur) === String(v) ? " selected" : ""}>${esc(t)}</option>`; }
+function semInfo(field){
+  const n = DATA.filter(l => (field === "suite" ? temSuite(l) : l[field]) == null).length;
+  return n ? `<small class="nainfo" title="Sem essa informação no cadastro — some quando o filtro está ativo">${n} sem info</small>` : "";
+}
+function checklist(name, values){
+  return `<div class="checklist" data-check="${name}">` + values.map(v =>
+    `<label><input type="checkbox" value="${esc(v)}"${F[name].includes(v) ? " checked" : ""}><span>${esc(v)}</span><em data-cnt="${esc(v)}"></em></label>`
+  ).join("") + `</div>`;
+}
+const fsec = (titulo, corpo, extra = "") => `<div class="fsec"><div class="fsec-h">${titulo}${extra}</div>${corpo}</div>`;
+const TRI = [["","Todos"],["sim","Sim"],["nao","Não"]];
+
+function renderList(){
+  document.title = "Novos Lançamentos · ZFF";
+  const precos = DATA.map(precoMin).filter(v => v != null);
+  $("#app").innerHTML = `
+  <section class="hero">
+    <h1>Lançamentos <em>Campinas</em> 2026</h1>
+    <p>Todos os empreendimentos da região num só lugar. Filtre pelo perfil do cliente e abra o projeto para ver book, vídeos, tabela e fluxo de pagamento.</p>
+    <div class="stats">
+      <div class="stat"><b>${DATA.length}</b><span>empreendimentos</span></div>
+      <div class="stat"><b>${BAIRROS.length}</b><span>bairros</span></div>
+      <div class="stat"><b>${CONSTRUTORAS.filter(c => c !== "Não informada").length}</b><span>construtoras</span></div>
+      <div class="stat"><b>${money(Math.min(...precos))} – ${money(Math.max(...precos))}</b><span>faixa de preço médio</span></div>
+    </div>
+  </section>
+  <div class="layout">
+    <aside class="side" id="side" aria-label="Filtros">
+      <div class="side-h"><b>Filtros</b><button class="linkbtn" id="limpar" type="button">Limpar</button><button class="iconbtn side-x" id="fechar" type="button" aria-label="Fechar filtros">✕</button></div>
+      <div class="side-body">
+        ${fsec("Bairro", checklist("bairro", BAIRROS))}
+        ${fsec("Valor", `<div class="range">
+          <select id="pmin" aria-label="Valor de">${opt("", "De", F.pmin)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmin)).join("")}</select>
+          <span>até</span>
+          <select id="pmax" aria-label="Valor até">${opt("", "Até", F.pmax)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmax)).join("")}</select></div>`)}
+        ${fsec("Data de entrega", `<div class="range">
+          <select id="sde" aria-label="Entrega de">${opt("", "De", F.sde)}${SEMS.map(k => opt(k, semLabel(k), F.sde)).join("")}</select>
+          <span>até</span>
+          <select id="sate" aria-label="Entrega até">${opt("", "Até", F.sate)}${SEMS.map(k => opt(k, semLabel(k), F.sate)).join("")}</select></div>`)}
+        ${fsec("Quartos", chips("dorms", [["1","1"],["2","2"],["3","3"],["4","4+"]]))}
+        ${fsec("Vagas", chips("vagas", [["1","1"],["2","2"],["3","3"],["4","4+"]]) +
+          `<div class="sub">Tipo de vaga</div>` + chips("vc", [["","Todas"],["coberta","Coberta"],["descoberta","Descoberta"]], false), semInfo("vc"))}
+        ${fsec("Aceita FGTS na entrada", chips("fgts", TRI, false), semInfo("fgts"))}
+        ${fsec("Metragem (m²)", `<div class="range">
+          <input id="mmin" type="number" inputmode="numeric" min="0" placeholder="De" value="${esc(F.mmin)}" aria-label="Metragem de">
+          <span>até</span>
+          <input id="mmax" type="number" inputmode="numeric" min="0" placeholder="Até" value="${esc(F.mmax)}" aria-label="Metragem até"></div>`)}
+        ${fsec("Ótimo para investimento", chips("inv", TRI, false), semInfo("inv"))}
+        ${fsec("Construtora", `<input class="cfind" id="cfind" type="search" placeholder="Buscar construtora…" aria-label="Buscar construtora">` + checklist("c", CONSTRUTORAS))}
+        ${fsec("Casa ou apartamento", chips("tipo", [["","Todos"],["apto","Apartamento"],["casa","Casa"]], false))}
+        ${fsec("Tem suíte", chips("suite", TRI, false), semInfo("suite"))}
+        ${fsec("Materiais", `<div class="chips"><button type="button" class="chip" id="mat" aria-pressed="${F.mat}">Só com book/vídeo/tabela</button></div>`)}
+      </div>
+      <div class="side-f"><button class="btn primary" id="ver" type="button" style="width:100%;justify-content:center"></button></div>
+    </aside>
+    <div class="main">
+      <div class="toolbar">
+        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Buscar empreendimento pelo nome…" value="${esc(F.q)}" aria-label="Buscar"></label>
+        <button class="btn abrir-filtros" id="abrir" type="button">⚙ Filtros <span class="badge" id="nf"></span></button>
+      </div>
+      <div class="resbar">
+        <div class="count" id="count"></div>
+        <div class="fgroup">
+          <select id="ord" aria-label="Ordenar">
+            ${[["preco","Menor preço"],["precod","Maior preço"],["entrega","Entrega mais próxima"],["m2","Maior metragem"],["bairro","Bairro"],["nome","Nome (A–Z)"]].map(([v,t]) => opt(v, "Ordenar: " + t, F.ord)).join("")}
+          </select>
+          <div class="seg" role="group" aria-label="Visualização">
+            <button type="button" data-view="cards" aria-pressed="${F.view === "cards"}">Cards</button>
+            <button type="button" data-view="tabela" aria-pressed="${F.view === "tabela"}">Tabela</button>
+          </div>
+        </div>
+      </div>
+      <div id="results"></div>
+    </div>
+  </div>`;
+
+  const upd = () => { syncUrl(); renderResults(); };
+  $("#q").addEventListener("input", e => { F.q = e.target.value; upd(); });
+  for (const id of ["pmin","pmax","sde","sate","ord"]) $("#" + id).addEventListener("change", e => { F[id] = e.target.value; upd(); });
+  for (const id of ["mmin","mmax"]) $("#" + id).addEventListener("input", e => { F[id] = e.target.value; upd(); });
+  document.querySelectorAll("[data-chips]").forEach(g => g.addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    const name = g.dataset.chips, v = b.dataset.v;
+    if (Array.isArray(F[name])){
+      F[name] = F[name].includes(v) ? F[name].filter(x => x !== v) : [...F[name], v];
+      b.setAttribute("aria-pressed", F[name].includes(v));
+    } else {
+      F[name] = v; g.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === v));
+    }
+    upd();
+  }));
+  document.querySelectorAll("[data-check]").forEach(g => g.addEventListener("change", e => {
+    const name = g.dataset.check;
+    F[name] = [...g.querySelectorAll("input:checked")].map(i => i.value); upd();
+  }));
+  $("#cfind").addEventListener("input", e => {
+    const t = norm(e.target.value);
+    document.querySelectorAll('[data-check="c"] label').forEach(lb => { lb.style.display = norm(lb.textContent).includes(t) ? "" : "none"; });
+  });
+  $("#mat").addEventListener("click", e => { F.mat = !F.mat; e.currentTarget.setAttribute("aria-pressed", F.mat); upd(); });
+  document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {
+    F.view = b.dataset.view; document.querySelectorAll("[data-view]").forEach(x => x.setAttribute("aria-pressed", x === b)); upd();
+  }));
+  $("#limpar").onclick = () => { const keep = { view: F.view, ord: F.ord }; F = JSON.parse(JSON.stringify(DEF)); Object.assign(F, keep); syncUrl(); const open = $("#side").classList.contains("open"); renderList(); if (open) abrirFiltros(); };
+  $("#abrir").onclick = abrirFiltros;
+  $("#fechar").onclick = $("#ver").onclick = fecharFiltros;
+  renderResults();
+}
+function abrirFiltros(){ $("#side").classList.add("open"); document.body.classList.add("noscroll"); }
+function fecharFiltros(){ $("#side").classList.remove("open"); document.body.classList.remove("noscroll"); }
+
+function matsHTML(l){
+  return `<div class="mats">` + TABS.slice(1).map(t => `<span class="mat${hasMat(l, t.k) ? " on" : ""}" title="${esc(t.t)}${hasMat(l, t.k) ? " disponível" : " — ainda não enviado"}">${esc(t.k === "fluxo" ? "Fluxo" : t.t)}</span>`).join("") + `</div>`;
+}
+function vagasLabel(l){
+  if (!l.v) return "—";
+  const vc = { coberta: " coberta", descoberta: " descoberta", ambas: " (cob./desc.)" }[l.vc] || "";
+  return l.v + vc;
+}
+function selos(l){
+  const s = [];
+  if (l.fgts === true) s.push(`<span class="tag ok">Aceita FGTS</span>`);
+  if (l.inv === true) s.push(`<span class="tag ok">Ótimo p/ investir</span>`);
+  if (temSuite(l) === true && !l.su) s.push(`<span class="tag">Tem suíte</span>`);
+  return s.join("");
+}
+function cardHTML(l){
+  const venc = entregaVencida(l);
+  return `<a class="card" href="#/p/${l.slug}" style="text-decoration:none">
+    <div class="hd">
+      <div><h3>${esc(l.n)}</h3><div class="by">${esc(l.c === "Não informada" ? "Construtora não informada" : "Construtora " + l.c)}</div></div>
+      <span class="tag">${TIPO[l.t]}</span>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tag bairro">${esc(l.b)}</span>
+      <span class="tag ${VIS[l.vis].cls}">${esc(visLabel(l))}</span>${selos(l)}
+    </div>
+    <div class="specs">
+      <div><span>Metragem</span>${esc(m2Range(l))}</div>
+      <div><span>${l.su ? "Suítes" : "Quartos"}</span>${esc(l.d ? dormLabel(l) : (l.tip || "—"))}</div>
+      <div><span>Vagas</span>${esc(vagasLabel(l))}</div>
+      <div><span>Entrega</span>${l.e === "pronto" ? `<b style="color:var(--ok)">Pronto</b>` : esc(entregaLabel(l)) + (venc ? ` <small style="color:var(--warn)" title="Previsão já passou — confirmar">⚠</small>` : "")}</div>
+    </div>
+    <div class="price"><div><small>Preço médio</small><br><b>${esc(precoLabel(l))}</b></div></div>
+    ${matsHTML(l)}
+  </a>`;
+}
+const simNao = v => v === true ? "Sim" : v === false ? "Não" : "—";
+function rowHTML(l){
+  return `<tr data-slug="${l.slug}">
+    <td class="nm">${esc(l.n)}<br><small style="color:var(--muted);font-weight:500">${TIPO[l.t]}</small></td>
+    <td>${esc(l.c)}</td><td>${esc(l.b)}</td><td class="num">${esc(m2Label(l))}</td><td>${esc(dormLabel(l))}</td><td>${esc(vagasLabel(l))}</td>
+    <td class="num">${esc(entregaLabel(l))}${entregaVencida(l) ? " ⚠" : ""}</td><td class="num"><b>${esc(precoLabel(l))}</b></td>
+    <td>${simNao(l.fgts)}</td><td>${simNao(l.inv)}</td><td>${esc(visLabel(l))}</td>
+  </tr>`;
+}
+function renderResults(){
+  const list = DATA.filter(l => passa(l)).sort(ORD[F.ord] || ORD.preco);
+  const n = ativos();
+  $("#count").innerHTML = `${list.length} empreendimento${list.length === 1 ? "" : "s"} <small>de ${DATA.length}${n ? " · " + n + " filtro" + (n > 1 ? "s" : "") + " ativo" + (n > 1 ? "s" : "") : ""}</small>`;
+  $("#nf").textContent = n || ""; $("#nf").hidden = !n;
+  $("#ver").textContent = `Ver ${list.length} resultado${list.length === 1 ? "" : "s"}`;
+  // contagem ao lado de cada bairro/construtora (considerando os outros filtros)
+  for (const name of ["bairro","c"]){
+    const cnt = {}; DATA.forEach(l => { if (passa(l, name)) { const k = name === "c" ? l.c : l.b; cnt[k] = (cnt[k] || 0) + 1; } });
+    document.querySelectorAll(`[data-check="${name}"] em`).forEach(em => { em.textContent = cnt[em.dataset.cnt] || 0; });
+  }
+  const out = $("#results");
+  if (!list.length){ out.innerHTML = `<div class="empty">Nenhum empreendimento com esses filtros.<br><button class="linkbtn" onclick="document.getElementById('limpar').click()">Limpar filtros</button></div>`; return; }
+  if (F.view === "tabela"){
+    out.innerHTML = `<div class="tablewrap"><table><thead><tr>
+      <th>Empreendimento</th><th>Construtora</th><th>Bairro</th><th>Metragem</th><th>Quartos</th><th>Vagas</th><th>Entrega</th><th>Preço médio</th><th>FGTS</th><th>Investim.</th><th>Visita</th>
+    </tr></thead><tbody>${list.map(rowHTML).join("")}</tbody></table></div>`;
+    out.querySelector("tbody").addEventListener("click", e => { const tr = e.target.closest("tr"); if (tr) location.hash = "#/p/" + tr.dataset.slug; });
+  } else {
+    out.innerHTML = `<div class="grid">${list.map(cardHTML).join("")}</div>`;
+  }
+}
+
+/* ---------- detail view ---------- */
+function fichaTexto(l){
+  const linhas = [
+    `🏢 *${l.n.toUpperCase()}* — ${l.c !== "Não informada" ? "Construtora " + l.c : ""}`.replace(/ — $/, ""),
+    `📍 ${l.b} · ${TIPO[l.t]}`,
+    `📐 ${m2Label(l)}${l.d ? " · " + dormLabel(l) : ""}${l.v ? " · " + l.v + " vaga(s)" : ""}`,
+    l.tip ? `🏠 ${l.tip}` : "",
+    `🗓️ Entrega: ${entregaLabel(l)}`,
+    `💰 Preço médio: ` + (l.p.length > 1 && l.p[0][0] ? l.p.map(([m, v]) => `${m} m² ${money(v)}`).join(" | ") : precoLabel(l)),
+    `👀 ${visLabel(l)}`,
+  ].filter(Boolean);
+  return linhas.join("\n");
+}
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1800); }
+async function copiar(txt){
+  try { await navigator.clipboard.writeText(txt); toast("Ficha copiada ✓"); }
+  catch(e){ const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); toast("Ficha copiada ✓"); } catch(_){ toast("Não foi possível copiar"); } ta.remove(); }
+}
+
+function resumoHTML(l){
+  const temTabela = l.p.length > 1 || l.p[0][0];
+  const venc = entregaVencida(l);
+  const notas = [];
+  if (venc) notas.push(`A previsão de entrega (${entregaLabel(l)}) já passou — confirme com a construtora se já foi entregue ou se o prazo mudou.`);
+  if (l.obs) notas.push(l.obs);
+  return `<div class="dgrid">
+    <div class="box">
+      <h3>Ficha do empreendimento</h3>
+      <div class="facts">
+        <div><span>Bairro</span><b>${esc(l.b)}</b></div>
+        <div><span>Construtora</span><b>${esc(l.c)}</b></div>
+        <div><span>Tipo</span><b>${TIPO[l.t]}</b></div>
+        <div><span>Metragens</span><b>${esc(m2Label(l))}</b></div>
+        <div><span>${l.su ? "Suítes" : "Dormitórios"}</span><b>${esc(dormLabel(l))}</b></div>
+        <div><span>Vagas</span><b>${esc(l.v ? vagasLabel(l) : "Não informado")}</b></div>
+        <div><span>Tem suíte</span><b>${temSuite(l) == null ? "Não informado" : simNao(temSuite(l))}</b></div>
+        <div><span>Aceita FGTS</span><b>${l.fgts == null ? "Não informado" : simNao(l.fgts)}</b></div>
+        <div><span>Ótimo p/ investimento</span><b>${l.inv == null ? "Não informado" : simNao(l.inv)}</b></div>
+        <div><span>Entrega</span><b${l.e === "pronto" ? ' style="color:var(--ok)"' : ""}>${esc(entregaLabel(l))}</b></div>
+        <div><span>Visita</span><b>${esc(visLabel(l))}</b></div>
+        ${l.tip && l.d ? `<div style="grid-column:1/-1"><span>Tipologia</span><b>${esc(l.tip)}</b></div>` : ""}
+      </div>
+      ${notas.map(n => `<div class="note">⚠ ${esc(n)}</div>`).join("")}
+      <div class="actions">
+        <button class="btn primary" id="copy" type="button">📋 Copiar ficha para WhatsApp</button>
+        <a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(fichaTexto(l))}">💬 Enviar no WhatsApp</a>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Preço médio</h3>
+      ${temTabela ? `<table class="ptable"><tbody>${l.p.map(([m, v]) => `<tr><td>${m ? m + " m²" : "Unidades"}</td><td style="${v == null ? "color:var(--muted)" : ""}">${money(v)}</td></tr>`).join("")}</tbody></table>`
+        : `<div style="font:600 30px/1 Oswald,sans-serif;color:var(--accent-text)">${esc(precoLabel(l))}</div>`}
+      <p style="color:var(--muted);font-size:12.5px;margin:12px 0 0">Valores médios de referência. Consulte a aba <b>Tabela</b> para os preços oficiais por unidade.</p>
+      <h3 style="margin-top:20px">Materiais</h3>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        ${TABS.slice(1).map(t => `<a href="#/p/${l.slug}/${t.k}" style="display:flex;justify-content:space-between;text-decoration:none;padding:8px 10px;border:1px solid var(--line);border-radius:10px">
+          <span>${t.t}</span><span class="tag ${hasMat(l, t.k) ? "ok" : ""}">${hasMat(l, t.k) ? matList(l, t.k).length + " disponível" : "ainda não"}</span></a>`).join("")}
+      </div>
+    </div>
+  </div>`;
+}
+
+function tabHTML(l, k){
+  if (k === "resumo") return resumoHTML(l);
+  const items = matList(l, k);
+  const t = TABS.find(x => x.k === k).t;
+  if (!items.length){
+    const ex = { book: "book.pdf", videos: "https://youtu.be/…", tabela: "tabela.pdf", fluxo: "fluxo.pdf" }[k];
+    return `<div class="vazio"><b>${esc(t)} ainda não disponível</b>
+      ${k === "fluxo" ? "O fluxo de pagamento será publicado assim que a construtora liberar." : "Este material ainda não foi enviado para este empreendimento."}
+      <div style="margin-top:14px;font-size:12.5px">Para adicionar: em <code>materiais.js</code>, chave <code>"${l.slug}"</code> → <code>${k}: "${k === "videos" ? ex : "materiais/" + l.slug + "/" + ex}"</code></div></div>`;
+  }
+  const html = items.map((it, i) => mediaHTML(it, i, k, l)).join("");
+  return k === "videos" ? `<div class="vgrid">${html}</div>` : `<div class="media">${html}</div>`;
+}
+
+function renderDetail(slug, tab){
+  const l = BY_SLUG[slug];
+  if (!l){ $("#app").innerHTML = `<div class="empty">Empreendimento não encontrado.<br><a class="linkbtn" href="#/">Voltar à lista</a></div>`; return; }
+  if (!TABS.some(t => t.k === tab)) tab = "resumo";
+  document.title = l.n + " · Novos Lançamentos";
+  const backQ = lastListQuery;
+  $("#app").innerHTML = `
+    <a class="back" href="#/${backQ}">← Todos os lançamentos</a>
+    <div class="dhead">
+      <div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag bairro">${esc(l.b)}</span><span class="tag">${TIPO[l.t]}</span>
+          <span class="tag ${VIS[l.vis].cls}">${esc(visLabel(l))}</span>
+        </div>
+        <h1>${esc(l.n)}</h1>
+        <div class="by">${esc(l.c === "Não informada" ? "Construtora não informada" : "Construtora " + l.c)} · ${esc(m2Label(l))} · Entrega ${esc(entregaLabel(l))}</div>
+      </div>
+      <div class="dprice"><small>Preço médio</small><b>${esc(precoLabel(l))}</b></div>
+    </div>
+    <nav class="tabs" role="tablist">
+      ${TABS.map(t => `<a role="tab" class="tab" href="#/p/${l.slug}/${t.k}" aria-selected="${t.k === tab}" style="text-decoration:none">${esc(t.t)}${t.k !== "resumo" ? `<span class="dot${hasMat(l, t.k) ? " on" : ""}"></span>` : ""}</a>`).join("")}
+    </nav>
+    <section class="panel" role="tabpanel">${tabHTML(l, tab)}</section>`;
+  const cp = $("#copy"); if (cp) cp.onclick = () => copiar(fichaTexto(l));
+}
+
+/* ---------- router ---------- */
+let lastListQuery = "";
+let lastRoute = "";
+function route(){
+  const h = location.hash || "#/";
+  const m = h.match(/^#\/p\/([^/?]+)(?:\/([^/?]+))?/);
+  if (m){
+    const isNewProject = !lastRoute.startsWith("p/" + m[1]);
+    lastRoute = "p/" + m[1];
+    renderDetail(decodeURIComponent(m[1]), m[2] || "resumo");
+    if (isNewProject) window.scrollTo(0, 0);
+  } else {
+    const wasDetail = lastRoute.startsWith("p/");
+    lastRoute = "list";
+    F = loadState(); lastListQuery = stateQuery();
+    renderList();
+    if (wasDetail && listScroll) window.scrollTo(0, listScroll);
+  }
+}
+let listScroll = 0;
+document.addEventListener("click", e => { const a = e.target.closest('a[href^="#/p/"]'); if (a && lastRoute === "list"){ listScroll = window.scrollY; lastListQuery = stateQuery(); } });
+window.addEventListener("hashchange", route);
+route();
+})();
+</script>
+</body>
+</html>
