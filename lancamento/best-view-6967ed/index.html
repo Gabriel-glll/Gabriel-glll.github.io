@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Best View · ZFF Realty</title>
+<link rel="icon" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#1b1d22; --panel:#25282f; --panel-2:#2c3038; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+  --text:#eef0f3; --muted:#9aa1ab; --accent:#ec7a35; --accent-soft:rgba(236,122,53,.14); --accent-text:#f39a62; --ok:#5cc28a;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.55 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:62px}
+.top img{width:36px;height:36px;border-radius:9px;object-fit:cover}
+.top b{font:600 18px/1 Oswald,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.hero{padding:26px 0 14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{display:inline-flex;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--panel-2);color:var(--muted)}
+.tag.b{background:var(--accent-soft);color:var(--accent-text)}
+h1{font:600 clamp(32px,6vw,52px)/1 Oswald,sans-serif;text-transform:uppercase;margin:10px 0 6px;letter-spacing:.01em}
+.sub{color:var(--muted)}
+.car{position:relative;background:var(--panel-2);overflow:hidden;border-radius:var(--r);border:1px solid var(--line);aspect-ratio:16/9;max-height:74vh;width:100%;margin:8px 0 18px}
+.car-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.car-track::-webkit-scrollbar{display:none}
+.car-track img{flex:0 0 100%;width:100%;height:100%;object-fit:contain;background:#14161a;scroll-snap-align:start;display:block;cursor:zoom-in;-webkit-user-drag:none}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(15,16,20,.62);color:#fff;font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.car-btn:hover{background:rgba(15,16,20,.85)}
+.car-btn[disabled]{opacity:0;pointer-events:none}
+.car-prev{left:14px}.car-next{right:14px}
+.car-count,.car-zoom{position:absolute;bottom:12px;background:rgba(15,16,20,.62);color:#fff;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;pointer-events:none}
+.car-count{right:14px}.car-zoom{left:14px}
+.vazio{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px}
+@media (max-width:760px){ .car{aspect-ratio:4/3} }
+.box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.box h2{margin:0 0 14px;font:600 17px/1.2 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px 20px}
+.facts span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:800;margin-bottom:2px}
+.facts b{font-size:16px}
+.tip{margin:16px 0 0;color:var(--muted);font-size:14px}
+.endereco a{color:var(--accent-text);font-weight:700}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ficha{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;margin:0;font-size:14.5px}
+.ficha dt{color:var(--muted)} .ficha dd{margin:0;font-weight:600}
+.lazer{margin:0;padding:0;list-style:none;columns:2;column-gap:18px;font-size:14.5px}
+.lazer li{padding:3px 0 3px 16px;position:relative;break-inside:avoid}
+.lazer li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
+.videos iframe,.videos video{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000;display:block}
+footer{color:var(--muted);font-size:12.5px;padding:10px 0 34px}
+@media (max-width:760px){ .duo{grid-template-columns:1fr} .lazer{columns:1} .videos{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><img src="logo.jpeg" alt="ZFF Realty"><b>ZFF Realty</b></div></header>
+<main class="wrap" id="app"></main>
+<footer><div class="wrap">Imagens e perspectivas meramente ilustrativas. Informações sujeitas a alteração pela incorporadora. Material apresentado por ZFF Realty.</div></footer>
+<script>window.EMP = {"n": "Best View", "b": "Swiss Park", "tipo": "Apartamento", "c": "F.A. Oliva", "m": [66, 78], "d": [2, 3], "su": false, "v": null, "vc": null, "entrega": "Abril de 2027", "tip": null, "end": null, "ficha": null, "lazer": null, "fotos": [], "videos": []};</script>
+<script>/* Galeria: carrossel com setas + zoom em tela cheia.
+   Usado pelo site interno e pelas páginas de cliente (que recebem este arquivo embutido).
+   Marcação esperada do carrossel:
+     <div class="car" data-car><div class="car-track"><img…>…</div>
+       <button class="car-btn car-prev">‹</button><button class="car-btn car-next">›</button><span class="car-count"></span></div>
+   Imagens dentro de um carrossel com a classe "zoomavel" abrem o zoom ao clicar. */
+(() => {
+"use strict";
+
+/* ---------- carrossel ---------- */
+function carSync(car, idx){
+  const t = car.querySelector(".car-track"), n = t.children.length;
+  const i = idx ?? Math.round(t.scrollLeft / Math.max(1, t.clientWidth));
+  const c = car.querySelector(".car-count"); if (c) c.textContent = (i + 1) + "/" + n;
+  const p = car.querySelector(".car-prev"), x = car.querySelector(".car-next");
+  if (p) p.disabled = i <= 0; if (x) x.disabled = i >= n - 1;
+}
+function carGo(car, i){
+  const t = car.querySelector(".car-track"), w = Math.max(1, t.clientWidth);
+  i = Math.min(t.children.length - 1, Math.max(0, i));
+  t.scrollTo({ left: i * w, behavior: "smooth" }); carSync(car, i);
+}
+const carIdx = car => { const t = car.querySelector(".car-track"); return Math.round(t.scrollLeft / Math.max(1, t.clientWidth)); };
+
+document.addEventListener("click", e => {
+  const b = e.target.closest(".car-btn"); if (b){
+    e.preventDefault(); e.stopPropagation();
+    const car = b.closest(".car"); carGo(car, carIdx(car) + (b.classList.contains("car-next") ? 1 : -1));
+    return;
+  }
+  const img = e.target.closest(".zoomavel .car-track img");
+  if (img){
+    const car = img.closest(".car"), imgs = [...car.querySelectorAll(".car-track img")];
+    abrir(imgs.map(x => x.currentSrc || x.src), imgs.indexOf(img), car);
+  }
+}, true);
+document.addEventListener("scroll", e => {
+  const t = e.target; if (!(t instanceof Element) || !t.classList.contains("car-track")) return;
+  clearTimeout(t._h); t._h = setTimeout(() => carSync(t.closest(".car")), 60);
+}, true);
+document.addEventListener("keydown", e => {
+  if (lb.classList.contains("on")) return;
+  if ((e.key !== "ArrowLeft" && e.key !== "ArrowRight") || /input|select|textarea/i.test(e.target.tagName)) return;
+  const g = document.querySelector(".galeria[data-car]"); if (!g) return;
+  carGo(g, carIdx(g) + (e.key === "ArrowRight" ? 1 : -1));
+});
+
+/* ---------- zoom (lightbox) ---------- */
+const st = document.createElement("style");
+st.textContent = `
+.lb{position:fixed;inset:0;z-index:100;background:rgba(8,9,11,.96);display:none;touch-action:none;user-select:none;-webkit-user-select:none}
+.lb.on{display:block}
+.lb-stage{position:absolute;inset:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
+.lb.zoom .lb-stage{cursor:grab}
+.lb.drag .lb-stage{cursor:grabbing}
+.lb-img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center center;will-change:transform;-webkit-user-drag:none;pointer-events:none}
+.lb-btn{position:absolute;z-index:2;border:0;background:rgba(255,255,255,.1);color:#fff;width:46px;height:46px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-btn:hover{background:rgba(255,255,255,.22)}
+.lb-btn[disabled]{opacity:.25;pointer-events:none}
+.lb-x{top:14px;right:14px}
+.lb-prev{left:14px;top:50%;transform:translateY(-50%)}
+.lb-next{right:14px;top:50%;transform:translateY(-50%)}
+.lb-bar{position:absolute;z-index:2;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.1);border-radius:999px;padding:5px 8px;color:#fff;font:600 13px/1 system-ui,sans-serif}
+.lb-bar .lb-btn{position:static;width:34px;height:34px;font-size:19px;background:transparent}
+.lb-bar .lb-btn:hover{background:rgba(255,255,255,.15)}
+.lb-n{min-width:52px;text-align:center}
+@media (max-width:760px){ .lb-prev,.lb-next{display:none} }`;
+document.head.appendChild(st);
+
+const lb = document.createElement("div");
+lb.className = "lb"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", "Foto ampliada");
+lb.innerHTML = `<div class="lb-stage"><img class="lb-img" alt=""></div>
+  <button class="lb-btn lb-x" type="button" aria-label="Fechar">✕</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Foto anterior">‹</button>
+  <button class="lb-btn lb-next" type="button" aria-label="Próxima foto">›</button>
+  <div class="lb-bar"><button class="lb-btn lb-out" type="button" aria-label="Diminuir zoom">−</button><span class="lb-n"></span><button class="lb-btn lb-in" type="button" aria-label="Aumentar zoom">+</button></div>`;
+const mount = () => document.body.appendChild(lb);
+document.body ? mount() : document.addEventListener("DOMContentLoaded", mount);
+
+const stage = lb.querySelector(".lb-stage"), img = lb.querySelector(".lb-img");
+let fotos = [], i = 0, s = 1, tx = 0, ty = 0, origem = null;
+const MAX = 5;
+
+function aplicar(anim){
+  img.style.transition = anim ? "transform .18s ease" : "none";
+  img.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
+  lb.classList.toggle("zoom", s > 1.01);
+  lb.querySelector(".lb-n").textContent = s > 1.01 ? Math.round(s * 100) + "%" : (i + 1) + " / " + fotos.length;
+}
+function limitar(){
+  const w = img.offsetWidth * s, h = img.offsetHeight * s, W = stage.clientWidth, H = stage.clientHeight;
+  const mx = Math.max(0, (w - W) / 2), my = Math.max(0, (h - H) / 2);
+  tx = Math.min(mx, Math.max(-mx, tx)); ty = Math.min(my, Math.max(-my, ty));
+}
+function zoomEm(novo, cx, cy, anim = true){
+  novo = Math.min(MAX, Math.max(1, novo));
+  const r = stage.getBoundingClientRect();
+  const px = (cx ?? r.left + r.width / 2) - (r.left + r.width / 2), py = (cy ?? r.top + r.height / 2) - (r.top + r.height / 2);
+  tx = px - (px - tx) * novo / s; ty = py - (py - ty) * novo / s; s = novo;
+  if (s === 1){ tx = 0; ty = 0; }
+  limitar(); aplicar(anim);
+}
+function mostrar(){
+  s = 1; tx = 0; ty = 0; img.src = fotos[i]; aplicar(false);
+  lb.querySelector(".lb-prev").disabled = i <= 0; lb.querySelector(".lb-next").disabled = i >= fotos.length - 1;
+}
+function ir(d){ const n = i + d; if (n < 0 || n >= fotos.length) return; i = n; mostrar(); }
+function abrir(lista, idx, car){ fotos = lista; i = Math.max(0, idx); origem = car; mostrar(); lb.classList.add("on"); document.documentElement.style.overflow = "hidden"; }
+function fechar(){ lb.classList.remove("on"); document.documentElement.style.overflow = ""; if (origem) carGo(origem, i); }
+window.abrirZoom = abrir;
+
+lb.querySelector(".lb-x").onclick = fechar;
+lb.querySelector(".lb-prev").onclick = () => ir(-1);
+lb.querySelector(".lb-next").onclick = () => ir(1);
+lb.querySelector(".lb-in").onclick = () => zoomEm(s * 1.6);
+lb.querySelector(".lb-out").onclick = () => zoomEm(s / 1.6);
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("on")) return;
+  if (e.key === "Escape") fechar();
+  else if (e.key === "ArrowRight") ir(1);
+  else if (e.key === "ArrowLeft") ir(-1);
+  else if (e.key === "+" || e.key === "=") zoomEm(s * 1.6);
+  else if (e.key === "-") zoomEm(s / 1.6);
+  else return;
+  e.preventDefault();
+});
+stage.addEventListener("wheel", e => { e.preventDefault(); zoomEm(s * Math.exp(-e.deltaY * 0.0022), e.clientX, e.clientY, false); }, { passive: false });
+
+// arrastar, pinça e deslizar
+const pts = new Map(); let ini = null, moveu = 0;
+stage.addEventListener("pointerdown", e => {
+  stage.setPointerCapture(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  moveu = 0;
+  if (pts.size === 1) ini = { x: e.clientX, y: e.clientY, tx, ty, t: Date.now() };
+  if (pts.size === 2){ const [a, b] = [...pts.values()]; ini = { d: Math.hypot(a.x - b.x, a.y - b.y), s, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 }; }
+});
+stage.addEventListener("pointermove", e => {
+  if (!pts.has(e.pointerId) || !ini) return;
+  pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pts.size === 2 && ini.d){
+    const [a, b] = [...pts.values()];
+    zoomEm(ini.s * Math.hypot(a.x - b.x, a.y - b.y) / ini.d, ini.cx, ini.cy, false); moveu = 99; return;
+  }
+  const dx = e.clientX - ini.x, dy = e.clientY - ini.y; moveu = Math.max(moveu, Math.hypot(dx, dy));
+  if (s > 1.01){ lb.classList.add("drag"); tx = ini.tx + dx; ty = ini.ty + dy; limitar(); aplicar(false); }
+});
+function solta(e){
+  if (!pts.has(e.pointerId)) return;
+  const eraPinca = pts.size === 2; pts.delete(e.pointerId); lb.classList.remove("drag");
+  if (eraPinca){ ini = null; return; }
+  if (!ini || pts.size) return;
+  const dx = e.clientX - ini.x, dy = e.clientY - ini.y;
+  if (s <= 1.01 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) ir(dx < 0 ? 1 : -1);
+  else if (moveu < 6){ s > 1.01 ? zoomEm(1) : zoomEm(2.5, e.clientX, e.clientY); }
+  ini = null;
+}
+stage.addEventListener("pointerup", solta);
+stage.addEventListener("pointercancel", solta);
+window.addEventListener("resize", () => { if (lb.classList.contains("on")){ limitar(); aplicar(false); } });
+})();
+</script>
+<script>
+(() => {
+const l = window.EMP;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const m2 = m => m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²";
+function dorms(){
+  if (!l.d) return l.tip || "—";
+  const [a, b] = l.d, w = l.su ? "suíte" : "dormitório";
+  return (a === b ? a : a + " e " + b) + " " + w + (b > 1 ? "s" : "");
+}
+const vagas = () => !l.v ? "—" : l.v + ({ coberta: " · cobertas", descoberta: " · descobertas", ambas: " · cobertas e descobertas" }[l.vc] || "");
+function video(u){
+  const y = u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{6,})/);
+  if (/youtu/.test(u) && y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y[1]}" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy" title="Vídeo"></iframe>`;
+  const v = u.match(/vimeo\.com\/(?:video\/)?(\d+)/); if (v) return `<iframe src="https://player.vimeo.com/video/${v[1]}" allow="fullscreen" allowfullscreen loading="lazy" title="Vídeo"></iframe>`;
+  const d = u.match(/drive\.google\.com\/.*?(?:\/d\/|id=)([\w-]+)/); if (d) return `<iframe src="https://drive.google.com/file/d/${d[1]}/preview" allow="fullscreen" allowfullscreen loading="lazy" title="Vídeo"></iframe>`;
+  return `<video src="${esc(u)}" controls preload="metadata"></video>`;
+}
+const f = l.fotos || [];
+const galeria = !f.length ? `<div class="car"><div class="vazio">Fotos em breve</div></div>` :
+  `<div class="car galeria zoomavel" data-car><div class="car-track">${f.map((u, i) => `<img src="${esc(u)}" alt="${esc(l.n)} — foto ${i + 1}" loading="${i ? "lazy" : "eager"}" draggable="false">`).join("")}</div>
+   <span class="car-zoom">🔍 Toque para ampliar</span>
+   ${f.length > 1 ? `<button type="button" class="car-btn car-prev" aria-label="Foto anterior" disabled>‹</button><button type="button" class="car-btn car-next" aria-label="Próxima foto">›</button><span class="car-count">1/${f.length}</span>` : ""}</div>`;
+document.getElementById("app").innerHTML = `
+  <section class="hero">
+    <div class="tags"><span class="tag b">${esc(l.b)}</span><span class="tag">${esc(l.tipo)}</span></div>
+    <h1>${esc(l.n)}</h1>
+    <div class="sub">${l.c ? "Construtora " + esc(l.c) + " · " : ""}${esc(m2(l.m))} · Entrega ${esc(l.entrega)}</div>
+  </section>
+  ${galeria}
+  <div class="box">
+    <h2>Informações</h2>
+    <div class="facts">
+      <div><span>Bairro</span><b>${esc(l.b)}</b></div>
+      <div><span>Tipo</span><b>${esc(l.tipo)}</b></div>
+      <div><span>Metragens</span><b>${esc(m2(l.m))}</b></div>
+      <div><span>${l.su ? "Suítes" : "Dormitórios"}</span><b>${esc(dorms())}</b></div>
+      <div><span>Vagas</span><b>${esc(vagas())}</b></div>
+      <div><span>Entrega</span><b>${esc(l.entrega)}</b></div>
+      ${l.c ? `<div><span>Construtora</span><b>${esc(l.c)}</b></div>` : ""}
+    </div>
+    ${l.tip && l.d ? `<p class="tip">${esc(l.tip)}</p>` : ""}
+    ${l.end ? `<p class="tip endereco">📍 ${esc(l.end)} · <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l.end + ", Campinas - SP")}" target="_blank" rel="noopener">ver no mapa</a></p>` : ""}
+  </div>
+  ${l.ficha || l.lazer ? `<div class="duo">
+    ${l.ficha ? `<div class="box"><h2>Ficha técnica</h2><dl class="ficha">${l.ficha.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl></div>` : ""}
+    ${l.lazer ? `<div class="box"><h2>Lazer e diferenciais</h2><ul class="lazer">${l.lazer.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+  </div>` : ""}
+  ${(l.videos || []).length ? `<div class="box"><h2>Vídeos</h2><div class="videos">${l.videos.map(video).join("")}</div></div>` : ""}`;
+})();
+</script>
+</body>
+</html>
