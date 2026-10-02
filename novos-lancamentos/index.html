@@ -70,35 +70,42 @@ select{height:42px;border:1px solid var(--line-strong);border-radius:11px;backgr
 .linkbtn{background:none;border:0;color:var(--accent-text);font-weight:700;cursor:pointer;padding:4px}
 
 /* Cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;padding-bottom:40px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .15s,transform .15s;text-align:left;width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding-bottom:40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:border-color .15s,transform .15s}
 .card:hover{border-color:var(--accent);transform:translateY(-2px)}
-.card .hd{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-.card h3{margin:0;font:600 21px/1.15 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
-.card .by{font-size:13px;color:var(--muted)}
+.card .car{aspect-ratio:4/3}
+.card-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.card h3{margin:0;font:600 19px/1.15 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.card h3 a{text-decoration:none}
+.card-meta{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.card-meta span{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:800;margin-bottom:2px}
+.card-meta .pv{font:600 20px/1.05 Oswald,sans-serif;color:var(--accent-text)}
+.card-meta .ent{text-align:right;font-weight:700;font-size:14.5px;white-space:nowrap}
 .tag{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--panel-2);color:var(--muted);white-space:nowrap}
 .tag.bairro{background:var(--accent-soft);color:var(--accent-text)}
 .tag.ok{background:var(--ok-soft);color:var(--ok)}
 .tag.warn{background:var(--warn-soft);color:var(--warn)}
-.specs{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13.5px}
-.specs div{display:flex;flex-direction:column}
-.specs span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
-.price{display:flex;align-items:baseline;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:10px;margin-top:auto}
-.price b{font:600 22px/1 Oswald,sans-serif;color:var(--accent-text)}
-.price small{font-size:12px;color:var(--muted)}
-.mats{display:flex;gap:5px;flex-wrap:wrap}
-.mat{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;border:1px solid var(--line-strong);color:var(--muted)}
-.mat.on{border-color:var(--ok);color:var(--ok)}
 
-/* Table view */
-.tablewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:40px}
-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:900px}
-th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);position:sticky;top:0;background:var(--panel);cursor:pointer;white-space:nowrap}
-tbody tr{cursor:pointer}
-tbody tr:hover{background:var(--panel-2)}
-td.nm{font-weight:700}
-td.num{white-space:nowrap}
+/* Carrossel de fotos */
+.car{position:relative;background:var(--panel-2);overflow:hidden}
+.car-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.car-track::-webkit-scrollbar{display:none}
+.car-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;display:block;user-select:none;-webkit-user-drag:none}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(15,16,20,.62);color:#fff;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;backdrop-filter:blur(4px)}
+.car-btn:hover{background:rgba(15,16,20,.85)}
+.car-prev{left:8px}.car-next{right:8px}
+.car:hover .car-btn,.car:focus-within .car-btn{opacity:1}
+.car-btn[disabled]{opacity:0!important;pointer-events:none}
+.car-count{position:absolute;right:8px;bottom:8px;background:rgba(15,16,20,.62);color:#fff;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}
+@media (hover:none){ .car-btn{opacity:1} }
+.car-vazio{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#2b2f37,#1f2228 60%,#2a2420);color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.car-vazio b{font:600 26px/1 Oswald,sans-serif;color:rgba(255,255,255,.14);letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 16px}
+.galeria{margin:4px 0 16px;border-radius:var(--r);border:1px solid var(--line)}
+.galeria.car{aspect-ratio:16/9;max-height:72vh;width:100%}
+.galeria .car-btn{width:44px;height:44px;font-size:26px;opacity:.9}
+.galeria .car-prev{left:14px}.galeria .car-next{right:14px}
+.galeria .car-count{font-size:13px;right:14px;bottom:12px;padding:3px 10px}
+@media (max-width:760px){ .galeria.car{aspect-ratio:4/3} }
 
 .empty{padding:60px 16px;text-align:center;color:var(--muted)}
 
@@ -363,7 +370,7 @@ const SEMS = [...new Set(DATA.map(semKey))].sort((a, b) => a - b);
 /* ---------- filter state (synced to URL query) ---------- */
 const DEF = {
   q: "", bairro: [], pmin: "", pmax: "", sde: "", sate: "", dorms: [], vagas: [], vc: "", fgts: "",
-  mmin: "", mmax: "", inv: "", c: [], tipo: "", suite: "", mat: false, ord: "preco", view: "cards",
+  mmin: "", mmax: "", inv: "", c: [], tipo: "", suite: "", mat: false, ord: "preco",
 };
 let F = loadState();
 function loadState(){
@@ -480,7 +487,7 @@ function renderList(){
   </div>
     <aside class="side${filtrosAbertos ? " open" : ""}" id="side" aria-label="Filtros">
       <div class="fgrid">
-        ${fc("Bairro", dd("bairro", BAIRROS))}
+        ${fc("Bairro", dd("bairro", BAIRROS, "Digite o bairro…"))}
         ${fc("Valor", `<div class="pair"><select id="pmin" aria-label="Valor de">${opt("", "De", F.pmin)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmin)).join("")}</select><select id="pmax" aria-label="Valor até">${opt("", "Até", F.pmax)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmax)).join("")}</select></div>`, "", "w2")}
         ${fc("Entrega", `<div class="pair"><select id="sde" aria-label="Entrega de">${opt("", "De", F.sde)}${SEMS.map(k => opt(k, semLabel(k), F.sde)).join("")}</select><select id="sate" aria-label="Entrega até">${opt("", "Até", F.sate)}${SEMS.map(k => opt(k, semLabel(k), F.sate)).join("")}</select></div>`, "", "w2")}
         ${fc("Quartos", mini("dorms"))}
@@ -490,7 +497,7 @@ function renderList(){
         ${fc("FGTS entrada", sel("fgts", "Aceita FGTS na entrada", TRI), semInfo("fgts"))}
         ${fc("Investimento", sel("inv", "Ótimo para investimento", TRI), semInfo("inv"))}
         ${fc("Construtora", dd("c", CONSTRUTORAS, "Buscar construtora…"))}
-        ${fc("Tipo", sel("tipo", "Casa ou apartamento", [["","Todos"],["apto","Apartamento"],["casa","Casa"]]))}
+        ${fc("Casa ou apartamento", sel("tipo", "Casa ou apartamento", [["","Todos"],["apto","Apartamento"],["casa","Casa"]]))}
         ${fc("Suíte", sel("suite", "Tem suíte", TRI), semInfo("suite"))}
         <div class="fact w2"><button class="btn" id="limpar" type="button">Limpar</button><button class="btn primary" id="ver" type="button"></button></div>
       </div>
@@ -501,10 +508,6 @@ function renderList(){
           <select id="ord" aria-label="Ordenar">
             ${[["preco","Menor preço"],["precod","Maior preço"],["entrega","Entrega mais próxima"],["m2","Maior metragem"],["bairro","Bairro"],["nome","Nome (A–Z)"]].map(([v,t]) => opt(v, "Ordenar: " + t, F.ord)).join("")}
           </select>
-          <div class="seg" role="group" aria-label="Visualização">
-            <button type="button" data-view="cards" aria-pressed="${F.view === "cards"}">Cards</button>
-            <button type="button" data-view="tabela" aria-pressed="${F.view === "tabela"}">Tabela</button>
-          </div>
         </div>
       </div>
   <div id="results"></div>`;
@@ -534,11 +537,13 @@ function renderList(){
       const t = norm(e.target.value);
       d.querySelectorAll(".checklist label").forEach(lb => { lb.style.display = norm(lb.textContent).includes(t) ? "" : "none"; });
     });
+    d.querySelector(".cfind")?.addEventListener("keydown", e => {
+      if (e.key !== "Enter") return; e.preventDefault();
+      const lb = [...d.querySelectorAll(".checklist label")].find(x => x.style.display !== "none");
+      if (lb){ lb.querySelector("input").click(); e.target.value = ""; e.target.dispatchEvent(new Event("input")); }
+    });
   });
-  document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {
-    F.view = b.dataset.view; document.querySelectorAll("[data-view]").forEach(x => x.setAttribute("aria-pressed", x === b)); upd();
-  }));
-  $("#limpar").onclick = () => { const keep = { view: F.view, ord: F.ord }; F = JSON.parse(JSON.stringify(DEF)); Object.assign(F, keep); syncUrl(); renderList(); };
+  $("#limpar").onclick = () => { const keep = { ord: F.ord }; F = JSON.parse(JSON.stringify(DEF)); Object.assign(F, keep); syncUrl(); renderList(); };
   $("#abrir").onclick = () => setFiltros(!filtrosAbertos);
   $("#ver").onclick = () => { setFiltros(false); $("#results").scrollIntoView({ behavior: "smooth", block: "start" }); };
   renderResults();
@@ -556,51 +561,40 @@ function ddSync(){
 }
 function setFiltros(on){ filtrosAbertos = on; $("#side").classList.toggle("open", on); $("#abrir").setAttribute("aria-expanded", on); }
 
-function matsHTML(l){
-  return `<div class="mats">` + TABS.slice(1).map(t => `<span class="mat${hasMat(l, t.k) ? " on" : ""}" title="${esc(t.t)}${hasMat(l, t.k) ? " disponível" : " — ainda não enviado"}">${esc(t.k === "fluxo" ? "Fluxo" : t.t)}</span>`).join("") + `</div>`;
-}
 function vagasLabel(l){
   if (!l.v) return "—";
   const vc = { coberta: " coberta", descoberta: " descoberta", ambas: " (cob./desc.)" }[l.vc] || "";
   return l.v + vc;
 }
-function selos(l){
-  const s = [];
-  if (l.fgts === true) s.push(`<span class="tag ok">Aceita FGTS</span>`);
-  if (l.inv === true) s.push(`<span class="tag ok">Ótimo p/ investir</span>`);
-  if (temSuite(l) === true && !l.su) s.push(`<span class="tag">Tem suíte</span>`);
-  return s.join("");
+function fotosDe(l){
+  const raw = (MAT[l.slug] || {}).fotos;
+  if (!raw) return [];
+  if (typeof raw === "number") return Array.from({ length: raw }, (_, i) => `materiais/${l.slug}/fotos/${String(i + 1).padStart(2, "0")}.jpg`);
+  return (Array.isArray(raw) ? raw : [raw]).map(x => typeof x === "string" ? x : x.url).filter(Boolean);
+}
+function carHTML(l, cls = ""){
+  const f = fotosDe(l);
+  if (!f.length) return `<div class="car ${cls}"><div class="car-vazio"><b>${esc(l.n)}</b>Foto em breve</div></div>`;
+  const multi = f.length > 1;
+  return `<div class="car ${cls}" data-car>
+    <div class="car-track">${f.map((u, i) => `<img src="${esc(u)}" alt="${esc(l.n)} — foto ${i + 1}" loading="${i ? "lazy" : (cls ? "eager" : "lazy")}" draggable="false">`).join("")}</div>
+    ${multi ? `<button type="button" class="car-btn car-prev" aria-label="Foto anterior" disabled>‹</button><button type="button" class="car-btn car-next" aria-label="Próxima foto">›</button><span class="car-count">1/${f.length}</span>` : ""}
+  </div>`;
 }
 function cardHTML(l){
   const venc = entregaVencida(l);
-  return `<a class="card" href="#/p/${l.slug}" style="text-decoration:none">
-    <div class="hd">
-      <div><h3>${esc(l.n)}</h3><div class="by">${esc(l.c === "Não informada" ? "Construtora não informada" : "Construtora " + l.c)}</div></div>
-      <span class="tag">${TIPO[l.t]}</span>
+  return `<article class="card" data-slug="${l.slug}">
+    ${carHTML(l)}
+    <div class="card-body">
+      <h3><a href="#/p/${l.slug}">${esc(l.n)}</a></h3>
+      <div class="card-meta">
+        <div><span>Valor</span><div class="pv">${esc(precoLabel(l))}</div></div>
+        <div class="ent"><span>Entrega</span>${l.e === "pronto" ? `<b style="color:var(--ok)">Pronto</b>` : esc(entregaLabel(l)) + (venc ? ` <small style="color:var(--warn)" title="Previsão já passou — confirmar">⚠</small>` : "")}</div>
+      </div>
     </div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">
-      <span class="tag bairro">${esc(l.b)}</span>
-      <span class="tag ${VIS[l.vis].cls}">${esc(visLabel(l))}</span>${selos(l)}
-    </div>
-    <div class="specs">
-      <div><span>Metragem</span>${esc(m2Range(l))}</div>
-      <div><span>${l.su ? "Suítes" : "Quartos"}</span>${esc(l.d ? dormLabel(l) : (l.tip || "—"))}</div>
-      <div><span>Vagas</span>${esc(vagasLabel(l))}</div>
-      <div><span>Entrega</span>${l.e === "pronto" ? `<b style="color:var(--ok)">Pronto</b>` : esc(entregaLabel(l)) + (venc ? ` <small style="color:var(--warn)" title="Previsão já passou — confirmar">⚠</small>` : "")}</div>
-    </div>
-    <div class="price"><div><small>Preço médio</small><br><b>${esc(precoLabel(l))}</b></div></div>
-    ${matsHTML(l)}
-  </a>`;
+  </article>`;
 }
 const simNao = v => v === true ? "Sim" : v === false ? "Não" : "—";
-function rowHTML(l){
-  return `<tr data-slug="${l.slug}">
-    <td class="nm">${esc(l.n)}<br><small style="color:var(--muted);font-weight:500">${TIPO[l.t]}</small></td>
-    <td>${esc(l.c)}</td><td>${esc(l.b)}</td><td class="num">${esc(m2Label(l))}</td><td>${esc(dormLabel(l))}</td><td>${esc(vagasLabel(l))}</td>
-    <td class="num">${esc(entregaLabel(l))}${entregaVencida(l) ? " ⚠" : ""}</td><td class="num"><b>${esc(precoLabel(l))}</b></td>
-    <td>${simNao(l.fgts)}</td><td>${simNao(l.inv)}</td><td>${esc(visLabel(l))}</td>
-  </tr>`;
-}
 function renderResults(){
   const list = DATA.filter(l => passa(l)).sort(ORD[F.ord] || ORD.preco);
   const n = ativos();
@@ -615,14 +609,13 @@ function renderResults(){
   }
   const out = $("#results");
   if (!list.length){ out.innerHTML = `<div class="empty">Nenhum empreendimento com esses filtros.<br><button class="linkbtn" onclick="document.getElementById('limpar').click()">Limpar filtros</button></div>`; return; }
-  if (F.view === "tabela"){
-    out.innerHTML = `<div class="tablewrap"><table><thead><tr>
-      <th>Empreendimento</th><th>Construtora</th><th>Bairro</th><th>Metragem</th><th>Quartos</th><th>Vagas</th><th>Entrega</th><th>Preço médio</th><th>FGTS</th><th>Investim.</th><th>Visita</th>
-    </tr></thead><tbody>${list.map(rowHTML).join("")}</tbody></table></div>`;
-    out.querySelector("tbody").addEventListener("click", e => { const tr = e.target.closest("tr"); if (tr) location.hash = "#/p/" + tr.dataset.slug; });
-  } else {
-    out.innerHTML = `<div class="grid">${list.map(cardHTML).join("")}</div>`;
-  }
+  out.innerHTML = `<div class="grid">${list.map(cardHTML).join("")}</div>`;
+  out.firstChild.addEventListener("click", e => {
+    if (e.target.closest(".car-btn")) return;
+    const c = e.target.closest(".card"); if (!c) return;
+    e.preventDefault(); listScroll = window.scrollY; lastListQuery = stateQuery();
+    location.hash = "#/p/" + c.dataset.slug;
+  });
 }
 
 /* ---------- detail view ---------- */
@@ -720,12 +713,38 @@ function renderDetail(slug, tab){
       </div>
       <div class="dprice"><small>Preço médio</small><b>${esc(precoLabel(l))}</b></div>
     </div>
+    ${fotosDe(l).length ? carHTML(l, "galeria") : ""}
     <nav class="tabs" role="tablist">
       ${TABS.map(t => `<a role="tab" class="tab" href="#/p/${l.slug}/${t.k}" aria-selected="${t.k === tab}" style="text-decoration:none">${esc(t.t)}${t.k !== "resumo" ? `<span class="dot${hasMat(l, t.k) ? " on" : ""}"></span>` : ""}</a>`).join("")}
     </nav>
     <section class="panel" role="tabpanel">${tabHTML(l, tab)}</section>`;
   const cp = $("#copy"); if (cp) cp.onclick = () => copiar(fichaTexto(l));
 }
+
+/* ---------- carrossel ---------- */
+function carSync(car, idx){
+  const t = car.querySelector(".car-track"), n = t.children.length;
+  const i = idx ?? Math.round(t.scrollLeft / Math.max(1, t.clientWidth));
+  const c = car.querySelector(".car-count"); if (c) c.textContent = (i + 1) + "/" + n;
+  const p = car.querySelector(".car-prev"), x = car.querySelector(".car-next");
+  if (p) p.disabled = i <= 0; if (x) x.disabled = i >= n - 1;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest(".car-btn"); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const car = b.closest(".car"), t = car.querySelector(".car-track"), w = Math.max(1, t.clientWidth);
+  const i = Math.min(t.children.length - 1, Math.max(0, Math.round(t.scrollLeft / w) + (b.classList.contains("car-next") ? 1 : -1)));
+  t.scrollTo({ left: i * w, behavior: "smooth" }); carSync(car, i);
+}, true);
+document.addEventListener("scroll", e => {
+  const t = e.target; if (!(t instanceof Element) || !t.classList.contains("car-track")) return;
+  clearTimeout(t._h); t._h = setTimeout(() => carSync(t.closest(".car")), 60);
+}, true);
+document.addEventListener("keydown", e => {
+  if ((e.key !== "ArrowLeft" && e.key !== "ArrowRight") || /input|select|textarea/i.test(e.target.tagName)) return;
+  const g = document.querySelector(".galeria[data-car]"); if (!g) return;
+  g.querySelector(e.key === "ArrowRight" ? ".car-next" : ".car-prev")?.click();
+});
 
 /* ---------- router ---------- */
 let lastListQuery = "";

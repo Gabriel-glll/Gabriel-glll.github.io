@@ -10,10 +10,15 @@
     • vídeo do YouTube/Vimeo:   "https://youtu.be/XXXX"
   Para dar um nome ao arquivo use { url: "...", titulo: "Tabela Outubro" }.
 
+  FOTOS (capa do card + galeria com setas na página do projeto) — extraídas do book:
+    fotos: 12   → usa materiais/<slug>/fotos/01.jpg … 12.jpg  (a 01 é a capa do card)
+    ou uma lista: fotos: ["materiais/<slug>/fotos/fachada.jpg", ...]
+
   Dica: vídeos pesados → YouTube (não listado) ou Drive. O GitHub não aceita arquivos > 100 MB.
 
   Exemplo:
   "vista-horizonte": {
+    fotos:  12,
     book:   "materiais/vista-horizonte/book.pdf",
     videos: ["https://youtu.be/abc123", { url: "https://drive.google.com/file/d/XYZ/view", titulo: "Tour decorado" }],
     tabela: { url: "materiais/vista-horizonte/tabela-out26.pdf", titulo: "Tabela Out/2026" },
