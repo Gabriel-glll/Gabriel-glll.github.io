@@ -102,6 +102,7 @@ select{height:42px;border:1px solid var(--line-strong);border-radius:11px;backgr
 .car-vazio b{font:600 26px/1 Oswald,sans-serif;color:rgba(255,255,255,.14);letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 16px}
 .galeria{margin:4px 0 16px;border-radius:var(--r);border:1px solid var(--line)}
 .galeria.car{aspect-ratio:16/9;max-height:72vh;width:100%}
+.galeria .car-track img{object-fit:contain;background:#14161a}
 .galeria .car-btn{width:44px;height:44px;font-size:26px;opacity:.9}
 .galeria .car-prev{left:14px}.galeria .car-next{right:14px}
 .galeria .car-count{font-size:13px;right:14px;bottom:12px;padding:3px 10px}
@@ -203,8 +204,6 @@ select{height:42px;border:1px solid var(--line-strong);border-radius:11px;backgr
 .vazio{text-align:center;padding:50px 20px;border:2px dashed var(--line-strong);border-radius:var(--r);color:var(--muted)}
 .vazio b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
 .vazio code{background:var(--panel-2);padding:2px 6px;border-radius:6px;font-size:12.5px;color:var(--text)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:12.5px}
 
 @media (max-width:760px){
@@ -236,7 +235,6 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
     Uso interno dos corretores ZFF Realty. Fonte: <i>Lançamentos Campinas 2026 — atualizado</i> (<span id="upd"></span>). Preços médios de referência — sempre confirmar valores, disponibilidade e prazos com a construtora antes de passar ao cliente.
   </div>
 </footer>
-<div class="toast" id="toast"></div>
 
 <script src="dados.js"></script>
 <script src="materiais.js"></script>
@@ -630,24 +628,6 @@ function renderResults(){
 }
 
 /* ---------- detail view ---------- */
-function fichaTexto(l){
-  const linhas = [
-    `🏢 *${l.n.toUpperCase()}* — ${l.c !== "Não informada" ? "Construtora " + l.c : ""}`.replace(/ — $/, ""),
-    `📍 ${l.b} · ${TIPO[l.t]}`,
-    `📐 ${m2Label(l)}${l.d ? " · " + dormLabel(l) : ""}${l.v ? " · " + l.v + " vaga(s)" : ""}`,
-    l.tip ? `🏠 ${l.tip}` : "",
-    `🗓️ Entrega: ${entregaLonga(l)}`,
-    `💰 Preço médio: ` + (l.p.length > 1 && l.p[0][0] ? l.p.map(([m, v]) => `${m} m² ${money(v)}`).join(" | ") : precoLabel(l)),
-    `👀 ${visLabel(l)}`,
-  ].filter(Boolean);
-  return linhas.join("\n");
-}
-function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1800); }
-async function copiar(txt){
-  try { await navigator.clipboard.writeText(txt); toast("Ficha copiada ✓"); }
-  catch(e){ const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); toast("Ficha copiada ✓"); } catch(_){ toast("Não foi possível copiar"); } ta.remove(); }
-}
-
 function resumoHTML(l){
   const temTabela = l.p.length > 1 || l.p[0][0];
   const venc = entregaVencida(l);
@@ -672,10 +652,6 @@ function resumoHTML(l){
         ${l.tip && l.d ? `<div style="grid-column:1/-1"><span>Tipologia</span><b>${esc(l.tip)}</b></div>` : ""}
       </div>
       ${notas.map(n => `<div class="note">⚠ ${esc(n)}</div>`).join("")}
-      <div class="actions">
-        <button class="btn primary" id="copy" type="button">📋 Copiar ficha para WhatsApp</button>
-        <a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(fichaTexto(l))}">💬 Enviar no WhatsApp</a>
-      </div>
     </div>
     <div class="box">
       <h3>Preço médio</h3>
@@ -740,7 +716,6 @@ function renderDetail(slug, tab){
       ${TABS.map(t => `<a role="tab" class="tab" href="#/p/${l.slug}/${t.k}" aria-selected="${t.k === tab}" style="text-decoration:none">${esc(t.t)}${t.k !== "resumo" ? `<span class="dot${hasMat(l, t.k) ? " on" : ""}"></span>` : ""}</a>`).join("")}
     </nav>
     <section class="panel" role="tabpanel">${tabHTML(l, tab)}</section>`;
-  const cp = $("#copy"); if (cp) cp.onclick = () => copiar(fichaTexto(l));
 }
 
 /* ---------- carrossel ---------- */
