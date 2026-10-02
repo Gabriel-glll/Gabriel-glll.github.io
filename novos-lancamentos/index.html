@@ -11,25 +11,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f4f4f2; --panel:#ffffff; --panel-2:#f0efec; --line:rgba(20,22,26,.09); --line-strong:rgba(20,22,26,.18);
-  --text:#16181d; --muted:#626873; --accent:#d9631f; --accent-soft:rgba(217,99,31,.11); --accent-text:#b84f12;
-  --ok:#2f8a57; --ok-soft:rgba(47,138,87,.12); --warn:#a86a00; --warn-soft:rgba(200,130,0,.13);
-  --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 24px rgba(0,0,0,.05);
-  --r:16px; --maxw:1240px;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#1b1d22; --panel:#25282f; --panel-2:#2c3038; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
-    --text:#eef0f3; --muted:#9aa1ab; --accent:#ec7a35; --accent-soft:rgba(236,122,53,.14); --accent-text:#f39a62;
-    --ok:#5cc28a; --ok-soft:rgba(92,194,138,.13); --warn:#e0a83a; --warn-soft:rgba(224,168,58,.13);
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);
-  }
-}
-:root[data-theme="dark"]{
+  color-scheme:dark;
   --bg:#1b1d22; --panel:#25282f; --panel-2:#2c3038; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
   --text:#eef0f3; --muted:#9aa1ab; --accent:#ec7a35; --accent-soft:rgba(236,122,53,.14); --accent-text:#f39a62;
   --ok:#5cc28a; --ok-soft:rgba(92,194,138,.13); --warn:#e0a83a; --warn-soft:rgba(224,168,58,.13);
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);
+  --r:16px; --maxw:1240px;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -115,17 +102,22 @@ td.num{white-space:nowrap}
 
 .empty{padding:60px 16px;text-align:center;color:var(--muted)}
 
-/* Layout com painel de filtros */
-.layout{display:grid;grid-template-columns:290px 1fr;gap:20px;align-items:start;margin-top:18px}
-.main{min-width:0}
-.side{position:sticky;top:76px;max-height:calc(100vh - 92px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
-.side-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
-.side-h b{font:600 17px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+/* Filtro no topo, recolhível */
+.toolbar{display:flex;gap:10px;align-items:center;margin-top:18px}
+.abrir-filtros{height:42px;white-space:nowrap;flex:none}
+.abrir-filtros .chev{transition:transform .2s;display:inline-block}
+.abrir-filtros[aria-expanded="true"]{border-color:var(--accent)}
+.abrir-filtros[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.badge{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px}
+.badge[hidden]{display:none}
+.side{display:none;margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.side.open{display:block;animation:abre .18s ease}
+@keyframes abre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.side-h{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.side-h b{font:600 16px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.04em}
 .side-h .linkbtn{margin-left:auto}
-.side-x,.side-f{display:none}
-.side-body{overflow-y:auto;padding:4px 16px 16px;overscroll-behavior:contain}
+.side-body{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px;padding:4px 16px 8px}
 .fsec{padding:13px 0;border-bottom:1px solid var(--line)}
-.fsec:last-child{border-bottom:0}
 .fsec-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:9px}
 .nainfo{font-size:10.5px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--warn)}
 .sub{font-size:12px;color:var(--muted);font-weight:600;margin:10px 0 6px}
@@ -134,27 +126,15 @@ td.num{white-space:nowrap}
 .range select,.range input{width:100%;min-width:0;height:38px;font-size:13.5px}
 .range input,.cfind{border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:0 10px}
 .cfind{width:100%;height:36px;margin-bottom:8px;font-size:13.5px}
-.checklist{display:flex;flex-direction:column;gap:1px;max-height:230px;overflow-y:auto;margin:0 -6px;padding:0 6px}
+.checklist{display:flex;flex-direction:column;gap:1px;max-height:196px;overflow-y:auto;margin:0 -6px;padding:0 6px}
 .checklist label{display:flex;align-items:center;gap:9px;padding:5px 6px;border-radius:8px;cursor:pointer;font-size:14px}
 .checklist label:hover{background:var(--panel-2)}
 .checklist input{accent-color:var(--accent);width:16px;height:16px;margin:0}
 .checklist span{flex:1}
 .checklist em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.toolbar{display:flex;gap:10px;align-items:center}
-.abrir-filtros{display:none;height:42px;white-space:nowrap;flex:none}
-.badge{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px}
-.badge[hidden]{display:none}
-.resbar{margin-top:12px}
-.layout .grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
-body.noscroll{overflow:hidden}
-@media (max-width:900px){
-  .layout{grid-template-columns:1fr;margin-top:8px}
-  .abrir-filtros{display:inline-flex}
-  .side{position:fixed;inset:0;top:0;max-height:none;border-radius:0;z-index:40;transform:translateX(-100%);transition:transform .22s ease;visibility:hidden}
-  .side.open{transform:none;visibility:visible}
-  .side-x{display:inline-flex}
-  .side-f{display:block;padding:12px 16px;border-top:1px solid var(--line)}
-}
+.side-f{display:flex;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--line)}
+.resbar{margin-top:14px}
+@media (max-width:760px){ .side-f .btn{width:100%;justify-content:center} }
 
 /* Detail page */
 .back{display:inline-flex;align-items:center;gap:6px;margin:20px 0 10px;font-weight:700;color:var(--muted);text-decoration:none;font-size:14px}
@@ -224,7 +204,6 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
       <div><b>Novos Lançamentos</b><span>Campinas e região · ZFF Realty</span></div>
     </a>
     <div class="sp"></div>
-    <button class="iconbtn" id="themeBtn" title="Alternar tema" aria-label="Alternar tema">◐</button>
   </div>
 </header>
 
@@ -249,14 +228,6 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const slugify = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const norm = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-/* ---------- theme ---------- */
-const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
-const savedTheme = store.get("nl-theme"); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-$("#themeBtn").onclick = () => {
-  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  const nxt = cur === "dark" ? "light" : "dark";
-  document.documentElement.dataset.theme = nxt; store.set("nl-theme", nxt);
-};
 $("#upd").textContent = window.ATUALIZADO_EM || "";
 
 /* ---------- formatting ---------- */
@@ -482,16 +453,14 @@ function renderList(){
   <section class="hero">
     <h1>Lançamentos <em>Campinas</em> 2026</h1>
     <p>Todos os empreendimentos da região num só lugar. Filtre pelo perfil do cliente e abra o projeto para ver book, vídeos, tabela e fluxo de pagamento.</p>
-    <div class="stats">
-      <div class="stat"><b>${DATA.length}</b><span>empreendimentos</span></div>
-      <div class="stat"><b>${BAIRROS.length}</b><span>bairros</span></div>
-      <div class="stat"><b>${CONSTRUTORAS.filter(c => c !== "Não informada").length}</b><span>construtoras</span></div>
-      <div class="stat"><b>${money(Math.min(...precos))} – ${money(Math.max(...precos))}</b><span>faixa de preço médio</span></div>
-    </div>
   </section>
-  <div class="layout">
-    <aside class="side" id="side" aria-label="Filtros">
-      <div class="side-h"><b>Filtros</b><button class="linkbtn" id="limpar" type="button">Limpar</button><button class="iconbtn side-x" id="fechar" type="button" aria-label="Fechar filtros">✕</button></div>
+  <div class="toolbar">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar empreendimento pelo nome…" value="${esc(F.q)}" aria-label="Buscar"></label>
+    <button class="btn abrir-filtros" id="abrir" type="button" aria-expanded="${filtrosAbertos}" aria-controls="side">⚙ Filtros <span class="badge" id="nf"></span> <span class="chev">▾</span></button>
+  </div>
+    <aside class="side${filtrosAbertos ? " open" : ""}" id="side" aria-label="Filtros">
+      <div class="side-h"><b>Filtros</b><button class="linkbtn" id="limpar" type="button">Limpar</button><button class="iconbtn" id="fechar" type="button" aria-label="Recolher filtros">✕</button></div>
       <div class="side-body">
         ${fsec("Bairro", checklist("bairro", BAIRROS))}
         ${fsec("Valor", `<div class="range">
@@ -516,14 +485,8 @@ function renderList(){
         ${fsec("Tem suíte", chips("suite", TRI, false), semInfo("suite"))}
         ${fsec("Materiais", `<div class="chips"><button type="button" class="chip" id="mat" aria-pressed="${F.mat}">Só com book/vídeo/tabela</button></div>`)}
       </div>
-      <div class="side-f"><button class="btn primary" id="ver" type="button" style="width:100%;justify-content:center"></button></div>
+      <div class="side-f"><button class="btn primary" id="ver" type="button"></button></div>
     </aside>
-    <div class="main">
-      <div class="toolbar">
-        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" type="search" placeholder="Buscar empreendimento pelo nome…" value="${esc(F.q)}" aria-label="Buscar"></label>
-        <button class="btn abrir-filtros" id="abrir" type="button">⚙ Filtros <span class="badge" id="nf"></span></button>
-      </div>
       <div class="resbar">
         <div class="count" id="count"></div>
         <div class="fgroup">
@@ -536,9 +499,7 @@ function renderList(){
           </div>
         </div>
       </div>
-      <div id="results"></div>
-    </div>
-  </div>`;
+  <div id="results"></div>`;
 
   const upd = () => { syncUrl(); renderResults(); };
   $("#q").addEventListener("input", e => { F.q = e.target.value; upd(); });
@@ -567,13 +528,14 @@ function renderList(){
   document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {
     F.view = b.dataset.view; document.querySelectorAll("[data-view]").forEach(x => x.setAttribute("aria-pressed", x === b)); upd();
   }));
-  $("#limpar").onclick = () => { const keep = { view: F.view, ord: F.ord }; F = JSON.parse(JSON.stringify(DEF)); Object.assign(F, keep); syncUrl(); const open = $("#side").classList.contains("open"); renderList(); if (open) abrirFiltros(); };
-  $("#abrir").onclick = abrirFiltros;
-  $("#fechar").onclick = $("#ver").onclick = fecharFiltros;
+  $("#limpar").onclick = () => { const keep = { view: F.view, ord: F.ord }; F = JSON.parse(JSON.stringify(DEF)); Object.assign(F, keep); syncUrl(); renderList(); };
+  $("#abrir").onclick = () => setFiltros(!filtrosAbertos);
+  $("#fechar").onclick = () => setFiltros(false);
+  $("#ver").onclick = () => { setFiltros(false); $("#results").scrollIntoView({ behavior: "smooth", block: "start" }); };
   renderResults();
 }
-function abrirFiltros(){ $("#side").classList.add("open"); document.body.classList.add("noscroll"); }
-function fecharFiltros(){ $("#side").classList.remove("open"); document.body.classList.remove("noscroll"); }
+let filtrosAbertos = false;
+function setFiltros(on){ filtrosAbertos = on; $("#side").classList.toggle("open", on); $("#abrir").setAttribute("aria-expanded", on); }
 
 function matsHTML(l){
   return `<div class="mats">` + TABS.slice(1).map(t => `<span class="mat${hasMat(l, t.k) ? " on" : ""}" title="${esc(t.t)}${hasMat(l, t.k) ? " disponível" : " — ainda não enviado"}">${esc(t.k === "fluxo" ? "Fluxo" : t.t)}</span>`).join("") + `</div>`;
@@ -623,7 +585,7 @@ function rowHTML(l){
 function renderResults(){
   const list = DATA.filter(l => passa(l)).sort(ORD[F.ord] || ORD.preco);
   const n = ativos();
-  $("#count").innerHTML = `${list.length} empreendimento${list.length === 1 ? "" : "s"} <small>de ${DATA.length}${n ? " · " + n + " filtro" + (n > 1 ? "s" : "") + " ativo" + (n > 1 ? "s" : "") : ""}</small>`;
+  $("#count").innerHTML = `${list.length} empreendimento${list.length === 1 ? "" : "s"} <small>de ${DATA.length}${n ? " · " + n + " filtro" + (n > 1 ? "s" : "") + " ativo" + (n > 1 ? "s" : "") : ""}</small>${n ? ` <button class="linkbtn" type="button" onclick="document.getElementById('limpar').click()">Limpar</button>` : ""}`;
   $("#nf").textContent = n || ""; $("#nf").hidden = !n;
   $("#ver").textContent = `Ver ${list.length} resultado${list.length === 1 ? "" : "s"}`;
   // contagem ao lado de cada bairro/construtora (considerando os outros filtros)
