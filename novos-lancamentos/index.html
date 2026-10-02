@@ -110,31 +110,35 @@ td.num{white-space:nowrap}
 .abrir-filtros[aria-expanded="true"] .chev{transform:rotate(180deg)}
 .badge{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 7px}
 .badge[hidden]{display:none}
-.side{display:none;margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.side{display:none;margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px}
 .side.open{display:block;animation:abre .18s ease}
 @keyframes abre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.side-h{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
-.side-h b{font:600 16px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.04em}
-.side-h .linkbtn{margin-left:auto}
-.side-body{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px;padding:4px 16px 8px}
-.fsec{padding:13px 0;border-bottom:1px solid var(--line)}
-.fsec-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:9px}
-.nainfo{font-size:10.5px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--warn)}
-.sub{font-size:12px;color:var(--muted);font-weight:600;margin:10px 0 6px}
-.range{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center}
-.range span{font-size:12px;color:var(--muted)}
-.range select,.range input{width:100%;min-width:0;height:38px;font-size:13.5px}
-.range input,.cfind{border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:0 10px}
-.cfind{width:100%;height:36px;margin-bottom:8px;font-size:13.5px}
-.checklist{display:flex;flex-direction:column;gap:1px;max-height:196px;overflow-y:auto;margin:0 -6px;padding:0 6px}
-.checklist label{display:flex;align-items:center;gap:9px;padding:5px 6px;border-radius:8px;cursor:pointer;font-size:14px}
-.checklist label:hover{background:var(--panel-2)}
-.checklist input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 12px;align-items:end}
+.fgrid .w2{grid-column:span 2}
+.fc{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fc > .lb{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;gap:4px;align-items:center;white-space:nowrap}
+.na{color:var(--warn);cursor:help;font-size:11px}
+.fc select,.fc input,.ddbtn{height:34px;width:100%;min-width:0;font-size:13px;border:1px solid var(--line-strong);border-radius:9px;background:var(--bg);padding:0 8px}
+.fc select.on,.ddbtn.on,.fc input.on{border-color:var(--accent);color:var(--accent-text)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.mini{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.mini .chip{padding:0;height:34px;border-radius:9px;font-size:13px}
+.dd{position:relative}
+.ddbtn{display:flex;align-items:center;justify-content:space-between;gap:6px;cursor:pointer;text-align:left}
+.ddbtn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ddpop{display:none;position:absolute;z-index:30;top:calc(100% + 4px);left:0;width:max(100%,250px);background:var(--panel-2);border:1px solid var(--line-strong);border-radius:12px;box-shadow:var(--shadow);padding:8px}
+.dd.open .ddpop{display:block}
+.cfind{width:100%;height:32px;margin-bottom:6px;font-size:13px;border:1px solid var(--line-strong);border-radius:8px;background:var(--bg);padding:0 8px}
+.checklist{display:flex;flex-direction:column;gap:1px;max-height:240px;overflow-y:auto}
+.checklist label{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:7px;cursor:pointer;font-size:13.5px}
+.checklist label:hover{background:var(--panel)}
+.checklist input{accent-color:var(--accent);width:15px;height:15px;margin:0}
 .checklist span{flex:1}
 .checklist em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.side-f{display:flex;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--line)}
+.fact{display:none;gap:8px;justify-content:flex-end;align-items:center}
+.fact .btn{height:34px;padding:0 12px;font-size:13px}
 .resbar{margin-top:14px}
-@media (max-width:760px){ .side-f .btn{width:100%;justify-content:center} }
+@media (max-width:760px){ .fgrid{grid-template-columns:1fr 1fr} .fc:has(> .dd){grid-column:1/-1} .fact{grid-column:1/-1;display:flex} .fact .btn.primary{flex:1;justify-content:center} }
 
 /* Detail page */
 .back{display:inline-flex;align-items:center;gap:6px;margin:20px 0 10px;font-weight:700;color:var(--muted);text-decoration:none;font-size:14px}
@@ -436,14 +440,23 @@ function chips(name, opts, multi = true){
 function opt(v, t, cur){ return `<option value="${esc(v)}"${String(cur) === String(v) ? " selected" : ""}>${esc(t)}</option>`; }
 function semInfo(field){
   const n = DATA.filter(l => (field === "suite" ? temSuite(l) : l[field]) == null).length;
-  return n ? `<small class="nainfo" title="Sem essa informação no cadastro — some quando o filtro está ativo">${n} sem info</small>` : "";
+  return n ? `<span class="na" title="${n} de ${DATA.length} empreendimentos ainda sem essa informação — eles não aparecem quando o filtro está ativo">ⓘ</span>` : "";
 }
 function checklist(name, values){
   return `<div class="checklist" data-check="${name}">` + values.map(v =>
     `<label><input type="checkbox" value="${esc(v)}"${F[name].includes(v) ? " checked" : ""}><span>${esc(v)}</span><em data-cnt="${esc(v)}"></em></label>`
   ).join("") + `</div>`;
 }
-const fsec = (titulo, corpo, extra = "") => `<div class="fsec"><div class="fsec-h">${titulo}${extra}</div>${corpo}</div>`;
+function dd(name, values, busca){
+  return `<div class="dd" data-dd="${name}"><button type="button" class="ddbtn" aria-haspopup="true"><span></span>▾</button>
+    <div class="ddpop">${busca ? `<input class="cfind" type="search" placeholder="${busca}" aria-label="${busca}">` : ""}${checklist(name, values)}</div></div>`;
+}
+function mini(name){
+  return `<div class="mini" data-chips="${name}">` + [["1","1"],["2","2"],["3","3"],["4","4+"]].map(([v, t]) =>
+    `<button type="button" class="chip" data-v="${v}" aria-pressed="${F[name].includes(v)}">${t}</button>`).join("") + `</div>`;
+}
+const fc = (titulo, corpo, extra = "", cls = "") => `<div class="fc ${cls}"><span class="lb">${titulo}${extra}</span>${corpo}</div>`;
+const sel = (id, label, opts) => `<select id="${id}" aria-label="${label}">${opts.map(([v, t]) => opt(v, t, F[id])).join("")}</select>`;
 const TRI = [["","Todos"],["sim","Sim"],["nao","Não"]];
 
 function renderList(){
@@ -460,32 +473,21 @@ function renderList(){
     <button class="btn abrir-filtros" id="abrir" type="button" aria-expanded="${filtrosAbertos}" aria-controls="side">⚙ Filtros <span class="badge" id="nf"></span> <span class="chev">▾</span></button>
   </div>
     <aside class="side${filtrosAbertos ? " open" : ""}" id="side" aria-label="Filtros">
-      <div class="side-h"><b>Filtros</b><button class="linkbtn" id="limpar" type="button">Limpar</button><button class="iconbtn" id="fechar" type="button" aria-label="Recolher filtros">✕</button></div>
-      <div class="side-body">
-        ${fsec("Bairro", checklist("bairro", BAIRROS))}
-        ${fsec("Valor", `<div class="range">
-          <select id="pmin" aria-label="Valor de">${opt("", "De", F.pmin)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmin)).join("")}</select>
-          <span>até</span>
-          <select id="pmax" aria-label="Valor até">${opt("", "Até", F.pmax)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmax)).join("")}</select></div>`)}
-        ${fsec("Data de entrega", `<div class="range">
-          <select id="sde" aria-label="Entrega de">${opt("", "De", F.sde)}${SEMS.map(k => opt(k, semLabel(k), F.sde)).join("")}</select>
-          <span>até</span>
-          <select id="sate" aria-label="Entrega até">${opt("", "Até", F.sate)}${SEMS.map(k => opt(k, semLabel(k), F.sate)).join("")}</select></div>`)}
-        ${fsec("Quartos", chips("dorms", [["1","1"],["2","2"],["3","3"],["4","4+"]]))}
-        ${fsec("Vagas", chips("vagas", [["1","1"],["2","2"],["3","3"],["4","4+"]]) +
-          `<div class="sub">Tipo de vaga</div>` + chips("vc", [["","Todas"],["coberta","Coberta"],["descoberta","Descoberta"]], false), semInfo("vc"))}
-        ${fsec("Aceita FGTS na entrada", chips("fgts", TRI, false), semInfo("fgts"))}
-        ${fsec("Metragem (m²)", `<div class="range">
-          <input id="mmin" type="number" inputmode="numeric" min="0" placeholder="De" value="${esc(F.mmin)}" aria-label="Metragem de">
-          <span>até</span>
-          <input id="mmax" type="number" inputmode="numeric" min="0" placeholder="Até" value="${esc(F.mmax)}" aria-label="Metragem até"></div>`)}
-        ${fsec("Ótimo para investimento", chips("inv", TRI, false), semInfo("inv"))}
-        ${fsec("Construtora", `<input class="cfind" id="cfind" type="search" placeholder="Buscar construtora…" aria-label="Buscar construtora">` + checklist("c", CONSTRUTORAS))}
-        ${fsec("Casa ou apartamento", chips("tipo", [["","Todos"],["apto","Apartamento"],["casa","Casa"]], false))}
-        ${fsec("Tem suíte", chips("suite", TRI, false), semInfo("suite"))}
-        ${fsec("Materiais", `<div class="chips"><button type="button" class="chip" id="mat" aria-pressed="${F.mat}">Só com book/vídeo/tabela</button></div>`)}
+      <div class="fgrid">
+        ${fc("Bairro", dd("bairro", BAIRROS))}
+        ${fc("Valor", `<div class="pair"><select id="pmin" aria-label="Valor de">${opt("", "De", F.pmin)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmin)).join("")}</select><select id="pmax" aria-label="Valor até">${opt("", "Até", F.pmax)}${PRECO_OPTS.map(v => opt(v, money(v), F.pmax)).join("")}</select></div>`, "", "w2")}
+        ${fc("Entrega", `<div class="pair"><select id="sde" aria-label="Entrega de">${opt("", "De", F.sde)}${SEMS.map(k => opt(k, semLabel(k), F.sde)).join("")}</select><select id="sate" aria-label="Entrega até">${opt("", "Até", F.sate)}${SEMS.map(k => opt(k, semLabel(k), F.sate)).join("")}</select></div>`, "", "w2")}
+        ${fc("Quartos", mini("dorms"))}
+        ${fc("Vagas", mini("vagas"))}
+        ${fc("Vaga coberta", sel("vc", "Vaga coberta", [["","Todas"],["coberta","Coberta"],["descoberta","Descoberta"]]), semInfo("vc"))}
+        ${fc("Metragem m²", `<div class="pair"><input id="mmin" type="number" inputmode="numeric" min="0" placeholder="De" value="${esc(F.mmin)}" aria-label="Metragem de"><input id="mmax" type="number" inputmode="numeric" min="0" placeholder="Até" value="${esc(F.mmax)}" aria-label="Metragem até"></div>`)}
+        ${fc("FGTS entrada", sel("fgts", "Aceita FGTS na entrada", TRI), semInfo("fgts"))}
+        ${fc("Investimento", sel("inv", "Ótimo para investimento", TRI), semInfo("inv"))}
+        ${fc("Construtora", dd("c", CONSTRUTORAS, "Buscar construtora…"))}
+        ${fc("Tipo", sel("tipo", "Casa ou apartamento", [["","Todos"],["apto","Apartamento"],["casa","Casa"]]))}
+        ${fc("Suíte", sel("suite", "Tem suíte", TRI), semInfo("suite"))}
+        <div class="fact w2"><button class="btn" id="limpar" type="button">Limpar</button><button class="btn primary" id="ver" type="button"></button></div>
       </div>
-      <div class="side-f"><button class="btn primary" id="ver" type="button"></button></div>
     </aside>
       <div class="resbar">
         <div class="count" id="count"></div>
@@ -503,7 +505,7 @@ function renderList(){
 
   const upd = () => { syncUrl(); renderResults(); };
   $("#q").addEventListener("input", e => { F.q = e.target.value; upd(); });
-  for (const id of ["pmin","pmax","sde","sate","ord"]) $("#" + id).addEventListener("change", e => { F[id] = e.target.value; upd(); });
+  for (const id of ["pmin","pmax","sde","sate","ord","vc","fgts","inv","tipo","suite"]) $("#" + id).addEventListener("change", e => { F[id] = e.target.value; upd(); });
   for (const id of ["mmin","mmax"]) $("#" + id).addEventListener("input", e => { F[id] = e.target.value; upd(); });
   document.querySelectorAll("[data-chips]").forEach(g => g.addEventListener("click", e => {
     const b = e.target.closest(".chip"); if (!b) return;
@@ -520,21 +522,32 @@ function renderList(){
     const name = g.dataset.check;
     F[name] = [...g.querySelectorAll("input:checked")].map(i => i.value); upd();
   }));
-  $("#cfind").addEventListener("input", e => {
-    const t = norm(e.target.value);
-    document.querySelectorAll('[data-check="c"] label').forEach(lb => { lb.style.display = norm(lb.textContent).includes(t) ? "" : "none"; });
+  document.querySelectorAll(".dd").forEach(d => {
+    d.querySelector(".ddbtn").addEventListener("click", () => { const o = !d.classList.contains("open"); document.querySelectorAll(".dd.open").forEach(x => x.classList.remove("open")); d.classList.toggle("open", o); if (o) d.querySelector(".cfind")?.focus(); });
+    d.querySelector(".cfind")?.addEventListener("input", e => {
+      const t = norm(e.target.value);
+      d.querySelectorAll(".checklist label").forEach(lb => { lb.style.display = norm(lb.textContent).includes(t) ? "" : "none"; });
+    });
   });
-  $("#mat").addEventListener("click", e => { F.mat = !F.mat; e.currentTarget.setAttribute("aria-pressed", F.mat); upd(); });
   document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {
     F.view = b.dataset.view; document.querySelectorAll("[data-view]").forEach(x => x.setAttribute("aria-pressed", x === b)); upd();
   }));
   $("#limpar").onclick = () => { const keep = { view: F.view, ord: F.ord }; F = JSON.parse(JSON.stringify(DEF)); Object.assign(F, keep); syncUrl(); renderList(); };
   $("#abrir").onclick = () => setFiltros(!filtrosAbertos);
-  $("#fechar").onclick = () => setFiltros(false);
   $("#ver").onclick = () => { setFiltros(false); $("#results").scrollIntoView({ behavior: "smooth", block: "start" }); };
   renderResults();
 }
 let filtrosAbertos = false;
+document.addEventListener("click", e => { if (!e.target.closest(".dd")) document.querySelectorAll(".dd.open").forEach(x => x.classList.remove("open")); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".dd.open").forEach(x => x.classList.remove("open")); });
+function ddSync(){
+  document.querySelectorAll(".dd").forEach(d => {
+    const v = F[d.dataset.dd], b = d.querySelector(".ddbtn");
+    b.querySelector("span").textContent = !v.length ? "Todos" : v.length === 1 ? v[0] : v[0] + " +" + (v.length - 1);
+    b.classList.toggle("on", v.length > 0);
+  });
+  for (const id of ["pmin","pmax","sde","sate","vc","fgts","inv","tipo","suite","mmin","mmax"]){ const el = $("#" + id); if (el) el.classList.toggle("on", !!el.value); }
+}
 function setFiltros(on){ filtrosAbertos = on; $("#side").classList.toggle("open", on); $("#abrir").setAttribute("aria-expanded", on); }
 
 function matsHTML(l){
@@ -588,6 +601,7 @@ function renderResults(){
   $("#count").innerHTML = `${list.length} empreendimento${list.length === 1 ? "" : "s"} <small>de ${DATA.length}${n ? " · " + n + " filtro" + (n > 1 ? "s" : "") + " ativo" + (n > 1 ? "s" : "") : ""}</small>${n ? ` <button class="linkbtn" type="button" onclick="document.getElementById('limpar').click()">Limpar</button>` : ""}`;
   $("#nf").textContent = n || ""; $("#nf").hidden = !n;
   $("#ver").textContent = `Ver ${list.length} resultado${list.length === 1 ? "" : "s"}`;
+  ddSync();
   // contagem ao lado de cada bairro/construtora (considerando os outros filtros)
   for (const name of ["bairro","c"]){
     const cnt = {}; DATA.forEach(l => { if (passa(l, name)) { const k = name === "c" ? l.c : l.b; cnt[k] = (cnt[k] || 0) + 1; } });
