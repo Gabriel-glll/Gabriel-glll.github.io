@@ -404,6 +404,9 @@ def de_texto(texto):
     r["valorIptu"] = pega([r"IPTU\s*:?\s*" + preco], numero)
     if r.get("valorVenda") and r["valorVenda"] < 20000:
         r["valorVenda"] = None
+    m = re.search(r"((?:Rua|R\.|Avenida|Av\.|Alameda|Al\.|Travessa|Estrada|Rodovia|Pra[çc]a)\s[^,\-]{2,60}?)(?:,\s*(\d+[A-Za-z]?))?\s+-\s+([^,\-]{2,40}),\s*([^,\-]{2,40}?)\s+-\s+([A-Z]{2})\b", t)
+    if m:
+        r["endereco"], r["numero"], r["bairro"], r["cidade"], r["uf"] = m.group(1).strip(), m.group(2), m.group(3).strip(), m.group(4).strip(), m.group(5)
     tl = sem_acento(t).lower()
     r["caracteristicas"] = [c for c in CARAC_CONHECIDAS if sem_acento(c).lower() in tl]
     return {k: v for k, v in r.items() if v not in (None, "", [])}
@@ -467,13 +470,32 @@ def _tam(u):
     return int(m.group(1)) * int(m.group(2)) if m else 0
 
 
+RE_GRANDE = re.compile(r"resizedimgs\.(vivareal|zapimoveis)\.com")
+
+
+def _grande(u):
+    """Portais que redimensionam pela URL: pede a foto no tamanho máximo."""
+    if RE_GRANDE.search(u):
+        return u.split("?")[0] + "?action=fit-in&dimension=1920x1080"
+    return u
+
+
+def _chave(u):
+    """Mesma foto em vários tamanhos -> mesma chave (caminho sem pasta de tamanho)."""
+    p = urlparse(u).path
+    p = re.sub(r"/resize/", "/", p)
+    p = re.sub(r"/\d{2,4}x\d{2,4}/", "/", p)
+    return p
+
+
 def melhores_tamanhos(urls):
     """Mesma foto em vários tamanhos -> fica a maior; e só a galeria principal
     (pasta com mais fotos), quando dá para identificar."""
     grupos, ordem = {}, []
     for u in urls:
-        nome = urlparse(u).path.rsplit("/", 1)[-1]
-        if not nome:
+        u = _grande(u)
+        nome = _chave(u)
+        if not nome.strip("/"):
             continue
         if nome not in grupos:
             grupos[nome] = u; ordem.append(nome)
@@ -487,7 +509,7 @@ def melhores_tamanhos(urls):
     topo, n = max(cont.items(), key=lambda x: x[1]) if cont else (None, 0)
     if n >= 5:
         escolhidas = [u for u in escolhidas if pasta(u) == topo]
-    return [u.split("?")[0] if _tam(u) else u for u in escolhidas]
+    return [u.split("?")[0] if _tam(u) and not RE_GRANDE.search(u) else u for u in escolhidas]
 
 
 def ahash(im):
