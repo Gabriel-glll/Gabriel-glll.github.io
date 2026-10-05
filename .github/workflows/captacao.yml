@@ -1,7 +1,10 @@
 name: Captação ZFF
-run-name: Captação ${{ inputs.pedido }}
+run-name: Captação ${{ inputs.pedido || 'fila' }}
 
 on:
+  push:
+    branches: [main]
+    paths: ["captacao/fila/*.json"]
   workflow_dispatch:
     inputs:
       url:
@@ -34,19 +37,34 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install --quiet requests pillow
-      - name: Ler anúncio e montar página
+      - name: Ler anúncio e montar página (hub)
+        if: github.event_name == 'workflow_dispatch'
         env:
           URL: ${{ inputs.url }}
           PEDIDO: ${{ inputs.pedido }}
           CODIGO: ${{ inputs.codigo }}
           VALOR: ${{ inputs.valor }}
         run: python .github/captacao/gerar.py --url "$URL" --pedido "$PEDIDO" --codigo "$CODIGO" --valor "$VALOR" > /dev/null
+      - name: Ler anúncios da fila
+        if: github.event_name == 'push'
+        run: |
+          for f in captacao/fila/*.json; do
+            [ -e "$f" ] || continue
+            python - "$f" <<'PY'
+          import json, subprocess, sys, os
+          p = sys.argv[1]; d = json.load(open(p, encoding="utf-8"))
+          pedido = d.get("pedido") or os.path.basename(p)[:-5]
+          subprocess.run([sys.executable, ".github/captacao/gerar.py", "--url", d["url"], "--pedido", pedido,
+                          "--codigo", d.get("codigo") or "", "--valor", str(d.get("valor") or "")], stdout=subprocess.DEVNULL)
+          os.remove(p)
+          PY
+          done
       - name: Publicar
         run: |
           git config user.name "Captação ZFF"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add captacao
+          git add -A captacao
           git diff --cached --quiet && exit 0
-          git commit -q -m "Captação ${{ inputs.pedido }}"
+          git commit -q -m "Captação ${{ inputs.pedido || 'fila' }}"
           for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done
           exit 1
