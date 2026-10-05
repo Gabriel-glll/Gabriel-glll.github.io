@@ -33,13 +33,21 @@ concurrency:
 jobs:
   gerar:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install --quiet requests pillow
+      - run: pip install --quiet requests pillow opencv-python-headless numpy scipy onnxruntime
+      - name: Modelo de preenchimento (LaMa) em cache
+        uses: actions/cache@v4
+        with:
+          path: .github/captacao/lama.onnx
+          key: lama-fp32-v1
+      - name: Baixar modelo se faltar
+        run: |
+          [ -s .github/captacao/lama.onnx ] || curl -sSL -o .github/captacao/lama.onnx             https://huggingface.co/Carve/LaMa-ONNX/resolve/main/lama_fp32.onnx
       - name: Ler anúncio e montar página (hub)
         if: github.event_name == 'workflow_dispatch'
         env:

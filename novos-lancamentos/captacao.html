@@ -169,7 +169,7 @@ const espera = ms => new Promise(r => setTimeout(r, ms));
 const brl = v => v ? "R$ " + Number(v).toLocaleString("pt-BR") : "valor sob consulta";
 
 /* ---------- status ---------- */
-const PASSOS = ["Enviando pedido", "Lendo o anúncio e baixando as fotos", "Publicando a página"];
+const PASSOS = ["Enviando pedido", "Lendo o anúncio e tratando as fotos (tira marca d'água · 3 a 6 min)", "Publicando a página"];
 function status(etapa, tipo = "and", extra = ""){
   const s = $("status"); s.className = "status on " + tipo;
   s.innerHTML = (etapa >= 0 ? `<ul class="passos">${PASSOS.map((p, i) =>
@@ -244,7 +244,7 @@ $("form").onsubmit = async e => {
 
 async function aguardaResultado(pedido){
   const t0 = Date.now();
-  while (Date.now() - t0 < 6 * 60e3) {
+  while (Date.now() - t0 < 15 * 60e3) {
     await espera(6000);
     const r = await fetch(`${MOTOR}/status?pedido=${encodeURIComponent(pedido)}`, { cache: "no-store" }).catch(() => null);
     const j = r && r.ok ? await r.json().catch(() => null) : null;
@@ -265,7 +265,7 @@ async function aguardaPublicacao(url){
 
 function mostraPronto(res){
   const av = res.avisos && res.avisos.length ? `<ul class="avisos">${res.avisos.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : "";
-  status(3, "ok", `<p style="margin:12px 0 0"><b>Pronto!</b> ${esc(res.titulo)} · <b>${esc(res.codigo)}</b> · ${res.fotos} fotos</p>
+  status(3, "ok", `<p style="margin:12px 0 0"><b>Pronto!</b> ${esc(res.titulo)} · <b>${esc(res.codigo)}</b> · ${res.fotos} fotos${res.marca_removida ? " · marca d'água removida" : ""}</p>
     <div class="res-link"><input readonly value="${esc(res.url)}" onclick="this.select()">
     <button class="btn sm" type="button" data-copiar="${esc(res.url)}">Copiar link</button>
     <a class="btn sm" href="${esc(res.url)}" target="_blank" rel="noopener">Abrir</a>

@@ -23,6 +23,8 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 HDR = {"User-Agent": UA, "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"}
 MAX_FOTOS = 60
+MARCA_REMOVIDA = False
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
 class Falha(Exception):
@@ -519,12 +521,19 @@ def baixa_fotos(sess, urls, destino, referer):
                 salvas[dup] = (im, w * h)
             continue
         hashes.append(hs); salvas.append((im, w * h))
+    imgs = [im.convert("RGB") for im, _ in salvas]
+    global MARCA_REMOVIDA
+    MARCA_REMOVIDA = False
+    try:
+        import marca  # remoção de marca d'água (captações autorizadas pela imobiliária) + nitidez
+        imgs, MARCA_REMOVIDA = marca.limpar(imgs)
+    except Exception as e:
+        print("aviso: fotos sem tratamento:", e.__class__.__name__, e, file=sys.stderr)
     nomes = []
-    for i, (im, _) in enumerate(salvas, 1):
-        im = im.convert("RGB")
+    for i, im in enumerate(imgs, 1):
         im.thumbnail((1920, 1920), Image.LANCZOS)
         nome = f"{i:02d}.jpg"
-        im.save(os.path.join(destino, nome), "JPEG", quality=84, optimize=True, progressive=True)
+        im.save(os.path.join(destino, nome), "JPEG", quality=90, optimize=True, progressive=True)
         nomes.append("fotos/" + nome)
     return nomes
 
@@ -706,7 +715,7 @@ def gerar(url, codigo=None, valor=None, html_url=None):
     if not descricao: avisos.append("sem descrição")
     if not saida.get("endereco"): avisos.append("sem rua — mapa pelo bairro")
     return {"ok": True, "url": link, "slug": slug, "codigo": codigo, "titulo": saida["titulo"],
-            "fotos": len(fotos), "avisos": avisos}
+            "fotos": len(fotos), "avisos": avisos, "marca_removida": MARCA_REMOVIDA}
 
 
 def main():
