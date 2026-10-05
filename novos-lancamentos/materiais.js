@@ -116,7 +116,12 @@ window.MATERIAIS = {
         "url": "materiais/lake-louise-taquaral/tabela/tabela-lake-louise-taquaral-2026-09-b.pdf",
         "titulo": "Tabela Set/2026 — B"
       }
-    ]
+    ],
+    "fotos": 17,
+    "book": {
+      "url": "materiais/lake-louise-taquaral/book.pdf",
+      "titulo": "Book Lake Louise"
+    }
   },
   "lazur": {
     "tabela": [
