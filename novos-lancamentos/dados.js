@@ -31,12 +31,20 @@ window.LANCAMENTOS = [
   { n:"Be Mansões", c:"Vertaz", b:"Mansões Santo Antônio", t:"apto", m:[42], d:[1,2], v:"1", e:"2027-12", p:[[null,480]], vis:"nenhum" },
   { n:"Cores da Mata", c:"Direcional", b:"Mansões Santo Antônio", t:"apto", m:[46], d:[2,2], v:"1", e:"2028-06", p:[[null,450]], vis:"stand_dec" },
   { n:"Alta Vista", c:"Direcional", b:"Mansões Santo Antônio", t:"apto", m:[46], d:[2,2], v:"1", e:"2029-06", p:[[null,490]], vis:"stand_dec" },
-  { n:"Alto das Mansões", c:"PAGV", b:"Mansões Santo Antônio", t:"apto", m:[35], d:[1,1], tip:"Studio", v:"1 (direito de uso)", e:"2029-10", p:[[null,350]], vis:"stand_dec" },
+  { n:"Alto das Mansões", c:"PAGV", b:"Mansões Santo Antônio", t:"apto", m:[30.58,31.02,62.04], d:[1,2], v:"1 (direito de uso, com manobrista)", e:"2029-10", p:[[null,350]], vis:"stand_dec",
+    tip:"Studios de 30,58 a 31,02 m² · 4 studios com Sky Garden (31,02 m² + 30,71 m² de jardim) · 7 coberturas duplex de 2 quartos (62,04 m²) · Powered by Housi (gestão de locação)",
+    end:"Rua Prof. Luiz de Pádua, 185 — Santa Cândida",
+    ficha:[["Unidades","188 residenciais em torre única (térreo + 24 pavimentos)"],["Studios","177 unidades de 30,58 a 31,02 m²"],["Studios Sky Garden","4 unidades de 31,02 m² + jardim de 30,71 m²"],["Duplex","7 coberturas de 2 quartos com 62,04 m²"],["Garagem","Com manobrista: 138 vagas de carro (2 descobertas), 4 PCD e 33 de moto"],["Lojas","5 lojas no térreo com pé-direito duplo"],["Terreno","2.000 m²"],["Locação","Parceria Housi (Vitacon) para gestão de aluguel"]],
+    lazer:["Casa de Campo com churrasqueira, WC e piscina privativa","Piscina com deck molhado","Quadra de beach tennis e lounge","Gourmet com Steak House","Lounge gourmet","Academia","Sauna","Coworking / meeting room","Mini mercado","Laundry","Praça pet","Wine lounge","Hall instagramável","Bicicletário"] },
   { n:"WYN Residence", c:"Acro", b:"Mansões Santo Antônio", t:"apto", m:[77,95], d:[2,3], v:"2", e:"2029-01", p:[[77,865],[95,1200]], vis:"stand_dec", obs:"77 m² = 2 dorms · 95 m² = 3 dorms" },
   { n:"Freedom", c:"Ytcon", b:"Mansões Santo Antônio", t:"apto", m:[66], d:[2,3], v:"1", e:"2028-03", p:[[null,640]], vis:"stand_dec" },
 
   // ── NOVA CAMPINAS ─────────────────────────────────────
-  { n:"Vista Horizonte", c:"Tegra", b:"Nova Campinas", t:"apto", m:[60,76], d:[2,3], v:"1", e:"2027-12", p:[[60,630],[76,820]], vis:"torre" },
+  { n:"Vista Horizonte", c:"Tegra", b:"Nova Campinas", t:"apto", m:[60,76.5], d:[2,3], suite:true, v:"1 ou 2", vc:"coberta", e:"2027-09", p:[[60,630],[76.5,820]], vis:"torre",
+    tip:"60 m²: 2 dorms (1 suíte) ou sala ampliada com 1 suíte · 76,5 m²: 3 dorms (1 suíte) ou sala ampliada com 2 suítes · 12 unidades de 76,5 m² com 2 vagas",
+    end:"Rua Maestro Agide Azzoni, 295 — Chácara da Barra (entre o Cambuí e Nova Campinas)",
+    ficha:[["Unidades","272 em torre única de 34 andares (8 por andar)"],["60 m²","136 unidades · 1 suíte · 1 vaga"],["76,5 m²","124 unidades com 1 vaga + 12 com 2 vagas · 1 suíte"],["Garagem","Edifício-garagem (2 subsolos ao 1º pavimento), vagas vinculadas"],["Elevadores","5 (4 sociais e 1 de serviço)"],["Terreno","4.669,82 m²"],["Arquitetura","Primi & Appoloni"],["Decoração","Bohrer Arquitetos"],["Paisagismo","Marcelo Novaes"],["Certificação","AQUA-HQE (sustentabilidade)"]],
+    lazer:["Family Pool com piscinas adulto e infantil e solário","Play Aventura","Quadra esportiva","Churrasqueira","Salão de festas","Festas gourmet","Lounge Square","Praça Boas-Vindas","Fit Place (academia) e fitness externo","Brinquedoteca","Game Room","Bicicletário decorado","Espaço delivery","Infraestrutura para carro elétrico","Controle de acesso e CFTV"] },
   { n:"Frame", c:"Vanguard", b:"Nova Campinas", t:"apto", m:[50,85,120], d:[1,3], v:"1 e 2", e:"2028-06", p:[[50,630],[85,950],[120,1500]], vis:"stand_dec" },
   { n:"Wide", c:"EBM", b:"Nova Campinas", t:"apto", m:[104], d:[3,3], su:true, v:"2", e:"2027-02", p:[[null,1300]], vis:"torre" },
   { n:"Tay", c:"Vanguard", b:"Nova Campinas", t:"apto", m:[68,76,96,105], d:[2,3], v:"1 e 2", e:"2027-08", p:[[68,830],[76,935],[96,1250],[105,1400]], vis:"stand" },
@@ -80,7 +88,11 @@ window.LANCAMENTOS = [
   // ── GALLERIA ──────────────────────────────────────────
   { n:"Sensia Galleria", c:"Sensia", b:"Galleria", t:"apto", m:[61,74], d:[2,3], v:"1 e 2", e:"pronto", p:[[61,510],[74,650]], vis:"stand" },
   { n:"City Galleria", c:"MRV", b:"Galleria", t:"apto", m:[45,53], d:[2,2], v:"1", e:"2028-07", p:[[45,430],[53,530]], vis:"stand_dec" },
-  { n:"Alto Galleria 2", c:"Zuma", b:"Galleria", t:"apto", m:[45], d:[2,2], v:"1", e:"2029-12", p:[[null,320]], vis:"stand_dec" },
+  { n:"Alto do Galleria II", c:"Zuma", b:"Galleria", t:"apto", m:[41.39,42.66], d:[2,2], v:"1 (carro ou moto)", e:"2029-08", p:[[null,320]], vis:"stand_dec",
+    tip:"2 dormitórios com varanda · planta de ponta 41,39 m² (finais 1, 2, 5 e 6) e planta de meio 42,66 m² (finais 3 e 4) · previsão de ar-condicionado no quarto do casal",
+    end:"Rua Antônio Pavin, 227 — Jardim Conceição",
+    ficha:[["Unidades","108 apartamentos em torre única"],["Vagas","89 aptos com vaga de carro, 3 com carro + moto e 16 só com vaga de moto"],["Visitantes","5 vagas"],["Elevadores","2"],["Terreno","2.818,74 m²"],["Construtora","Zuma Engenharia"]],
+    lazer:["Piscina","Playground","Academia","Salão gourmet com churrasqueira","Espaço multiuso","Bicicletário (10 vagas)","Portaria"] },
 
   // ── SWISS PARK ────────────────────────────────────────
   { n:"Swiss Garden", c:"Sensia", b:"Swiss Park", t:"apto", m:[61,74], d:[2,3], v:"1 e 2", e:"2028-12", p:[[61,600],[74,760]], vis:"stand_dec" },

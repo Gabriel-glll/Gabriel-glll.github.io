@@ -281,8 +281,9 @@ function entregaLabel(l){
   const [y, m] = l.e.split("-").map(Number); return MESES[m - 1] + "/" + y;
 }
 function entregaVencida(l){ return l.e !== "pronto" && entregaKey(l) < NOW_KEY; }
-function m2Label(l){ const m = l.m; return m.length === 1 ? m[0] + " m²" : m.length === 2 ? m[0] + " e " + m[1] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; }
-function m2Range(l){ return Math.min(...l.m) === Math.max(...l.m) ? l.m[0] + " m²" : Math.min(...l.m) + "–" + Math.max(...l.m) + " m²"; }
+const nm = x => x.toLocaleString("pt-BR");
+function m2Label(l){ const m = l.m.map(nm); return m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; }
+function m2Range(l){ return Math.min(...l.m) === Math.max(...l.m) ? nm(l.m[0]) + " m²" : nm(Math.min(...l.m)) + "–" + nm(Math.max(...l.m)) + " m²"; }
 function dormLabel(l){
   if (!l.d) return l.tip || "—";
   const w = l.su ? "suíte" : "dorm";
@@ -390,7 +391,7 @@ const SEMS = [...new Set(DATA.map(semKey))].sort((a, b) => a - b);
 /* ---------- filter state (synced to URL query) ---------- */
 const DEF = {
   q: "", bairro: [], pmin: "", pmax: "", sde: "", sate: "", dorms: [], vagas: [], vc: "", fgts: "",
-  mmin: "", mmax: "", inv: "", c: [], tipo: "", suite: "", mat: false, ord: "preco",
+  mmin: "", mmax: "", inv: "", c: [], tipo: "", suite: "", mat: false, pend: "", ord: "preco",
 };
 let F = loadState();
 function loadState(){
@@ -418,7 +419,7 @@ function stateQuery(){
 }
 function syncUrl(){ history.replaceState(null, "", "#/" + stateQuery()); }
 const ativos = () => ["bairro","dorms","vagas","c"].filter(k => F[k].length).length
-  + ["vc","fgts","inv","tipo","suite"].filter(k => F[k]).length
+  + ["vc","fgts","inv","tipo","suite","pend"].filter(k => F[k]).length
   + (F.pmin || F.pmax ? 1 : 0) + (F.sde || F.sate ? 1 : 0) + (F.mmin || F.mmax ? 1 : 0) + (F.mat ? 1 : 0);
 
 const PRECO_OPTS = [250,300,350,400,450,500,550,600,700,800,900,1000,1200,1400,1600,1800,2000,2500,3000,4000,5000,7000];
@@ -452,6 +453,13 @@ function passa(l, skip){
   if (F.tipo && l.t !== F.tipo) return false;
   if (!triMatch(temSuite(l), F.suite)) return false;
   if (F.mat && !TABS.slice(1).some(t => hasMat(l, t.k))) return false;
+  if (F.pend){
+    const b = hasMat(l, "book"), t = hasMat(l, "tabela");
+    if (F.pend === "completo" && !(b && t)) return false;
+    if (F.pend === "pendente" && b && t) return false;
+    if (F.pend === "book" && b) return false;
+    if (F.pend === "tabela" && t) return false;
+  }
   return true;
 }
 const ORD = {
@@ -491,6 +499,10 @@ function mini(name){
 const fc = (titulo, corpo, extra = "", cls = "") => `<div class="fc ${cls}"><span class="lb">${titulo}${extra}</span>${corpo}</div>`;
 const sel = (id, label, opts) => `<select id="${id}" aria-label="${label}">${opts.map(([v, t]) => opt(v, t, F[id])).join("")}</select>`;
 const TRI = [["","Todos"],["sim","Sim"],["nao","Não"]];
+function pendInfo(){
+  const n = DATA.filter(l => !(hasMat(l, "book") && hasMat(l, "tabela"))).length;
+  return n ? `<span class="na" title="${n} de ${DATA.length} empreendimentos ainda sem book e/ou tabela (obrigatórios)">${n}</span>` : "";
+}
 
 function renderList(){
   document.title = "Novos Lançamentos · ZFF";
@@ -519,6 +531,7 @@ function renderList(){
         ${fc("Construtora", dd("c", CONSTRUTORAS, "Buscar construtora…"))}
         ${fc("Casa ou apartamento", sel("tipo", "Casa ou apartamento", [["","Todos"],["apto","Apartamento"],["casa","Casa"]]))}
         ${fc("Suíte", sel("suite", "Tem suíte", TRI), semInfo("suite"))}
+        ${fc("Pendências", sel("pend", "Pendências de material", [["","Todos"],["pendente","Falta book ou tabela"],["book","Falta book"],["tabela","Falta tabela"],["completo","Completo (book + tabela)"]]), pendInfo())}
         <div class="fact w2"><button class="btn" id="limpar" type="button">Limpar</button><button class="btn primary" id="ver" type="button"></button></div>
       </div>
     </aside>
@@ -534,7 +547,7 @@ function renderList(){
 
   const upd = () => { syncUrl(); renderResults(); };
   $("#q").addEventListener("input", e => { F.q = e.target.value; upd(); });
-  for (const id of ["pmin","pmax","sde","sate","ord","vc","fgts","inv","tipo","suite"]) $("#" + id).addEventListener("change", e => { F[id] = e.target.value; upd(); });
+  for (const id of ["pmin","pmax","sde","sate","ord","vc","fgts","inv","tipo","suite","pend"]) $("#" + id).addEventListener("change", e => { F[id] = e.target.value; upd(); });
   for (const id of ["mmin","mmax"]) $("#" + id).addEventListener("input", e => { F[id] = e.target.value; upd(); });
   document.querySelectorAll("[data-chips]").forEach(g => g.addEventListener("click", e => {
     const b = e.target.closest(".chip"); if (!b) return;
@@ -577,7 +590,7 @@ function ddSync(){
     b.querySelector("span").textContent = !v.length ? "Todos" : v.length === 1 ? v[0] : v[0] + " +" + (v.length - 1);
     b.classList.toggle("on", v.length > 0);
   });
-  for (const id of ["pmin","pmax","sde","sate","vc","fgts","inv","tipo","suite","mmin","mmax"]){ const el = $("#" + id); if (el) el.classList.toggle("on", !!el.value); }
+  for (const id of ["pmin","pmax","sde","sate","vc","fgts","inv","tipo","suite","pend","mmin","mmax"]){ const el = $("#" + id); if (el) el.classList.toggle("on", !!el.value); }
 }
 function setFiltros(on){ filtrosAbertos = on; $("#side").classList.toggle("open", on); $("#abrir").setAttribute("aria-expanded", on); }
 
@@ -646,6 +659,8 @@ function resumoHTML(l){
   const notas = [];
   if (venc) notas.push(`A previsão de entrega (${entregaLabel(l)}) já passou — confirme com a construtora se já foi entregue ou se o prazo mudou.`);
   if (l.obs) notas.push(l.obs);
+  const falta = ["book", "tabela"].filter(k => !hasMat(l, k));
+  if (falta.length) notas.push("Material obrigatório pendente: " + falta.map(k => k === "book" ? "book" : "tabela").join(" e ") + ". Coloque na pasta Materiais Lançamentos ZFF › Projetos › " + l.n + ".");
   return `<div class="dgrid">
     <div class="box">
       <h3>Ficha do empreendimento</h3>
@@ -667,7 +682,7 @@ function resumoHTML(l){
     </div>
     <div class="box">
       <h3>Preço médio</h3>
-      ${temTabela ? `<table class="ptable"><tbody>${l.p.map(([m, v]) => `<tr><td>${m ? m + " m²" : "Unidades"}</td><td style="${v == null ? "color:var(--muted)" : ""}">${money(v)}</td></tr>`).join("")}</tbody></table>`
+      ${temTabela ? `<table class="ptable"><tbody>${l.p.map(([m, v]) => `<tr><td>${m ? nm(m) + " m²" : "Unidades"}</td><td style="${v == null ? "color:var(--muted)" : ""}">${money(v)}</td></tr>`).join("")}</tbody></table>`
         : `<div style="font:600 30px/1 Oswald,sans-serif;color:var(--accent-text)">${esc(precoLabel(l))}</div>`}
       <p style="color:var(--muted);font-size:12.5px;margin:12px 0 0">Valores médios de referência. Consulte a aba <b>Tabela</b> para os preços oficiais por unidade.</p>
       <h3 style="margin-top:20px">Materiais</h3>

@@ -233,7 +233,7 @@ window.addEventListener("resize", () => { if (lb.classList.contains("on")){ limi
 (() => {
 const l = window.EMP;
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const m2 = m => m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²";
+const m2 = mm => { const m = mm.map(x => x.toLocaleString("pt-BR")); return m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; };
 function dorms(){
   if (!l.d) return l.tip || "—";
   const [a, b] = l.d, w = l.su ? "suíte" : "dormitório";

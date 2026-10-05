@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Alto Galleria 2 · ZFF Realty</title>
+<title>Alto do Galleria II · ZFF Realty</title>
 <link rel="icon" href="logo.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,7 +67,7 @@ footer{color:var(--muted);font-size:12.5px;padding:10px 0 34px}
 <header class="top"><div class="wrap"><img src="logo.jpeg" alt="ZFF Realty"><b>ZFF Realty</b></div></header>
 <main class="wrap" id="app"></main>
 <footer><div class="wrap">Imagens e perspectivas meramente ilustrativas. Informações sujeitas a alteração pela incorporadora. Material apresentado por ZFF Realty.</div></footer>
-<script>window.EMP = {"n": "Alto Galleria 2", "b": "Galleria", "tipo": "Apartamento", "c": "Zuma", "m": [45], "d": [2, 2], "su": false, "v": "1", "vc": null, "entrega": "Dezembro de 2029", "tip": null, "end": null, "ficha": null, "lazer": null, "fotos": [], "videos": []};</script>
+<script>window.EMP = {"n": "Alto do Galleria II", "b": "Galleria", "tipo": "Apartamento", "c": "Zuma", "m": [41.39, 42.66], "d": [2, 2], "su": false, "v": "1 (carro ou moto)", "vc": null, "entrega": "Agosto de 2029", "tip": "2 dormitórios com varanda · planta de ponta 41,39 m² (finais 1, 2, 5 e 6) e planta de meio 42,66 m² (finais 3 e 4) · previsão de ar-condicionado no quarto do casal", "end": "Rua Antônio Pavin, 227 — Jardim Conceição", "ficha": [["Unidades", "108 apartamentos em torre única"], ["Vagas", "89 aptos com vaga de carro, 3 com carro + moto e 16 só com vaga de moto"], ["Visitantes", "5 vagas"], ["Elevadores", "2"], ["Terreno", "2.818,74 m²"], ["Construtora", "Zuma Engenharia"]], "lazer": ["Piscina", "Playground", "Academia", "Salão gourmet com churrasqueira", "Espaço multiuso", "Bicicletário (10 vagas)", "Portaria"], "fotos": ["fotos/01.jpg", "fotos/02.jpg", "fotos/03.jpg", "fotos/04.jpg", "fotos/05.jpg", "fotos/06.jpg", "fotos/07.jpg", "fotos/08.jpg", "fotos/09.jpg", "fotos/10.jpg", "fotos/11.jpg", "fotos/12.jpg", "fotos/13.jpg", "fotos/14.jpg"], "videos": []};</script>
 <script>/* Galeria: carrossel com setas + zoom em tela cheia.
    Usado pelo site interno e pelas páginas de cliente (que recebem este arquivo embutido).
    Marcação esperada do carrossel:
@@ -233,7 +233,7 @@ window.addEventListener("resize", () => { if (lb.classList.contains("on")){ limi
 (() => {
 const l = window.EMP;
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const m2 = m => m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²";
+const m2 = mm => { const m = mm.map(x => x.toLocaleString("pt-BR")); return m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; };
 function dorms(){
   if (!l.d) return l.tip || "—";
   const [a, b] = l.d, w = l.su ? "suíte" : "dormitório";

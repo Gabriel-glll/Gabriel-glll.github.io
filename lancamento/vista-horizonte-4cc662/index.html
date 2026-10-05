@@ -67,7 +67,7 @@ footer{color:var(--muted);font-size:12.5px;padding:10px 0 34px}
 <header class="top"><div class="wrap"><img src="logo.jpeg" alt="ZFF Realty"><b>ZFF Realty</b></div></header>
 <main class="wrap" id="app"></main>
 <footer><div class="wrap">Imagens e perspectivas meramente ilustrativas. Informações sujeitas a alteração pela incorporadora. Material apresentado por ZFF Realty.</div></footer>
-<script>window.EMP = {"n": "Vista Horizonte", "b": "Nova Campinas", "tipo": "Apartamento", "c": "Tegra", "m": [60, 76], "d": [2, 3], "su": false, "v": "1", "vc": null, "entrega": "Dezembro de 2027", "tip": null, "end": null, "ficha": null, "lazer": null, "fotos": [], "videos": []};</script>
+<script>window.EMP = {"n": "Vista Horizonte", "b": "Nova Campinas", "tipo": "Apartamento", "c": "Tegra", "m": [60, 76.5], "d": [2, 3], "su": false, "v": "1 ou 2", "vc": "coberta", "entrega": "Setembro de 2027", "tip": "60 m²: 2 dorms (1 suíte) ou sala ampliada com 1 suíte · 76,5 m²: 3 dorms (1 suíte) ou sala ampliada com 2 suítes · 12 unidades de 76,5 m² com 2 vagas", "end": "Rua Maestro Agide Azzoni, 295 — Chácara da Barra (entre o Cambuí e Nova Campinas)", "ficha": [["Unidades", "272 em torre única de 34 andares (8 por andar)"], ["60 m²", "136 unidades · 1 suíte · 1 vaga"], ["76,5 m²", "124 unidades com 1 vaga + 12 com 2 vagas · 1 suíte"], ["Garagem", "Edifício-garagem (2 subsolos ao 1º pavimento), vagas vinculadas"], ["Elevadores", "5 (4 sociais e 1 de serviço)"], ["Terreno", "4.669,82 m²"], ["Arquitetura", "Primi & Appoloni"], ["Decoração", "Bohrer Arquitetos"], ["Paisagismo", "Marcelo Novaes"], ["Certificação", "AQUA-HQE (sustentabilidade)"]], "lazer": ["Family Pool com piscinas adulto e infantil e solário", "Play Aventura", "Quadra esportiva", "Churrasqueira", "Salão de festas", "Festas gourmet", "Lounge Square", "Praça Boas-Vindas", "Fit Place (academia) e fitness externo", "Brinquedoteca", "Game Room", "Bicicletário decorado", "Espaço delivery", "Infraestrutura para carro elétrico", "Controle de acesso e CFTV"], "fotos": ["fotos/01.jpg", "fotos/02.jpg", "fotos/03.jpg", "fotos/04.jpg", "fotos/05.jpg", "fotos/06.jpg", "fotos/07.jpg", "fotos/08.jpg", "fotos/09.jpg", "fotos/10.jpg", "fotos/11.jpg", "fotos/12.jpg", "fotos/13.jpg", "fotos/14.jpg", "fotos/15.jpg", "fotos/16.jpg", "fotos/17.jpg", "fotos/18.jpg", "fotos/19.jpg"], "videos": []};</script>
 <script>/* Galeria: carrossel com setas + zoom em tela cheia.
    Usado pelo site interno e pelas páginas de cliente (que recebem este arquivo embutido).
    Marcação esperada do carrossel:
@@ -233,7 +233,7 @@ window.addEventListener("resize", () => { if (lb.classList.contains("on")){ limi
 (() => {
 const l = window.EMP;
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const m2 = m => m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²";
+const m2 = mm => { const m = mm.map(x => x.toLocaleString("pt-BR")); return m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; };
 function dorms(){
   if (!l.d) return l.tip || "—";
   const [a, b] = l.d, w = l.su ? "suíte" : "dormitório";

@@ -67,7 +67,7 @@ footer{color:var(--muted);font-size:12.5px;padding:10px 0 34px}
 <header class="top"><div class="wrap"><img src="logo.jpeg" alt="ZFF Realty"><b>ZFF Realty</b></div></header>
 <main class="wrap" id="app"></main>
 <footer><div class="wrap">Imagens e perspectivas meramente ilustrativas. Informações sujeitas a alteração pela incorporadora. Material apresentado por ZFF Realty.</div></footer>
-<script>window.EMP = {"n": "Alto das Mansões", "b": "Mansões Santo Antônio", "tipo": "Apartamento", "c": "PAGV", "m": [35], "d": [1, 1], "su": false, "v": "1 (direito de uso)", "vc": null, "entrega": "Outubro de 2029", "tip": "Studio", "end": null, "ficha": null, "lazer": null, "fotos": [], "videos": []};</script>
+<script>window.EMP = {"n": "Alto das Mansões", "b": "Mansões Santo Antônio", "tipo": "Apartamento", "c": "PAGV", "m": [30.58, 31.02, 62.04], "d": [1, 2], "su": false, "v": "1 (direito de uso, com manobrista)", "vc": null, "entrega": "Outubro de 2029", "tip": "Studios de 30,58 a 31,02 m² · 4 studios com Sky Garden (31,02 m² + 30,71 m² de jardim) · 7 coberturas duplex de 2 quartos (62,04 m²) · Powered by Housi (gestão de locação)", "end": "Rua Prof. Luiz de Pádua, 185 — Santa Cândida", "ficha": [["Unidades", "188 residenciais em torre única (térreo + 24 pavimentos)"], ["Studios", "177 unidades de 30,58 a 31,02 m²"], ["Studios Sky Garden", "4 unidades de 31,02 m² + jardim de 30,71 m²"], ["Duplex", "7 coberturas de 2 quartos com 62,04 m²"], ["Garagem", "Com manobrista: 138 vagas de carro (2 descobertas), 4 PCD e 33 de moto"], ["Lojas", "5 lojas no térreo com pé-direito duplo"], ["Terreno", "2.000 m²"], ["Locação", "Parceria Housi (Vitacon) para gestão de aluguel"]], "lazer": ["Casa de Campo com churrasqueira, WC e piscina privativa", "Piscina com deck molhado", "Quadra de beach tennis e lounge", "Gourmet com Steak House", "Lounge gourmet", "Academia", "Sauna", "Coworking / meeting room", "Mini mercado", "Laundry", "Praça pet", "Wine lounge", "Hall instagramável", "Bicicletário"], "fotos": ["fotos/01.jpg", "fotos/02.jpg", "fotos/03.jpg", "fotos/04.jpg", "fotos/05.jpg", "fotos/06.jpg", "fotos/07.jpg", "fotos/08.jpg", "fotos/09.jpg", "fotos/10.jpg", "fotos/11.jpg", "fotos/12.jpg", "fotos/13.jpg", "fotos/14.jpg", "fotos/15.jpg", "fotos/16.jpg", "fotos/17.jpg", "fotos/18.jpg", "fotos/19.jpg", "fotos/20.jpg"], "videos": []};</script>
 <script>/* Galeria: carrossel com setas + zoom em tela cheia.
    Usado pelo site interno e pelas páginas de cliente (que recebem este arquivo embutido).
    Marcação esperada do carrossel:
@@ -233,7 +233,7 @@ window.addEventListener("resize", () => { if (lb.classList.contains("on")){ limi
 (() => {
 const l = window.EMP;
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const m2 = m => m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²";
+const m2 = mm => { const m = mm.map(x => x.toLocaleString("pt-BR")); return m.length === 1 ? m[0] + " m²" : m.slice(0, -1).join(", ") + " e " + m[m.length - 1] + " m²"; };
 function dorms(){
   if (!l.d) return l.tip || "—";
   const [a, b] = l.d, w = l.su ? "suíte" : "dormitório";

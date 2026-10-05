@@ -42,7 +42,7 @@ window.LINKS_CLIENTE = {
  "hipica-boulevard": "https://gabriel-glll.github.io/lancamento/hipica-boulevard-05a889/",
  "sensia-galleria": "https://gabriel-glll.github.io/lancamento/sensia-galleria-aff828/",
  "city-galleria": "https://gabriel-glll.github.io/lancamento/city-galleria-bc724b/",
- "alto-galleria-2": "https://gabriel-glll.github.io/lancamento/alto-galleria-2-bc1521/",
+ "alto-do-galleria-ii": "https://gabriel-glll.github.io/lancamento/alto-do-galleria-ii-194e04/",
  "swiss-garden": "https://gabriel-glll.github.io/lancamento/swiss-garden-524709/",
  "best-view": "https://gabriel-glll.github.io/lancamento/best-view-6967ed/",
  "reserva-perfetto": "https://gabriel-glll.github.io/lancamento/reserva-perfetto-30fb64/",
