@@ -1,8 +1,9 @@
 """Comparador de lançamentos (site Novos Lançamentos): lê a página de um empreendimento de outro site
 e devolve os campos do comparativo + até 10 fotos. Reaproveita a leitura do gerar.py (Captação).
 
-Saída: captacao/pedidos/<pedido>.json  (lido pelo Worker em /status)
-       captacao/comparar/<pedido>/NN.jpg (fotos publicadas no GitHub Pages)
+Saída: resultado e fotos vão para a Cloudflare pelo Worker (/publicar, como a Captação):
+       fotos em <motor>/imovel/comparar-<pedido>/fotos/NN.jpg; o resultado é lido em /status.
+       Cópia do resultado em captacao/pedidos/<pedido>.json (registrada em _mudou.txt).
 Só preenche o que a página traz; o resto fica vazio para o corretor completar.
 
 Uso: python comparar.py --url <link> [--pedido ID] [--html-url <página enviada pelo navegador>]
@@ -14,8 +15,7 @@ import gerar
 from gerar import Falha, sem_acento, numero, inteiro, limpo, json_seguro, salvar_json
 from PIL import Image, ImageOps
 
-PASTA = os.path.join(gerar.PASTA, "comparar")
-SITE = gerar.SITE + "comparar/"
+MOTOR = gerar.SITE_MOTOR
 MAX_FOTOS = 10
 MESES = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto",
          "Setembro", "Outubro", "Novembro", "Dezembro"]
@@ -129,8 +129,7 @@ def do_texto(t):
 
 # ---------------------------------------------------------------- fotos
 def salva_fotos(sess, urls, pedido, referer):
-    destino = os.path.join(PASTA, pedido)
-    os.makedirs(destino, exist_ok=True)
+    pasta = "comparar-" + pedido.lower()
     salvas, hashes = [], []
     for u in urls:
         if len(salvas) >= MAX_FOTOS:
@@ -152,8 +151,10 @@ def salva_fotos(sess, urls, pedido, referer):
         im = im.convert("RGB")
         im.thumbnail((1600, 1600), Image.LANCZOS)
         nome = f"{len(salvas) + 1:02d}.jpg"
-        im.save(os.path.join(destino, nome), "JPEG", quality=85, optimize=True, progressive=True)
-        salvas.append(SITE + pedido + "/" + nome)
+        buf = io.BytesIO()
+        im.save(buf, "JPEG", quality=85, optimize=True, progressive=True)
+        if gerar.cf_enviar(pedido, f"{pasta}/fotos/{nome}", buf.getvalue()):
+            salvas.append(f"{MOTOR}/imovel/{pasta}/fotos/{nome}")
     return salvas
 
 
@@ -216,11 +217,10 @@ def main():
         res = {"ok": False, "modo": "comparar", "erro": f"Erro inesperado ao ler a página: {e.__class__.__name__}: {e}"}
     res["quando"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     salvar_json(os.path.join(gerar.PASTA, "pedidos", pedido + ".json"), res)
+    gerar.cf_enviar(pedido, "_resultado", json.dumps(res, ensure_ascii=False).encode("utf-8"))
     # o passo Publicar do workflow publica só o que estiver listado em captacao/_mudou.txt
     with open(os.path.join(gerar.PASTA, "_mudou.txt"), "a", encoding="utf-8") as m:
         m.write(f"captacao/pedidos/{pedido}.json\n")
-        if os.path.isdir(os.path.join(PASTA, pedido)):
-            m.write(f"captacao/comparar/{pedido}\n")
     print(json.dumps(res, ensure_ascii=False, indent=1))
 
 
