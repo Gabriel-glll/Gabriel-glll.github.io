@@ -179,7 +179,7 @@ $("form").onsubmit = async e => {
 
 async function aguardaResultado(pedido){
   const t0 = Date.now();
-  while (Date.now() - t0 < 12 * 60e3) {
+  while (Date.now() - t0 < 6 * 60e3) {
     await espera(6000);
     const r = await fetch(`${MOTOR}/status?pedido=${encodeURIComponent(pedido)}`, { cache: "no-store" }).catch(() => null);
     const j = r && r.ok ? await r.json().catch(() => null) : null;
