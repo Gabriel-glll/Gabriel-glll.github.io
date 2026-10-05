@@ -178,7 +178,6 @@ function status(etapa, tipo = "and", extra = ""){
 
 /* ---------- favorito "Captar ZFF" (roda na página do anúncio) ---------- */
 function captarZFF(){
-  var H = "https://gabriel-glll.github.io/novos-lancamentos/captacao.html#captar";
   var d = document.documentElement.cloneNode(true), I = {};
   d.querySelectorAll("script").forEach(function(s){
     var t = (s.type || "").toLowerCase();
@@ -188,24 +187,26 @@ function captarZFF(){
   });
   d.querySelectorAll("style,svg,noscript,iframe,link").forEach(function(e){ e.remove(); });
   var html = "<!doctype html>" + d.outerHTML + "\n<!-" + "-IMGS " + JSON.stringify(Object.keys(I)) + " --" + ">";
-  var w = window.open(H, "_blank");
-  if (!w) { alert("Libere pop-ups para este site e clique de novo em Captar ZFF."); return; }
-  var f = function(e){ if (e.source === w && e.data === "zff-pronto") { w.postMessage({ tipo: "zff-pagina", url: location.href, html: html }, "https://gabriel-glll.github.io"); removeEventListener("message", f); } };
-  addEventListener("message", f);
+  var f = document.createElement("form");
+  f.method = "POST"; f.action = "https://captacao-zff.zff-captacao.workers.dev/receber"; f.target = "_blank";
+  f.acceptCharset = "UTF-8"; f.style.display = "none";
+  [["url", location.href], ["html", html]].forEach(function(c){
+    var t = document.createElement("textarea"); t.name = c[0]; t.value = c[1]; f.appendChild(t);
+  });
+  document.body.appendChild(f); f.submit(); setTimeout(function(){ f.remove(); }, 1000);
 }
 $("bm").href = "javascript:" + encodeURIComponent("(" + captarZFF.toString() + ")()");
 $("bm").onclick = e => { e.preventDefault(); toast("Arraste o botão para a barra de favoritos"); };
 
-let PAGINA = null;  // html entregue pelo favorito
-if (location.hash === "#captar" && window.opener) {
-  addEventListener("message", e => {
-    if (e.source !== window.opener || !e.data || e.data.tipo !== "zff-pagina") return;
-    PAGINA = e.data.html;
-    $("url").value = e.data.url;
+let REF = null;  // página entregue pelo favorito (guardada 1 h no gerador)
+{
+  const m = location.hash.match(/^#receber=(r[0-9a-f]{32})&url=(.+)$/);
+  if (m) {
+    REF = m[1];
+    $("url").value = decodeURIComponent(m[2]);
     history.replaceState(null, "", location.pathname);
-    $("form").requestSubmit();
-  });
-  window.opener.postMessage("zff-pronto", "*");
+    setTimeout(() => $("form").requestSubmit(), 50);
+  }
 }
 
 /* ---------- gerar ---------- */
@@ -218,7 +219,7 @@ $("form").onsubmit = async e => {
   try {
     status(0);
     const r = await fetch(MOTOR + "/gerar", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor, html: PAGINA || undefined }) }).catch(() => null);
+      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor, ref: REF || undefined }) }).catch(() => null);
     const j = r ? await r.json().catch(() => ({})) : {};
     if (!r || !r.ok || !j.pedido) throw new Error(j.erro || "Sem conexão com o gerador. Tente de novo em instantes.");
     const pedido = j.pedido;
@@ -232,12 +233,12 @@ $("form").onsubmit = async e => {
     status(2);
     await aguardaPublicacao(res.url);
     mostraPronto(res);
-    PAGINA = null;
+    REF = null;
     $("url").value = ""; $("codigo").value = ""; $("valor").value = "";
     carregaLista();
   } catch (err) {
     status(-1, "err", `<b>Não deu certo.</b><br>${esc(err.message)}`);
-    PAGINA = null;
+    REF = null;
   } finally { $("gerar").disabled = false; }
 };
 

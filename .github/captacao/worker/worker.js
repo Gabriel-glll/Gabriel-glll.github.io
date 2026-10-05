@@ -2,6 +2,7 @@
 // e aciona o workflow captacao.yml. Nenhum aparelho precisa de configuração.
 const REPO = "Gabriel-glll/Gabriel-glll.github.io", WF = "captacao.yml";
 const API = "https://api.github.com/repos/" + REPO;
+const HUB = "https://gabriel-glll.github.io/novos-lancamentos/captacao.html";
 const ORIGENS = [/^https:\/\/gabriel-glll\.github\.io$/, /^http:\/\/localhost(:\d+)?$/, /^http:\/\/127\.0\.0\.1(:\d+)?$/];
 
 export default {
@@ -24,6 +25,18 @@ export default {
                : new Response("não encontrado", { status: 404 });
     }
 
+    // Favorito "Captar ZFF": a página do anúncio chega por formulário (de qualquer site),
+    // fica guardada 1 h e o hub é aberto já com o pedido. Gerar continua só pelo hub.
+    if (req.method === "POST" && u.pathname === "/receber") {
+      const f = await req.formData().catch(() => null);
+      const html = f && f.get("html"), url = f && String(f.get("url") || "");
+      if (typeof html !== "string" || html.length < 500 || html.length > 8e6 || !/^https?:\/\//.test(url))
+        return new Response("Não recebi a página do anúncio.", { status: 400 });
+      const ref = "r" + crypto.randomUUID().replace(/-/g, "");
+      await env.PAGINAS.put(ref, html, { expirationTtl: 3600 });
+      return Response.redirect(HUB + "#receber=" + ref + "&url=" + encodeURIComponent(url), 303);
+    }
+
     if (!ok) return json({ erro: "Origem não autorizada." }, 403);
 
     if (req.method === "POST" && u.pathname === "/gerar") {
@@ -36,7 +49,10 @@ export default {
       const valor = String(b.valor || "").replace(/[^\d.,]/g, "").slice(0, 15);
       const pedido = new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "-" + crypto.randomUUID().slice(0, 8);
       const inputs = { url, pedido, codigo, valor };
-      if (typeof b.html === "string" && b.html.length > 500) {
+      if (typeof b.ref === "string" && /^r[0-9a-f]{32}$/.test(b.ref)) {
+        if (!(await env.PAGINAS.get(b.ref))) return json({ erro: "A página enviada expirou. Clique de novo em 'Captar ZFF' no anúncio." }, 410);
+        inputs.html_url = u.origin + "/pagina?pedido=" + b.ref;
+      } else if (typeof b.html === "string" && b.html.length > 500) {
         if (b.html.length > 8e6) return json({ erro: "Página grande demais." }, 400);
         await env.PAGINAS.put(pedido, b.html, { expirationTtl: 3600 });
         inputs.html_url = u.origin + "/pagina?pedido=" + pedido;
