@@ -245,24 +245,23 @@ def _mascara(forma, pos, alfa, dil=7):
     return cv2.dilate(m, np.ones((dil, dil), np.uint8))
 
 
-def limpar(imagens, aviso=None):
+def _uma_marca(arrs, aviso=None, passo=1):
     """Recebe lista de PIL.Image; devolve (lista limpa, removeu_marca).
     1) acha a marca cruzando as fotos (mesma marca em todas); 2) mede o formato exato dela;
     3) preenche só esses pixels com IA (LaMa); 4) nitidez leve. Sem marca: só nitidez."""
-    arrs = [np.asarray(im.convert("RGB")) for im in imagens]
     grupos = {}
     for i, a in enumerate(arrs):
         grupos.setdefault(a.shape[:2], []).append(i)
     ordem = sorted(grupos.values(), key=len, reverse=True)
     if len(ordem[0]) < MIN_FOTOS:
-        return [nitidez(im.convert("RGB")) for im in imagens], False
+        return arrs, False
     base = [arrs[i] for i in ordem[0]]
     mk = detectar(base)
     if not mk:
-        return [nitidez(im.convert("RGB")) for im in imagens], False
+        return arrs, False
     mk["pos"] = posicoes(base, mk)
     if sum(p is not None for p in mk["pos"]) < MIN_FOTOS:
-        return [nitidez(im.convert("RGB")) for im in imagens], False
+        return arrs, False
     alfa, cor = estimar_mistura(base, mk)
     usar_ia = os.path.exists(MODELO)
     saida = list(arrs)
@@ -270,7 +269,7 @@ def limpar(imagens, aviso=None):
     def tratar(i, pos, al, cr):
         feitos[0] += 1
         if aviso:
-            aviso(feitos[0], len(arrs))
+            aviso(feitos[0], len(arrs), passo)
         if usar_ia:
             saida[i] = preencher(arrs[i], _mascara(arrs[i].shape, pos, al))
         else:
@@ -285,7 +284,20 @@ def limpar(imagens, aviso=None):
             cr = cv2.resize(np.ascontiguousarray(cor), (al.shape[1], al.shape[0]))
             for i in idx:
                 tratar(i, pos, al, cr)
-    return [nitidez(Image.fromarray(a)) for a in saida], True
+    return saida, True
+
+
+def limpar(imagens, aviso=None):
+    """Recebe lista de PIL.Image; devolve (lista limpa, removeu_marca).
+    Repete até 3 vezes: portais costumam pôr mais de uma marca (logo no centro + texto no canto)."""
+    arrs = [np.asarray(im.convert("RGB")) for im in imagens]
+    removeu = False
+    for passo in (1, 2, 3):
+        arrs, ok = _uma_marca(arrs, aviso, passo)
+        if not ok:
+            break
+        removeu = True
+    return [nitidez(Image.fromarray(a)) for a in arrs], removeu
 
 
 def nitidez(im):

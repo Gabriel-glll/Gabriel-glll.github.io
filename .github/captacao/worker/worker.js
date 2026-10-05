@@ -89,6 +89,7 @@ export default {
         const L = JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => i.slug !== e.slug && i.codigo !== e.codigo);
         L.unshift(e);
         await env.PAGINAS.put("lista", JSON.stringify(L));
+        await env.PAGINAS.put("idx:" + e.slug, "1");   // marca de "existe" (exclusões simultâneas não se atropelam)
       } else if (caminho === "_progresso") {      // o que está acontecendo agora (mostrado no hub)
         await env.PAGINAS.put("prog:" + pedido, txt().slice(0, 200), { expirationTtl: 3600 });
       } else if (caminho === "_resultado") {       // resultado do pedido (o hub lê na hora)
@@ -122,8 +123,10 @@ export default {
     }
 
     // ---------- Daqui para baixo: só o hub ----------
-    if (req.method === "GET" && u.pathname === "/api/lista")
-      return json(JSON.parse(await env.PAGINAS.get("lista") || "[]"));
+    if (req.method === "GET" && u.pathname === "/api/lista") {
+      const vivos = new Set((await env.PAGINAS.list({ prefix: "idx:" })).keys.map(k => k.name.slice(4)));
+      return json(JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => vivos.has(i.slug)));
+    }
 
     if (!ok) return json({ erro: "Origem não autorizada." }, 403);
 
@@ -134,6 +137,7 @@ export default {
       const slug = String(b.slug || "").replace(/[^a-z0-9-]/g, "");
       if (!slug || slug.length > 200) return json({ erro: "Captação inválida." }, 400);
       await apagarPasta(slug);
+      await env.PAGINAS.delete("idx:" + slug);
       const L = JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => i.slug !== slug);
       await env.PAGINAS.put("lista", JSON.stringify(L));
       const pedido = "x" + new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "-" + crypto.randomUUID().slice(0, 8);

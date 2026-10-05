@@ -561,7 +561,7 @@ def baixa_fotos(sess, urls, destino, referer):
     MARCA_REMOVIDA = False
     try:
         import marca  # remoção de marca d'água (captações autorizadas pela imobiliária) + nitidez
-        imgs, MARCA_REMOVIDA = marca.limpar(imgs, lambda i, n: progresso(f"Tirando marca d'água: foto {i} de {n}"))
+        imgs, MARCA_REMOVIDA = marca.limpar(imgs, lambda i, n, k=1: progresso(f"Tirando marca d'água{' (' + str(k) + 'ª marca)' if k > 1 else ''}: foto {i} de {n}"))
     except Exception as e:
         print("aviso: fotos sem tratamento:", e.__class__.__name__, e, file=sys.stderr)
     nomes = []
