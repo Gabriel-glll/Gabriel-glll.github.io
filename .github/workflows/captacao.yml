@@ -19,6 +19,9 @@ on:
       valor:
         description: Valor de venda (opcional)
         required: false
+      html_url:
+        description: Página entregue pelo navegador (sites com anti-robô)
+        required: false
 
 permissions:
   contents: write
@@ -44,7 +47,8 @@ jobs:
           PEDIDO: ${{ inputs.pedido }}
           CODIGO: ${{ inputs.codigo }}
           VALOR: ${{ inputs.valor }}
-        run: python .github/captacao/gerar.py --url "$URL" --pedido "$PEDIDO" --codigo "$CODIGO" --valor "$VALOR" > /dev/null
+          HTML_URL: ${{ inputs.html_url }}
+        run: python .github/captacao/gerar.py --url "$URL" --pedido "$PEDIDO" --codigo "$CODIGO" --valor "$VALOR" --html-url "$HTML_URL" > /dev/null
       - name: Ler anúncios da fila
         if: github.event_name == 'push'
         run: |

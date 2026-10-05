@@ -12,10 +12,19 @@ export default {
                    "Access-Control-Allow-Methods": "GET,POST,OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Vary": "Origin" };
     const json = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { ...cors, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" } });
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    if (!ok) return json({ erro: "Origem não autorizada." }, 403);
     const gh = (p, init = {}) => fetch(API + p, { ...init, headers: { Authorization: "Bearer " + env.GH_TOKEN,
       Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "captacao-zff", ...(init.headers || {}) } });
     const u = new URL(req.url);
+
+    // Página entregue pelo navegador do corretor (sites com anti-robô): lida pelo GitHub Actions.
+    if (req.method === "GET" && u.pathname === "/pagina") {
+      const k = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
+      const h = k && await env.PAGINAS.get(k);
+      return h ? new Response(h, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } })
+               : new Response("não encontrado", { status: 404 });
+    }
+
+    if (!ok) return json({ erro: "Origem não autorizada." }, 403);
 
     if (req.method === "POST" && u.pathname === "/gerar") {
       let b; try { b = await req.json(); } catch { return json({ erro: "Pedido inválido." }, 400); }
@@ -26,8 +35,14 @@ export default {
       const codigo = String(b.codigo || "").replace(/[^\w-]/g, "").slice(0, 12);
       const valor = String(b.valor || "").replace(/[^\d.,]/g, "").slice(0, 15);
       const pedido = new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "-" + crypto.randomUUID().slice(0, 8);
+      const inputs = { url, pedido, codigo, valor };
+      if (typeof b.html === "string" && b.html.length > 500) {
+        if (b.html.length > 8e6) return json({ erro: "Página grande demais." }, 400);
+        await env.PAGINAS.put(pedido, b.html, { expirationTtl: 3600 });
+        inputs.html_url = u.origin + "/pagina?pedido=" + pedido;
+      }
       const r = await gh(`/actions/workflows/${WF}/dispatches`, { method: "POST",
-        body: JSON.stringify({ ref: "main", inputs: { url, pedido, codigo, valor } }) });
+        body: JSON.stringify({ ref: "main", inputs }) });
       if (!r.ok) return json({ erro: "O GitHub recusou o pedido (erro " + r.status + "). Avise o Claude." }, 502);
       return json({ pedido });
     }

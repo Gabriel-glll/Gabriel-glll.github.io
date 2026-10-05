@@ -77,6 +77,15 @@ h2 small{font:500 13px Manrope,sans-serif;color:var(--muted);text-transform:none
 .item .cod{display:inline-block;background:var(--panel-2);border:1px solid var(--line-strong);border-radius:6px;padding:0 6px;font-weight:700;color:var(--accent-text);margin-right:6px}
 .item .ac{display:flex;gap:6px;flex:none}
 .vazio{color:var(--muted);font-size:14px;padding:14px;border:1px dashed var(--line-strong);border-radius:14px;text-align:center}
+.fav{margin-top:28px}
+.fav .box{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.fav .tx{flex:1 1 360px;font-size:14px;color:var(--muted)}
+.fav .tx b{color:var(--text)}
+.fav ol{margin:8px 0 0;padding-left:20px}
+.fav li{margin:3px 0}
+.bm{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#1b1d22;font-weight:800;border-radius:11px;padding:12px 18px;text-decoration:none;cursor:grab;white-space:nowrap}
+.bm:active{cursor:grabbing}
+.fav.alerta .box{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--panel-2);border:1px solid var(--line-strong);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
 .toast.on{opacity:1}
 footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
@@ -123,6 +132,23 @@ footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
     <div class="status" id="status"></div>
   </form>
 
+  <section class="fav" id="fav">
+    <h2 style="margin-top:0">Sites que bloqueiam leitura <small>imovelweb, ZAP, VivaReal, OLX…</small></h2>
+    <div class="box">
+      <a class="bm" id="bm" href="#" title="Arraste para a barra de favoritos">📌 Captar ZFF</a>
+      <div class="tx">
+        <b>Instale uma vez neste navegador:</b> arraste o botão laranja para a barra de favoritos
+        (no Opera: menu ☰ › Favoritos › mostrar barra; ou clique com o direito no botão › “Adicionar aos favoritos”).
+        <ol>
+          <li>Abra o anúncio normalmente no navegador.</li>
+          <li>Clique no favorito <b>Captar ZFF</b>.</li>
+          <li>O hub abre numa nova aba e gera a captação sozinho.</li>
+        </ol>
+        <p style="margin:8px 0 0">No celular é mais prático mandar o link para o Claude.</p>
+      </div>
+    </div>
+  </section>
+
   <h2>Captações geradas <small id="qtd"></small></h2>
   <div class="lista" id="lista"><div class="vazio">Carregando…</div></div>
 
@@ -150,6 +176,38 @@ function status(etapa, tipo = "and", extra = ""){
     `<li class="${i < etapa || tipo === "ok" ? "feito" : i === etapa && tipo === "and" ? "at" : ""}"><i>${i < etapa || tipo === "ok" ? "✓" : ""}</i>${p}</li>`).join("")}</ul>` : "") + extra;
 }
 
+/* ---------- favorito "Captar ZFF" (roda na página do anúncio) ---------- */
+function captarZFF(){
+  var H = "https://gabriel-glll.github.io/novos-lancamentos/captacao.html#captar";
+  var d = document.documentElement.cloneNode(true), I = {};
+  d.querySelectorAll("script").forEach(function(s){
+    var t = (s.type || "").toLowerCase();
+    if (t.indexOf("json") >= 0 || s.id === "__NEXT_DATA__") return;
+    (s.textContent.match(/https?:\\?\/\\?\/[^"'\s<>]+?\.(?:jpe?g|webp|png)/gi) || []).forEach(function(u){ I[u.replace(/\\\//g, "/")] = 1; });
+    s.remove();
+  });
+  d.querySelectorAll("style,svg,noscript,iframe,link").forEach(function(e){ e.remove(); });
+  var html = "<!doctype html>" + d.outerHTML + "\n<!-" + "-IMGS " + JSON.stringify(Object.keys(I)) + " --" + ">";
+  var w = window.open(H, "_blank");
+  if (!w) { alert("Libere pop-ups para este site e clique de novo em Captar ZFF."); return; }
+  var f = function(e){ if (e.source === w && e.data === "zff-pronto") { w.postMessage({ tipo: "zff-pagina", url: location.href, html: html }, "https://gabriel-glll.github.io"); removeEventListener("message", f); } };
+  addEventListener("message", f);
+}
+$("bm").href = "javascript:" + encodeURIComponent("(" + captarZFF.toString() + ")()");
+$("bm").onclick = e => { e.preventDefault(); toast("Arraste o botão para a barra de favoritos"); };
+
+let PAGINA = null;  // html entregue pelo favorito
+if (location.hash === "#captar" && window.opener) {
+  addEventListener("message", e => {
+    if (e.source !== window.opener || !e.data || e.data.tipo !== "zff-pagina") return;
+    PAGINA = e.data.html;
+    $("url").value = e.data.url;
+    history.replaceState(null, "", location.pathname);
+    $("form").requestSubmit();
+  });
+  window.opener.postMessage("zff-pronto", "*");
+}
+
 /* ---------- gerar ---------- */
 $("form").onsubmit = async e => {
   e.preventDefault();
@@ -160,20 +218,26 @@ $("form").onsubmit = async e => {
   try {
     status(0);
     const r = await fetch(MOTOR + "/gerar", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor }) }).catch(() => null);
+      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor, html: PAGINA || undefined }) }).catch(() => null);
     const j = r ? await r.json().catch(() => ({})) : {};
     if (!r || !r.ok || !j.pedido) throw new Error(j.erro || "Sem conexão com o gerador. Tente de novo em instantes.");
     const pedido = j.pedido;
     status(1);
     const res = await aguardaResultado(pedido);
-    if (!res.ok) throw new Error(res.erro || "Não foi possível gerar a página.");
+    if (!res.ok) {
+      const m = res.erro || "Não foi possível gerar a página.";
+      if (m.startsWith("BLOQUEADO|")) { $("fav").classList.add("alerta"); setTimeout(() => $("fav").scrollIntoView({ behavior: "smooth", block: "center" }), 300); }
+      throw new Error(m.replace(/^BLOQUEADO\|/, ""));
+    }
     status(2);
     await aguardaPublicacao(res.url);
     mostraPronto(res);
+    PAGINA = null;
     $("url").value = ""; $("codigo").value = ""; $("valor").value = "";
     carregaLista();
   } catch (err) {
     status(-1, "err", `<b>Não deu certo.</b><br>${esc(err.message)}`);
+    PAGINA = null;
   } finally { $("gerar").disabled = false; }
 };
 

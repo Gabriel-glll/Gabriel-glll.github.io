@@ -109,16 +109,26 @@ def paragrafos_de_html(h):
 
 
 # ---------------------------------------------------------------- leitura
-def baixar_pagina(url):
+def baixar_pagina(url, html_url=None):
     s = requests.Session()
     s.headers.update(HDR)
+    if html_url:
+        # página já aberta pelo corretor no navegador dele (sites com anti-robô)
+        try:
+            r = s.get(html_url, timeout=40)
+        except requests.RequestException as e:
+            raise Falha(f"Não consegui receber a página enviada pelo navegador ({e.__class__.__name__}).")
+        if r.status_code != 200:
+            raise Falha("A página enviada pelo navegador expirou. Clique de novo em 'Captar ZFF' no anúncio.")
+        r.encoding = "utf-8"
+        return url, r.text, s
     try:
         r = s.get(url, timeout=40, allow_redirects=True)
     except requests.RequestException as e:
         raise Falha(f"Não consegui abrir o link ({e.__class__.__name__}).")
     if r.status_code in (403, 429, 503) or "cf-chl" in r.text[:5000] or "captcha" in r.text[:20000].lower():
-        raise Falha(f"O site {urlparse(url).netloc} bloqueou a leitura automática (erro {r.status_code}). "
-                    "Tente o link do mesmo imóvel em outro site, ou mande o link para o Claude.")
+        raise Falha(f"BLOQUEADO|O site {urlparse(url).netloc} bloqueia leitura automática. "
+                    "Abra o anúncio no navegador e clique no favorito 'Captar ZFF'.")
     if r.status_code >= 400:
         raise Falha(f"O link respondeu com erro {r.status_code}.")
     r.encoding = r.apparent_encoding if not r.encoding or r.encoding.lower() == "iso-8859-1" else r.encoding
@@ -166,6 +176,88 @@ class Coletor(HTMLParser):
             self._script["txt"].append(d)
         elif not self._pula and d.strip():
             self.texto.append(d.strip())
+
+
+class TextoDe(HTMLParser):
+    """Texto do primeiro (ou de todos os) elemento(s) cujo id/class casa com o padrão."""
+    VAZIOS = {"br", "img", "input", "meta", "link", "hr", "source", "wbr", "area", "col", "embed", "param", "track"}
+
+    def __init__(self, padrao, todos=False):
+        super().__init__(convert_charrefs=True)
+        self.p, self.todos = re.compile(padrao, re.I), todos
+        self.prof, self.atual, self.res = 0, None, []
+        self._pula = 0
+
+    def handle_starttag(self, tag, a):
+        if tag in self.VAZIOS:
+            if self.prof and tag == "br":
+                self.atual.append("\n")
+            return
+        if self.prof:
+            self.prof += 1
+            if tag in ("p", "div", "li", "h1", "h2", "h3", "h4", "span", "tr"):
+                self.atual.append("\n")
+            if tag in ("script", "style", "button"):
+                self._pula += 1
+            return
+        a = dict(a)
+        chave = " ".join(filter(None, [a.get("id"), a.get("class")]))
+        if chave and self.p.search(chave) and (self.todos or not self.res):
+            self.prof, self.atual = 1, []
+
+    def handle_endtag(self, tag):
+        if tag in self.VAZIOS or not self.prof:
+            return
+        if tag in ("script", "style", "button") and self._pula:
+            self._pula -= 1
+        self.prof -= 1
+        if not self.prof:
+            self.res.append("".join(self.atual))
+
+    def handle_data(self, d):
+        if self.prof and not self._pula:
+            self.atual.append(d)
+
+
+def texto_de(h, padrao, todos=False):
+    t = TextoDe(padrao, todos)
+    try:
+        t.feed(h)
+    except Exception:
+        pass
+    linhas = lambda x: [re.sub(r"\s+", " ", l).strip() for l in x.split("\n") if l.strip()]
+    return [linhas(x) for x in t.res] if todos else (linhas(t.res[0]) if t.res else [])
+
+
+RE_LOGRADOURO = re.compile(r"(?i)(rua|r\.|av\.?|avenida|alameda|al\.|travessa|estrada|rodovia|pra[çc]a)\b")
+
+
+def de_portais(h, url):
+    """Imovelweb (Navent) e marcações comuns de descrição/endereço/características."""
+    r = {}
+    desc = texto_de(h, r"(^|\s)longDescription(\s|$)") or texto_de(h, r"description-content|descricao-imovel|property-description")
+    if desc and len(" ".join(desc)) > 80:
+        r["descricao"] = desc
+    end = texto_de(h, r"section-location-property")
+    if end:
+        partes = [x.strip() for x in end[0].split(",") if x.strip()]
+        if partes and RE_LOGRADOURO.match(partes[0]):
+            m = re.match(r"(.+?)\s+(\d+[A-Za-z]?)$", partes[0])
+            if m:
+                r["endereco"], r["numero"] = m.group(1), m.group(2)
+            else:
+                r["endereco"] = partes[0]
+        if len(partes) >= 3:
+            r["bairro"], r["cidade"] = partes[-2], partes[-1]
+    carac = texto_de(h, r"reactGeneralFeatures")
+    if carac:
+        itens = [re.sub(r"\s*\(.*?\)", "", c).strip() for c in carac]
+        itens = [c for c in itens if c and not re.match(r"(?i)saiba mais|[áa]reas (comuns|privativas)$|outros$|ver (mais|menos)", c)]
+        if itens:
+            r["caracteristicas"] = list(dict.fromkeys(itens))
+    if re.search(r"imovelweb|zapimoveis|vivareal|olx\.com", urlparse(url).netloc):
+        r["iptuPeriodo"] = "mes"
+    return r
 
 
 def json_seguro(t):
@@ -245,9 +337,13 @@ def de_jsonld(blocos):
             ad = d.get("address")
             if isinstance(ad, dict):
                 r.setdefault("endereco", ad.get("streetAddress"))
-                r.setdefault("bairro", ad.get("addressNeighborhood") or None)
-                r.setdefault("cidade", ad.get("addressLocality"))
-                r.setdefault("uf", ad.get("addressRegion"))
+                loc = (ad.get("addressLocality") or "").split(",")[0].strip() or None
+                reg = (ad.get("addressRegion") or "").strip()
+                eh_uf = len(reg) == 2 or sem_acento(reg).lower() in ("sao paulo", "minas gerais", "rio de janeiro", "parana")
+                r.setdefault("bairro", ad.get("addressNeighborhood") or (None if eh_uf else reg or None))
+                r.setdefault("cidade", loc)
+                if eh_uf and len(reg) == 2:
+                    r.setdefault("uf", reg)
             geo = d.get("geo")
             if isinstance(geo, dict) and geo.get("latitude"):
                 r.setdefault("lat", numero(geo["latitude"]) * (-1 if str(geo["latitude"]).startswith("-") else 1))
@@ -297,7 +393,7 @@ def de_texto(texto):
     area = r"(\d{1,3}(?:\.\d{3})*(?:,\d+)?|\d+(?:\.\d+)?)\s*(?:m²|m2|metros)"
     r["areaTerreno"] = pega([r"(?:[áa]rea (?:do )?terreno|terreno)\s*:?\s*" + area, area + r"\s*(?:de )?terreno"], numero)
     r["areaConstruida"] = pega([r"[áa]rea constru[íi]da\s*:?\s*" + area, area + r"\s*(?:de [áa]rea )?constru[íi]d"], numero)
-    r["areaUtil"] = pega([r"[áa]rea (?:[úu]til|privativa)\s*:?\s*" + area, area + r"\s*(?:de [áa]rea )?(?:[úu]te?is|privativ)"], numero)
+    r["areaUtil"] = pega([r"[áa]rea (?:[úu]til|privativa)\s*:?\s*" + area, area + r"\s*(?:de [áa]rea )?(?:[úu]til|[úu]teis|privativ)"], numero)
     if not any((r["areaTerreno"], r["areaConstruida"], r["areaUtil"])):
         r["areaUtil"] = pega([area], numero)
     preco = r"R\$\s*([\d.]+(?:,\d{2})?)"
@@ -349,7 +445,35 @@ def candidatas(base, col, extra):
             u = u.replace("\\/", "/").replace("\\u002F", "/")
             if u not in vistos and url_foto_ok(u):
                 vistos.add(u); saida.append(u)
-    return saida
+    return melhores_tamanhos(saida)
+
+
+def _tam(u):
+    m = re.search(r"/(\d{2,4})x(\d{2,4})/", u)
+    return int(m.group(1)) * int(m.group(2)) if m else 0
+
+
+def melhores_tamanhos(urls):
+    """Mesma foto em vários tamanhos -> fica a maior; e só a galeria principal
+    (pasta com mais fotos), quando dá para identificar."""
+    grupos, ordem = {}, []
+    for u in urls:
+        nome = urlparse(u).path.rsplit("/", 1)[-1]
+        if not nome:
+            continue
+        if nome not in grupos:
+            grupos[nome] = u; ordem.append(nome)
+        elif _tam(u) > _tam(grupos[nome]) or (_tam(u) == _tam(grupos[nome]) and "/resize/" in grupos[nome]):
+            grupos[nome] = u
+    escolhidas = [grupos[n] for n in ordem]
+    pasta = lambda u: re.sub(r"/resize/|/\d{2,4}x\d{2,4}$", "/", urlparse(u).path.rsplit("/", 1)[0])
+    cont = {}
+    for u in escolhidas:
+        cont[pasta(u)] = cont.get(pasta(u), 0) + 1
+    topo, n = max(cont.items(), key=lambda x: x[1]) if cont else (None, 0)
+    if n >= 5:
+        escolhidas = [u for u in escolhidas if pasta(u) == topo]
+    return [u.split("?")[0] if _tam(u) else u for u in escolhidas]
 
 
 def ahash(im):
@@ -394,10 +518,13 @@ def baixa_fotos(sess, urls, destino, referer):
 
 
 # ---------------------------------------------------------------- montagem
-def extrair(url):
-    final, texto_html, sess = baixar_pagina(url)
+def extrair(url, html_url=None):
+    final, texto_html, sess = baixar_pagina(url, html_url)
     col = Coletor()
     col.feed(texto_html)
+    m = re.search(r"<!--IMGS (\[.*?\]) -->", texto_html, re.S)
+    if m:
+        col.imgs += [u for u in (json_seguro(m.group(1)) or []) if isinstance(u, str)]
     dados = {}
     blocos_json, ld = [], []
     for s in col.scripts:
@@ -414,7 +541,7 @@ def extrair(url):
         dados = de_flip(j)
         if dados:
             break
-    camadas = [dados, de_jsonld(ld)]
+    camadas = [dados, de_portais(texto_html, final), de_jsonld(ld)]
     meta = {k: v[0] for k, v in col.meta.items()}
     camadas.append({
         "titulo_fonte": meta.get("og:title") or (col.texto[0] if col.texto else None),
@@ -426,6 +553,10 @@ def extrair(url):
         for k, v in c.items():
             if junto.get(k) in (None, "", []) and v not in (None, "", []):
                 junto[k] = v
+    if junto.get("endereco") and not junto.get("numero"):
+        m = re.match(r"(.+?),?\s+(\d+[A-Za-z]?)$", junto["endereco"])
+        if m:
+            junto["endereco"], junto["numero"] = m.group(1), m.group(2)
     if junto.get("quartos") and junto.get("suites") and junto["suites"] > junto["quartos"]:
         junto["suites"] = None
     estruturadas = [urljoin(final, u) for u in (dados.get("fotos") or []) if isinstance(u, str)]
@@ -494,10 +625,10 @@ def renderizar(slug):
     return url
 
 
-def gerar(url, codigo=None, valor=None):
+def gerar(url, codigo=None, valor=None, html_url=None):
     if not re.match(r"https?://", url or ""):
         url = "https://" + (url or "").strip()
-    d = extrair(url)
+    d = extrair(url, html_url)
     d["tipo"] = d.get("tipo") or tipo_de(d.get("titulo_fonte"), url, " ".join(d.get("descricao") or [])[:300])
     d["tipo"] = corrige_texto(d["tipo"]).strip().capitalize() if d["tipo"] else "Imóvel"
     for k in ("endereco", "bairro", "cidade", "condominio", "titulo_fonte"):
@@ -567,14 +698,14 @@ def gerar(url, codigo=None, valor=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url"); ap.add_argument("--pedido"); ap.add_argument("--codigo"); ap.add_argument("--valor")
-    ap.add_argument("--refazer", action="store_true")
+    ap.add_argument("--html-url"); ap.add_argument("--refazer", action="store_true")
     a = ap.parse_args()
     if a.refazer:
         for i in carregar_lista():
             print(renderizar(i["slug"]))
         return
     try:
-        res = gerar(a.url, a.codigo, a.valor)
+        res = gerar(a.url, a.codigo, a.valor, a.html_url or None)
     except Falha as e:
         res = {"ok": False, "erro": str(e)}
     except Exception as e:  # erro inesperado: registra para o hub mostrar
