@@ -77,10 +77,6 @@ h2 small{font:500 13px Manrope,sans-serif;color:var(--muted);text-transform:none
 .item .cod{display:inline-block;background:var(--panel-2);border:1px solid var(--line-strong);border-radius:6px;padding:0 6px;font-weight:700;color:var(--accent-text);margin-right:6px}
 .item .ac{display:flex;gap:6px;flex:none}
 .vazio{color:var(--muted);font-size:14px;padding:14px;border:1px dashed var(--line-strong);border-radius:14px;text-align:center}
-.cfg{margin-top:36px;font-size:13px;color:var(--muted)}
-.cfg ol{padding-left:20px;margin:8px 0 12px}
-.cfg li{margin:4px 0}
-.cfg code{background:var(--panel-2);padding:1px 6px;border-radius:5px;color:var(--text)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--panel-2);border:1px solid var(--line-strong);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
 .toast.on{opacity:1}
 footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
@@ -130,29 +126,13 @@ footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
   <h2>Captações geradas <small id="qtd"></small></h2>
   <div class="lista" id="lista"><div class="vazio">Carregando…</div></div>
 
-  <section class="cfg" id="cfg">
-    <details id="cfgd">
-      <summary>Configurar acesso (uma vez por aparelho)</summary>
-      <p>O hub usa o GitHub para ler o anúncio e publicar a página. Em cada aparelho que for usar, cole uma chave de acesso:</p>
-      <ol>
-        <li>Abra <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained token</a> (logado na conta <b>Gabriel-glll</b>).</li>
-        <li>Nome: <code>captacao-zff</code> · Expiração: a maior disponível.</li>
-        <li>Repository access: <b>Only select repositories</b> → <code>Gabriel-glll.github.io</code>.</li>
-        <li>Permissions → Repository: <b>Actions: Read and write</b> e <b>Contents: Read-only</b>.</li>
-        <li>Gere, copie e cole abaixo.</li>
-      </ol>
-      <div class="linha"><input id="token" type="password" placeholder="github_pat_..." autocomplete="off"><button class="btn" id="salvar" type="button">Salvar chave</button></div>
-      <p id="tokst" style="margin-top:8px"></p>
-    </details>
-  </section>
 </main>
 <footer class="wrap">Uso interno dos corretores ZFF Realty. As páginas geradas ficam em gabriel-glll.github.io/captacao/ e mostram apenas os contatos da ZFF.</footer>
 <div class="toast" id="toast"></div>
 
 <script>
 (() => {
-const REPO = "Gabriel-glll/Gabriel-glll.github.io", WF = "captacao.yml";
-const API = "https://api.github.com/repos/" + REPO;
+const MOTOR = "https://captacao-zff.zff-captacao.workers.dev";
 const BASE = new URL("../captacao/", location.href).href;
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -161,19 +141,6 @@ const ls = { get: k => { try { return localStorage.getItem(k) || ""; } catch { r
              set: (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch {} } };
 const espera = ms => new Promise(r => setTimeout(r, ms));
 const brl = v => v ? "R$ " + Number(v).toLocaleString("pt-BR") : "valor sob consulta";
-
-/* ---------- chave de acesso ---------- */
-const tok = () => ls.get("zff-gh-token");
-const pintaTok = () => { $("tokst").textContent = tok() ? "✓ Chave salva neste aparelho." : "Nenhuma chave salva neste aparelho."; if (!tok()) $("cfgd").open = true; };
-$("salvar").onclick = async () => {
-  const t = $("token").value.trim();
-  if (!t) { ls.set("zff-gh-token", ""); pintaTok(); return; }
-  $("tokst").textContent = "Testando…";
-  const r = await fetch(API + "/actions/workflows/" + WF, { headers: hdr(t) }).catch(() => null);
-  if (!r || !r.ok) { $("tokst").textContent = "✗ A chave não funcionou (" + (r ? r.status : "sem conexão") + "). Confira o repositório e as permissões."; return; }
-  ls.set("zff-gh-token", t); $("token").value = ""; pintaTok(); $("cfgd").open = false; toast("Chave salva");
-};
-function hdr(t = tok()){ return { Authorization: "Bearer " + t, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" }; }
 
 /* ---------- status ---------- */
 const PASSOS = ["Enviando pedido", "Lendo o anúncio e baixando as fotos", "Publicando a página"];
@@ -186,17 +153,17 @@ function status(etapa, tipo = "and", extra = ""){
 /* ---------- gerar ---------- */
 $("form").onsubmit = async e => {
   e.preventDefault();
-  if (!tok()) { $("cfgd").open = true; $("cfg").scrollIntoView({ behavior: "smooth" }); toast("Configure a chave de acesso primeiro"); return; }
   let url = $("url").value.trim();
   if (!/^https?:\/\//i.test(url)) url = "https://" + url;
-  const pedido = new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "-" + Math.random().toString(36).slice(2, 7);
   const valor = $("valor").value.replace(/[^\d,]/g, "").replace(",", ".");
   $("gerar").disabled = true;
   try {
     status(0);
-    const r = await fetch(API + "/actions/workflows/" + WF + "/dispatches", { method: "POST", headers: hdr(),
-      body: JSON.stringify({ ref: "main", inputs: { url, pedido, codigo: $("codigo").value.trim(), valor } }) });
-    if (!r.ok) throw new Error(r.status === 401 || r.status === 403 ? "A chave de acesso expirou ou não tem permissão (Actions: Read and write). Gere outra em Configurar acesso." : "O GitHub recusou o pedido (erro " + r.status + ").");
+    const r = await fetch(MOTOR + "/gerar", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor }) }).catch(() => null);
+    const j = r ? await r.json().catch(() => ({})) : {};
+    if (!r || !r.ok || !j.pedido) throw new Error(j.erro || "Sem conexão com o gerador. Tente de novo em instantes.");
+    const pedido = j.pedido;
     status(1);
     const res = await aguardaResultado(pedido);
     if (!res.ok) throw new Error(res.erro || "Não foi possível gerar a página.");
@@ -214,15 +181,10 @@ async function aguardaResultado(pedido){
   const t0 = Date.now();
   while (Date.now() - t0 < 12 * 60e3) {
     await espera(6000);
-    const r = await fetch(`${API}/contents/captacao/pedidos/${pedido}.json?ref=main&t=${Date.now()}`, { headers: { ...hdr(), Accept: "application/vnd.github.raw+json" }, cache: "no-store" }).catch(() => null);
-    if (r && r.ok) return r.json();
-    // a execução falhou antes de registrar o resultado?
-    if (Date.now() - t0 > 30e3) {
-      const rr = await fetch(`${API}/actions/workflows/${WF}/runs?per_page=15&t=${Date.now()}`, { headers: hdr(), cache: "no-store" }).catch(() => null);
-      const run = rr && rr.ok ? (await rr.json()).workflow_runs.find(x => x.display_title === "Captação " + pedido) : null;
-      if (run && run.status === "completed" && run.conclusion !== "success")
-        throw new Error("A geração falhou no GitHub. Tente de novo; se repetir, mande o link para o Claude.");
-    }
+    const r = await fetch(`${MOTOR}/status?pedido=${encodeURIComponent(pedido)}`, { cache: "no-store" }).catch(() => null);
+    const j = r && r.ok ? await r.json().catch(() => null) : null;
+    if (j && j.estado === "pronto") return j.resultado;
+    if (j && j.estado === "falhou") throw new Error("A geração falhou. Tente de novo; se repetir, mande o link para o Claude.");
   }
   throw new Error("Demorou demais. Confira a lista abaixo em alguns minutos.");
 }
@@ -262,7 +224,6 @@ document.addEventListener("click", async e => {
   try { await navigator.clipboard.writeText(b.dataset.copiar); toast("Link copiado!"); } catch { prompt("Copie o link:", b.dataset.copiar); }
 });
 
-pintaTok();
 carregaLista();
 })();
 </script>
