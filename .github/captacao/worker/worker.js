@@ -1,27 +1,43 @@
-// Intermediário do hub de Captação ZFF: guarda a chave do GitHub (secret GH_TOKEN)
-// e aciona o workflow captacao.yml. Nenhum aparelho precisa de configuração.
+// Captação ZFF na Cloudflare: serve o hub e as páginas de captação (sem depender do GitHub Pages),
+// guarda a chave do GitHub (GH_TOKEN) e aciona o workflow captacao.yml, que só processa as fotos.
 const REPO = "Gabriel-glll/Gabriel-glll.github.io", WF = "captacao.yml";
 const API = "https://api.github.com/repos/" + REPO;
-const HUB = "https://gabriel-glll.github.io/novos-lancamentos/captacao.html";
-const ORIGENS = [/^https:\/\/gabriel-glll\.github\.io$/, /^http:\/\/localhost(:\d+)?$/, /^http:\/\/127\.0\.0\.1(:\d+)?$/];
+const ORIGENS = [/^https:\/\/gabriel-glll\.github\.io$/, /^https:\/\/captacao-zff\.zff-captacao\.workers\.dev$/,
+                 /^http:\/\/localhost(:\d+)?$/, /^http:\/\/127\.0\.0\.1(:\d+)?$/];
+const TIPOS = { html: "text/html; charset=utf-8", json: "application/json; charset=utf-8", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
+const RE_ARQ = /^[a-z0-9-]+\/(index\.html|fotos\/\d{2}\.(jpg|jpeg|png|webp))$/;
 
 export default {
   async fetch(req, env) {
     const origem = req.headers.get("Origin") || "";
-    const ok = ORIGENS.some(r => r.test(origem));
+    const u = new URL(req.url);
+    const ok = ORIGENS.some(r => r.test(origem)) || origem === u.origin;
     const cors = { "Access-Control-Allow-Origin": ok ? origem : "https://gabriel-glll.github.io",
-                   "Access-Control-Allow-Methods": "GET,POST,OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Vary": "Origin" };
-    const json = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { ...cors, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" } });
+                   "Access-Control-Allow-Methods": "GET,POST,PUT,OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Vary": "Origin" };
+    const json = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { ...cors, "Content-Type": TIPOS.json, "Cache-Control": "no-store" } });
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     const gh = (p, init = {}) => fetch(API + p, { ...init, headers: { Authorization: "Bearer " + env.GH_TOKEN,
       Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "captacao-zff", ...(init.headers || {}) } });
-    const u = new URL(req.url);
+    const HUB = u.origin + "/";
+
+    // ---------- Páginas de captação (públicas, para o cliente) ----------
+    if (req.method === "GET" && u.pathname.startsWith("/imovel/")) {
+      let caminho = decodeURIComponent(u.pathname.slice(8));
+      if (/^[a-z0-9-]+$/.test(caminho)) return Response.redirect(u.origin + u.pathname + "/", 301);
+      if (caminho.endsWith("/")) caminho += "index.html";
+      if (!RE_ARQ.test(caminho)) return new Response("Página não encontrada.", { status: 404 });
+      const v = await env.PAGINAS.get("pag:" + caminho, "arrayBuffer");
+      if (!v) return new Response("Esta captação não está mais disponível.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+      const ext = caminho.split(".").pop();
+      return new Response(v, { headers: { "Content-Type": TIPOS[ext] || "application/octet-stream",
+        "Cache-Control": ext === "html" ? "public, max-age=60" : "public, max-age=31536000, immutable" } });
+    }
 
     // Página entregue pelo navegador do corretor (sites com anti-robô): lida pelo GitHub Actions.
     if (req.method === "GET" && u.pathname === "/pagina") {
       const k = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
       const h = k && await env.PAGINAS.get(k);
-      return h ? new Response(h, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } })
+      return h ? new Response(h, { headers: { "Content-Type": TIPOS.html, "Cache-Control": "no-store" } })
                : new Response("não encontrado", { status: 404 });
     }
 
@@ -35,6 +51,48 @@ export default {
       const ref = "r" + crypto.randomUUID().replace(/-/g, "");
       await env.PAGINAS.put(ref, html, { expirationTtl: 3600 });
       return Response.redirect(HUB + "#receber=" + ref + "&url=" + encodeURIComponent(url), 303);
+    }
+
+    // ---------- Publicação vinda do GitHub Actions (sem chave: só aceita durante a execução do pedido) ----------
+    async function execucaoAtiva(pedido) {
+      if (!pedido) return false;
+      if (await env.PAGINAS.get("ok:" + pedido)) return true;
+      const r = await gh(`/actions/workflows/${WF}/runs?status=in_progress&per_page=30`);
+      if (!r.ok) return false;
+      const ativa = (await r.json()).workflow_runs.some(x => x.display_title === "Captação " + pedido ||
+        (pedido.startsWith("fila") && x.display_title === "Captação fila"));
+      if (ativa) await env.PAGINAS.put("ok:" + pedido, "1", { expirationTtl: 3600 });
+      return ativa;
+    }
+    async function apagarPasta(slug) {
+      let cursor;
+      do {
+        const l = await env.PAGINAS.list({ prefix: "pag:" + slug + "/", cursor });
+        await Promise.all(l.keys.map(k => env.PAGINAS.delete(k.name)));
+        cursor = l.list_complete ? null : l.cursor;
+      } while (cursor);
+    }
+    if (req.method === "PUT" && u.pathname === "/publicar") {
+      const pedido = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
+      const caminho = u.searchParams.get("caminho") || "";
+      if (!(await execucaoAtiva(pedido))) return json({ erro: "Pedido não está em execução." }, 403);
+      const corpo = await req.arrayBuffer();
+      if (corpo.byteLength > 20e6) return json({ erro: "Arquivo grande demais." }, 413);
+      const txt = () => new TextDecoder().decode(corpo);
+      if (RE_ARQ.test(caminho)) {
+        await env.PAGINAS.put("pag:" + caminho, corpo);
+      } else if (caminho === "_limpar") {          // apaga fotos antigas antes de regravar o mesmo imóvel
+        const slug = txt().replace(/[^a-z0-9-]/g, "");
+        if (slug) await apagarPasta(slug);
+      } else if (caminho === "_lista") {           // entrada da lista de captações
+        const e = JSON.parse(txt());
+        const L = JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => i.slug !== e.slug && i.codigo !== e.codigo);
+        L.unshift(e);
+        await env.PAGINAS.put("lista", JSON.stringify(L));
+      } else if (caminho === "_resultado") {       // resultado do pedido (o hub lê na hora)
+        await env.PAGINAS.put("res:" + pedido, txt(), { expirationTtl: 86400 * 7 });
+      } else return json({ erro: "Caminho inválido." }, 400);
+      return json({ ok: true });
     }
 
     // Observações do corretor aplicadas à descrição (chamado pelo GitHub Actions). Só funciona
@@ -54,31 +112,31 @@ export default {
             "Aplique exatamente as instruções do corretor. Não invente nada que não esteja no texto original, nos dados " +
             "ou nas instruções. Nunca inclua telefones, e-mails, links, nomes de imobiliárias, corretores ou CRECI. " +
             "Responda somente com o texto final da descrição, em parágrafos curtos, sem título, sem aspas e sem comentários." },
-          { role: "user", content: `INSTRUÇÕES DO CORRETOR:
-${obs}
-
-DADOS DO IMÓVEL:
-${dados}
-
-TEXTO ORIGINAL:
-${texto || "(sem descrição — escreva uma curta, só com os dados acima)"}` }
+          { role: "user", content: `INSTRUÇÕES DO CORRETOR:\n${obs}\n\nDADOS DO IMÓVEL:\n${dados}\n\nTEXTO ORIGINAL:\n${texto || "(sem descrição — escreva uma curta, só com os dados acima)"}` }
         ]
       }).catch(() => null);
       return json({ texto: (r && r.response || "").trim() });
     }
 
+    // ---------- Daqui para baixo: só o hub ----------
+    if (req.method === "GET" && u.pathname === "/api/lista")
+      return json(JSON.parse(await env.PAGINAS.get("lista") || "[]"));
+
     if (!ok) return json({ erro: "Origem não autorizada." }, 403);
 
-    // Excluir captação (botão no hub, com confirmação)
+    // Excluir captação (botão no hub, com confirmação): some na hora da Cloudflare;
+    // o GitHub apaga a cópia de reserva quando puder.
     if (req.method === "POST" && u.pathname === "/excluir") {
       let b; try { b = await req.json(); } catch { return json({ erro: "Pedido inválido." }, 400); }
       const slug = String(b.slug || "").replace(/[^a-z0-9-]/g, "");
       if (!slug || slug.length > 200) return json({ erro: "Captação inválida." }, 400);
+      await apagarPasta(slug);
+      const L = JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => i.slug !== slug);
+      await env.PAGINAS.put("lista", JSON.stringify(L));
       const pedido = "x" + new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "-" + crypto.randomUUID().slice(0, 8);
-      const r = await gh(`/actions/workflows/${WF}/dispatches`, { method: "POST",
-        body: JSON.stringify({ ref: "main", inputs: { url: slug, pedido, modo: "excluir" } }) });
-      if (!r.ok) return json({ erro: "O GitHub recusou o pedido (erro " + r.status + ")." }, 502);
-      return json({ pedido });
+      await gh(`/actions/workflows/${WF}/dispatches`, { method: "POST",
+        body: JSON.stringify({ ref: "main", inputs: { url: slug, pedido, modo: "excluir" } }) }).catch(() => null);
+      return json({ ok: true });
     }
 
     if (req.method === "POST" && u.pathname === "/gerar") {
@@ -136,13 +194,15 @@ ${texto || "(sem descrição — escreva uma curta, só com os dados acima)"}` }
     if (req.method === "GET" && u.pathname === "/status") {
       const pedido = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
       if (!pedido) return json({ erro: "Pedido ausente." }, 400);
+      const k = await env.PAGINAS.get("res:" + pedido);
+      if (k) return json({ estado: "pronto", resultado: JSON.parse(k) });
       const r = await gh(`/contents/captacao/pedidos/${pedido}.json?ref=main`, { headers: { Accept: "application/vnd.github.raw+json" } });
       if (r.ok) return json({ estado: "pronto", resultado: await r.json() });
       const rr = await gh(`/actions/workflows/${WF}/runs?per_page=20`);
       const run = rr.ok ? (await rr.json()).workflow_runs.find(x => x.display_title === "Captação " + pedido) : null;
       if (run && run.status === "completed" && run.conclusion !== "success")
         return json({ estado: "falhou" });
-      return json({ estado: "andamento" });
+      return json({ estado: run && run.status === "queued" ? "fila" : "andamento" });
     }
     return json({ erro: "Não encontrado." }, 404);
   }

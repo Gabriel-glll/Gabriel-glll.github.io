@@ -10,3 +10,6 @@ id = "492aa75c8b68463b81a7668ef11267cf"
 
 [ai]
 binding = "AI"
+
+[assets]
+directory = "./publico"

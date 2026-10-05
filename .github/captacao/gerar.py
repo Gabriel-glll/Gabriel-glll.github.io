@@ -17,7 +17,7 @@ from PIL import Image, ImageOps
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PASTA = os.path.join(RAIZ, "captacao")
 MODELO = os.path.join(os.path.dirname(__file__), "modelo.html")
-SITE = "https://gabriel-glll.github.io/captacao/"
+SITE = "https://captacao-zff.zff-captacao.workers.dev/imovel/"  # páginas servidas pela Cloudflare
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/129.0 Safari/537.36")
 HDR = {"User-Agent": UA, "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
@@ -667,6 +667,31 @@ def reescrever(pedido, texto, d):
         return None
 
 
+def cf_enviar(pedido, caminho, corpo):
+    """Envia um arquivo para a Cloudflare (o Worker só aceita durante a execução deste pedido)."""
+    if not pedido:
+        return False
+    for tentativa in range(3):
+        try:
+            r = requests.put(SITE_MOTOR + "/publicar", params={"pedido": pedido, "caminho": caminho},
+                             data=corpo, timeout=60)
+            if r.ok:
+                return True
+        except requests.RequestException:
+            pass
+    return False
+
+
+def cf_publicar(pedido, slug, entrada):
+    pasta = os.path.join(PASTA, slug)
+    cf_enviar(pedido, "_limpar", slug.encode())
+    for f in sorted(os.listdir(os.path.join(pasta, "fotos"))):
+        cf_enviar(pedido, f"{slug}/fotos/{f}", open(os.path.join(pasta, "fotos", f), "rb").read())
+    ok = cf_enviar(pedido, f"{slug}/index.html", open(os.path.join(pasta, "index.html"), "rb").read())
+    cf_enviar(pedido, "_lista", json.dumps(entrada, ensure_ascii=False).encode("utf-8"))
+    return ok
+
+
 def excluir(slug):
     slug = re.sub(r"[^a-z0-9-]", "", slug or "")
     pasta = os.path.join(PASTA, slug)
@@ -781,6 +806,8 @@ def gerar(url, codigo=None, valor=None, html_url=None, pedido=None, obs=False):
     salvar_json(os.path.join(PASTA, "lista.json"), lista)
     salvar_json(os.path.join(PASTA, "_entrada.json"), lista[0])  # mesclado na publicação
     registrar(pasta)
+    if pedido and not cf_publicar(pedido, slug, lista[0]):
+        raise Falha("Não consegui publicar a página. Tente de novo em instantes.")
     avisos = []
     if not saida.get("valorVenda"): avisos.append("valor não encontrado (aparece 'Consulte')")
     if not saida.get("quartos") and saida["tipo"] not in ("Terreno", "Sala", "Galpão"): avisos.append("nº de quartos não encontrado")
@@ -814,6 +841,7 @@ def main():
         arq = os.path.join(PASTA, "pedidos", re.sub(r"[^\w-]", "", a.pedido) + ".json")
         salvar_json(arq, res)
         registrar(arq)
+        cf_enviar(a.pedido, "_resultado", json.dumps(res, ensure_ascii=False).encode("utf-8"))
     print(json.dumps(res, ensure_ascii=False, indent=1))
     if not res["ok"] and not a.pedido:
         sys.exit(1)
