@@ -1,5 +1,14 @@
 [
  {
+  "codigo": "AP9008",
+  "slug": "apartamento-venda-1-dormitorios-1-vagas-40m2-campinas-taquaral-ap9008",
+  "titulo": "Apartamento à venda em Campinas, Taquaral, com 1 quarto, com 40 m²",
+  "capa": "apartamento-venda-1-dormitorios-1-vagas-40m2-campinas-taquaral-ap9008/fotos/01.jpg",
+  "valor": 235000,
+  "data": "2026-10-05",
+  "fotos": 27
+ },
+ {
   "codigo": "AP9007",
   "slug": "apartamento-venda-2-dormitorios-2-vagas-65m2-campinas-taquaral-ap9007",
   "titulo": "Apartamento à venda em Campinas, Taquaral, com 2 quartos, com 65 m²",
