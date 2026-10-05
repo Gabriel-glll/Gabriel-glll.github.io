@@ -245,7 +245,7 @@ def _mascara(forma, pos, alfa, dil=7):
     return cv2.dilate(m, np.ones((dil, dil), np.uint8))
 
 
-def limpar(imagens):
+def limpar(imagens, aviso=None):
     """Recebe lista de PIL.Image; devolve (lista limpa, removeu_marca).
     1) acha a marca cruzando as fotos (mesma marca em todas); 2) mede o formato exato dela;
     3) preenche só esses pixels com IA (LaMa); 4) nitidez leve. Sem marca: só nitidez."""
@@ -266,7 +266,11 @@ def limpar(imagens):
     alfa, cor = estimar_mistura(base, mk)
     usar_ia = os.path.exists(MODELO)
     saida = list(arrs)
+    feitos = [0]
     def tratar(i, pos, al, cr):
+        feitos[0] += 1
+        if aviso:
+            aviso(feitos[0], len(arrs))
         if usar_ia:
             saida[i] = preencher(arrs[i], _mascara(arrs[i].shape, pos, al))
         else:

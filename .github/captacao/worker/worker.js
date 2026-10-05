@@ -89,6 +89,8 @@ export default {
         const L = JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => i.slug !== e.slug && i.codigo !== e.codigo);
         L.unshift(e);
         await env.PAGINAS.put("lista", JSON.stringify(L));
+      } else if (caminho === "_progresso") {      // o que está acontecendo agora (mostrado no hub)
+        await env.PAGINAS.put("prog:" + pedido, txt().slice(0, 200), { expirationTtl: 3600 });
       } else if (caminho === "_resultado") {       // resultado do pedido (o hub lê na hora)
         await env.PAGINAS.put("res:" + pedido, txt(), { expirationTtl: 86400 * 7 });
       } else return json({ erro: "Caminho inválido." }, 400);
@@ -111,6 +113,7 @@ export default {
           { role: "system", content: "Você edita descrições de anúncios de imóveis, em português do Brasil. " +
             "Aplique exatamente as instruções do corretor. Não invente nada que não esteja no texto original, nos dados " +
             "ou nas instruções. Nunca inclua telefones, e-mails, links, nomes de imobiliárias, corretores ou CRECI. " +
+            "Se as instruções não pedirem uma mudança clara (ex.: 'teste', 'ok'), devolva o texto original sem alterar. " +
             "Responda somente com o texto final da descrição, em parágrafos curtos, sem título, sem aspas e sem comentários." },
           { role: "user", content: `INSTRUÇÕES DO CORRETOR:\n${obs}\n\nDADOS DO IMÓVEL:\n${dados}\n\nTEXTO ORIGINAL:\n${texto || "(sem descrição — escreva uma curta, só com os dados acima)"}` }
         ]
@@ -202,7 +205,7 @@ export default {
       const run = rr.ok ? (await rr.json()).workflow_runs.find(x => x.display_title === "Captação " + pedido) : null;
       if (run && run.status === "completed" && run.conclusion !== "success")
         return json({ estado: "falhou" });
-      return json({ estado: run && run.status === "queued" ? "fila" : "andamento" });
+      return json({ estado: run && run.status === "queued" ? "fila" : "andamento", progresso: await env.PAGINAS.get("prog:" + pedido) });
     }
     return json({ erro: "Não encontrado." }, 404);
   }

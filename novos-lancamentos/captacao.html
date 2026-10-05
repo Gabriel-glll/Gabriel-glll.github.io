@@ -260,6 +260,13 @@ async function aguardaResultado(pedido){
     const r = await fetch(`${MOTOR}/status?pedido=${encodeURIComponent(pedido)}`, { cache: "no-store" }).catch(() => null);
     const j = r && r.ok ? await r.json().catch(() => null) : null;
     if (j && j.estado === "pronto") return j.resultado;
+    const seg = Math.round((Date.now() - t0) / 1000);
+    const at = $("status").querySelector(".passos li.at");
+    if (at) {
+      let p = at.querySelector(".prog");
+      if (!p) { p = document.createElement("small"); p.className = "prog"; p.style.cssText = "margin-left:8px;font-weight:500;color:var(--muted)"; at.appendChild(p); }
+      p.textContent = `${j && j.progresso ? j.progresso + " · " : ""}${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, "0")}`;
+    }
     if (j && j.estado === "falhou") throw new Error("A geração falhou. Tente de novo; se repetir, mande o link para o Claude.");
     if (j && j.estado === "fila" && Date.now() - t0 > 90e3)
       $("status").querySelector(".passos li.at")?.setAttribute("data-fila", "1"),
@@ -317,6 +324,7 @@ document.addEventListener("click", async e => {
 });
 
 carregaLista();
+document.addEventListener("visibilitychange", () => { if (!document.hidden) carregaLista(); });
 })();
 </script>
 </body>

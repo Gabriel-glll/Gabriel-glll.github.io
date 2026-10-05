@@ -257,7 +257,7 @@ def de_portais(h, url):
         itens = [c for c in itens if c and not re.match(r"(?i)saiba mais|[áa]reas (comuns|privativas)$|outros$|ver (mais|menos)", c)]
         if itens:
             r["caracteristicas"] = list(dict.fromkeys(itens))
-    if re.search(r"imovelweb|zapimoveis|vivareal|olx\.com", urlparse(url).netloc):
+    if re.search(r"imovelweb", urlparse(url).netloc):
         r["iptuPeriodo"] = "mes"
     return r
 
@@ -523,14 +523,25 @@ def ahash(im):
 def baixa_fotos(sess, urls, destino, referer):
     os.makedirs(destino, exist_ok=True)
     salvas, hashes = [], []
-    for u in urls:
-        if len(salvas) >= MAX_FOTOS:
-            break
+    from concurrent.futures import ThreadPoolExecutor
+    urls = urls[:MAX_FOTOS * 2]
+    progresso(f"Baixando {len(urls)} fotos…", True)
+
+    def pega(u):
         try:
             r = sess.get(u, timeout=30, headers={"Referer": referer, "Accept": "image/avif,image/webp,image/*,*/*"})
-            if r.status_code != 200 or len(r.content) < 8000:
-                continue
-            im = Image.open(io.BytesIO(r.content))
+            return r.content if r.status_code == 200 and len(r.content) >= 8000 else None
+        except Exception:
+            return None
+    with ThreadPoolExecutor(8) as ex:
+        conteudos = list(ex.map(pega, urls))
+    for conteudo in conteudos:
+        if len(salvas) >= MAX_FOTOS:
+            break
+        if not conteudo:
+            continue
+        try:
+            im = Image.open(io.BytesIO(conteudo))
             im = ImageOps.exif_transpose(im)
         except Exception:
             continue
@@ -550,7 +561,7 @@ def baixa_fotos(sess, urls, destino, referer):
     MARCA_REMOVIDA = False
     try:
         import marca  # remoção de marca d'água (captações autorizadas pela imobiliária) + nitidez
-        imgs, MARCA_REMOVIDA = marca.limpar(imgs)
+        imgs, MARCA_REMOVIDA = marca.limpar(imgs, lambda i, n: progresso(f"Tirando marca d'água: foto {i} de {n}"))
     except Exception as e:
         print("aviso: fotos sem tratamento:", e.__class__.__name__, e, file=sys.stderr)
     nomes = []
@@ -682,6 +693,23 @@ def cf_enviar(pedido, caminho, corpo):
     return False
 
 
+PEDIDO_ATUAL = None
+_ultimo_prog = [0.0]
+
+
+def progresso(txt, forcar=False):
+    """Mostra no hub o que está acontecendo (no máx. a cada 4 s)."""
+    import time
+    if not PEDIDO_ATUAL or (not forcar and time.time() - _ultimo_prog[0] < 4):
+        return
+    _ultimo_prog[0] = time.time()
+    try:
+        requests.put(SITE_MOTOR + "/publicar", params={"pedido": PEDIDO_ATUAL, "caminho": "_progresso"},
+                     data=txt.encode("utf-8"), timeout=10)
+    except requests.RequestException:
+        pass
+
+
 def cf_publicar(pedido, slug, entrada):
     pasta = os.path.join(PASTA, slug)
     cf_enviar(pedido, "_limpar", slug.encode())
@@ -778,8 +806,10 @@ def gerar(url, codigo=None, valor=None, html_url=None, pedido=None, obs=False):
     if len(" ".join(descricao)) < 60:
         descricao = []
     if obs and pedido:
+        progresso("Aplicando as observações na descrição…", True)
         novo = reescrever(pedido, "\n".join(descricao), d)
-        if novo:
+        original = len(" ".join(descricao))
+        if novo and (len(" ".join(novo)) >= 120 or original < 200):
             descricao = higieniza(novo)
     saida = {
         "codigo": codigo, "tipo": d["tipo"], "finalidade": d.get("finalidade") or "Venda", "titulo": d["titulo"],
@@ -828,6 +858,9 @@ def main():
             print(renderizar(i["slug"]))
         return
     try:
+        global PEDIDO_ATUAL
+        PEDIDO_ATUAL = a.pedido
+        progresso("Lendo o anúncio…", True)
         if a.modo == "excluir":
             res = excluir(a.url)
         else:
