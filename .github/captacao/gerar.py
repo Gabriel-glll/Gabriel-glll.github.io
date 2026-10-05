@@ -379,6 +379,8 @@ def de_texto(texto):
     """Extração por padrões no texto visível — último recurso."""
     t = " ".join(texto)
     t = re.sub(r"\s+", " ", t)
+    # faixas de lançamento ("48 - 153 m²", "1 - 2 quartos"): ignora, vale a unidade
+    t = re.sub(r"\b\d+\s*-\s*\d+(?=\s*(m²|m2|quartos?|banheiros?|vagas?|su[ií]tes?|dormit))", " ", t, flags=re.I)
     r = {}
 
     def pega(pads, conv=inteiro):
@@ -430,7 +432,7 @@ def tipo_de(*fontes):
                         ("sobrado", "Sobrado"), ("chacara", "Chácara"), ("sitio", "Sítio"), ("terreno", "Terreno"),
                         ("lote", "Terreno"), ("galpao", "Galpão"), ("sala comercial", "Sala"), ("kitnet", "Kitnet"),
                         ("studio", "Studio"), ("casa", "Casa")):
-        if re.search(r"\b" + chave + r"\b", s):
+        if re.search(r"\b" + chave + r"s?\b", s):
             return nome
     return "Imóvel"
 
