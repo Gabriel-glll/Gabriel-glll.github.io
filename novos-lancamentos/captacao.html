@@ -152,7 +152,7 @@ footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
         <ol>
           <li>Abra o anúncio normalmente no navegador.</li>
           <li>Clique no favorito <b>Captar ZFF</b>.</li>
-          <li>O hub abre numa nova aba e gera a captação sozinho.</li>
+          <li>O hub abre numa nova aba com o anúncio carregado: escreva as observações (se quiser) e clique em <b>Gerar captação</b>.</li>
         </ol>
         <p style="margin:8px 0 0">No celular é mais prático mandar o link para o Claude.</p>
       </div>
@@ -215,7 +215,9 @@ let REF = null;  // página entregue pelo favorito (guardada 1 h no gerador)
     REF = m[1];
     $("url").value = decodeURIComponent(m[2]);
     history.replaceState(null, "", location.pathname);
-    setTimeout(() => $("form").requestSubmit(), 50);
+    // não gera sozinho: dá chance de escrever observações antes
+    status(-1, "ok", `<b>Anúncio recebido.</b> Se quiser, escreva as observações para a descrição e clique em <b>Gerar captação</b>.`);
+    setTimeout(() => { $("obs").focus(); $("obs").scrollIntoView({ behavior: "smooth", block: "center" }); }, 100);
   }
 }
 
