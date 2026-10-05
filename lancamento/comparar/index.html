@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Estudo comparativo · ZFF Realty</title>
+<link rel="icon" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Página GERADA a partir de ferramentas/comparar.html (gerar_links.py). Os dados vêm no próprio link (#...). */
+:root{
+  color-scheme:dark;
+  --bg:#1b1d22; --panel:#25282f; --panel-2:#2c3038; --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
+  --text:#eef0f3; --muted:#9aa1ab; --accent:#ec7a35; --accent-soft:rgba(236,122,53,.14); --accent-text:#f39a62;
+  --ok:#5cc28a; --ok-soft:rgba(92,194,138,.14);
+  --r:16px; --lab:200px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-text)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:62px}
+.top img{width:36px;height:36px;border-radius:9px;object-fit:cover}
+.top b{font:600 18px/1 Oswald,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.hero{padding:26px 0 18px}
+.kicker{display:inline-flex;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text);text-transform:uppercase;letter-spacing:.06em}
+h1{font:600 clamp(30px,5.4vw,50px)/1.02 Oswald,sans-serif;text-transform:uppercase;margin:10px 0 6px;letter-spacing:.01em}
+.sub{color:var(--muted)}
+.num{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font:600 13px/1 Oswald,sans-serif}
+
+/* cards dos projetos */
+.cards{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:16px;margin-bottom:26px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h2{display:flex;gap:9px;align-items:center;margin:0;font:600 22px/1.1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.card .by{color:var(--muted);font-size:13.5px;margin-top:-4px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-top:2px}
+.kpis span{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:800}
+.kpis b{font-size:14.5px}
+.kpis .v b{color:var(--accent-text);font:600 19px/1.15 Oswald,sans-serif}
+.card .mais{margin-top:auto;font-weight:700;font-size:13.5px;text-decoration:none}
+.card .mais:hover{text-decoration:underline}
+
+.car{position:relative;background:var(--panel-2);overflow:hidden;aspect-ratio:4/3}
+.car-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.car-track::-webkit-scrollbar{display:none}
+.car-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;background:#14161a;scroll-snap-align:start;display:block;cursor:zoom-in;-webkit-user-drag:none}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(15,16,20,.62);color:#fff;font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.car-btn:hover{background:rgba(15,16,20,.85)}
+.car-btn[disabled]{opacity:0;pointer-events:none}
+.car-prev{left:10px}.car-next{right:10px}
+.car-count{position:absolute;bottom:10px;right:10px;background:rgba(15,16,20,.62);color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;pointer-events:none}
+.car-vazio{height:100%;display:flex;align-items:center;justify-content:center;padding:0 16px;text-align:center;background:linear-gradient(135deg,#2b2f37,#1f2228 60%,#2a2420);font:600 24px/1.1 Oswald,sans-serif;color:rgba(255,255,255,.16);text-transform:uppercase}
+
+/* tabela comparativa */
+.cmp{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:18px}
+.row{display:grid;grid-template-columns:var(--lab) repeat(var(--n),minmax(0,1fr));border-top:1px solid var(--line)}
+.row > div{padding:11px 14px;min-width:0;overflow-wrap:anywhere}
+.row > div + div{border-left:1px solid var(--line)}
+.lab{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:flex-start}
+.val{font-weight:600;font-size:14.5px}
+.val.vazio{color:var(--muted);font-weight:500}
+.val.best{background:var(--ok-soft)}
+.badge{display:inline-flex;margin-top:5px;font-size:11px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:.05em}
+.head{position:sticky;top:0;z-index:5;background:var(--panel-2);border-top:0;border-radius:var(--r) var(--r) 0 0}
+.head > div{display:flex;gap:8px;align-items:center;font:600 15px/1.15 Oswald,sans-serif;text-transform:uppercase}
+.head .lab{font:800 12px/1.2 Manrope,sans-serif}
+.grp{padding:16px 14px 8px;border-top:1px solid var(--line-strong);font:600 15px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-text)}
+.lz{margin:0;padding:0;list-style:none;font-weight:500;font-size:14px}
+.lz li{padding:2px 0 2px 14px;position:relative}
+.lz li::before{content:"";position:absolute;left:1px;top:10px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+details summary{cursor:pointer;color:var(--accent-text);font-weight:700;font-size:13px;margin-top:4px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details[open] summary{display:none}
+.endmap{display:inline-block;margin-top:3px;font-size:12.5px;font-weight:700}
+.nota{color:var(--muted);font-size:12.5px;margin:0 0 6px}
+.erro{padding:70px 16px;text-align:center;color:var(--muted)}
+.erro b{display:block;color:var(--text);font-size:18px;margin-bottom:6px}
+footer{color:var(--muted);font-size:12.5px;padding:10px 0 34px}
+
+@media (max-width:760px){
+  .cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 22px;padding:0 16px;scrollbar-width:none}
+  .cards::-webkit-scrollbar{display:none}
+  .card{scroll-snap-align:center}
+  .cmp{margin:0 -16px 18px;border-radius:0;border-left:0;border-right:0}
+  .row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+  .row > .lab{grid-column:1/-1;padding:10px 12px 0;border-left:0}
+  .row > div{padding:6px 10px 10px}
+  .row > .lab + div{border-left:0}
+  .val{font-size:13.5px}
+  .head{border-radius:0}
+  .head > .lab{display:none}
+  .head > div{padding:10px;font-size:13px;flex-direction:column;align-items:flex-start;gap:4px}
+  .head > div:nth-child(2){border-left:0}
+  .grp{padding:14px 12px 6px}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><img src="logo.jpeg" alt="ZFF Realty"><b>ZFF Realty</b></div></header>
+<main class="wrap" id="app"></main>
+<footer><div class="wrap">Imagens e perspectivas meramente ilustrativas. Valores, prazos e condições são estimativas sujeitas a alteração pela incorporadora — confirme com seu corretor. Material apresentado por ZFF Realty.</div></footer>
+<script>/* Galeria: carrossel com setas + zoom em tela cheia.
+   Usado pelo site interno e pelas páginas de cliente (que recebem este arquivo embutido).
+   Marcação esperada do carrossel:
+     <div class="car" data-car><div class="car-track"><img…>…</div>
+       <button class="car-btn car-prev">‹</button><button class="car-btn car-next">›</button><span class="car-count"></span></div>
+   Imagens dentro de um carrossel com a classe "zoomavel" abrem o zoom ao clicar. */
+(() => {
+"use strict";
+
+/* ---------- carrossel ---------- */
+function carSync(car, idx){
+  const t = car.querySelector(".car-track"), n = t.children.length;
+  const i = idx ?? Math.round(t.scrollLeft / Math.max(1, t.clientWidth));
+  const c = car.querySelector(".car-count"); if (c) c.textContent = (i + 1) + "/" + n;
+  const p = car.querySelector(".car-prev"), x = car.querySelector(".car-next");
+  if (p) p.disabled = i <= 0; if (x) x.disabled = i >= n - 1;
+}
+function carGo(car, i){
+  const t = car.querySelector(".car-track"), w = Math.max(1, t.clientWidth);
+  i = Math.min(t.children.length - 1, Math.max(0, i));
+  t.scrollTo({ left: i * w, behavior: "smooth" }); carSync(car, i);
+}
+const carIdx = car => { const t = car.querySelector(".car-track"); return Math.round(t.scrollLeft / Math.max(1, t.clientWidth)); };
+
+document.addEventListener("click", e => {
+  const b = e.target.closest(".car-btn"); if (b){
+    e.preventDefault(); e.stopPropagation();
+    const car = b.closest(".car"); carGo(car, carIdx(car) + (b.classList.contains("car-next") ? 1 : -1));
+    return;
+  }
+  const img = e.target.closest(".zoomavel .car-track img");
+  if (img){
+    const car = img.closest(".car"), imgs = [...car.querySelectorAll(".car-track img")];
+    abrir(imgs.map(x => x.currentSrc || x.src), imgs.indexOf(img), car);
+  }
+}, true);
+document.addEventListener("scroll", e => {
+  const t = e.target; if (!(t instanceof Element) || !t.classList.contains("car-track")) return;
+  clearTimeout(t._h); t._h = setTimeout(() => carSync(t.closest(".car")), 60);
+}, true);
+document.addEventListener("keydown", e => {
+  if (lb.classList.contains("on")) return;
+  if ((e.key !== "ArrowLeft" && e.key !== "ArrowRight") || /input|select|textarea/i.test(e.target.tagName)) return;
+  const g = document.querySelector(".galeria[data-car]"); if (!g) return;
+  carGo(g, carIdx(g) + (e.key === "ArrowRight" ? 1 : -1));
+});
+
+/* ---------- zoom (lightbox) ---------- */
+const st = document.createElement("style");
+st.textContent = `
+.lb{position:fixed;inset:0;z-index:100;background:rgba(8,9,11,.96);display:none;touch-action:none;user-select:none;-webkit-user-select:none}
+.lb.on{display:block}
+.lb-stage{position:absolute;inset:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
+.lb.zoom .lb-stage{cursor:grab}
+.lb.drag .lb-stage{cursor:grabbing}
+.lb-img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center center;will-change:transform;-webkit-user-drag:none;pointer-events:none}
+.lb-btn{position:absolute;z-index:2;border:0;background:rgba(255,255,255,.1);color:#fff;width:46px;height:46px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-btn:hover{background:rgba(255,255,255,.22)}
+.lb-btn[disabled]{opacity:.25;pointer-events:none}
+.lb-x{top:14px;right:14px}
+.lb-prev{left:14px;top:50%;transform:translateY(-50%)}
+.lb-next{right:14px;top:50%;transform:translateY(-50%)}
+.lb-bar{position:absolute;z-index:2;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.1);border-radius:999px;padding:5px 8px;color:#fff;font:600 13px/1 system-ui,sans-serif}
+.lb-bar .lb-btn{position:static;width:34px;height:34px;font-size:19px;background:transparent}
+.lb-bar .lb-btn:hover{background:rgba(255,255,255,.15)}
+.lb-n{min-width:52px;text-align:center}
+@media (max-width:760px){ .lb-prev,.lb-next{display:none} }`;
+document.head.appendChild(st);
+
+const lb = document.createElement("div");
+lb.className = "lb"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", "Foto ampliada");
+lb.innerHTML = `<div class="lb-stage"><img class="lb-img" alt=""></div>
+  <button class="lb-btn lb-x" type="button" aria-label="Fechar">✕</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Foto anterior">‹</button>
+  <button class="lb-btn lb-next" type="button" aria-label="Próxima foto">›</button>
+  <div class="lb-bar"><button class="lb-btn lb-out" type="button" aria-label="Diminuir zoom">−</button><span class="lb-n"></span><button class="lb-btn lb-in" type="button" aria-label="Aumentar zoom">+</button></div>`;
+const mount = () => document.body.appendChild(lb);
+document.body ? mount() : document.addEventListener("DOMContentLoaded", mount);
+
+const stage = lb.querySelector(".lb-stage"), img = lb.querySelector(".lb-img");
+let fotos = [], i = 0, s = 1, tx = 0, ty = 0, origem = null;
+const MAX = 5;
+
+function aplicar(anim){
+  img.style.transition = anim ? "transform .18s ease" : "none";
+  img.style.transform = `translate(${tx}px,${ty}px) scale(${s})`;
+  lb.classList.toggle("zoom", s > 1.01);
+  lb.querySelector(".lb-n").textContent = s > 1.01 ? Math.round(s * 100) + "%" : (i + 1) + " / " + fotos.length;
+}
+function limitar(){
+  const w = img.offsetWidth * s, h = img.offsetHeight * s, W = stage.clientWidth, H = stage.clientHeight;
+  const mx = Math.max(0, (w - W) / 2), my = Math.max(0, (h - H) / 2);
+  tx = Math.min(mx, Math.max(-mx, tx)); ty = Math.min(my, Math.max(-my, ty));
+}
+function zoomEm(novo, cx, cy, anim = true){
+  novo = Math.min(MAX, Math.max(1, novo));
+  const r = stage.getBoundingClientRect();
+  const px = (cx ?? r.left + r.width / 2) - (r.left + r.width / 2), py = (cy ?? r.top + r.height / 2) - (r.top + r.height / 2);
+  tx = px - (px - tx) * novo / s; ty = py - (py - ty) * novo / s; s = novo;
+  if (s === 1){ tx = 0; ty = 0; }
+  limitar(); aplicar(anim);
+}
+function mostrar(){
+  s = 1; tx = 0; ty = 0; img.src = fotos[i]; aplicar(false);
+  lb.querySelector(".lb-prev").disabled = i <= 0; lb.querySelector(".lb-next").disabled = i >= fotos.length - 1;
+}
+function ir(d){ const n = i + d; if (n < 0 || n >= fotos.length) return; i = n; mostrar(); }
+function abrir(lista, idx, car){ fotos = lista; i = Math.max(0, idx); origem = car; mostrar(); lb.classList.add("on"); document.documentElement.style.overflow = "hidden"; }
+function fechar(){ lb.classList.remove("on"); document.documentElement.style.overflow = ""; if (origem) carGo(origem, i); }
+window.abrirZoom = abrir;
+
+lb.querySelector(".lb-x").onclick = fechar;
+lb.querySelector(".lb-prev").onclick = () => ir(-1);
+lb.querySelector(".lb-next").onclick = () => ir(1);
+lb.querySelector(".lb-in").onclick = () => zoomEm(s * 1.6);
+lb.querySelector(".lb-out").onclick = () => zoomEm(s / 1.6);
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("on")) return;
+  if (e.key === "Escape") fechar();
+  else if (e.key === "ArrowRight") ir(1);
+  else if (e.key === "ArrowLeft") ir(-1);
+  else if (e.key === "+" || e.key === "=") zoomEm(s * 1.6);
+  else if (e.key === "-") zoomEm(s / 1.6);
+  else return;
+  e.preventDefault();
+});
+stage.addEventListener("wheel", e => { e.preventDefault(); zoomEm(s * Math.exp(-e.deltaY * 0.0022), e.clientX, e.clientY, false); }, { passive: false });
+
+// arrastar, pinça e deslizar
+const pts = new Map(); let ini = null, moveu = 0;
+stage.addEventListener("pointerdown", e => {
+  stage.setPointerCapture(e.pointerId); pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  moveu = 0;
+  if (pts.size === 1) ini = { x: e.clientX, y: e.clientY, tx, ty, t: Date.now() };
+  if (pts.size === 2){ const [a, b] = [...pts.values()]; ini = { d: Math.hypot(a.x - b.x, a.y - b.y), s, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 }; }
+});
+stage.addEventListener("pointermove", e => {
+  if (!pts.has(e.pointerId) || !ini) return;
+  pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pts.size === 2 && ini.d){
+    const [a, b] = [...pts.values()];
+    zoomEm(ini.s * Math.hypot(a.x - b.x, a.y - b.y) / ini.d, ini.cx, ini.cy, false); moveu = 99; return;
+  }
+  const dx = e.clientX - ini.x, dy = e.clientY - ini.y; moveu = Math.max(moveu, Math.hypot(dx, dy));
+  if (s > 1.01){ lb.classList.add("drag"); tx = ini.tx + dx; ty = ini.ty + dy; limitar(); aplicar(false); }
+});
+function solta(e){
+  if (!pts.has(e.pointerId)) return;
+  const eraPinca = pts.size === 2; pts.delete(e.pointerId); lb.classList.remove("drag");
+  if (eraPinca){ ini = null; return; }
+  if (!ini || pts.size) return;
+  const dx = e.clientX - ini.x, dy = e.clientY - ini.y;
+  if (s <= 1.01 && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) ir(dx < 0 ? 1 : -1);
+  else if (moveu < 6){ s > 1.01 ? zoomEm(1) : zoomEm(2.5, e.clientX, e.clientY); }
+  ini = null;
+}
+stage.addEventListener("pointerup", solta);
+stage.addEventListener("pointercancel", solta);
+window.addEventListener("resize", () => { if (lb.classList.contains("on")){ limitar(); aplicar(false); } });
+})();
+</script>
+<script>
+(async () => {
+"use strict";
+const $app = document.getElementById("app");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const url = u => /^https?:\/\/[^\s"'<>]+$/i.test(String(u || "").trim()) ? String(u).trim() : "";
+const norm = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+/* mesmas linhas do comparador do site interno (index.html → CMP_CAMPOS) */
+const CAMPOS = [
+  ["Projeto",        [["c","Incorporadora"],["st","Status"],["b","Bairro"],["end","Endereço"],["lanc","Lançamento"],["ent","Entrega"]]],
+  ["Empreendimento", [["ter","Área do terreno"],["tor","Torres"],["un","Total de unidades"],["el","Elevadores"]]],
+  ["Unidades",       [["m2","Metragem"],["dor","Dormitórios"],["vg","Vagas"],["var","Varanda"],["dif","Diferenciais da unidade"]]],
+  ["Lazer",          [["lz","Lazer"]]],
+  ["Valores",        [["val","Valores"],["cond","Previsão de condomínio"],["alug","Estimativa de aluguel"]]],
+];
+
+/* ---------- leitura do link ---------- */
+async function ler(hash){
+  const h = hash.replace(/^#/, "");
+  const tipo = h[0], b64 = h.slice(1).replace(/-/g, "+").replace(/_/g, "/");
+  const bin = Uint8Array.from(atob(b64 + "===".slice((b64.length + 3) % 4)), c => c.charCodeAt(0));
+  let bytes = bin;
+  if (tipo === "z"){
+    const ds = new Blob([bin]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    bytes = new Uint8Array(await new Response(ds).arrayBuffer());
+  } else if (tipo !== "j") throw new Error("formato");
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+let D;
+try { D = await ler(location.hash); if (!D || !Array.isArray(D.p) || !D.p.length) throw 0; }
+catch(e){
+  $app.innerHTML = `<div class="erro"><b>Não foi possível abrir este comparativo</b>O link parece incompleto. Peça ao seu corretor para enviá-lo novamente.</div>`;
+  return;
+}
+const P = D.p.slice(0, 4);
+const N = P.length;
+document.documentElement.style.setProperty("--n", N);
+if (D.t) document.title = D.t + " · ZFF Realty";
+
+/* ---------- números para os destaques ---------- */
+function dinheiro(s){
+  if (!s) return null;
+  const t = norm(s);
+  const conv = (n, u) => {
+    let v = parseFloat(n.replace(/\./g, "").replace(",", "."));   // formato brasileiro: 302.100 · 350,00 · 1,1 mi
+    if (u) v *= u.startsWith("mi") ? 1e6 : 1e3;
+    return v;
+  };
+  const rs = [...t.matchAll(/r\$\s*(\d[\d.,]*\d|\d)\s*(milh|mi\b|mil\b|k\b)?/g)].map(m => conv(m[1], m[2])).filter(v => v > 0);
+  if (rs.length) return Math.min(...rs);
+  const m = t.match(/(\d[\d.,]*\d|\d)\s*(milh|mi\b|mil\b|k\b)?/);
+  return m ? conv(m[1], m[2]) || null : null;
+}
+const MES = { jan:1, fev:2, mar:3, abr:4, mai:5, jun:6, jul:7, ago:8, set:9, out:10, nov:11, dez:12 };
+function quando(s){
+  if (!s) return null;
+  const t = norm(s);
+  if (/pronto|entregue/.test(t)) return 0;
+  let a = t.match(/\b(20\d\d)\b/), ano = a ? +a[1] : null;
+  if (!ano){ a = t.match(/\/(\d\d)\b/); if (a) ano = 2000 + +a[1]; }
+  if (!ano) return null;
+  const m = t.match(/(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/) || [];
+  let mes = MES[m[1]];
+  if (!mes){ const n = t.match(/\b(\d{1,2})[\/-](?:20)?\d\d\b/); mes = n ? +n[1] : 12; }
+  return ano * 100 + mes;
+}
+const brl = v => "R$ " + Math.round(v).toLocaleString("pt-BR");
+
+/* rentabilidade estimada = aluguel ÷ valor (só quando os dois existem) */
+const rent = P.map(p => { const v = dinheiro(p.val), a = dinheiro(p.alug); return v > 20000 && a > 0 && a < v ? a / v * 100 : null; });
+
+function melhor(chave, fn, menor){
+  const vs = P.map(p => fn(p[chave]));
+  const ok = vs.filter(v => v != null);
+  if (ok.length < 2) return [];
+  const alvo = menor ? Math.min(...ok) : Math.max(...ok);
+  if (ok.every(v => v === alvo)) return [];
+  return vs.map(v => v === alvo);
+}
+const BEST = {
+  val:  [melhor("val", dinheiro, true), "Menor valor"],
+  cond: [melhor("cond", dinheiro, true), "Menor condomínio"],
+  ent:  [melhor("ent", quando, true), "Entrega mais próxima"],
+};
+const rentBest = (() => { const ok = rent.filter(v => v != null); if (ok.length < 2) return []; const mx = Math.max(...ok); return rent.map(v => v === mx); })();
+
+/* ---------- montagem ---------- */
+const temCampo = k => P.some(p => String(p[k] || "").trim());
+function celula(p, k, i){
+  const v = String(p[k] || "").trim();
+  if (!v) return `<div class="val vazio">—</div>`;
+  const [bests, rot] = BEST[k] || [[]];
+  const best = bests[i];
+  let html;
+  if (k === "lz"){
+    const itens = v.split(/\n|;|•/).map(x => x.trim().replace(/^[-–·]\s*/, "")).filter(Boolean);
+    if (itens.length < 2) html = esc(v);
+    else {
+      const li = x => `<li>${esc(x)}</li>`;
+      html = `<ul class="lz">${itens.slice(0, 8).map(li).join("")}</ul>` +
+        (itens.length > 8 ? `<details><summary>+ ${itens.length - 8} itens</summary><ul class="lz">${itens.slice(8).map(li).join("")}</ul></details>` : "");
+    }
+  } else if (k === "end"){
+    html = esc(v) + `<br><a class="endmap" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v + (p.b ? ", " + p.b : ""))}" target="_blank" rel="noopener">ver no mapa ↗</a>`;
+  } else html = esc(v).replace(/\n/g, "<br>");
+  return `<div class="val${best ? " best" : ""}">${html}${best ? `<div class="badge">✓ ${rot}</div>` : ""}</div>`;
+}
+
+function carrossel(p){
+  const f = (p.ft || []).map(url).filter(Boolean);
+  if (!f.length) return `<div class="car"><div class="car-vazio">${esc(p.n)}</div></div>`;
+  return `<div class="car zoomavel" data-car><div class="car-track">${f.map((u, i) => `<img src="${esc(u)}" alt="${esc(p.n)} — foto ${i + 1}" loading="${i ? "lazy" : "eager"}" draggable="false">`).join("")}</div>
+    ${f.length > 1 ? `<button type="button" class="car-btn car-prev" aria-label="Foto anterior" disabled>‹</button><button type="button" class="car-btn car-next" aria-label="Próxima foto">›</button><span class="car-count">1/${f.length}</span>` : ""}</div>`;
+}
+const kpi = (rot, v, cls = "") => v ? `<div class="${cls}"><span>${rot}</span><b>${esc(v)}</b></div>` : "";
+
+const cards = P.map((p, i) => `<article class="card">
+  ${carrossel(p)}
+  <div class="card-body">
+    <h2><span class="num">${i + 1}</span>${esc(p.n || "Projeto " + (i + 1))}</h2>
+    <div class="by">${esc([p.c, p.b].filter(Boolean).join(" · "))}</div>
+    <div class="kpis">${kpi("Valores", p.val, "v")}${kpi("Entrega", p.ent)}${kpi("Metragem", p.m2)}${kpi("Dormitórios", p.dor)}</div>
+    ${url(p.link) ? `<a class="mais" href="${esc(url(p.link))}" target="_blank" rel="noopener">Ver o projeto completo ↗</a>` : ""}
+  </div>
+</article>`).join("");
+
+let linhas = "";
+for (const [grupo, campos] of CAMPOS){
+  const vis = campos.filter(([k]) => temCampo(k));
+  const extra = grupo === "Valores" && rent.some(v => v != null);
+  if (!vis.length && !extra) continue;
+  linhas += `<div class="grp">${grupo}</div>`;
+  for (const [k, rot] of vis) linhas += `<div class="row"><div class="lab">${rot}</div>${P.map((p, i) => celula(p, k, i)).join("")}</div>`;
+  if (extra) linhas += `<div class="row"><div class="lab">Retorno estimado do aluguel</div>${rent.map((r, i) => r == null ? `<div class="val vazio">—</div>` :
+    `<div class="val${rentBest[i] ? " best" : ""}">${r.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}% ao mês<div style="color:var(--muted);font-weight:500;font-size:12px">${brl(dinheiro(P[i].alug))} ÷ ${brl(dinheiro(P[i].val))}</div>${rentBest[i] ? `<div class="badge">✓ Maior retorno</div>` : ""}</div>`).join("")}</div>`;
+}
+
+$app.innerHTML = `
+  <section class="hero">
+    <span class="kicker">Estudo comparativo</span>
+    <h1>${esc(D.t || "Comparativo de empreendimentos")}</h1>
+    <div class="sub">${esc([D.para ? "Preparado para " + D.para : "", N + " empreendimentos", D.d].filter(Boolean).join(" · "))}</div>
+  </section>
+  <section class="cards">${cards}</section>
+  <section class="cmp">
+    <div class="row head"><div class="lab">Comparativo</div>${P.map((p, i) => `<div><span class="num">${i + 1}</span>${esc(p.n || "Projeto " + (i + 1))}</div>`).join("")}</div>
+    ${linhas}
+  </section>
+  ${D.obs ? `<p class="nota">${esc(D.obs)}</p>` : ""}`;
+})();
+</script>
+</body>
+</html>

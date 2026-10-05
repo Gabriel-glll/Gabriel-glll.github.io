@@ -136,7 +136,12 @@ window.MATERIAIS = {
         "url": "materiais/liv-guanabara/tabela/tabela-liv-guanabara-2026-10-valores-com-desconto.pdf",
         "titulo": "Tabela Out/2026 — Valores com desconto"
       }
-    ]
+    ],
+    "fotos": 9,
+    "book": {
+      "url": "materiais/liv-guanabara/book.pdf",
+      "titulo": "Book Liv Guanabara"
+    }
   },
   "liv-mansoes": {
     "tabela": [
@@ -188,7 +193,12 @@ window.MATERIAIS = {
         "url": "materiais/sensia-taquaral/tabela/tabela-sensia-taquaral-2026-09.pdf",
         "titulo": "Tabela Set/2026"
       }
-    ]
+    ],
+    "fotos": 20,
+    "book": {
+      "url": "materiais/sensia-taquaral/book.pdf",
+      "titulo": "Book Sensia Taquaral"
+    }
   },
   "spot": {
     "tabela": [
@@ -278,6 +288,48 @@ window.MATERIAIS = {
     "book": {
       "url": "materiais/alto-do-galleria-ii/book.pdf",
       "titulo": "Book do corretor Alto do Galleria II"
+    }
+  },
+  "cores-da-mata": {
+    "fotos": 12,
+    "book": {
+      "url": "materiais/cores-da-mata/book.pdf",
+      "titulo": "Book Cores da Mata Mangará"
+    }
+  },
+  "alta-vista": {
+    "fotos": 14,
+    "book": {
+      "url": "materiais/alta-vista/book.pdf",
+      "titulo": "Book Alta Vista Mangará"
+    }
+  },
+  "oni-dijon-taquaral": {
+    "fotos": 16,
+    "book": {
+      "url": "materiais/oni-dijon-taquaral/book.pdf",
+      "titulo": "Book Oni Dijon"
+    }
+  },
+  "maxi-bonfim": {
+    "fotos": 8,
+    "book": {
+      "url": "materiais/maxi-bonfim/book.pdf",
+      "titulo": "Book HM Maxi Campinas"
+    }
+  },
+  "yard": {
+    "fotos": 19,
+    "book": {
+      "url": "materiais/yard/book.pdf",
+      "titulo": "Book Yard Cambuí"
+    }
+  },
+  "san-pietro": {
+    "fotos": 11,
+    "book": {
+      "url": "materiais/san-pietro/book.pdf",
+      "titulo": "Book San Pietro"
     }
   }
 };

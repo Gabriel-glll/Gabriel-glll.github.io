@@ -214,6 +214,38 @@ select{height:42px;border:1px solid var(--line-strong);border-radius:11px;backgr
 .vazio code{background:var(--panel-2);padding:2px 6px;border-radius:6px;font-size:12.5px;color:var(--text)}
 footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:12.5px}
 
+/* Comparador */
+.cmp-top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.cmp-top h1{font:600 clamp(28px,4.6vw,44px)/1.05 Oswald,sans-serif;text-transform:uppercase;margin:6px 0 4px}
+.cmp-top p{color:var(--muted);margin:0;max-width:720px}
+.cmp-add{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-bottom:14px}
+.cmp-add label,.cmp-meta label{display:flex;flex-direction:column;gap:5px;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.cmp-add .in{display:flex;gap:6px}
+.cmp input,.cmp textarea,.cmp-add input,.cmp-meta input{width:100%;background:var(--panel-2);border:1px solid var(--line-strong);border-radius:10px;padding:9px 11px;font:500 14px/1.35 Manrope,sans-serif;color:var(--text);text-transform:none;letter-spacing:0}
+.cmp textarea{resize:vertical;min-height:40px}
+.cmp input:focus,.cmp textarea:focus,.cmp-add input:focus,.cmp-meta input:focus{outline:none;border-color:var(--accent)}
+.cmp-meta{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:14px}
+.cmp{display:grid;grid-template-columns:repeat(var(--n),minmax(260px,1fr));gap:14px;overflow-x:auto;padding-bottom:6px;align-items:start}
+.cmp-col{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;min-width:0}
+.cmp-col .car{aspect-ratio:16/10}
+.cmp-col .car-track img{object-fit:cover}
+.cmp-h{display:flex;gap:6px;align-items:center;padding:12px 12px 0}
+.cmp-h .num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font:600 13px/1 Oswald,sans-serif}
+.cmp .cmp-h input{font:600 17px/1.2 Oswald,sans-serif;text-transform:uppercase}
+.cmp-h button{flex:0 0 auto;border:1px solid var(--line-strong);background:var(--panel-2);border-radius:8px;width:30px;height:30px;cursor:pointer;color:var(--muted)}
+.cmp-h button:hover{color:var(--text);border-color:var(--accent)}
+.cmp-src{padding:6px 12px 0;font-size:12px;color:var(--muted)}
+.cmp-f{padding:10px 12px 14px;display:flex;flex-direction:column;gap:8px}
+.cmp-f h4{margin:10px 0 0;font:600 13px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-text)}
+.cmp-f label{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:var(--muted)}
+.cmp-vazio{grid-column:1/-1;text-align:center;padding:46px 16px;border:2px dashed var(--line-strong);border-radius:var(--r);color:var(--muted)}
+.cmp-vazio b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
+.cmp-go{position:sticky;bottom:0;z-index:8;margin:16px -16px 0;padding:12px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cmp-go .msg{color:var(--muted);font-size:13px;flex:1;min-width:200px}
+.cmp-go .msg a{color:var(--accent-text);font-weight:700}
+.iconbtn .badge{background:var(--accent);color:#fff;border-radius:999px;font-size:11px;padding:1px 6px}
+@media (max-width:760px){ .cmp-add,.cmp-meta{grid-template-columns:1fr} .cmp{grid-template-columns:repeat(var(--n),86%);margin:0 -16px;padding:0 16px 6px;scroll-snap-type:x mandatory} .cmp-col{scroll-snap-align:center} }
+
 @media (max-width:760px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .dgrid{grid-template-columns:1fr}
@@ -233,6 +265,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
       <div><b>Novos Lançamentos</b><span>Campinas e região · ZFF Realty</span></div>
     </a>
     <div class="sp"></div>
+    <a class="iconbtn" href="#/comparar" title="Comparar empreendimentos">⇄ Comparar <span class="badge" id="cmpn" hidden></span></a>
   </div>
 </header>
 
@@ -738,13 +771,15 @@ function renderDetail(slug, tab){
         <div class="by">${esc(l.c === "Não informada" ? "Construtora não informada" : "Construtora " + l.c)} · ${esc(m2Label(l))} · Entrega ${esc(entregaLonga(l))}</div>
       </div>
       <div class="dprice"><small>Preço médio</small><b>${esc(precoLabel(l))}</b>
-        ${(window.LINKS_CLIENTE || {})[l.slug] ? `<div class="clink"><button class="btn primary" id="copylink" type="button">🔗 Copiar link para o cliente</button><a class="btn" href="${esc(window.LINKS_CLIENTE[l.slug])}" target="_blank" rel="noopener">Ver como cliente</a></div>` : ""}</div>
+        ${(window.LINKS_CLIENTE || {})[l.slug] ? `<div class="clink"><button class="btn primary" id="copylink" type="button">🔗 Copiar link para o cliente</button><a class="btn" href="${esc(window.LINKS_CLIENTE[l.slug])}" target="_blank" rel="noopener">Ver como cliente</a></div>` : ""}
+        <div class="clink"><button class="btn" id="cmpadd" type="button">⇄ Comparar com outros</button></div></div>
     </div>
     ${fotosDe(l).length ? carHTML(l, "galeria zoomavel") : ""}
     <nav class="tabs" role="tablist">
       ${TABS.map(t => `<a role="tab" class="tab" href="#/p/${l.slug}/${t.k}" aria-selected="${t.k === tab}" style="text-decoration:none">${esc(t.t)}${t.k !== "resumo" ? `<span class="dot${hasMat(l, t.k) ? " on" : ""}"></span>` : ""}</a>`).join("")}
     </nav>
     <section class="panel" role="tabpanel">${tabHTML(l, tab)}</section>`;
+  $("#cmpadd").onclick = () => { if (CMP.p.some(p => p.src === l.slug) || cmpAdd(cmpDoSite(l))) location.hash = "#/comparar"; };
   const cl = $("#copylink");
   if (cl) cl.onclick = async () => {
     const url = window.LINKS_CLIENTE[l.slug];
@@ -754,11 +789,167 @@ function renderDetail(slug, tab){
   };
 }
 
+/* ---------- comparador (gera o link da página lancamento/comparar/) ---------- */
+const CMP_URL = "https://gabriel-glll.github.io/lancamento/comparar/";
+/* mesmas linhas da página do cliente (ferramentas/comparar.html → CAMPOS) */
+const CMP_CAMPOS = [
+  ["Projeto",        [["c","Incorporadora"],["st","Status","Lançamento · Pré-lançamento · Em obras"],["b","Bairro"],["end","Endereço"],["lanc","Data de lançamento","Ex.: Novembro de 2025"],["ent","Entrega"]]],
+  ["Empreendimento", [["ter","Área do terreno"],["tor","Torres"],["un","Total de unidades"],["el","Elevadores"]]],
+  ["Unidades",       [["m2","Metragem"],["dor","Dormitórios"],["vg","Vagas"],["var","Varanda","Sim / Não · gourmet"],["dif","Diferenciais da unidade","Ex.: Entrega padrão"]]],
+  ["Lazer",          [["lz","Lazer (um item por linha)","",1]]],
+  ["Valores",        [["val","Valores","Ex.: A partir de R$ 302.100"],["cond","Previsão de condomínio","Ex.: R$ 350"],["alug","Estimativa de aluguel","Ex.: R$ 2.800 + taxas"]]],
+];
+const CMP_KEY = "zff-comparar";
+let CMP = (() => { try { return JSON.parse(localStorage.getItem(CMP_KEY)) || null; } catch(e){ return null; } })() || { t: "", para: "", p: [] };
+const cmpSalvar = () => { try { localStorage.setItem(CMP_KEY, JSON.stringify(CMP)); } catch(e){} cmpBadge(); };
+function cmpBadge(){ const b = $("#cmpn"); if (b){ b.textContent = CMP.p.length || ""; b.hidden = !CMP.p.length; } }
+
+function fichaBusca(l, re){ const f = (l.ficha || []).find(([k]) => re.test(norm(k))); return f ? f[1] : ""; }
+function cmpDoSite(l){
+  const fn = norm((l.ficha || []).map(x => x.join(" ")).join(" · "));
+  const torres = /torre unica/.test(fn) ? "1" : ((fn.match(/(\d+)\s*torres/) || [])[1] || "");
+  const un = (fichaBusca(l, /^unidades|^casas/).match(/^\d[\d.]*/) || [""])[0];
+  const pv = l.p.filter(x => x[1] != null);
+  const val = !l.p.length ? "" : !pv.length ? "Esgotado" :
+    "Média " + pv.map(([m, v]) => money(v) + (m && pv.length > 1 ? " (" + nm(m) + " m²)" : "")).join(" · ");
+  const link = (window.LINKS_CLIENTE || {})[l.slug] || "";
+  const fotos = link ? fotosDe(l).slice(0, 10).map((u, i) => link + "fotos/" + String(i + 1).padStart(2, "0") + ((u.match(/\.\w+$/) || [".jpg"])[0]).toLowerCase()) : [];
+  return {
+    src: l.slug, n: l.n, c: l.c === "Não informada" ? "" : l.c, st: l.e === "pronto" ? "Pronto" : "",
+    b: l.b, end: l.end || "", ent: l.e === "pronto" ? "Pronto" : l.el || entregaLonga(l),
+    ter: fichaBusca(l, /terreno/), tor: torres, un, el: fichaBusca(l, /elevador/),
+    m2: m2Label(l) + (l.t === "casa" ? " (casa)" : ""), dor: dormLabel(l).replace(/\bdorms?\b/, m => m === "dorms" ? "dormitórios" : "dormitório"),
+    vg: l.v ? vagasLabel(l) : "", lz: (l.lazer || []).join("\n"), val, link, ft: fotos,
+  };
+}
+function cmpAdd(obj){
+  if (CMP.p.length >= 4){ alert("O comparativo aceita até 4 projetos."); return false; }
+  if (obj.src && CMP.p.some(p => p.src === obj.src)){ alert(obj.n + " já está no comparativo."); return false; }
+  CMP.p.push(obj); cmpSalvar(); return true;
+}
+function cmpPeloLink(u){
+  const links = window.LINKS_CLIENTE || {};
+  const slug = Object.keys(links).find(s => u.startsWith(links[s].replace(/\/$/, ""))) || (u.match(/#\/p\/([^/?#]+)/) || [])[1];
+  return slug && BY_SLUG[slug] ? cmpDoSite(BY_SLUG[slug]) : null;
+}
+
+async function cmpCodificar(obj){
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  const b64 = b => { let s = ""; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+  if (window.CompressionStream){
+    const cs = new Blob([bytes]).stream().pipeThrough(new CompressionStream("deflate-raw"));
+    return "z" + b64(new Uint8Array(await new Response(cs).arrayBuffer()));
+  }
+  return "j" + b64(bytes);
+}
+async function cmpLink(){
+  const limpa = p => { const o = {}; for (const [k, v] of Object.entries(p)){ if (k === "src") continue; if (Array.isArray(v) ? v.length : String(v || "").trim()) o[k] = Array.isArray(v) ? v : String(v).trim(); } return o; };
+  const obj = { t: CMP.t.trim(), para: CMP.para.trim(), d: new Date().toLocaleDateString("pt-BR"), p: CMP.p.map(limpa) };
+  return CMP_URL + "#" + await cmpCodificar(obj);
+}
+
+function cmpColHTML(p, i){
+  const f = p.ft || [];
+  const campo = ([k, rot, ph, area]) => `<label>${esc(rot)}${area || k === "end" || k === "val" || k === "alug" ?
+      `<textarea data-k="${k}" rows="${area ? 6 : 2}" placeholder="${esc(ph || "")}">${esc(p[k] || "")}</textarea>` :
+      `<input type="text" data-k="${k}" value="${esc(p[k] || "")}" placeholder="${esc(ph || "")}">`}</label>`;
+  return `<div class="cmp-col" data-i="${i}">
+    ${f.length ? `<div class="car" data-car><div class="car-track">${f.map(u => `<img src="${esc(u)}" alt="" loading="lazy" draggable="false">`).join("")}</div>
+      ${f.length > 1 ? `<button type="button" class="car-btn car-prev" aria-label="Foto anterior" disabled>‹</button><button type="button" class="car-btn car-next" aria-label="Próxima foto">›</button><span class="car-count">1/${f.length}</span>` : ""}</div>`
+      : `<div class="car"><div class="car-vazio"><b>${esc(p.n || "Projeto " + (i + 1))}</b>Sem fotos</div></div>`}
+    <div class="cmp-h"><span class="num">${i + 1}</span><input type="text" data-k="n" value="${esc(p.n || "")}" placeholder="Nome do projeto" aria-label="Nome do projeto">
+      ${i > 0 ? `<button type="button" data-mv title="Mover para a esquerda">←</button>` : ""}
+      <button type="button" data-rm title="Remover do comparativo">✕</button></div>
+    <div class="cmp-src">${p.src ? `Dados do site · <a href="#/p/${esc(p.src)}" style="color:var(--accent-text)">abrir projeto</a> · confira e complete os vazios` : "Projeto de fora do site — preencha os campos"}</div>
+    <div class="cmp-f">
+      ${CMP_CAMPOS.map(([g, cs]) => `<h4>${g}</h4>${cs.map(campo).join("")}`).join("")}
+      <h4>Link e fotos</h4>
+      <label>Link do projeto (aparece como “Ver o projeto completo”)<input type="url" data-k="link" value="${esc(p.link || "")}" placeholder="https://…"></label>
+      <label>Fotos — endereços de imagem (um por linha)<textarea data-k="ft" rows="3" placeholder="https://…/fachada.jpg">${esc(f.join("\n"))}</textarea></label>
+    </div>
+  </div>`;
+}
+function renderComparar(){
+  document.title = "Comparar · Novos Lançamentos";
+  const nomes = DATA.map(l => l.n).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  $("#app").innerHTML = `
+    <a class="back" href="#/${lastListQuery}">← Todos os lançamentos</a>
+    <div class="cmp-top"><div><h1>Comparar empreendimentos</h1>
+      <p>Escolha de 2 a 4 projetos do site (ou de fora, pelo link), confira e complete as informações e gere um link para o cliente. Campos em branco não aparecem para ele.</p></div></div>
+    <div class="box cmp-add">
+      <label>Projeto do site<span class="in"><input id="cmp-busca" list="cmp-nomes" type="search" placeholder="Digite o nome…" autocomplete="off"><button class="btn" id="cmp-addsite" type="button">Adicionar</button></span>
+        <datalist id="cmp-nomes">${nomes.map(n => `<option value="${esc(n)}">`).join("")}</datalist></label>
+      <label>Ou cole o link de um projeto<span class="in"><input id="cmp-url" type="url" placeholder="https://… (site da construtora, link de cliente…)"><button class="btn" id="cmp-addurl" type="button">Adicionar</button></span></label>
+      <button class="btn" id="cmp-branco" type="button">+ Em branco</button>
+    </div>
+    <div class="box cmp-meta">
+      <label>Título do estudo<input id="cmp-t" type="text" value="${esc(CMP.t)}" placeholder="Comparativo de empreendimentos"></label>
+      <label>Para o cliente (opcional)<input id="cmp-para" type="text" value="${esc(CMP.para)}" placeholder="Nome do cliente"></label>
+    </div>
+    <div class="cmp" id="cmp" style="--n:${Math.max(1, CMP.p.length)}">
+      ${CMP.p.length ? CMP.p.map(cmpColHTML).join("") : `<div class="cmp-vazio"><b>Nenhum projeto ainda</b>Adicione projetos do site pelo nome, ou cole o link de um projeto de fora.</div>`}
+    </div>
+    <div class="cmp-go">
+      <button class="btn primary" id="cmp-gerar" type="button">🔗 Gerar link para o cliente</button>
+      <button class="btn" id="cmp-ver" type="button">Ver como cliente</button>
+      <button class="btn" id="cmp-limpar" type="button">Limpar</button>
+      <div class="msg" id="cmp-msg">${CMP.p.length < 2 ? "Adicione pelo menos 2 projetos." : ""}</div>
+    </div>`;
+
+  const busca = $("#cmp-busca");
+  const addSite = () => {
+    const l = DATA.find(x => norm(x.n) === norm(busca.value.trim()));
+    if (!l){ busca.focus(); busca.style.borderColor = "var(--warn)"; return; }
+    if (cmpAdd(cmpDoSite(l))) renderComparar(); else busca.value = "";
+  };
+  $("#cmp-addsite").onclick = addSite;
+  busca.addEventListener("keydown", e => { if (e.key === "Enter") addSite(); });
+  busca.addEventListener("input", () => { busca.style.borderColor = ""; if (DATA.some(x => x.n === busca.value)) addSite(); });
+  const addUrl = () => {
+    const u = $("#cmp-url").value.trim(); if (!u) return;
+    if (cmpAdd(cmpPeloLink(u) || { n: "", link: /^https?:\/\//i.test(u) ? u : "https://" + u, ft: [] })) renderComparar();
+  };
+  $("#cmp-addurl").onclick = addUrl;
+  $("#cmp-url").addEventListener("keydown", e => { if (e.key === "Enter") addUrl(); });
+  $("#cmp-branco").onclick = () => { if (cmpAdd({ n: "", ft: [] })) renderComparar(); };
+  $("#cmp-t").oninput = e => { CMP.t = e.target.value; cmpSalvar(); };
+  $("#cmp-para").oninput = e => { CMP.para = e.target.value; cmpSalvar(); };
+
+  const box = $("#cmp");
+  box.addEventListener("input", e => {
+    const k = e.target.dataset.k, col = e.target.closest(".cmp-col"); if (!k || !col) return;
+    const p = CMP.p[+col.dataset.i];
+    p[k] = k === "ft" ? e.target.value.split("\n").map(x => x.trim()).filter(x => /^https?:\/\//i.test(x)) : e.target.value;
+    cmpSalvar();
+  });
+  box.addEventListener("change", e => { if (e.target.dataset.k === "ft") renderComparar(); });
+  box.addEventListener("click", e => {
+    const col = e.target.closest(".cmp-col"); if (!col) return;
+    const i = +col.dataset.i;
+    if (e.target.closest("[data-rm]")){ CMP.p.splice(i, 1); cmpSalvar(); renderComparar(); }
+    else if (e.target.closest("[data-mv]")){ const [x] = CMP.p.splice(i, 1); CMP.p.splice(i - 1, 0, x); cmpSalvar(); renderComparar(); }
+  });
+
+  const msg = $("#cmp-msg");
+  const pronto = () => { if (CMP.p.length >= 2) return true; msg.textContent = "Adicione pelo menos 2 projetos."; return false; };
+  $("#cmp-gerar").onclick = async () => {
+    if (!pronto()) return;
+    const url = await cmpLink();
+    let ok = true;
+    try { await navigator.clipboard.writeText(url); }
+    catch(e){ const ta = document.createElement("textarea"); ta.value = url; document.body.appendChild(ta); ta.select(); try { ok = document.execCommand("copy"); } catch(_){ ok = false; } ta.remove(); }
+    msg.innerHTML = `${ok ? "✓ Link copiado — é só colar para o cliente." : "Copie o link abaixo:"} <input type="text" readonly value="${esc(url)}" onfocus="this.select()" style="width:100%;margin:4px 0;background:var(--panel-2);border:1px solid var(--line-strong);border-radius:8px;padding:6px 9px;font-size:12.5px" aria-label="Link do comparativo"> <a href="${esc(url)}" target="_blank" rel="noopener">abrir</a> · <a href="https://wa.me/?text=${encodeURIComponent(url)}" target="_blank" rel="noopener">enviar pelo WhatsApp</a>`;
+  };
+  $("#cmp-ver").onclick = async () => { if (pronto()) window.open(await cmpLink(), "_blank", "noopener"); };
+  $("#cmp-limpar").onclick = () => { if (!CMP.p.length || confirm("Apagar este comparativo e começar outro?")){ CMP = { t: "", para: "", p: [] }; cmpSalvar(); renderComparar(); } };
+}
+
 /* ---------- router ---------- */
 let lastListQuery = "";
 let lastRoute = "";
 function route(){
   const h = location.hash || "#/";
+  if (/^#\/comparar/.test(h)){ lastRoute = "comparar"; renderComparar(); window.scrollTo(0, 0); return; }
   const m = h.match(/^#\/p\/([^/?]+)(?:\/([^/?]+))?/);
   if (m){
     const isNewProject = !lastRoute.startsWith("p/" + m[1]);
@@ -776,6 +967,7 @@ function route(){
 let listScroll = 0;
 document.addEventListener("click", e => { const a = e.target.closest('a[href^="#/p/"]'); if (a && lastRoute === "list"){ listScroll = window.scrollY; lastListQuery = stateQuery(); } });
 window.addEventListener("hashchange", route);
+cmpBadge();
 route();
 })();
 </script>
