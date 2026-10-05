@@ -1,0 +1,52 @@
+name: Captação ZFF
+run-name: Captação ${{ inputs.pedido }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Link do anúncio do imóvel
+        required: true
+      pedido:
+        description: Identificador do pedido (gerado pelo hub)
+        required: true
+      codigo:
+        description: Código do imóvel (opcional)
+        required: false
+      valor:
+        description: Valor de venda (opcional)
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: captacao
+  cancel-in-progress: false
+
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet requests pillow
+      - name: Ler anúncio e montar página
+        env:
+          URL: ${{ inputs.url }}
+          PEDIDO: ${{ inputs.pedido }}
+          CODIGO: ${{ inputs.codigo }}
+          VALOR: ${{ inputs.valor }}
+        run: python .github/captacao/gerar.py --url "$URL" --pedido "$PEDIDO" --codigo "$CODIGO" --valor "$VALOR" > /dev/null
+      - name: Publicar
+        run: |
+          git config user.name "Captação ZFF"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add captacao
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Captação ${{ inputs.pedido }}"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done
+          exit 1
