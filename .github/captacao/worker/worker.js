@@ -128,6 +128,20 @@ export default {
       return json(JSON.parse(await env.PAGINAS.get("lista") || "[]").filter(i => vivos.has(i.slug)));
     }
 
+    // andamento do pedido: só leitura (GET do próprio hub não envia Origin)
+    if (req.method === "GET" && u.pathname === "/status") {
+      const pedido = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
+      if (!pedido) return json({ erro: "Pedido ausente." }, 400);
+      const k = await env.PAGINAS.get("res:" + pedido);
+      if (k) return json({ estado: "pronto", resultado: JSON.parse(k) });
+      const r = await gh(`/contents/captacao/pedidos/${pedido}.json?ref=main`, { headers: { Accept: "application/vnd.github.raw+json" } });
+      if (r.ok) return json({ estado: "pronto", resultado: await r.json() });
+      const rr = await gh(`/actions/workflows/${WF}/runs?per_page=20`);
+      const run = rr.ok ? (await rr.json()).workflow_runs.find(x => x.display_title === "Captação " + pedido) : null;
+      if (run && run.status === "completed" && run.conclusion !== "success")
+        return json({ estado: "falhou" });
+      return json({ estado: run && run.status === "queued" ? "fila" : "andamento", progresso: await env.PAGINAS.get("prog:" + pedido) });
+    }
     if (!ok) return json({ erro: "Origem não autorizada." }, 403);
 
     // Excluir captação (botão no hub, com confirmação): some na hora da Cloudflare;
@@ -198,19 +212,6 @@ export default {
       return json({ pedido });
     }
 
-    if (req.method === "GET" && u.pathname === "/status") {
-      const pedido = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
-      if (!pedido) return json({ erro: "Pedido ausente." }, 400);
-      const k = await env.PAGINAS.get("res:" + pedido);
-      if (k) return json({ estado: "pronto", resultado: JSON.parse(k) });
-      const r = await gh(`/contents/captacao/pedidos/${pedido}.json?ref=main`, { headers: { Accept: "application/vnd.github.raw+json" } });
-      if (r.ok) return json({ estado: "pronto", resultado: await r.json() });
-      const rr = await gh(`/actions/workflows/${WF}/runs?per_page=20`);
-      const run = rr.ok ? (await rr.json()).workflow_runs.find(x => x.display_title === "Captação " + pedido) : null;
-      if (run && run.status === "completed" && run.conclusion !== "success")
-        return json({ estado: "falhou" });
-      return json({ estado: run && run.status === "queued" ? "fila" : "andamento", progresso: await env.PAGINAS.get("prog:" + pedido) });
-    }
     return json({ erro: "Não encontrado." }, 404);
   }
 };
