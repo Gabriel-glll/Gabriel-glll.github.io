@@ -37,6 +37,11 @@ h1 em{font-style:normal;color:var(--accent)}
 .sub{color:var(--muted);margin:0 0 20px}
 .box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
 label{display:block;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px}
+textarea{width:100%;min-height:84px;resize:vertical;border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:10px 14px;font:inherit;font-size:14px;color:inherit}
+textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.obs{margin-top:14px}
+.btn.del{color:var(--err)}
+.btn.del:hover{border-color:var(--err)}
 input{width:100%;height:48px;border:1px solid var(--line-strong);border-radius:11px;background:var(--bg);padding:0 14px;font-size:15px}
 input:focus{outline:2px solid var(--accent);outline-offset:1px}
 .linha{display:flex;gap:10px}
@@ -121,6 +126,11 @@ footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
     <div class="linha">
       <input id="url" type="url" inputmode="url" placeholder="https://..." required>
       <button class="btn pri" id="gerar" type="submit">Gerar captação</button>
+    </div>
+    <div class="obs">
+      <label for="obs">Observações para a descrição (opcional)</label>
+      <textarea id="obs" maxlength="1000" placeholder="Ex.: não citar o nome do condomínio · destacar que aceita financiamento · deixar o texto mais curto · acrescentar que o imóvel está desocupado"></textarea>
+      <div class="dica">O texto do anúncio é reescrito seguindo o que você pedir, sem inventar informações.</div>
     </div>
     <details>
       <summary>Ajustes (opcional)</summary>
@@ -219,7 +229,7 @@ $("form").onsubmit = async e => {
   try {
     status(0);
     const r = await fetch(MOTOR + "/gerar", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor, ref: REF || undefined }) }).catch(() => null);
+      body: JSON.stringify({ url, codigo: $("codigo").value.trim(), valor, obs: $("obs").value.trim() || undefined, ref: REF || undefined }) }).catch(() => null);
     const j = r ? await r.json().catch(() => ({})) : {};
     if (!r || !r.ok || !j.pedido) throw new Error(j.erro || "Sem conexão com o gerador. Tente de novo em instantes.");
     const pedido = j.pedido;
@@ -234,7 +244,7 @@ $("form").onsubmit = async e => {
     await aguardaPublicacao(res.url);
     mostraPronto(res);
     REF = null;
-    $("url").value = ""; $("codigo").value = ""; $("valor").value = "";
+    $("url").value = ""; $("codigo").value = ""; $("valor").value = ""; $("obs").value = "";
     carregaLista();
   } catch (err) {
     status(-1, "err", `<b>Não deu certo.</b><br>${esc(err.message)}`);
@@ -275,16 +285,29 @@ function mostraPronto(res){
 /* ---------- lista ---------- */
 async function carregaLista(){
   const r = await fetch(BASE + "lista.json?v=" + Date.now(), { cache: "no-store" }).catch(() => null);
-  const L = r && r.ok ? await r.json() : [];
+  const apagadas = (() => { try { return JSON.parse(sessionStorage.getItem("zff-excluidas") || "[]"); } catch { return []; } })();
+  const L = (r && r.ok ? await r.json() : []).filter(i => !apagadas.includes(i.slug));
   $("qtd").textContent = L.length ? L.length + (L.length > 1 ? " imóveis" : " imóvel") : "";
   $("lista").innerHTML = L.length ? L.map(i => {
     const u = BASE + i.slug + "/";
     return `<div class="item"><img src="${esc(BASE + i.capa)}" alt="" loading="lazy"><div class="tx"><b>${esc(i.titulo)}</b>
       <span><span class="cod">${esc(i.codigo)}</span>${brl(i.valor)} · ${i.fotos} fotos · ${new Date(i.data + "T12:00").toLocaleDateString("pt-BR")}</span></div>
-      <div class="ac"><button class="btn sm" type="button" data-copiar="${esc(u)}">Copiar link</button><a class="btn sm" href="${esc(u)}" target="_blank" rel="noopener">Abrir</a></div></div>`;
+      <div class="ac"><button class="btn sm" type="button" data-copiar="${esc(u)}">Copiar link</button><a class="btn sm" href="${esc(u)}" target="_blank" rel="noopener">Abrir</a><button class="btn sm del" type="button" data-excluir="${esc(i.slug)}" data-cod="${esc(i.codigo)}">Excluir</button></div></div>`;
   }).join("") : `<div class="vazio">Nenhuma captação ainda. Cole o primeiro link acima.</div>`;
 }
 document.addEventListener("click", async e => {
+  const x = e.target.closest("[data-excluir]");
+  if (x) {
+    if (!confirm(`Excluir a captação ${x.dataset.cod}?\n\nO link enviado aos clientes deixa de funcionar. Não dá para desfazer.`)) return;
+    x.disabled = true; x.textContent = "Excluindo…";
+    const r = await fetch(MOTOR + "/excluir", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: x.dataset.excluir }) }).catch(() => null);
+    if (!r || !r.ok) { x.disabled = false; x.textContent = "Excluir"; toast("Não consegui excluir. Tente de novo."); return; }
+    try { const a = JSON.parse(sessionStorage.getItem("zff-excluidas") || "[]"); a.push(x.dataset.excluir); sessionStorage.setItem("zff-excluidas", JSON.stringify(a)); } catch {}
+    x.closest(".item").remove();
+    toast(`${x.dataset.cod} excluída — some do site em 1 a 2 minutos`);
+    return;
+  }
   const b = e.target.closest("[data-copiar]"); if (!b) return;
   try { await navigator.clipboard.writeText(b.dataset.copiar); toast("Link copiado!"); } catch { prompt("Copie o link:", b.dataset.copiar); }
 });

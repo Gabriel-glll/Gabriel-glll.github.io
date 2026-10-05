@@ -23,7 +23,10 @@ on:
         description: Página entregue pelo navegador (sites com anti-robô)
         required: false
       modo:
-        description: "'comparar' = só ler o empreendimento para o comparador de lançamentos"
+        description: "'comparar' = só ler o empreendimento para o comparador; 'excluir' = apagar a captação (url = slug)"
+        required: false
+      obs:
+        description: "'1' = aplicar as observações do corretor à descrição (texto guardado no Worker)"
         required: false
 
 permissions:
@@ -62,7 +65,9 @@ jobs:
           CODIGO: ${{ inputs.codigo }}
           VALOR: ${{ inputs.valor }}
           HTML_URL: ${{ inputs.html_url }}
-        run: python .github/captacao/gerar.py --url "$URL" --pedido "$PEDIDO" --codigo "$CODIGO" --valor "$VALOR" --html-url "$HTML_URL" > /dev/null
+          MODO: ${{ inputs.modo }}
+          OBS: ${{ inputs.obs }}
+        run: python .github/captacao/gerar.py --url "$URL" --pedido "$PEDIDO" --codigo "$CODIGO" --valor "$VALOR" --html-url "$HTML_URL" --modo "$MODO" --obs "$OBS" > /dev/null
       - name: Ler anúncios da fila
         if: github.event_name == 'push'
         run: |
@@ -86,13 +91,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Sem "git pull" (trava em clone raso): aponta para a ponta atual do main e
           # recommita só a pasta captacao/ por cima.
-          # Pedidos rodam em paralelo: --ignore-removal evita apagar páginas que outro
-          # pedido publicou depois do checkout deste.
+          # Pedidos rodam em paralelo: cada um envia só o que ele mesmo criou/apagou
+          # (listado em captacao/_mudou.txt) + a lista.json mesclada com a do repositório.
           for i in 1 2 3 4 5 6 7 8; do
             git fetch -q --depth=1 origin main
             git reset -q --mixed origin/main
             python .github/captacao/mesclar.py
-            git add --ignore-removal captacao
+            if [ -f captacao/_mudou.txt ]; then
+              sort -u captacao/_mudou.txt | while read -r p; do [ -n "$p" ] && git add -A -- "$p"; done
+            fi
+            git add -- captacao/lista.json
             git add -A captacao/fila 2>/dev/null || true
             git reset -q -- captacao/_entrada.json
             git diff --cached --quiet && exit 0

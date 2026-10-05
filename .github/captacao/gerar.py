@@ -642,6 +642,44 @@ def proximo_codigo(lista, tipo):
     return f"{pre}{n}"
 
 
+def registrar(*caminhos):
+    """Anota o que este pedido criou/apagou: o passo Publicar só envia esses caminhos."""
+    with open(os.path.join(PASTA, "_mudou.txt"), "a", encoding="utf-8") as f:
+        for c in caminhos:
+            f.write(os.path.relpath(c, RAIZ).replace("\\", "/") + "\n")
+
+
+SITE_MOTOR = "https://captacao-zff.zff-captacao.workers.dev"
+
+
+def reescrever(pedido, texto, d):
+    """Aplica as observações do corretor ao texto (IA da Cloudflare, via Worker).
+    As observações ficam guardadas no Worker pelo pedido; aqui só vai o texto."""
+    try:
+        r = requests.post(SITE_MOTOR + "/reescrever", timeout=90, json={
+            "pedido": pedido, "texto": texto,
+            "dados": {k: d.get(k) for k in ("tipo", "bairro", "cidade", "quartos", "suites", "vagas",
+                                              "areaUtil", "areaConstruida", "areaTerreno", "valorVenda")}})
+        j = r.json() if r.ok else {}
+        novo = (j.get("texto") or "").strip()
+        return [p.strip() for p in novo.split("\n") if p.strip()] if novo else None
+    except Exception:
+        return None
+
+
+def excluir(slug):
+    slug = re.sub(r"[^a-z0-9-]", "", slug or "")
+    pasta = os.path.join(PASTA, slug)
+    if not slug or not os.path.isdir(pasta) or slug in ("assets", "pedidos", "comparar", "fila"):
+        raise Falha("Captação não encontrada.")
+    import shutil
+    shutil.rmtree(pasta)
+    with open(os.path.join(PASTA, "_remover.txt"), "a", encoding="utf-8") as f:
+        f.write(slug + "\n")
+    registrar(pasta)
+    return {"ok": True, "excluida": slug}
+
+
 def carregar_lista():
     p = os.path.join(PASTA, "lista.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else []
@@ -670,7 +708,7 @@ def renderizar(slug):
     return url
 
 
-def gerar(url, codigo=None, valor=None, html_url=None):
+def gerar(url, codigo=None, valor=None, html_url=None, pedido=None, obs=False):
     if not re.match(r"https?://", url or ""):
         url = "https://" + (url or "").strip()
     d = extrair(url, html_url)
@@ -682,7 +720,11 @@ def gerar(url, codigo=None, valor=None, html_url=None):
     if valor:
         d["valorVenda"] = numero(valor)
     lista = carregar_lista()
-    codigo = (codigo or "").strip().upper() or proximo_codigo(lista, d["tipo"])
+    codigo = (codigo or "").strip().upper()
+    m = re.match(r"^#(\d+)$", codigo)
+    if m:  # número único reservado pelo Worker (pedidos em paralelo não repetem)
+        codigo = proximo_codigo([], d["tipo"])[:2] + m.group(1)
+    codigo = codigo or proximo_codigo(lista, d["tipo"])
     d["titulo"] = titulo_padrao(d)
     vagas = (d.get("vagasCob") or 0) + (d.get("vagasDes") or 0) or d.get("vagas")
     area = d.get("areaConstruida") or d.get("areaUtil") or d.get("areaTerreno")
@@ -710,6 +752,10 @@ def gerar(url, codigo=None, valor=None, html_url=None):
     # descrição curta (só meta) costuma ser o próprio título do anúncio -> descarta
     if len(" ".join(descricao)) < 60:
         descricao = []
+    if obs and pedido:
+        novo = reescrever(pedido, "\n".join(descricao), d)
+        if novo:
+            descricao = higieniza(novo)
     saida = {
         "codigo": codigo, "tipo": d["tipo"], "finalidade": d.get("finalidade") or "Venda", "titulo": d["titulo"],
         "endereco": d.get("endereco"), "numero": d.get("numero"), "bairro": d.get("bairro"),
@@ -734,6 +780,7 @@ def gerar(url, codigo=None, valor=None, html_url=None):
                      "valor": saida.get("valorVenda"), "data": saida["atualizado"], "fotos": len(fotos)})
     salvar_json(os.path.join(PASTA, "lista.json"), lista)
     salvar_json(os.path.join(PASTA, "_entrada.json"), lista[0])  # mesclado na publicação
+    registrar(pasta)
     avisos = []
     if not saida.get("valorVenda"): avisos.append("valor não encontrado (aparece 'Consulte')")
     if not saida.get("quartos") and saida["tipo"] not in ("Terreno", "Sala", "Galpão"): avisos.append("nº de quartos não encontrado")
@@ -747,20 +794,26 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url"); ap.add_argument("--pedido"); ap.add_argument("--codigo"); ap.add_argument("--valor")
     ap.add_argument("--html-url"); ap.add_argument("--refazer", action="store_true")
+    ap.add_argument("--modo", default=""); ap.add_argument("--obs", default="")
     a = ap.parse_args()
     if a.refazer:
         for i in carregar_lista():
             print(renderizar(i["slug"]))
         return
     try:
-        res = gerar(a.url, a.codigo, a.valor, a.html_url or None)
+        if a.modo == "excluir":
+            res = excluir(a.url)
+        else:
+            res = gerar(a.url, a.codigo, a.valor, a.html_url or None, a.pedido, a.obs == "1")
     except Falha as e:
         res = {"ok": False, "erro": str(e)}
     except Exception as e:  # erro inesperado: registra para o hub mostrar
         res = {"ok": False, "erro": f"Erro inesperado ao ler o anúncio: {e.__class__.__name__}: {e}"}
     res["quando"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     if a.pedido:
-        salvar_json(os.path.join(PASTA, "pedidos", re.sub(r"[^\w-]", "", a.pedido) + ".json"), res)
+        arq = os.path.join(PASTA, "pedidos", re.sub(r"[^\w-]", "", a.pedido) + ".json")
+        salvar_json(arq, res)
+        registrar(arq)
     print(json.dumps(res, ensure_ascii=False, indent=1))
     if not res["ok"] and not a.pedido:
         sys.exit(1)
