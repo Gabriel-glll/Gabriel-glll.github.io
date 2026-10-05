@@ -216,6 +216,11 @@ def main():
         res = {"ok": False, "modo": "comparar", "erro": f"Erro inesperado ao ler a página: {e.__class__.__name__}: {e}"}
     res["quando"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     salvar_json(os.path.join(gerar.PASTA, "pedidos", pedido + ".json"), res)
+    # o passo Publicar do workflow publica só o que estiver listado em captacao/_mudou.txt
+    with open(os.path.join(gerar.PASTA, "_mudou.txt"), "a", encoding="utf-8") as m:
+        m.write(f"captacao/pedidos/{pedido}.json\n")
+        if os.path.isdir(os.path.join(PASTA, pedido)):
+            m.write(f"captacao/comparar/{pedido}\n")
     print(json.dumps(res, ensure_ascii=False, indent=1))
 
 
