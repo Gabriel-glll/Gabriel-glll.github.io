@@ -1,0 +1,13 @@
+{
+ "ok": true,
+ "modo": "comparar",
+ "projeto": {
+  "st": "Lançamento",
+  "n": "Apartamento para Venda em Centro",
+  "link": "https://captacao-zff.zff-captacao.workers.dev/imovel/apartamento-venda-1-dormitorios-1-vagas-46m2-campinas-centro-ap9002/",
+  "ft": [
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261005212915-f71117e5/fotos/01.jpg"
+  ]
+ },
+ "quando": "2026-10-05T21:29:58Z"
+}
