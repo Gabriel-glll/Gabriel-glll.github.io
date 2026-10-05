@@ -293,6 +293,7 @@ function precoMin(l){ const v = precosValidos(l); return v.length ? Math.min(...
 function precoMax(l){ const v = precosValidos(l); return v.length ? Math.max(...v) : null; }
 function precoLabel(l){
   const a = precoMin(l), b = precoMax(l);
+  if (!l.p.length) return "Sob consulta";
   if (a == null) return "Esgotado";
   return a === b ? money(a) : money(a) + " a " + money(b);
 }
@@ -640,7 +641,7 @@ function renderResults(){
 
 /* ---------- detail view ---------- */
 function resumoHTML(l){
-  const temTabela = l.p.length > 1 || l.p[0][0];
+  const temTabela = l.p.length > 1 || (l.p[0] && l.p[0][0]);
   const venc = entregaVencida(l);
   const notas = [];
   if (venc) notas.push(`A previsão de entrega (${entregaLabel(l)}) já passou — confirme com a construtora se já foi entregue ou se o prazo mudou.`);
