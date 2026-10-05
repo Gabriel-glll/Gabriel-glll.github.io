@@ -66,7 +66,7 @@ h1{font:600 clamp(30px,5.4vw,50px)/1.02 Oswald,sans-serif;text-transform:upperca
 .val{font-weight:600;font-size:14.5px}
 .val.vazio{color:var(--muted);font-weight:500}
 .val.best{background:var(--ok-soft)}
-.badge{display:inline-flex;margin-top:5px;font-size:11px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:.05em}
+.badge{display:flex;width:fit-content;margin-top:5px;font-size:11px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:.05em}
 .head{position:sticky;top:0;z-index:5;background:var(--panel-2);border-top:0;border-radius:var(--r) var(--r) 0 0}
 .head > div{display:flex;gap:8px;align-items:center;font:600 15px/1.15 Oswald,sans-serif;text-transform:uppercase}
 .head .lab{font:800 12px/1.2 Manrope,sans-serif}
@@ -312,7 +312,7 @@ function dinheiro(s){
   const t = norm(s);
   const conv = (n, u) => {
     let v = parseFloat(n.replace(/\./g, "").replace(",", "."));   // formato brasileiro: 302.100 · 350,00 · 1,1 mi
-    if (u) v *= u.startsWith("mi") ? 1e6 : 1e3;
+    if (u) v *= u === "mil" || u === "k" ? 1e3 : 1e6;   // "mil"/"k" = milhares · "mi"/"milh" = milhões
     return v;
   };
   const rs = [...t.matchAll(/r\$\s*(\d[\d.,]*\d|\d)\s*(milh|mi\b|mil\b|k\b)?/g)].map(m => conv(m[1], m[2])).filter(v => v > 0);
