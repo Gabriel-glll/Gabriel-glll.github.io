@@ -362,7 +362,7 @@ def de_jsonld(blocos):
 
 CARAC_CONHECIDAS = [
     "Piscina", "Churrasqueira", "Espaço gourmet", "Varanda gourmet", "Área gourmet", "Varanda", "Sacada", "Quintal",
-    "Jardim", "Lavabo", "Área de serviço", "Lavanderia", "Cozinha americana", "Cozinha planejada", "Armários planejados",
+    "Lavabo", "Área de serviço", "Lavanderia", "Cozinha americana", "Cozinha planejada", "Armários planejados",
     "Armários na cozinha", "Armários nos dormitórios", "Closet", "Escritório", "Home office", "Ar-condicionado",
     "Aquecimento solar", "Aquecimento a gás", "Energia solar", "Piso em porcelanato", "Piso laminado", "Mobiliado",
     "Semi-mobiliado", "Aceita pets", "Edícula", "Despensa", "Hidromassagem", "Sauna", "Lareira", "Portaria 24h",
@@ -405,6 +405,18 @@ def de_texto(texto):
     tl = sem_acento(t).lower()
     r["caracteristicas"] = [c for c in CARAC_CONHECIDAS if sem_acento(c).lower() in tl]
     return {k: v for k, v in r.items() if v not in (None, "", [])}
+
+
+def completa_caracteristicas(lista, texto):
+    """Lista do anúncio + itens conhecidos citados na descrição (sem repetir)."""
+    vistos = {sem_acento(c).lower() for c in lista}
+    t = sem_acento(texto).lower()
+    extra = [c for c in CARAC_CONHECIDAS if sem_acento(c).lower() in t and sem_acento(c).lower() not in vistos]
+    sinonimos = {"espaco fitness": "Academia", "portaria 24 horas": "Portaria 24h", "planejados": "Armários planejados"}
+    for k, v in sinonimos.items():
+        if k in t and sem_acento(v).lower() not in vistos and v not in extra:
+            extra.append(v)
+    return list(lista) + extra
 
 
 def tipo_de(*fontes):
@@ -660,6 +672,8 @@ def gerar(url, codigo=None, valor=None, html_url=None):
     if not fotos:
         raise Falha("Não encontrei fotos do imóvel nesse link.")
     descricao = higieniza(d.get("descricao") or [])
+    descricao = [re.sub(r"\s*-\s*\d{2}/\d{2}/\d{4}$", "", p) for p in descricao]
+    carac = completa_caracteristicas(d.get("caracteristicas") or [], " ".join(descricao))
     # descrição curta (só meta) costuma ser o próprio título do anúncio -> descarta
     if len(" ".join(descricao)) < 60:
         descricao = []
@@ -675,7 +689,7 @@ def gerar(url, codigo=None, valor=None, html_url=None):
         "valorVenda": limpo(numero(d.get("valorVenda"))), "valorLocacao": limpo(numero(d.get("valorLocacao"))),
         "valorCondominio": limpo(numero(d.get("valorCondominio"))), "valorIptu": limpo(numero(d.get("valorIptu"))),
         "iptuPeriodo": d.get("iptuPeriodo") or "ano",
-        "descricao": descricao, "caracteristicas": d.get("caracteristicas") or [],
+        "descricao": descricao, "caracteristicas": carac,
         "fotos": fotos, "lat": d.get("lat"), "lon": d.get("lon"),
         "atualizado": datetime.date.today().isoformat(), "slug": slug,
     }
