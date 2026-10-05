@@ -22,6 +22,9 @@ on:
       html_url:
         description: Página entregue pelo navegador (sites com anti-robô)
         required: false
+      modo:
+        description: "'comparar' = só ler o empreendimento para o comparador de lançamentos"
+        required: false
 
 permissions:
   contents: write
@@ -44,8 +47,15 @@ jobs:
       - name: Baixar modelo se faltar
         run: |
           [ -s .github/captacao/lama.onnx ] || curl -sSL -o .github/captacao/lama.onnx             https://huggingface.co/Carve/LaMa-ONNX/resolve/main/lama_fp32.onnx
+      - name: Ler empreendimento para o comparador (Novos Lançamentos)
+        if: github.event_name == 'workflow_dispatch' && inputs.modo == 'comparar'
+        env:
+          URL: ${{ inputs.url }}
+          PEDIDO: ${{ inputs.pedido }}
+          HTML_URL: ${{ inputs.html_url }}
+        run: python .github/captacao/comparar.py --url "$URL" --pedido "$PEDIDO" --html-url "$HTML_URL" > /dev/null
       - name: Ler anúncio e montar página (hub)
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.modo != 'comparar'
         env:
           URL: ${{ inputs.url }}
           PEDIDO: ${{ inputs.pedido }}

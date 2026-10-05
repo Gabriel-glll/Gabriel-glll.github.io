@@ -63,6 +63,22 @@ export default {
       return json({ pedido });
     }
 
+    // Comparador de lançamentos (site Novos Lançamentos): só lê o empreendimento, não publica captação.
+    if (req.method === "POST" && u.pathname === "/comparar") {
+      let b; try { b = await req.json(); } catch { return json({ erro: "Pedido inválido." }, 400); }
+      let url = String(b.url || "").trim();
+      if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+      try { new URL(url); } catch { return json({ erro: "Link inválido." }, 400); }
+      if (url.length > 1500) return json({ erro: "Link longo demais." }, 400);
+      const pedido = "c" + new Date().toISOString().replace(/\D/g, "").slice(0, 14) + "-" + crypto.randomUUID().slice(0, 8);
+      const inputs = { url, pedido, modo: "comparar" };
+      if (typeof b.ref === "string" && /^r[0-9a-f]{32}$/.test(b.ref) && await env.PAGINAS.get(b.ref))
+        inputs.html_url = u.origin + "/pagina?pedido=" + b.ref;
+      const r = await gh(`/actions/workflows/${WF}/dispatches`, { method: "POST", body: JSON.stringify({ ref: "main", inputs }) });
+      if (!r.ok) return json({ erro: "O GitHub recusou o pedido (erro " + r.status + ")." }, 502);
+      return json({ pedido });
+    }
+
     if (req.method === "GET" && u.pathname === "/status") {
       const pedido = (u.searchParams.get("pedido") || "").replace(/[^\w-]/g, "");
       if (!pedido) return json({ erro: "Pedido ausente." }, 400);
