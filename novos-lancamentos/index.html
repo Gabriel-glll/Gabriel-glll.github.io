@@ -238,6 +238,16 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
 .cmp-f{padding:10px 12px 14px;display:flex;flex-direction:column;gap:8px}
 .cmp-f h4{margin:10px 0 0;font:600 13px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-text)}
 .cmp-f label{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:var(--muted)}
+.cmp-det{border-top:1px solid var(--line);margin-top:10px}
+.cmp-det summary{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 12px;cursor:pointer;font-weight:700;font-size:13.5px;list-style:none}
+.cmp-det summary::-webkit-details-marker{display:none}
+.cmp-det summary span::before{content:"▸ ";color:var(--muted)}
+.cmp-det[open] summary span::before{content:"▾ "}
+.cmp-det summary b{font-size:12px;padding:2px 8px;border-radius:999px}
+.cmp-det summary .falta{background:var(--warn-soft);color:var(--warn)}
+.cmp-det summary .ok{background:var(--ok-soft);color:var(--ok)}
+.cmp-f .obr{color:var(--accent-text);font-style:normal}
+.cmp .erro{border-color:var(--warn) !important;box-shadow:0 0 0 2px var(--warn-soft)}
 .cmp-vazio{grid-column:1/-1;text-align:center;padding:46px 16px;border:2px dashed var(--line-strong);border-radius:var(--r);color:var(--muted)}
 .cmp-vazio b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
 .cmp-go{position:sticky;bottom:0;z-index:8;margin:16px -16px 0;padding:12px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -793,12 +803,20 @@ function renderDetail(slug, tab){
 const CMP_URL = "https://gabriel-glll.github.io/lancamento/comparar/";
 /* mesmas linhas da página do cliente (ferramentas/comparar.html → CAMPOS) */
 const CMP_CAMPOS = [
-  ["Projeto",        [["c","Incorporadora"],["st","Status","Lançamento · Pré-lançamento · Em obras"],["b","Bairro"],["end","Endereço"],["lanc","Data de lançamento","Ex.: Novembro de 2025"],["ent","Entrega"]]],
+  ["Projeto",        [["c","Incorporadora"],["st","Status","Lançamento · Pré-lançamento · Em obras"],["b","Bairro"],["end","Endereço"],["ent","Entrega"]]],
   ["Empreendimento", [["ter","Área do terreno"],["tor","Torres"],["un","Total de unidades"],["el","Elevadores"]]],
   ["Unidades",       [["m2","Metragem"],["dor","Dormitórios"],["vg","Vagas"],["var","Varanda","Sim / Não · gourmet"],["dif","Diferenciais da unidade","Ex.: Entrega padrão"]]],
   ["Lazer",          [["lz","Lazer (um item por linha)","",1]]],
-  ["Valores",        [["val","Valores","Ex.: A partir de R$ 302.100"],["cond","Previsão de condomínio","Ex.: R$ 350"],["alug","Estimativa de aluguel","Ex.: R$ 2.800 + taxas"]]],
+  ["Valores",        [["val","Valores","Ex.: A partir de R$ 302.100"],["cond","Previsão de condomínio (opcional)","Ex.: R$ 350"],["alug","Estimativa de aluguel (opcional)","Ex.: R$ 2.800 + taxas"]]],
 ];
+/* obrigatórios para gerar o link: todos, menos condomínio e aluguel */
+const CMP_OPC = new Set(["cond", "alug"]);
+function cmpFaltando(p){
+  const f = String(p.n || "").trim() ? [] : ["Nome"];
+  for (const [, cs] of CMP_CAMPOS) for (const [k, rot] of cs) if (!CMP_OPC.has(k) && !String(p[k] || "").trim()) f.push(rot.replace(/ \(.*\)$/, ""));
+  return f;
+}
+const cmpAbertos = new Set();
 const CMP_KEY = "zff-comparar";
 let CMP = (() => { try { return JSON.parse(localStorage.getItem(CMP_KEY)) || null; } catch(e){ return null; } })() || { t: "", para: "", p: [] };
 const cmpSalvar = () => { try { localStorage.setItem(CMP_KEY, JSON.stringify(CMP)); } catch(e){} cmpBadge(); };
@@ -815,11 +833,13 @@ function cmpDoSite(l){
   const link = (window.LINKS_CLIENTE || {})[l.slug] || "";
   const fotos = link ? fotosDe(l).slice(0, 10).map((u, i) => link + "fotos/" + String(i + 1).padStart(2, "0") + ((u.match(/\.\w+$/) || [".jpg"])[0]).toLowerCase()) : [];
   return {
-    src: l.slug, n: l.n, c: l.c === "Não informada" ? "" : l.c, st: l.e === "pronto" ? "Pronto" : "",
+    src: l.slug, n: l.n, c: l.c === "Não informada" ? "" : l.c,
+    st: l.e === "pronto" ? "Pronto" : entregaVencida(l) ? "" : "Lançamento",   // entrega futura sem status = lançamento
     b: l.b, end: l.end || "", ent: l.e === "pronto" ? "Pronto" : l.el || entregaLonga(l),
     ter: fichaBusca(l, /terreno/), tor: torres, un, el: fichaBusca(l, /elevador/),
     m2: m2Label(l) + (l.t === "casa" ? " (casa)" : ""), dor: dormLabel(l).replace(/\bdorms?\b/, m => m === "dorms" ? "dormitórios" : "dormitório"),
     vg: l.v ? vagasLabel(l) : "", lz: (l.lazer || []).join("\n"), val, link, ft: fotos,
+    ...(l.cmp || {}),   // terreno, torres, unidades, elevadores, varanda e diferenciais tirados do book
   };
 }
 function cmpAdd(obj){
@@ -848,9 +868,13 @@ async function cmpLink(){
   return CMP_URL + "#" + await cmpCodificar(obj);
 }
 
+function cmpResumo(p){
+  const n = cmpFaltando(p).length;
+  return n ? `<b class="falta">faltam ${n}</b>` : `<b class="ok">✓ completo</b>`;
+}
 function cmpColHTML(p, i){
   const f = p.ft || [];
-  const campo = ([k, rot, ph, area]) => `<label>${esc(rot)}${area || k === "end" || k === "val" || k === "alug" ?
+  const campo = ([k, rot, ph, area]) => `<label><span>${esc(rot)}${!CMP_OPC.has(k) ? ' <i class="obr">*</i>' : ""}</span>${area || k === "end" || k === "val" || k === "alug" ?
       `<textarea data-k="${k}" rows="${area ? 6 : 2}" placeholder="${esc(ph || "")}">${esc(p[k] || "")}</textarea>` :
       `<input type="text" data-k="${k}" value="${esc(p[k] || "")}" placeholder="${esc(ph || "")}">`}</label>`;
   return `<div class="cmp-col" data-i="${i}">
@@ -861,21 +885,28 @@ function cmpColHTML(p, i){
       ${i > 0 ? `<button type="button" data-mv title="Mover para a esquerda">←</button>` : ""}
       <button type="button" data-rm title="Remover do comparativo">✕</button></div>
     <div class="cmp-src">${p.src ? `Dados do site · <a href="#/p/${esc(p.src)}" style="color:var(--accent-text)">abrir projeto</a> · confira e complete os vazios` : "Projeto de fora do site — preencha os campos"}</div>
+    <details class="cmp-det"${cmpAbertos.has(i) ? " open" : ""}><summary><span>Informações do projeto</span>${cmpResumo(p)}</summary>
     <div class="cmp-f">
       ${CMP_CAMPOS.map(([g, cs]) => `<h4>${g}</h4>${cs.map(campo).join("")}`).join("")}
       <h4>Link e fotos</h4>
       <label>Link do projeto (aparece como “Ver o projeto completo”)<input type="url" data-k="link" value="${esc(p.link || "")}" placeholder="https://…"></label>
       <label>Fotos — endereços de imagem (um por linha)<textarea data-k="ft" rows="3" placeholder="https://…/fachada.jpg">${esc(f.join("\n"))}</textarea></label>
-    </div>
+    </div></details>
   </div>`;
 }
 function renderComparar(){
   document.title = "Comparar · Novos Lançamentos";
+  for (const p of CMP.p){
+    if (!p.src || !BY_SLUG[p.src]) continue;
+    const novo = cmpDoSite(BY_SLUG[p.src]);
+    for (const k of Object.keys(novo)) if (!(Array.isArray(p[k]) ? p[k].length : String(p[k] || "").trim())) p[k] = novo[k];
+    delete p.lanc;
+  }
   const nomes = DATA.map(l => l.n).sort((a, b) => a.localeCompare(b, "pt-BR"));
   $("#app").innerHTML = `
     <a class="back" href="#/${lastListQuery}">← Todos os lançamentos</a>
     <div class="cmp-top"><div><h1>Comparar empreendimentos</h1>
-      <p>Escolha de 2 a 4 projetos do site (ou de fora, pelo link), confira e complete as informações e gere um link para o cliente. Campos em branco não aparecem para ele.</p></div></div>
+      <p>Escolha de 2 a 4 projetos do site (ou de fora, pelo link), confira e complete as informações e gere um link para o cliente. <b>Para gerar o link, todos os campos com * precisam estar preenchidos</b> — só condomínio e aluguel são opcionais.</p></div></div>
     <div class="box cmp-add">
       <label>Projeto do site<span class="in"><input id="cmp-busca" list="cmp-nomes" type="search" placeholder="Digite o nome…" autocomplete="off"><button class="btn" id="cmp-addsite" type="button">Adicionar</button></span>
         <datalist id="cmp-nomes">${nomes.map(n => `<option value="${esc(n)}">`).join("")}</datalist></label>
@@ -920,8 +951,14 @@ function renderComparar(){
     const k = e.target.dataset.k, col = e.target.closest(".cmp-col"); if (!k || !col) return;
     const p = CMP.p[+col.dataset.i];
     p[k] = k === "ft" ? e.target.value.split("\n").map(x => x.trim()).filter(x => /^https?:\/\//i.test(x)) : e.target.value;
+    if (e.target.value.trim()) e.target.classList.remove("erro");
+    const r = col.querySelector(".cmp-det summary b"); if (r) r.outerHTML = cmpResumo(p);
     cmpSalvar();
   });
+  box.addEventListener("toggle", e => {
+    const col = e.target.closest(".cmp-col"); if (!col || !e.target.matches(".cmp-det")) return;
+    e.target.open ? cmpAbertos.add(+col.dataset.i) : cmpAbertos.delete(+col.dataset.i);
+  }, true);
   box.addEventListener("change", e => { if (e.target.dataset.k === "ft") renderComparar(); });
   box.addEventListener("click", e => {
     const col = e.target.closest(".cmp-col"); if (!col) return;
@@ -931,7 +968,25 @@ function renderComparar(){
   });
 
   const msg = $("#cmp-msg");
-  const pronto = () => { if (CMP.p.length >= 2) return true; msg.textContent = "Adicione pelo menos 2 projetos."; return false; };
+  const pronto = () => {
+    if (CMP.p.length < 2){ msg.textContent = "Adicione pelo menos 2 projetos."; return false; }
+    const faltas = CMP.p.map(cmpFaltando);
+    if (faltas.every(f => !f.length)) return true;
+    let primeiro = null;
+    document.querySelectorAll(".cmp-col").forEach((col, i) => {
+      if (!faltas[i].length) return;
+      col.querySelector(".cmp-det").open = true; cmpAbertos.add(i);
+      col.querySelectorAll("[data-k]").forEach(el => {
+        const k = el.dataset.k;
+        if (k === "link" || k === "ft" || CMP_OPC.has(k) || el.value.trim()) return;
+        el.classList.add("erro"); primeiro = primeiro || el;
+      });
+    });
+    msg.innerHTML = `<b style="color:var(--warn)">Complete antes de gerar o link</b> (só condomínio e aluguel são opcionais) — ` +
+      CMP.p.map((p, i) => faltas[i].length ? `<b>${esc(p.n || "Projeto " + (i + 1))}</b>: ${esc(faltas[i].join(", "))}` : "").filter(Boolean).join(" · ");
+    if (primeiro){ primeiro.scrollIntoView({ block: "center", behavior: "smooth" }); primeiro.focus({ preventScroll: true }); }
+    return false;
+  };
   $("#cmp-gerar").onclick = async () => {
     if (!pronto()) return;
     const url = await cmpLink();
