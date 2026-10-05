@@ -235,6 +235,8 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
 .cmp-h button{flex:0 0 auto;border:1px solid var(--line-strong);background:var(--panel-2);border-radius:8px;width:30px;height:30px;cursor:pointer;color:var(--muted)}
 .cmp-h button:hover{color:var(--text);border-color:var(--accent)}
 .cmp-src{padding:6px 12px 0;font-size:12px;color:var(--muted)}
+.cmp-src .lendo{color:var(--accent-text);animation:pisca 1.4s ease-in-out infinite}
+@keyframes pisca{50%{opacity:.45}}
 .cmp-f{padding:10px 12px 14px;display:flex;flex-direction:column;gap:8px}
 .cmp-f h4{margin:10px 0 0;font:600 13px/1 Oswald,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--accent-text)}
 .cmp-f label{display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:var(--muted)}
@@ -275,7 +277,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
       <div><b>Novos Lançamentos</b><span>Campinas e região · ZFF Realty</span></div>
     </a>
     <div class="sp"></div>
-    <a class="iconbtn" href="captacao.html" title="Gerar página de captação para o cliente">＋ Captação</a>
+    <a class="iconbtn" href="https://captacao-zff.zff-captacao.workers.dev/" target="_blank" rel="noopener" title="Gerar página de captação para o cliente">＋ Captação</a>
     <a class="iconbtn" href="#/comparar" title="Comparar empreendimentos">⇄ Comparar <span class="badge" id="cmpn" hidden></span></a>
   </div>
 </header>
@@ -854,6 +856,46 @@ function cmpPeloLink(u){
   return slug && BY_SLUG[slug] ? cmpDoSite(BY_SLUG[slug]) : null;
 }
 
+/* Projeto de outro site: o motor da Captação lê a página (GitHub Actions) e devolve os campos + fotos */
+const MOTOR = "https://captacao-zff.zff-captacao.workers.dev";
+const cmpLendo = new Set();
+const cmpVazio = v => !(Array.isArray(v) ? v.length : String(v || "").trim());
+async function cmpLer(p){
+  if (cmpLendo.has(p)) return;
+  cmpLendo.add(p); delete p._erro;
+  try {
+    if (!p._pedido){
+      const r = await fetch(MOTOR + "/comparar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: p.link }) }).catch(() => null);
+      const j = r && await r.json().catch(() => null);
+      if (!r || !r.ok || !j || !j.pedido) throw new Error((j && j.erro) || "Não consegui iniciar a leitura do link.");
+      p._pedido = j.pedido; cmpSalvar();
+    }
+    let res = null;
+    for (let i = 0; i < 100 && !res; i++){
+      await new Promise(ok => setTimeout(ok, 6000));
+      if (!CMP.p.includes(p)) return;
+      const r = await fetch(`${MOTOR}/status?pedido=${encodeURIComponent(p._pedido)}`, { cache: "no-store" }).catch(() => null);
+      const j = r && await r.json().catch(() => null);
+      if (j && j.estado === "pronto") res = j.resultado;
+      else if (j && j.estado === "falhou") throw new Error("A leitura falhou.");
+    }
+    if (!res) throw new Error("A leitura demorou demais.");
+    if (!res.ok) throw new Error(String(res.erro || "A leitura falhou.").replace(/^BLOQUEADO\|/, "").replace(/ Abra o anúncio.*$/, " Preencha os campos manualmente."));
+    for (const [k, v] of Object.entries(res.projeto || {})) if (cmpVazio(p[k])) p[k] = v;   // não sobrescreve o que o corretor já digitou
+    p._lido = true;
+  } catch(e){
+    p._erro = e.message;
+  } finally {
+    cmpLendo.delete(p); delete p._pedido; cmpSalvar();
+    if (lastRoute === "comparar") renderComparar();
+  }
+}
+window.cmpFotoDeNovo = img => {   // fotos recém-publicadas levam ~1 min para aparecer no GitHub Pages
+  const n = +(img.dataset.tent || 0); if (n >= 8) return;
+  img.dataset.tent = n + 1;
+  setTimeout(() => { img.src = img.src.split("?")[0] + "?t=" + Date.now(); }, 15000);
+};
+
 async function cmpCodificar(obj){
   const bytes = new TextEncoder().encode(JSON.stringify(obj));
   const b64 = b => { let s = ""; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
@@ -864,7 +906,7 @@ async function cmpCodificar(obj){
   return "j" + b64(bytes);
 }
 async function cmpLink(){
-  const limpa = p => { const o = {}; for (const [k, v] of Object.entries(p)){ if (k === "src") continue; if (Array.isArray(v) ? v.length : String(v || "").trim()) o[k] = Array.isArray(v) ? v : String(v).trim(); } return o; };
+  const limpa = p => { const o = {}; for (const [k, v] of Object.entries(p)){ if (k === "src" || k.startsWith("_")) continue; if (Array.isArray(v) ? v.length : String(v || "").trim()) o[k] = Array.isArray(v) ? v : String(v).trim(); } return o; };
   const obj = { t: CMP.t.trim(), para: CMP.para.trim(), d: new Date().toLocaleDateString("pt-BR"), p: CMP.p.map(limpa) };
   return CMP_URL + "#" + await cmpCodificar(obj);
 }
@@ -879,13 +921,17 @@ function cmpColHTML(p, i){
       `<textarea data-k="${k}" rows="${area ? 6 : 2}" placeholder="${esc(ph || "")}">${esc(p[k] || "")}</textarea>` :
       `<input type="text" data-k="${k}" value="${esc(p[k] || "")}" placeholder="${esc(ph || "")}">`}</label>`;
   return `<div class="cmp-col" data-i="${i}">
-    ${f.length ? `<div class="car" data-car><div class="car-track">${f.map(u => `<img src="${esc(u)}" alt="" loading="lazy" draggable="false">`).join("")}</div>
+    ${f.length ? `<div class="car" data-car><div class="car-track">${f.map(u => `<img src="${esc(u)}" alt="" loading="lazy" draggable="false" onerror="cmpFotoDeNovo(this)">`).join("")}</div>
       ${f.length > 1 ? `<button type="button" class="car-btn car-prev" aria-label="Foto anterior" disabled>‹</button><button type="button" class="car-btn car-next" aria-label="Próxima foto">›</button><span class="car-count">1/${f.length}</span>` : ""}</div>`
       : `<div class="car"><div class="car-vazio"><b>${esc(p.n || "Projeto " + (i + 1))}</b>Sem fotos</div></div>`}
     <div class="cmp-h"><span class="num">${i + 1}</span><input type="text" data-k="n" value="${esc(p.n || "")}" placeholder="Nome do projeto" aria-label="Nome do projeto">
       ${i > 0 ? `<button type="button" data-mv title="Mover para a esquerda">←</button>` : ""}
       <button type="button" data-rm title="Remover do comparativo">✕</button></div>
-    <div class="cmp-src">${p.src ? `Dados do site · <a href="#/p/${esc(p.src)}" style="color:var(--accent-text)">abrir projeto</a> · confira e complete os vazios` : "Projeto de fora do site — preencha os campos"}</div>
+    <div class="cmp-src">${cmpLendo.has(p) || p._pedido ? `<b class="lendo">⏳ Lendo a página do projeto…</b> costuma levar de 1 a 3 minutos; os campos e as fotos se preenchem sozinhos.`
+      : p._erro ? `<b style="color:var(--warn)">⚠ Não consegui ler esse link:</b> ${esc(p._erro)}`
+      : p.src ? `Dados do site · <a href="#/p/${esc(p.src)}" style="color:var(--accent-text)">abrir projeto</a> · confira e complete os vazios`
+      : p._lido ? `Preenchido a partir do <a href="${esc(p.link)}" target="_blank" rel="noopener" style="color:var(--accent-text)">link</a> · o que o site não informa ficou vazio — confira e complete`
+      : "Projeto de fora do site — preencha os campos"}</div>
     <details class="cmp-det"${cmpAbertos.has(i) ? " open" : ""}><summary><span>Informações do projeto</span>${cmpResumo(p)}</summary>
     <div class="cmp-f">
       ${CMP_CAMPOS.map(([g, cs]) => `<h4>${g}</h4>${cs.map(campo).join("")}`).join("")}
@@ -903,6 +949,7 @@ function renderComparar(){
     for (const k of Object.keys(novo)) if (!(Array.isArray(p[k]) ? p[k].length : String(p[k] || "").trim())) p[k] = novo[k];
     delete p.lanc;
   }
+  CMP.p.forEach(p => { if (p._pedido) cmpLer(p); });
   const nomes = DATA.map(l => l.n).sort((a, b) => a.localeCompare(b, "pt-BR"));
   $("#app").innerHTML = `
     <a class="back" href="#/${lastListQuery}">← Todos os lançamentos</a>
@@ -911,7 +958,7 @@ function renderComparar(){
     <div class="box cmp-add">
       <label>Projeto do site<span class="in"><input id="cmp-busca" list="cmp-nomes" type="search" placeholder="Digite o nome…" autocomplete="off"><button class="btn" id="cmp-addsite" type="button">Adicionar</button></span>
         <datalist id="cmp-nomes">${nomes.map(n => `<option value="${esc(n)}">`).join("")}</datalist></label>
-      <label>Ou cole o link de um projeto<span class="in"><input id="cmp-url" type="url" placeholder="https://… (site da construtora, link de cliente…)"><button class="btn" id="cmp-addurl" type="button">Adicionar</button></span></label>
+      <label>Ou cole o link de um projeto de outro site (preenche sozinho)<span class="in"><input id="cmp-url" type="url" placeholder="https://… (apto.vc, site da construtora, portal…)"><button class="btn" id="cmp-addurl" type="button">Adicionar</button></span></label>
       <button class="btn" id="cmp-branco" type="button">+ Em branco</button>
     </div>
     <div class="box cmp-meta">
@@ -939,7 +986,11 @@ function renderComparar(){
   busca.addEventListener("input", () => { busca.style.borderColor = ""; if (DATA.some(x => x.n === busca.value)) addSite(); });
   const addUrl = () => {
     const u = $("#cmp-url").value.trim(); if (!u) return;
-    if (cmpAdd(cmpPeloLink(u) || { n: "", link: /^https?:\/\//i.test(u) ? u : "https://" + u, ft: [] })) renderComparar();
+    const doSite = cmpPeloLink(u), novo = doSite || { n: "", link: /^https?:\/\//i.test(u) ? u : "https://" + u, ft: [] };
+    if (!cmpAdd(novo)) return;
+    $("#cmp-url").value = "";
+    if (!doSite) cmpLer(novo);
+    renderComparar();
   };
   $("#cmp-addurl").onclick = addUrl;
   $("#cmp-url").addEventListener("keydown", e => { if (e.key === "Enter") addUrl(); });
@@ -971,6 +1022,7 @@ function renderComparar(){
   const msg = $("#cmp-msg");
   const pronto = () => {
     if (CMP.p.length < 2){ msg.textContent = "Adicione pelo menos 2 projetos."; return false; }
+    if (CMP.p.some(p => cmpLendo.has(p))){ msg.textContent = "Aguarde terminar a leitura do link (⏳) antes de gerar."; return false; }
     const faltas = CMP.p.map(cmpFaltando);
     if (faltas.every(f => !f.length)) return true;
     let primeiro = null;
