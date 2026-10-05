@@ -731,6 +731,7 @@ def gerar(url, codigo=None, valor=None, html_url=None):
     lista.insert(0, {"codigo": codigo, "slug": slug, "titulo": saida["titulo"], "capa": slug + "/" + fotos[0],
                      "valor": saida.get("valorVenda"), "data": saida["atualizado"], "fotos": len(fotos)})
     salvar_json(os.path.join(PASTA, "lista.json"), lista)
+    salvar_json(os.path.join(PASTA, "_entrada.json"), lista[0])  # mesclado na publicação
     avisos = []
     if not saida.get("valorVenda"): avisos.append("valor não encontrado (aparece 'Consulte')")
     if not saida.get("quartos") and saida["tipo"] not in ("Terreno", "Sala", "Galpão"): avisos.append("nº de quartos não encontrado")
