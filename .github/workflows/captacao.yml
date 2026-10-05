@@ -83,6 +83,7 @@ jobs:
             git reset -q --mixed origin/main
             python .github/captacao/mesclar.py
             git add --ignore-removal captacao
+            git add -A captacao/fila 2>/dev/null || true
             git reset -q -- captacao/_entrada.json
             git diff --cached --quiet && exit 0
             git commit -q -m "Captação ${{ inputs.pedido || 'fila' }}"
