@@ -1,0 +1,32 @@
+{
+ "ok": true,
+ "modo": "comparar",
+ "projeto": {
+  "c": "vazio",
+  "st": "Pronto",
+  "ent": "Pronto",
+  "ter": "vazio",
+  "tor": "vazio",
+  "un": "vazio",
+  "el": "vazio",
+  "n": "Apartamento para Venda em Taquaral",
+  "m2": "40 m²",
+  "dor": "1 dormitório",
+  "val": "R$ 230.000",
+  "cond": "R$ 444",
+  "link": "https://captacao-zff.zff-captacao.workers.dev/imovel/apartamento-venda-1-dormitorios-40m2-campinas-taquaral-ap9009/",
+  "ft": [
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/01.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/02.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/03.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/04.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/05.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/06.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/07.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/08.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/09.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141240-b4831975/fotos/10.jpg"
+  ]
+ },
+ "quando": "2026-10-06T14:14:02Z"
+}
