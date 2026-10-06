@@ -464,7 +464,7 @@ def tipo_de(*fontes):
               ("sobrado", "Sobrado"), ("chacara", "Chácara"), ("sitio", "Sítio"), ("terreno", "Terreno"),
               ("lote", "Terreno"), ("galpao", "Galpão"), ("sala comercial", "Sala"), ("kitnet", "Kitnet"),
               ("studio", "Studio"), ("casa", "Casa"))
-    achados = [(m.start(), nome) for chave, nome in termos for m in [re.search(r"" + chave + r"s?", s)] if m]
+    achados = [(m.start(), nome) for chave, nome in termos for m in [re.search(r"\b" + chave + r"s?\b", s)] if m]
     return min(achados)[1] if achados else "Imóvel"
 
 
