@@ -136,10 +136,14 @@ export default {
       const r = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
         max_tokens: 900, temperature: 0.1, messages: [{ role: "system", content: sistema }, { role: "user", content: usuario }]
       }).catch(() => null);
-      const txt = String(r && r.response || "");
-      const m = txt.match(/\{[\s\S]*\}/);
-      let res = null; try { res = m ? JSON.parse(m[0]) : null; } catch {}
-      return json({ resultado: res });
+      const bruto = r && (r.response !== undefined ? r.response : r.result);
+      let res = null;
+      if (bruto && typeof bruto === "object") res = bruto;
+      else {
+        const m = String(bruto || "").match(/\{[\s\S]*\}/);
+        try { res = m ? JSON.parse(m[0]) : null; } catch {}
+      }
+      return json({ resultado: res, ...(res ? {} : { bruto: String(bruto || "").slice(0, 300) }) });
     }
 
     // Observações do corretor aplicadas à descrição (chamado pelo GitHub Actions). Só funciona

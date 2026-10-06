@@ -458,14 +458,14 @@ def completa_caracteristicas(lista, texto):
 
 
 def tipo_de(*fontes):
+    """Tipo do imóvel: vale o termo que aparece PRIMEIRO no texto ("Casa ... terreno de 200 m²" = Casa)."""
     s = sem_acento(" ".join(str(f or "") for f in fontes)).lower()
-    for chave, nome in (("cobertura", "Cobertura"), ("apartamento", "Apartamento"), ("apto", "Apartamento"),
-                        ("sobrado", "Sobrado"), ("chacara", "Chácara"), ("sitio", "Sítio"), ("terreno", "Terreno"),
-                        ("lote", "Terreno"), ("galpao", "Galpão"), ("sala comercial", "Sala"), ("kitnet", "Kitnet"),
-                        ("studio", "Studio"), ("casa", "Casa")):
-        if re.search(r"\b" + chave + r"s?\b", s):
-            return nome
-    return "Imóvel"
+    termos = (("cobertura", "Cobertura"), ("apartamento", "Apartamento"), ("apto", "Apartamento"),
+              ("sobrado", "Sobrado"), ("chacara", "Chácara"), ("sitio", "Sítio"), ("terreno", "Terreno"),
+              ("lote", "Terreno"), ("galpao", "Galpão"), ("sala comercial", "Sala"), ("kitnet", "Kitnet"),
+              ("studio", "Studio"), ("casa", "Casa"))
+    achados = [(m.start(), nome) for chave, nome in termos for m in [re.search(r"" + chave + r"s?", s)] if m]
+    return min(achados)[1] if achados else "Imóvel"
 
 
 # ---------------------------------------------------------------- fotos
