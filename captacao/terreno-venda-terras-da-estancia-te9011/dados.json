@@ -1,0 +1,35 @@
+{
+ "codigo": "TE9011",
+ "tipo": "Terreno",
+ "finalidade": "Venda",
+ "titulo": "Terreno à venda em Campinas, Terras da Estância",
+ "bairro": "Terras da Estância",
+ "uf": "SP",
+ "iptuPeriodo": "ano",
+ "descricao": [
+  "Localizado no bairro Terras da Estância, este imóvel oferece um refúgio perfeito para quem busca segurança, lazer e qualidade de vida. Com uma área externa atraente, o imóvel apresenta características que tornam a vida mais confortável e prazerosa. A região é conhecida por proporcionar uma experiência de moradia tranquila e agradável, ideal para famílias que valorizam o bem-estar e a proximidade com áreas verdes. O imóvel em si é uma oportunidade única de adquirir um pedaço de terra para construir o sonho da sua família."
+ ],
+ "caracteristicas": [
+  "Piscina",
+  "Área gourmet",
+  "Churrasqueira",
+  "Varanda gourmet",
+  "Varanda",
+  "Ar-condicionado",
+  "Aquecimento solar"
+ ],
+ "fotos": [
+  "fotos/01.jpg",
+  "fotos/02.jpg",
+  "fotos/03.jpg",
+  "fotos/04.jpg",
+  "fotos/05.jpg",
+  "fotos/06.jpg",
+  "fotos/07.jpg",
+  "fotos/08.jpg",
+  "fotos/09.jpg",
+  "fotos/10.jpg"
+ ],
+ "atualizado": "2026-10-06",
+ "slug": "terreno-venda-terras-da-estancia-te9011"
+}
