@@ -170,12 +170,6 @@ select{height:42px;border:1px solid var(--line-strong);border-radius:11px;backgr
 .tab .dot{width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
 .tab .dot.on{background:var(--ok)}
 .panel{padding:20px 0 50px}
-.dl-card{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
-.dl-ico{width:52px;height:64px;border-radius:8px;background:var(--accent-soft);color:var(--accent-text);display:flex;align-items:center;justify-content:center;font:700 14px/1 Manrope,sans-serif;flex:none}
-.dl-txt{flex:1;min-width:180px;display:flex;flex-direction:column;gap:3px}
-.dl-txt b{font-size:16px}
-.dl-txt span{color:var(--muted);font-size:13px}
-.dl-card .actions{margin:0}
 .endereco{margin:0 0 14px;color:var(--muted)}
 .mapa{display:block;width:100%;height:340px;border:0;border-radius:12px;margin:0 0 18px;background:#2c3038}
 @media (max-width:760px){ .mapa{height:260px} }
@@ -401,26 +395,7 @@ function embedUrl(url, kind){
   }
   return url;
 }
-function bookHTML(item, idx, l){
-  const nome = item.titulo || ("Book " + l.n);
-  const arq = slugify(l.n) + (idx ? "-" + (idx + 1) : "") + ".pdf";
-  return `<div class="dl-card">
-    <div class="dl-ico">PDF</div>
-    <div class="dl-txt"><b>${esc(nome)}</b><span data-tam="${esc(item.url)}">Arquivo PDF</span></div>
-    <div class="actions"><a class="btn primary" href="${esc(item.url)}" download="${esc(arq)}">⬇ Baixar book</a><a class="btn" href="${esc(item.url)}" target="_blank" rel="noopener">↗ Abrir em nova aba</a></div>
-  </div>`;
-}
-function preencheTamanhos(){
-  document.querySelectorAll("[data-tam]").forEach(async el => {
-    try {
-      const r = await fetch(el.dataset.tam, { method: "HEAD" });
-      const n = +r.headers.get("content-length");
-      if (n) el.textContent = "Arquivo PDF · " + (n / 1048576).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + " MB";
-    } catch(e) {}
-  });
-}
 function mediaHTML(item, idx, tabKey, l){
-  if (tabKey === "book" && mediaKind(item.url) === "pdf") return bookHTML(item, idx, l);
   const kind = mediaKind(item.url);
   const nome = item.titulo || (TABS.find(t => t.k === tabKey).t + (idx ? " " + (idx + 1) : ""));
   const isVid = tabKey === "videos";
@@ -790,7 +765,6 @@ function tabHTML(l, k){
       <div style="margin-top:14px;font-size:12.5px">Para adicionar: em <code>materiais.js</code>, chave <code>"${l.slug}"</code> → <code>${k}: "${k === "videos" ? ex : "materiais/" + l.slug + "/" + ex}"</code></div></div>`;
   }
   const html = items.map((it, i) => mediaHTML(it, i, k, l)).join("");
-  if (k === "book") setTimeout(preencheTamanhos, 0);
   return k === "videos" ? `<div class="vgrid">${html}</div>` : `<div class="media">${html}</div>`;
 }
 
