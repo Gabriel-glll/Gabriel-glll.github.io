@@ -291,7 +291,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
 </footer>
 
 <script src="dados.js?v=ea2dc686"></script>
-<script src="materiais.js?v=5aa75b4d"></script>
+<script src="materiais.js?v=4ab4a016"></script>
 <script src="links.js?v=c90126ed"></script>
 <script src="galeria.js?v=dade6568"></script>
 <script>
@@ -404,7 +404,8 @@ function mediaHTML(item, idx, tabKey, l){
   else if (kind === "drive") body = `<iframe class="${isVid ? "vid" : "doc"}" src="${esc(embedUrl(item.url, kind))}" allow="fullscreen" allowfullscreen loading="lazy" title="${esc(nome)}"></iframe>`;
   else if (kind === "pdf") body = `<iframe class="doc" src="${esc(item.url)}#view=FitH" loading="lazy" title="${esc(nome)}"></iframe>`;
   else body = `<div class="vazio" style="border:0"><b>Link externo</b>Abra pelo botão acima.</div>`;
-  const dl = (kind === "pdf" || kind === "image" || kind === "video") ? `<a class="btn" href="${esc(item.url)}" download>⬇ Baixar</a>` : "";
+  const dlUrl = /workers\.dev\//.test(item.url) ? item.url + (item.url.includes("?") ? "&" : "?") + "baixar=1" : item.url;
+  const dl = (kind === "pdf" || kind === "image" || kind === "video") ? `<a class="btn" href="${esc(dlUrl)}" download>⬇ Baixar</a>` : "";
   return `<div class="mitem">
     <div class="mbar"><b>${esc(nome)}</b>
       <div class="actions"><a class="btn" href="${esc(item.url)}" target="_blank" rel="noopener">↗ Abrir em nova aba</a>${dl}</div>
