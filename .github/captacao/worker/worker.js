@@ -50,6 +50,8 @@ export default {
         return new Response("Não recebi a página do anúncio.", { status: 400 });
       const ref = "r" + crypto.randomUUID().replace(/-/g, "");
       await env.PAGINAS.put(ref, html, { expirationTtl: 3600 });
+      if (f.get("destino") === "comparar")   // favorito "Comparar ZFF" (comparador do Novos Lançamentos)
+        return Response.redirect("https://gabriel-glll.github.io/novos-lancamentos/#/comparar?receber=" + ref + "&url=" + encodeURIComponent(url), 303);
       return Response.redirect(HUB + "#receber=" + ref + "&url=" + encodeURIComponent(url), 303);
     }
 

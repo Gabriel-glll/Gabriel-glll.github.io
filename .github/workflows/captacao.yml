@@ -56,6 +56,7 @@ jobs:
           URL: ${{ inputs.url }}
           PEDIDO: ${{ inputs.pedido }}
           HTML_URL: ${{ inputs.html_url }}
+          BRAVE_KEY: ${{ secrets.BRAVE_KEY }}   # opcional: pesquisa do condomínio (imóvel pronto)
         run: python .github/captacao/comparar.py --url "$URL" --pedido "$PEDIDO" --html-url "$HTML_URL" > /dev/null
       - name: Ler anúncio e montar página (hub)
         if: github.event_name == 'workflow_dispatch' && inputs.modo != 'comparar'

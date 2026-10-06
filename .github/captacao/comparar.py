@@ -158,6 +158,86 @@ def salva_fotos(sess, urls, pedido, referer):
     return salvas
 
 
+# ---------------------------------------------------------------- imóvel pronto (anúncio de revenda)
+EMPREEND = ("ter", "tor", "un", "el")
+SINAIS_LANC = re.compile(r"lancamento|na planta|pre-lancamento|breve lancamento|em construcao|em obras")
+CONDO_GENERICO = re.compile(r"(?i)^(fechado|clube|com|de|do|da|horizontal|vertical|residencial|r\$|valor|mensal|incluso)\b")
+
+
+def eh_lancamento(apto, meta, texto):
+    if apto:
+        return "pronto" not in sem_acento(apto.get("st", "")).lower()
+    cab = sem_acento(" ".join(meta.get(k, "") for k in ("og:title", "og:description", "description", "title"))).lower()
+    if SINAIS_LANC.search(cab):
+        return True
+    return bool(re.search(r"previsao de entrega|entrega prevista|data de entrega", sem_acento(texto).lower()))
+
+
+def nome_condominio(d, meta, texto):
+    if d.get("condominio"):
+        return str(d["condominio"]).strip()
+    fonte = " ".join([meta.get("og:title", ""), meta.get("og:description", ""), texto[:20000]])
+    for m in re.finditer(r"\b(?:[Cc]ondom[ií]nio|[Ee]dif[ií]cio|[Rr]esidencial)\s+((?:[A-ZÀ-Ú0-9][\wÀ-ú'’.&-]*\s?){1,5})", fonte):
+        nome = m.group(1).strip(" .-")
+        if len(nome) > 2 and not CONDO_GENERICO.match(nome):
+            return m.group(0).strip(" .-")
+    return ""
+
+
+def busca_web(q, sess):
+    """Links de resultado para a pesquisa. Com BRAVE_KEY (API gratuita do Brave) é confiável;
+    sem ela tenta o Bing, que costuma responder mal a robôs."""
+    chave = os.environ.get("BRAVE_KEY", "").strip()
+    try:
+        if chave:
+            r = sess.get("https://api.search.brave.com/res/v1/web/search", timeout=20,
+                         params={"q": q, "country": "BR", "search_lang": "pt-br", "count": 8},
+                         headers={"X-Subscription-Token": chave, "Accept": "application/json"})
+            return [x.get("url") for x in ((r.json().get("web") or {}).get("results") or []) if x.get("url")]
+        import base64, html as H
+        r = sess.get("https://www.bing.com/search", params={"q": q, "setlang": "pt-BR", "cc": "BR"}, timeout=20)
+        urls = []
+        for u in re.findall(r'<h2[^>]*><a[^>]+href="(https?://[^"]+)"', r.text):
+            u = H.unescape(u)
+            m = re.search(r"[?&]u=a1([^&]+)", u)
+            if m:
+                u = base64.urlsafe_b64decode(m.group(1) + "=" * (-len(m.group(1)) % 4)).decode("utf-8", "ignore")
+            urls.append(u)
+        return urls[:8]
+    except Exception:
+        return []
+
+
+def pesquisa_condominio(nome, cidade, sess, ja):
+    """Terreno, torres, unidades e elevadores do condomínio, só de páginas que citam o condomínio e a cidade."""
+    achado = {}
+    base = re.sub(r"(?i)^(condom[ií]nio|edif[ií]cio|residencial)\s+", "", nome).strip()
+    alvo, cid = sem_acento(base).lower(), sem_acento(cidade or "campinas").lower()
+    for u in busca_web(f'"{base}" {cidade or "Campinas"} condomínio torres andares unidades', sess):
+        if all(k in ja or k in achado for k in EMPREEND):
+            break
+        try:
+            r = sess.get(u, timeout=20)
+            col = gerar.Coletor()
+            col.feed(r.text)
+        except Exception:
+            continue
+        t = re.sub(r"\s+", " ", " ".join(col.texto))
+        tl = sem_acento(t).lower()
+        i = tl.find(alvo)
+        if i < 0 or cid not in tl:
+            continue
+        trecho = t[max(0, i - 1500): i + 3000]   # só o entorno do nome do condomínio
+        for k, v in do_texto(trecho).items():
+            if k in EMPREEND and k not in ja and k not in achado:
+                achado[k] = v
+    return achado
+
+
+def unidade(c):
+    return not LAZER.search(c) and not re.search(r"(?i)portaria|seguran|elevador|condom|aceita|financ|permuta|interfone|port[aã]o|cerca|c[aâ]mera", c)
+
+
 # ---------------------------------------------------------------- montagem
 def comparar(url, pedido, html_url=None):
     if not re.match(r"https?://", url or ""):
@@ -194,7 +274,33 @@ def comparar(url, pedido, html_url=None):
         "cond": brl(numero(d["valorCondominio"])) if numero(d.get("valorCondominio")) else "",
     }
     junto = {}
-    for camada in (apto, do_texto(texto), geral):   # o mais confiável primeiro
+    pronto = not eh_lancamento(apto, meta, texto)
+    if pronto:
+        # imóvel pronto: sem incorporadora; status/entrega "Pronto"; empreendimento = dados do condomínio
+        carac = d.get("caracteristicas") or []
+        area = numero(d.get("areaUtil")) or numero(d.get("areaConstruida"))
+        geral.update({
+            "n": nome_condominio(d, meta, texto) or geral["n"],
+            "m2": f"{m2(area)} m²" if area else "",
+            "val": brl(numero(d["valorVenda"])) if numero(d.get("valorVenda")) else "",
+            "dif": " · ".join(c for c in carac if unidade(c)),
+        })
+        junto.update({"c": "vazio", "st": "Pronto", "ent": "Pronto"})
+        textuais = do_texto(texto)
+        for k in EMPREEND[1:]:               # torres/unidades/elevadores citados no próprio anúncio
+            if textuais.get(k):
+                junto[k] = textuais[k]
+        nome = nome_condominio(d, meta, texto)
+        if nome:
+            junto.update(pesquisa_condominio(nome, d.get("cidade"), d["_sessao"], junto))
+        for k in EMPREEND:
+            junto.setdefault(k, "vazio")
+        if textuais.get("var"):
+            junto["var"] = textuais["var"]
+        camadas = (geral,)
+    else:
+        camadas = (apto, do_texto(texto), geral)   # o mais confiável primeiro
+    for camada in camadas:
         for k, v in camada.items():
             if v and not junto.get(k):
                 junto[k] = v
