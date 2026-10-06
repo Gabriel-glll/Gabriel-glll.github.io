@@ -1,0 +1,44 @@
+{
+ "codigo": "CA9012",
+ "tipo": "Casa",
+ "finalidade": "Venda",
+ "titulo": "Casa à venda em Paulínia, Ala Bosque, com 3 quartos, com 142 m², Terras da Estância",
+ "bairro": "Ala Bosque",
+ "cidade": "Paulínia",
+ "uf": "SP",
+ "condominio": "Terras da Estância",
+ "areaTerreno": 200,
+ "areaConstruida": 142,
+ "quartos": 3,
+ "suites": 3,
+ "vagas": 2,
+ "valorVenda": 1190000,
+ "iptuPeriodo": "ano",
+ "descricao": [
+  "Localizada no bairro Ala Bosque, em Paulínia, esta casa térrea é um refúgio perfeito para quem busca conforto e lazer. Com três suítes e duas vagas de garagem, oferece espaço suficiente para uma família. A área construída de 142 metros quadrados é distribuída de forma harmoniosa, enquanto o terreno de 200 metros quadrados proporciona uma sensação de amplitude.",
+  "A casa apresenta uma combinação perfeita de funcionalidade e lazer, com uma piscina integrada à varanda gourmet, onde você pode desfrutar de momentos agradáveis com a família e amigos. A cozinha, com ilha aberta para o lazer, é outro ponto alto, permitindo a integração perfeita entre os ambientes.",
+  "Detalhes como iluminação em LED, infraestrutura para ar-condicionado e aquecimento solar demonstram o cuidado com o conforto e a sustentabilidade. Esta casa é um oásis de segurança, lazer e qualidade de vida, pronto para ser seu refúgio. Com um valor de venda de R$ 1.190.000, é uma oportunidade única de adquirir um imóvel que combina confort, lazer e tranquilidade."
+ ],
+ "caracteristicas": [
+  "Piscina",
+  "Área gourmet",
+  "Churrasqueira",
+  "Varanda gourmet",
+  "Varanda",
+  "Ar-condicionado",
+  "Aquecimento solar"
+ ],
+ "fotos": [
+  "fotos/01.jpg",
+  "fotos/02.jpg",
+  "fotos/03.jpg",
+  "fotos/04.jpg",
+  "fotos/05.jpg",
+  "fotos/06.jpg",
+  "fotos/07.jpg",
+  "fotos/08.jpg",
+  "fotos/09.jpg"
+ ],
+ "atualizado": "2026-10-06",
+ "slug": "casa-venda-3-dormitorios-2-vagas-142m2-paulinia-ala-bosque-ca9012"
+}
