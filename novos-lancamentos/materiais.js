@@ -88,7 +88,12 @@ window.MATERIAIS = {
         "url": "materiais/grand-paysage/tabela/tabela-grand-paysage-2026-10-financiamento-bancario.pdf",
         "titulo": "Tabela Out/2026 — Financiamento bancário"
       }
-    ]
+    ],
+    "fotos": 18,
+    "book": {
+      "url": "materiais/grand-paysage/book.pdf",
+      "titulo": "Book Grand Paysage"
+    }
   },
   "high-life": {
     "tabela": [
@@ -96,7 +101,12 @@ window.MATERIAIS = {
         "url": "materiais/high-life/tabela/tabela-high-life-2026-10-flex.pdf",
         "titulo": "Tabela Out/2026 — Flex"
       }
-    ]
+    ],
+    "fotos": 24,
+    "book": {
+      "url": "materiais/high-life/book.pdf",
+      "titulo": "Manual do corretor High Life"
+    }
   },
   "intento": {
     "tabela": [
@@ -129,7 +139,12 @@ window.MATERIAIS = {
         "url": "materiais/lazur/tabela/tabela-lazur-2026-09.pdf",
         "titulo": "Tabela Set/2026"
       }
-    ]
+    ],
+    "fotos": 22,
+    "book": {
+      "url": "materiais/lazur/book.pdf",
+      "titulo": "Book Lazur"
+    }
   },
   "liv-guanabara": {
     "tabela": [
@@ -182,7 +197,12 @@ window.MATERIAIS = {
         "url": "materiais/reserva-perfetto/tabela/tabela-reserva-perfetto-2026-10.pdf",
         "titulo": "Tabela Out/2026"
       }
-    ]
+    ],
+    "fotos": 19,
+    "book": {
+      "url": "materiais/reserva-perfetto/book.pdf",
+      "titulo": "Apresentação Reserva Perfetto"
+    }
   },
   "sensia-galleria": {
     "tabela": [
@@ -233,14 +253,6 @@ window.MATERIAIS = {
     "tabela": [
       {
         "url": "materiais/upside/tabela/tabela-upside-2026-10.pdf",
-        "titulo": "Tabela Out/2026"
-      }
-    ]
-  },
-  "vila-vitta-taquaral": {
-    "tabela": [
-      {
-        "url": "materiais/vila-vitta-taquaral/tabela/tabela-vila-vitta-taquaral-2026-10.pdf",
         "titulo": "Tabela Out/2026"
       }
     ]
@@ -335,6 +347,143 @@ window.MATERIAIS = {
     "book": {
       "url": "materiais/san-pietro/book.pdf",
       "titulo": "Book San Pietro"
+    }
+  },
+  "casa-da-mata-gramado": {
+    "fotos": 21,
+    "book": {
+      "url": "materiais/casa-da-mata-gramado/book.pdf",
+      "titulo": "Book Casa da Mata"
+    }
+  },
+  "avenida-105": {
+    "fotos": 26,
+    "book": {
+      "url": "materiais/avenida-105/book.pdf",
+      "titulo": "Book Avenida 105"
+    }
+  },
+  "verter": {
+    "fotos": 19,
+    "book": {
+      "url": "materiais/verter/book.pdf",
+      "titulo": "Book Vërtër Cambuí"
+    }
+  },
+  "casa-bella": {
+    "fotos": 20,
+    "book": {
+      "url": "materiais/casa-bella/book.pdf",
+      "titulo": "Book Casa Bella"
+    }
+  },
+  "vestra": {
+    "fotos": 11,
+    "book": {
+      "url": "materiais/vestra/book.pdf",
+      "titulo": "Treinamento de produto Vestra"
+    }
+  },
+  "edge-cambui": {
+    "fotos": 11,
+    "book": {
+      "url": "materiais/edge-cambui/book.pdf",
+      "titulo": "Book Edge Cambuí"
+    }
+  },
+  "maziero-betel": {
+    "fotos": 18,
+    "book": {
+      "url": "materiais/maziero-betel/book.pdf",
+      "titulo": "Book Residencial Maziero"
+    }
+  },
+  "belgravia": {
+    "fotos": 18,
+    "book": {
+      "url": "materiais/belgravia/book.pdf",
+      "titulo": "Book Belgravia"
+    }
+  },
+  "house-me-taquaral": {
+    "fotos": 16,
+    "book": {
+      "url": "materiais/house-me-taquaral/book.pdf",
+      "titulo": "Book House Me Taquaral"
+    }
+  },
+  "villa-vita-taquaral": {
+    "tabela": [
+      {
+        "url": "materiais/villa-vita-taquaral/tabela/tabela-villa-vita-taquaral-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      }
+    ],
+    "fotos": 10,
+    "book": {
+      "url": "materiais/villa-vita-taquaral/book.pdf",
+      "titulo": "Apresentação Villa Vita"
+    }
+  },
+  "tresor": {
+    "fotos": 16,
+    "book": {
+      "url": "materiais/tresor/book.pdf",
+      "titulo": "Book Trésor"
+    }
+  },
+  "wyn-residence": {
+    "fotos": 23,
+    "book": {
+      "url": "materiais/wyn-residence/book.pdf",
+      "titulo": "Apresentação WYN Residence"
+    }
+  },
+  "tay": {
+    "fotos": 12,
+    "book": {
+      "url": "materiais/tay/book.pdf",
+      "titulo": "Book Tay"
+    }
+  },
+  "yees-taquaral": {
+    "fotos": 15,
+    "book": {
+      "url": "materiais/yees-taquaral/book.pdf",
+      "titulo": "Apresentação Taquaral Residence"
+    },
+    "tabela": [
+      {
+        "url": "materiais/yees-taquaral/tabela/tabela-yees-taquaral-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      }
+    ]
+  },
+  "frame": {
+    "fotos": 6,
+    "book": {
+      "url": "materiais/frame/book.pdf",
+      "titulo": "Apresentação Frame"
+    }
+  },
+  "yees-mansoes": {
+    "fotos": 13,
+    "book": {
+      "url": "materiais/yees-mansoes/book.pdf",
+      "titulo": "Book Mansões Residencial"
+    },
+    "tabela": [
+      {
+        "url": "materiais/yees-mansoes/tabela/tabela-yees-mansoes-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      }
+    ]
+  },
+  "city-galleria": {
+    "fotos": 10,
+    "book": {
+      "url": "materiais/city-galleria/book.pdf",
+      "titulo": "Book City Galleria"
     }
   }
 };

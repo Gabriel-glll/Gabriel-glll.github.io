@@ -67,5 +67,5 @@ window.LINKS_CLIENTE = {
  "arborais-alta-vista": "https://gabriel-glll.github.io/lancamento/arborais-alta-vista-fed30d/",
  "alpha-housing": "https://gabriel-glll.github.io/lancamento/alpha-housing-8d88f9/",
  "lauzanne": "https://gabriel-glll.github.io/lancamento/lauzanne-26b0ff/",
- "vila-vitta-taquaral": "https://gabriel-glll.github.io/lancamento/vila-vitta-taquaral-3408dc/"
+ "villa-vita-taquaral": "https://gabriel-glll.github.io/lancamento/villa-vita-taquaral-c887f7/"
 };
