@@ -354,9 +354,11 @@ const BEST = {
 const rentBest = (() => { const ok = rent.filter(v => v != null); if (ok.length < 2) return []; const mx = Math.max(...ok); return rent.map(v => v === mx); })();
 
 /* ---------- montagem ---------- */
-const temCampo = k => P.some(p => String(p[k] || "").trim());
+/* "vazio" = o corretor confirmou que não há a informação: para o cliente aparece "—" */
+const val = x => { const v = String(x || "").trim(); return /^vazio$/i.test(v) ? "" : v; };
+const temCampo = k => P.some(p => val(p[k]));
 function celula(p, k, i){
-  const v = String(p[k] || "").trim();
+  const v = val(p[k]);
   if (!v) return `<div class="val vazio">—</div>`;
   const [bests, rot] = BEST[k] || [[]];
   const best = bests[i];
@@ -381,13 +383,13 @@ function carrossel(p){
   return `<div class="car zoomavel" data-car><div class="car-track">${f.map((u, i) => `<img src="${esc(u)}" alt="${esc(p.n)} — foto ${i + 1}" loading="${i ? "lazy" : "eager"}" draggable="false">`).join("")}</div>
     ${f.length > 1 ? `<button type="button" class="car-btn car-prev" aria-label="Foto anterior" disabled>‹</button><button type="button" class="car-btn car-next" aria-label="Próxima foto">›</button><span class="car-count">1/${f.length}</span>` : ""}</div>`;
 }
-const kpi = (rot, v, cls = "") => v ? `<div class="${cls}"><span>${rot}</span><b>${esc(v)}</b></div>` : "";
+const kpi = (rot, v, cls = "") => (v = val(v)) ? `<div class="${cls}"><span>${rot}</span><b>${esc(v)}</b></div>` : "";
 
 const cards = P.map((p, i) => `<article class="card">
   ${carrossel(p)}
   <div class="card-body">
     <h2><span class="num">${i + 1}</span>${esc(p.n || "Projeto " + (i + 1))}</h2>
-    <div class="by">${esc([p.c, p.b].filter(Boolean).join(" · "))}</div>
+    <div class="by">${esc([val(p.c), val(p.b)].filter(Boolean).join(" · "))}</div>
     <div class="kpis">${kpi("Valores", p.val, "v")}${kpi("Entrega", p.ent)}${kpi("Metragem", p.m2)}${kpi("Dormitórios", p.dor)}</div>
     ${url(p.link) ? `<a class="mais" href="${esc(url(p.link))}" target="_blank" rel="noopener">Ver o projeto completo ↗</a>` : ""}
   </div>

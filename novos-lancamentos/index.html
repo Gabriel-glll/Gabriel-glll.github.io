@@ -256,6 +256,8 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
 .cmp-det summary .ok{background:var(--ok-soft);color:var(--ok)}
 .cmp-f .obr{color:var(--accent-text);font-style:normal}
 .cmp .erro{border-color:var(--warn) !important;box-shadow:0 0 0 2px var(--warn-soft)}
+.cmp-fav{grid-column:1/-1;margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.cmp-fav .btn{display:inline-flex;padding:4px 10px;font-size:12.5px;cursor:grab;border-color:var(--accent);color:var(--accent-text)}
 .cmp-vazio{grid-column:1/-1;text-align:center;padding:46px 16px;border:2px dashed var(--line-strong);border-radius:var(--r);color:var(--muted)}
 .cmp-vazio b{display:block;color:var(--text);font-size:17px;margin-bottom:6px}
 .cmp-go{position:sticky;bottom:0;z-index:8;margin:16px -16px 0;padding:12px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -891,7 +893,7 @@ async function cmpLer(p){
   cmpLendo.add(p); delete p._erro;
   try {
     if (!p._pedido){
-      const r = await fetch(MOTOR + "/comparar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: p.link }) }).catch(() => null);
+      const r = await fetch(MOTOR + "/comparar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: p.link, ref: p._ref }) }).catch(() => null);
       const j = r && await r.json().catch(() => null);
       if (!r || !r.ok || !j || !j.pedido) throw new Error((j && j.erro) || "Não consegui iniciar a leitura do link.");
       p._pedido = j.pedido; cmpSalvar();
@@ -906,15 +908,33 @@ async function cmpLer(p){
       else if (j && j.estado === "falhou") throw new Error("A leitura falhou.");
     }
     if (!res) throw new Error("A leitura demorou demais.");
-    if (!res.ok) throw new Error(String(res.erro || "A leitura falhou.").replace(/^BLOQUEADO\|/, "").replace(/ Abra o anúncio.*$/, " Preencha os campos manualmente."));
+    if (!res.ok) throw new Error(String(res.erro || "A leitura falhou.").replace(/^BLOQUEADO\|/, "").replace(/ Abra o anúncio.*$/, " Abra o anúncio no navegador e clique no favorito 📌 Comparar ZFF (ou preencha à mão)."));
     for (const [k, v] of Object.entries(res.projeto || {})) if (cmpVazio(p[k])) p[k] = v;   // não sobrescreve o que o corretor já digitou
     p._lido = true;
   } catch(e){
     p._erro = e.message;
   } finally {
-    cmpLendo.delete(p); delete p._pedido; cmpSalvar();
+    cmpLendo.delete(p); delete p._pedido; delete p._ref; cmpSalvar();
     if (lastRoute === "comparar") renderComparar();
   }
+}
+function compararZFF(){
+  var d = document.documentElement.cloneNode(true), I = {};
+  d.querySelectorAll("script").forEach(function(s){
+    var t = (s.type || "").toLowerCase();
+    if (t.indexOf("json") >= 0 || s.id === "__NEXT_DATA__") return;
+    (s.textContent.match(/https?:\\?\/\\?\/[^"'\s<>]+?\.(?:jpe?g|webp|png)/gi) || []).forEach(function(u){ I[u.replace(/\\\//g, "/")] = 1; });
+    s.remove();
+  });
+  d.querySelectorAll("style,svg,noscript,iframe,link").forEach(function(e){ e.remove(); });
+  var html = "<!doctype html>" + d.outerHTML + "\n<!-" + "-IMGS " + JSON.stringify(Object.keys(I)) + " --" + ">";
+  var f = document.createElement("form");
+  f.method = "POST"; f.action = "https://captacao-zff.zff-captacao.workers.dev/receber"; f.target = "_blank";
+  f.acceptCharset = "UTF-8"; f.style.display = "none";
+  [["url", location.href], ["html", html], ["destino", "comparar"]].forEach(function(c){
+    var t = document.createElement("textarea"); t.name = c[0]; t.value = c[1]; f.appendChild(t);
+  });
+  document.body.appendChild(f); f.submit(); setTimeout(function(){ f.remove(); }, 1000);
 }
 window.cmpFotoDeNovo = img => {   // fotos recém-publicadas levam ~1 min para aparecer no GitHub Pages
   const n = +(img.dataset.tent || 0); if (n >= 8) return;
@@ -975,6 +995,15 @@ function renderComparar(){
     for (const k of Object.keys(novo)) if (!(Array.isArray(p[k]) ? p[k].length : String(p[k] || "").trim())) p[k] = novo[k];
     delete p.lanc;
   }
+  const rec = location.hash.match(/[?&]receber=(r[0-9a-f]{32})&url=([^&]+)/);
+  if (rec){
+    history.replaceState(null, "", "#/comparar");
+    const link = decodeURIComponent(rec[2]);
+    if (!CMP.p.some(p => p.link === link && !p.src)){
+      const novo = { n: "", link, ft: [], _ref: rec[1] };
+      if (cmpAdd(novo)) cmpLer(novo);
+    }
+  }
   CMP.p.forEach(p => { if (p._pedido) cmpLer(p); });
   const nomes = DATA.map(l => l.n).sort((a, b) => a.localeCompare(b, "pt-BR"));
   $("#app").innerHTML = `
@@ -986,6 +1015,9 @@ function renderComparar(){
         <datalist id="cmp-nomes">${nomes.map(n => `<option value="${esc(n)}">`).join("")}</datalist></label>
       <label>Ou cole o link de um projeto de outro site (preenche sozinho)<span class="in"><input id="cmp-url" type="url" placeholder="https://… (apto.vc, site da construtora, portal…)"><button class="btn" id="cmp-addurl" type="button">Adicionar</button></span></label>
       <button class="btn" id="cmp-branco" type="button">+ Em branco</button>
+      <p class="cmp-fav">Portais como ZAP, VivaReal e Imovelweb bloqueiam a leitura pelo link. Para eles, arraste
+        <a class="btn" id="cmp-bm" href="#" title="Arraste para a barra de favoritos">📌 Comparar ZFF</a> para a barra de favoritos
+        (uma vez só); depois, com o anúncio aberto, clique no favorito — o projeto entra aqui já sendo lido.</p>
     </div>
     <div class="box cmp-meta">
       <label>Título do estudo<input id="cmp-t" type="text" value="${esc(CMP.t)}" placeholder="Comparativo de empreendimentos"></label>
@@ -1020,6 +1052,8 @@ function renderComparar(){
   };
   $("#cmp-addurl").onclick = addUrl;
   $("#cmp-url").addEventListener("keydown", e => { if (e.key === "Enter") addUrl(); });
+  $("#cmp-bm").href = "javascript:" + encodeURIComponent("(" + compararZFF.toString() + ")()");
+  $("#cmp-bm").onclick = e => { e.preventDefault(); alert("Arraste este botão para a barra de favoritos do navegador."); };
   $("#cmp-branco").onclick = () => { if (cmpAdd({ n: "", ft: [] })) renderComparar(); };
   $("#cmp-t").oninput = e => { CMP.t = e.target.value; cmpSalvar(); };
   $("#cmp-para").oninput = e => { CMP.para = e.target.value; cmpSalvar(); };
