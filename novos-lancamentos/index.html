@@ -277,7 +277,7 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
       <div><b>Novos Lançamentos</b><span>Campinas e região · ZFF Realty</span></div>
     </a>
     <div class="sp"></div>
-    <a class="iconbtn" href="https://captacao-zff.zff-captacao.workers.dev/" target="_blank" rel="noopener" title="Gerar página de captação para o cliente">＋ Captação</a>
+    <a class="iconbtn" href="https://captacao-zff.zffrealty.workers.dev/" target="_blank" rel="noopener" title="Gerar página de captação para o cliente">＋ Captação</a>
     <a class="iconbtn" href="#/comparar" title="Comparar empreendimentos">⇄ Comparar <span class="badge" id="cmpn" hidden></span></a>
   </div>
 </header>
@@ -291,8 +291,8 @@ footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);f
 </footer>
 
 <script src="dados.js?v=ea2dc686"></script>
-<script src="materiais.js?v=4ab4a016"></script>
-<script src="links.js?v=4f7ee538"></script>
+<script src="materiais.js?v=21497af6"></script>
+<script src="links.js?v=2fcc6978"></script>
 <script src="galeria.js?v=dade6568"></script>
 <script>
 (() => {
@@ -804,7 +804,7 @@ function renderDetail(slug, tab){
 }
 
 /* ---------- comparador (gera o link da página lancamento/comparar/) ---------- */
-const CMP_URL = "https://lancamentos.zff-captacao.workers.dev/comparar/";
+const CMP_URL = "https://lancamentos.zffrealty.workers.dev/comparar/";
 /* mesmas linhas da página do cliente (ferramentas/comparar.html → CAMPOS) */
 const CMP_CAMPOS = [
   ["Projeto",        [["c","Incorporadora"],["st","Status","Lançamento · Pré-lançamento · Em obras"],["b","Bairro"],["end","Endereço"],["ent","Entrega"]]],
@@ -859,11 +859,11 @@ function cmpPeloLink(u){
 
 /* Imóvel captado (＋ Captação): os dados já estão guardados na captação -> leitura na hora.
    Imóvel pronto: incorporadora "vazio", status/entrega "Pronto"; o que não existir nos dados nem no texto = "vazio". */
-const MOTOR = "https://captacao-zff.zff-captacao.workers.dev";
+const MOTOR = "https://captacao-zff.zffrealty.workers.dev";
 const cmpLendo = new Set();
 const cmpVazio = v => !(Array.isArray(v) ? v.length : String(v || "").trim());
 function cmpLinkCaptacao(u){
-  let m = u.match(/^https?:\/\/captacao-zff\.zff-captacao\.workers\.dev\/imovel\/([a-z0-9-]+)/i);
+  let m = u.match(/^https?:\/\/captacao-zff\.zffrealty\.workers\.dev\/imovel\/([a-z0-9-]+)/i);
   if (m) return { api: MOTOR + "/api/imovel/" + m[1], base: MOTOR + "/imovel/" + m[1] + "/" };
   m = u.match(/^https?:\/\/gabriel-glll\.github\.io\/captacao\/([a-z0-9-]+)/i);
   if (m) return { api: "https://gabriel-glll.github.io/captacao/" + m[1] + "/dados.json", base: "https://gabriel-glll.github.io/captacao/" + m[1] + "/" };

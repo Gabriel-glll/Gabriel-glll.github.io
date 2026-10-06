@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Captação · ZFF</title>
-<link rel="icon" href="https://captacao-zff.zff-captacao.workers.dev/assets/zff-logo.jpeg">
+<link rel="icon" href="https://captacao-zff.zffrealty.workers.dev/assets/zff-logo.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -109,7 +109,7 @@ footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
 <header class="top">
   <div class="wrap">
     <a class="brand" href="https://gabriel-glll.github.io/novos-lancamentos/#/">
-      <img src="https://captacao-zff.zff-captacao.workers.dev/assets/zff-logo.jpeg" alt="ZFF Realty">
+      <img src="https://captacao-zff.zffrealty.workers.dev/assets/zff-logo.jpeg" alt="ZFF Realty">
       <div><b>Novos Lançamentos</b><span>Campinas e região · ZFF Realty</span></div>
     </a>
     <div class="sp"></div>
@@ -168,7 +168,7 @@ footer{color:var(--muted);font-size:12px;padding:40px 0 30px}
 
 <script>
 (() => {
-const MOTOR = "https://captacao-zff.zff-captacao.workers.dev";
+const MOTOR = "https://captacao-zff.zffrealty.workers.dev";
 const BASE = MOTOR + "/imovel/";  // páginas servidas pela Cloudflare (não dependem do GitHub Pages)
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -198,7 +198,7 @@ function captarZFF(){
   d.querySelectorAll("style,svg,noscript,iframe,link").forEach(function(e){ e.remove(); });
   var html = "<!doctype html>" + d.outerHTML + "\n<!-" + "-IMGS " + JSON.stringify(Object.keys(I)) + " --" + ">";
   var f = document.createElement("form");
-  f.method = "POST"; f.action = "https://captacao-zff.zff-captacao.workers.dev/receber"; f.target = "_blank";
+  f.method = "POST"; f.action = "https://captacao-zff.zffrealty.workers.dev/receber"; f.target = "_blank";
   f.acceptCharset = "UTF-8"; f.style.display = "none";
   [["url", location.href], ["html", html]].forEach(function(c){
     var t = document.createElement("textarea"); t.name = c[0]; t.value = c[1]; f.appendChild(t);

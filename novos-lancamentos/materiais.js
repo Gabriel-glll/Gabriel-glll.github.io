@@ -29,7 +29,7 @@ window.MATERIAIS = {
   "luce-cambui": {
     "fotos": 16,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/luce-cambui.pdf?v=1790975365",
+      "url": "https://zff-books.zffrealty.workers.dev/luce-cambui.pdf?v=1790975365",
       "titulo": "Book Luce Cambuí"
     }
   },
@@ -42,7 +42,7 @@ window.MATERIAIS = {
     ],
     "fotos": 20,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/alto-das-mansoes.pdf?v=1791210971",
+      "url": "https://zff-books.zffrealty.workers.dev/alto-das-mansoes.pdf?v=1791210971",
       "titulo": "Book do corretor Alto das Mansões"
     }
   },
@@ -91,7 +91,7 @@ window.MATERIAIS = {
     ],
     "fotos": 18,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/grand-paysage.pdf?v=1791290525",
+      "url": "https://zff-books.zffrealty.workers.dev/grand-paysage.pdf?v=1791290525",
       "titulo": "Book Grand Paysage"
     }
   },
@@ -104,7 +104,7 @@ window.MATERIAIS = {
     ],
     "fotos": 24,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/high-life.pdf?v=1791290199",
+      "url": "https://zff-books.zffrealty.workers.dev/high-life.pdf?v=1791290199",
       "titulo": "Manual do corretor High Life"
     }
   },
@@ -129,7 +129,7 @@ window.MATERIAIS = {
     ],
     "fotos": 17,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/lake-louise-taquaral.pdf?v=1791290575",
+      "url": "https://zff-books.zffrealty.workers.dev/lake-louise-taquaral.pdf?v=1791290575",
       "titulo": "Book Lake Louise"
     }
   },
@@ -142,7 +142,7 @@ window.MATERIAIS = {
     ],
     "fotos": 22,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/lazur.pdf?v=1791290321",
+      "url": "https://zff-books.zffrealty.workers.dev/lazur.pdf?v=1791290321",
       "titulo": "Book Lazur"
     }
   },
@@ -159,7 +159,7 @@ window.MATERIAIS = {
     ],
     "fotos": 9,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/liv-guanabara.pdf?v=1791211697",
+      "url": "https://zff-books.zffrealty.workers.dev/liv-guanabara.pdf?v=1791211697",
       "titulo": "Book Liv Guanabara"
     }
   },
@@ -200,7 +200,7 @@ window.MATERIAIS = {
     ],
     "fotos": 19,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/reserva-perfetto.pdf?v=1791290272",
+      "url": "https://zff-books.zffrealty.workers.dev/reserva-perfetto.pdf?v=1791290272",
       "titulo": "Apresentação Reserva Perfetto"
     }
   },
@@ -221,7 +221,7 @@ window.MATERIAIS = {
     ],
     "fotos": 20,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/sensia-taquaral.pdf?v=1791211801",
+      "url": "https://zff-books.zffrealty.workers.dev/sensia-taquaral.pdf?v=1791211801",
       "titulo": "Book Sensia Taquaral"
     }
   },
@@ -266,7 +266,7 @@ window.MATERIAIS = {
     ],
     "fotos": 19,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/vista-horizonte.pdf?v=1791210851",
+      "url": "https://zff-books.zffrealty.workers.dev/vista-horizonte.pdf?v=1791210851",
       "titulo": "Book Vista Horizonte"
     }
   },
@@ -303,112 +303,112 @@ window.MATERIAIS = {
     ],
     "fotos": 14,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/alto-do-galleria-ii.pdf?v=1791290479",
+      "url": "https://zff-books.zffrealty.workers.dev/alto-do-galleria-ii.pdf?v=1791290479",
       "titulo": "Book do corretor Alto do Galleria II"
     }
   },
   "cores-da-mata": {
     "fotos": 12,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/cores-da-mata.pdf?v=1791211621",
+      "url": "https://zff-books.zffrealty.workers.dev/cores-da-mata.pdf?v=1791211621",
       "titulo": "Book Cores da Mata Mangará"
     }
   },
   "alta-vista": {
     "fotos": 14,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/alta-vista.pdf?v=1791290458",
+      "url": "https://zff-books.zffrealty.workers.dev/alta-vista.pdf?v=1791290458",
       "titulo": "Book Alta Vista Mangará"
     }
   },
   "oni-dijon-taquaral": {
     "fotos": 16,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/oni-dijon-taquaral.pdf?v=1791211729",
+      "url": "https://zff-books.zffrealty.workers.dev/oni-dijon-taquaral.pdf?v=1791211729",
       "titulo": "Book Oni Dijon"
     }
   },
   "maxi-bonfim": {
     "fotos": 8,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/maxi-bonfim.pdf?v=1791211830",
+      "url": "https://zff-books.zffrealty.workers.dev/maxi-bonfim.pdf?v=1791211830",
       "titulo": "Book HM Maxi Campinas"
     }
   },
   "yard": {
     "fotos": 19,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/yard.pdf?v=1791211886",
+      "url": "https://zff-books.zffrealty.workers.dev/yard.pdf?v=1791211886",
       "titulo": "Book Yard Cambuí"
     }
   },
   "san-pietro": {
     "fotos": 11,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/san-pietro.pdf?v=1791290633",
+      "url": "https://zff-books.zffrealty.workers.dev/san-pietro.pdf?v=1791290633",
       "titulo": "Book San Pietro"
     }
   },
   "casa-da-mata-gramado": {
     "fotos": 21,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/casa-da-mata-gramado.pdf?v=1791289738",
+      "url": "https://zff-books.zffrealty.workers.dev/casa-da-mata-gramado.pdf?v=1791289738",
       "titulo": "Book Casa da Mata"
     }
   },
   "avenida-105": {
     "fotos": 26,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/avenida-105.pdf?v=1791290484",
+      "url": "https://zff-books.zffrealty.workers.dev/avenida-105.pdf?v=1791290484",
       "titulo": "Book Avenida 105"
     }
   },
   "verter": {
     "fotos": 19,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/verter.pdf?v=1791290663",
+      "url": "https://zff-books.zffrealty.workers.dev/verter.pdf?v=1791290663",
       "titulo": "Book Vërtër Cambuí"
     }
   },
   "casa-bella": {
     "fotos": 20,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/casa-bella.pdf?v=1791289820",
+      "url": "https://zff-books.zffrealty.workers.dev/casa-bella.pdf?v=1791289820",
       "titulo": "Book Casa Bella"
     }
   },
   "vestra": {
     "fotos": 11,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/vestra.pdf?v=1791289898",
+      "url": "https://zff-books.zffrealty.workers.dev/vestra.pdf?v=1791289898",
       "titulo": "Treinamento de produto Vestra"
     }
   },
   "edge-cambui": {
     "fotos": 11,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/edge-cambui.pdf?v=1791289923",
+      "url": "https://zff-books.zffrealty.workers.dev/edge-cambui.pdf?v=1791289923",
       "titulo": "Book Edge Cambuí"
     }
   },
   "maziero-betel": {
     "fotos": 18,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/maziero-betel.pdf?v=1791290437",
+      "url": "https://zff-books.zffrealty.workers.dev/maziero-betel.pdf?v=1791290437",
       "titulo": "Book Residencial Maziero"
     }
   },
   "belgravia": {
     "fotos": 18,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/belgravia.pdf?v=1791290497",
+      "url": "https://zff-books.zffrealty.workers.dev/belgravia.pdf?v=1791290497",
       "titulo": "Book Belgravia"
     }
   },
   "house-me-taquaral": {
     "fotos": 16,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/house-me-taquaral.pdf?v=1791290030",
+      "url": "https://zff-books.zffrealty.workers.dev/house-me-taquaral.pdf?v=1791290030",
       "titulo": "Book House Me Taquaral"
     }
   },
@@ -421,35 +421,35 @@ window.MATERIAIS = {
     ],
     "fotos": 10,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/villa-vita-taquaral.pdf?v=1791290673",
+      "url": "https://zff-books.zffrealty.workers.dev/villa-vita-taquaral.pdf?v=1791290673",
       "titulo": "Apresentação Villa Vita"
     }
   },
   "tresor": {
     "fotos": 16,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/tresor.pdf?v=1791290659",
+      "url": "https://zff-books.zffrealty.workers.dev/tresor.pdf?v=1791290659",
       "titulo": "Book Trésor"
     }
   },
   "wyn-residence": {
     "fotos": 23,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/wyn-residence.pdf?v=1791290106",
+      "url": "https://zff-books.zffrealty.workers.dev/wyn-residence.pdf?v=1791290106",
       "titulo": "Apresentação WYN Residence"
     }
   },
   "tay": {
     "fotos": 12,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/tay.pdf?v=1791290131",
+      "url": "https://zff-books.zffrealty.workers.dev/tay.pdf?v=1791290131",
       "titulo": "Book Tay"
     }
   },
   "yees-taquaral": {
     "fotos": 15,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/yees-taquaral.pdf?v=1791290224",
+      "url": "https://zff-books.zffrealty.workers.dev/yees-taquaral.pdf?v=1791290224",
       "titulo": "Apresentação Taquaral Residence"
     },
     "tabela": [
@@ -462,14 +462,14 @@ window.MATERIAIS = {
   "frame": {
     "fotos": 6,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/frame.pdf?v=1791290251",
+      "url": "https://zff-books.zffrealty.workers.dev/frame.pdf?v=1791290251",
       "titulo": "Apresentação Frame"
     }
   },
   "yees-mansoes": {
     "fotos": 13,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/yees-mansoes.pdf?v=1791290698",
+      "url": "https://zff-books.zffrealty.workers.dev/yees-mansoes.pdf?v=1791290698",
       "titulo": "Book Mansões Residencial"
     },
     "tabela": [
@@ -482,7 +482,7 @@ window.MATERIAIS = {
   "city-galleria": {
     "fotos": 10,
     "book": {
-      "url": "https://zff-books.zff-captacao.workers.dev/city-galleria.pdf?v=1791290347",
+      "url": "https://zff-books.zffrealty.workers.dev/city-galleria.pdf?v=1791290347",
       "titulo": "Book City Galleria"
     }
   }

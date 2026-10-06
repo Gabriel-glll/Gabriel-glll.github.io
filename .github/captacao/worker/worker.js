@@ -2,7 +2,7 @@
 // guarda a chave do GitHub (GH_TOKEN) e aciona o workflow captacao.yml, que só processa as fotos.
 const REPO = "Gabriel-glll/Gabriel-glll.github.io", WF = "captacao.yml";
 const API = "https://api.github.com/repos/" + REPO;
-const ORIGENS = [/^https:\/\/gabriel-glll\.github\.io$/, /^https:\/\/captacao-zff\.zff-captacao\.workers\.dev$/,
+const ORIGENS = [/^https:\/\/gabriel-glll\.github\.io$/, /^https:\/\/captacao-zff\.zffrealty\.workers\.dev$/,
                  /^http:\/\/localhost(:\d+)?$/, /^http:\/\/127\.0\.0\.1(:\d+)?$/];
 const TIPOS = { html: "text/html; charset=utf-8", json: "application/json; charset=utf-8", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
 const RE_ARQ = /^[a-z0-9-]+\/(index\.html|fotos\/\d{2}\.(jpg|jpeg|png|webp))$/;

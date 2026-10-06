@@ -17,7 +17,7 @@ from PIL import Image, ImageOps
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PASTA = os.path.join(RAIZ, "captacao")
 MODELO = os.path.join(os.path.dirname(__file__), "modelo.html")
-SITE = "https://captacao-zff.zff-captacao.workers.dev/imovel/"  # páginas servidas pela Cloudflare
+SITE = "https://captacao-zff.zffrealty.workers.dev/imovel/"  # páginas servidas pela Cloudflare
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/129.0 Safari/537.36")
 HDR = {"User-Agent": UA, "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
@@ -660,7 +660,7 @@ def registrar(*caminhos):
             f.write(os.path.relpath(c, RAIZ).replace("\\", "/") + "\n")
 
 
-SITE_MOTOR = "https://captacao-zff.zff-captacao.workers.dev"
+SITE_MOTOR = "https://captacao-zff.zffrealty.workers.dev"
 
 
 def reescrever(pedido, texto, d):
