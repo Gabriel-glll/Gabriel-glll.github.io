@@ -21,6 +21,17 @@ export default {
     const HUB = u.origin + "/";
 
     // ---------- Páginas de captação (públicas, para o cliente) ----------
+    // Dados de uma captação em JSON (comparador do Novos Lançamentos lê na hora, sem GitHub)
+    if (req.method === "GET" && u.pathname.startsWith("/api/imovel/")) {
+      const slug = u.pathname.slice(12).replace(/\/$/, "");
+      if (!/^[a-z0-9-]+$/.test(slug)) return json({ erro: "Captação inválida." }, 400);
+      const h = await env.PAGINAS.get("pag:" + slug + "/index.html");
+      if (!h) return json({ erro: "Captação não encontrada." }, 404);
+      const m = h.match(/(\{"codigo":[\s\S]*?"slug": ?"[a-z0-9-]+"\})/);
+      if (!m) return json({ erro: "Dados da captação não encontrados." }, 500);
+      try { return json(JSON.parse(m[1])); } catch { return json({ erro: "Dados da captação ilegíveis." }, 500); }
+    }
+
     if (req.method === "GET" && u.pathname.startsWith("/imovel/")) {
       let caminho = decodeURIComponent(u.pathname.slice(8));
       if (/^[a-z0-9-]+$/.test(caminho)) return Response.redirect(u.origin + u.pathname + "/", 301);
