@@ -1,0 +1,36 @@
+{
+ "ok": true,
+ "modo": "comparar",
+ "projeto": {
+  "c": "vazio",
+  "st": "Pronto",
+  "ent": "Pronto",
+  "ter": "vazio",
+  "tor": "vazio",
+  "un": "vazio",
+  "el": "vazio",
+  "n": "Apartamento à venda com 2 Quartos, Jardim dos Oliveiras, Campinas",
+  "b": "Jardim dos Oliveiras",
+  "end": "Rua Felipe Camarão",
+  "m2": "57 m²",
+  "dor": "2 dormitórios",
+  "vg": "1 vaga",
+  "lz": "Playground\nSalão de festas",
+  "val": "R$ 240.000",
+  "cond": "R$ 750",
+  "link": "https://www.imovelweb.com.br/propriedades/apartamento-a-venda-jardim-amazonas-2-quartos-57-3047467542.html?labs=2,AnnoyAPI5toAndar_itemitem,20261006101042,ab976938-61ef-47f5-98d8-7cdb6d6a1064&userid=0&itemid=3016684073&labs_source=RECOMENDADOS_FICHA_PROPIEDAD_DESKTOP&labs_version=2",
+  "ft": [
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/01.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/02.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/03.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/04.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/05.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/06.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/07.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/08.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/09.jpg",
+   "https://captacao-zff.zff-captacao.workers.dev/imovel/comparar-c20261006141053-5f31b1dc/fotos/10.jpg"
+  ]
+ },
+ "quando": "2026-10-06T14:11:37Z"
+}
