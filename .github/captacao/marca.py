@@ -45,6 +45,34 @@ def _poisson(gx, gy):
     return idstn(dstn(div, type=1) / den, type=1).astype(np.float32)
 
 
+def _sem_linhas(mag):
+    """Zera linhas retas que atravessam a imagem (bordas de faixa/letterbox)."""
+    mag = mag.copy()
+    alto = mag > np.percentile(mag, 99.9) * 0.3
+    for r in np.where(alto.mean(axis=1) > 0.4)[0]:
+        mag[max(r - 2, 0):r + 3, :] = 0
+    for c in np.where(alto.mean(axis=0) > 0.4)[0]:
+        mag[:, max(c - 2, 0):c + 3] = 0
+    return mag
+
+
+def caixa_conteudo(a, tol=10):
+    """(topo, base, esq, dir) da foto dentro de faixas de cor lisa."""
+    a = a.astype(np.int16)
+    H, W = a.shape[:2]
+    canto = np.median(np.stack([a[0, 0], a[0, -1], a[-1, 0], a[-1, -1]]), axis=0)
+    lisa = lambda l: (np.abs(l - canto).max(axis=-1) <= tol).mean() > 0.985
+    t, b, e, d = 0, H, 0, W
+    while t < H * 0.45 and lisa(a[t]): t += 1
+    while b > H * 0.55 and lisa(a[b - 1]): b -= 1
+    while e < W * 0.45 and lisa(a[:, e]): e += 1
+    while d > W * 0.55 and lisa(a[:, d - 1]): d -= 1
+    if (b - t) < H * 0.2 or (d - e) < W * 0.2:
+        return 0, H, 0, W
+    f = 3  # fio de transição entre faixa e foto
+    return (t + f if t else 0), (b - f if b < H else H), (e + f if e else 0), (d - f if d < W else W)
+
+
 def detectar(arrs):
     """Retorna (caixa relativa ao centro, alpha*W por canal (h,w,3), máscara) ou None."""
     # usa o maior grupo de mesmo tamanho para estimar
@@ -57,16 +85,27 @@ def detectar(arrs):
     gx = np.median([np.diff(a.astype(np.float32), axis=1, append=a[:, -1:].astype(np.float32)) for a in base], axis=0)
     gy = np.median([np.diff(a.astype(np.float32), axis=0, append=a[-1:, :].astype(np.float32)) for a in base], axis=0)
     mag = np.sqrt((gx ** 2 + gy ** 2).sum(axis=2))
-    fundo = float(np.median(mag)) + 1e-3
+    mag = _sem_linhas(mag)   # borda de faixa/letterbox não é marca
+    vivo = mag[mag > 0.5]
+    fundo = (float(np.median(vivo)) if vivo.size > 1000 else float(np.median(mag))) + 1e-3
     forte = mag > max(np.percentile(mag, 99.7), fundo * RAZAO_MIN)
     forte = cv2.morphologyEx(forte.astype(np.uint8), cv2.MORPH_OPEN, np.ones((2, 2), np.uint8))
     n, rot, est, _ = cv2.connectedComponentsWithStats(cv2.dilate(forte, np.ones((25, 25), np.uint8)))
     if n <= 1:
         return None
-    i = 1 + int(np.argmax(est[1:, cv2.CC_STAT_AREA]))
-    x, y, w, h = est[i, :4]
-    if est[i, cv2.CC_STAT_AREA] < 400 or w * h > 0.35 * H * W:
+    # maior componente que não seja linha reta longa (borda de faixa/letterbox, moldura)
+    cands = []
+    for k in range(1, n):
+        x, y, w, h, area = est[k]
+        if (w > 0.45 * W and h < 0.08 * H) or (h > 0.45 * H and w < 0.08 * W):
+            continue
+        if area < 400 or w * h > 0.35 * H * W:
+            continue
+        cands.append((area, k))
+    if not cands:
         return None
+    i = max(cands)[1]
+    x, y, w, h = est[i, :4]
     if float(np.percentile(mag[rot == i], 95)) < fundo * RAZAO_MIN:
         return None
     m = 12
@@ -222,8 +261,9 @@ def _encaixe_grupo(arrs, alfa):
         g = np.sqrt(gx ** 2 + gy ** 2).astype(np.float32)
     else:
         g = _magn(_cinza(arrs[0]))
+    g = _sem_linhas(g)
     melhor = (0.35, None)
-    for esc in [1.0] + [round(x, 3) for x in np.arange(0.80, 1.26, 0.025) if abs(x - 1) > 0.01]:
+    for esc in [1.0] + [round(float(x), 3) for x in np.arange(0.35, 1.81, 0.02) if abs(x - 1) > 0.01]:
         al = cv2.resize(alfa, None, fx=float(esc), fy=float(esc), interpolation=cv2.INTER_LINEAR) if esc != 1.0 else alfa
         if al.shape[0] >= g.shape[0] or al.shape[1] >= g.shape[1]:
             continue
@@ -251,7 +291,9 @@ def _uma_marca(arrs, aviso=None, passo=1):
     3) preenche só esses pixels com IA (LaMa); 4) nitidez leve. Sem marca: só nitidez."""
     grupos = {}
     for i, a in enumerate(arrs):
-        grupos.setdefault(a.shape[:2], []).append(i)
+        t, b, e, d = caixa_conteudo(a)
+        # mesmo quadro, mas foto deitada (faixas em cima/baixo) x em pé (faixas laterais)
+        grupos.setdefault((a.shape[:2], (d - e) >= (b - t)), []).append(i)
     ordem = sorted(grupos.values(), key=len, reverse=True)
     if len(ordem[0]) < MIN_FOTOS:
         return arrs, False
@@ -297,7 +339,13 @@ def limpar(imagens, aviso=None):
         if not ok:
             break
         removeu = True
-    return [nitidez(Image.fromarray(a)) for a in arrs], removeu
+    return [nitidez(tirar_faixas(Image.fromarray(a))) for a in arrs], removeu
+
+
+def tirar_faixas(im):
+    """Recorta faixas de cor lisa nas bordas (letterbox de portais, ex.: QuintoAndar)."""
+    t, b, e, d = caixa_conteudo(np.asarray(im.convert("RGB")))
+    return im if (t, b, e, d) == (0, im.height, 0, im.width) else im.crop((e, t, d, b))
 
 
 def nitidez(im):
