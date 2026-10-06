@@ -111,6 +111,37 @@ export default {
       return json({ ok: true });
     }
 
+    // IA para o gerador (só durante a execução do pedido): extrair dados de texto livre
+    // (legenda de Instagram, anúncio pobre) e interpretar as observações sobre as fotos.
+    if (req.method === "POST" && u.pathname === "/ia") {
+      let b; try { b = await req.json(); } catch { return json({ erro: "Pedido inválido." }, 400); }
+      const pedido = String(b.pedido || "").replace(/[^\w-]/g, "");
+      if (!(await execucaoAtiva(pedido))) return json({ erro: "Pedido não está em execução." }, 403);
+      let sistema, usuario;
+      if (b.tarefa === "extrair") {
+        sistema = "Você extrai dados de anúncios de imóveis do Brasil. Responda SOMENTE com um objeto JSON válido, sem texto antes ou depois. " +
+          "Chaves (omita as que o texto não informa; números sem unidade, valores em reais como número inteiro): " +
+          "tipo (Casa, Apartamento, Sobrado, Terreno, Cobertura, Chácara, Sala, Galpão), quartos, suites, banheiros, vagas, " +
+          "areaConstruida, areaTerreno, areaUtil, valorVenda, valorCondominio, valorIptu, bairro, cidade, condominio (nome do condomínio/residencial), " +
+          "endereco (rua), caracteristicas (lista curta de itens do imóvel e do condomínio, ex.: Piscina, Área gourmet). Nunca invente.";
+        usuario = String(b.texto || "").slice(0, 6000);
+      } else if (b.tarefa === "instrucoes") {
+        const obs = await env.PAGINAS.get("obs:" + pedido);
+        if (!obs) return json({ resultado: {} });
+        sistema = "Você interpreta instruções de um corretor sobre as FOTOS de um anúncio. Responda SOMENTE com JSON válido no formato " +
+          '{"remover_fotos": [números]} — posições começando em 1; use números negativos para contar do fim (-1 = última foto). ' +
+          'Se não houver instrução sobre remover fotos, responda {"remover_fotos": []}. Ignore instruções sobre o texto ou marca d\'água.';
+        usuario = obs;
+      } else return json({ erro: "Tarefa inválida." }, 400);
+      const r = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+        max_tokens: 900, temperature: 0.1, messages: [{ role: "system", content: sistema }, { role: "user", content: usuario }]
+      }).catch(() => null);
+      const txt = String(r && r.response || "");
+      const m = txt.match(/\{[\s\S]*\}/);
+      let res = null; try { res = m ? JSON.parse(m[0]) : null; } catch {}
+      return json({ resultado: res });
+    }
+
     // Observações do corretor aplicadas à descrição (chamado pelo GitHub Actions). Só funciona
     // uma vez por pedido que tenha observações guardadas — não é uma IA aberta a terceiros.
     if (req.method === "POST" && u.pathname === "/reescrever") {
@@ -125,8 +156,10 @@ export default {
         max_tokens: 1200, temperature: 0.3,
         messages: [
           { role: "system", content: "Você edita descrições de anúncios de imóveis, em português do Brasil. " +
-            "Aplique exatamente as instruções do corretor. Não invente nada que não esteja no texto original, nos dados " +
-            "ou nas instruções. Nunca inclua telefones, e-mails, links, nomes de imobiliárias, corretores ou CRECI. " +
+            "Aplique as instruções do corretor que se referem ao TEXTO (ignore as que falam de fotos ou marca d'água). " +
+            "Se ele pedir para criar um texto novo, escreva com suas palavras, em tom profissional e atraente, sem copiar frases. " +
+            "Não invente informações que não estejam no texto original, nos dados ou nas instruções. " +
+            "Nunca inclua telefones, e-mails, links, @perfis, hashtags, emojis, nomes de imobiliárias, corretores ou CRECI. " +
             "Se as instruções não pedirem uma mudança clara (ex.: 'teste', 'ok'), devolva o texto original sem alterar. " +
             "Responda somente com o texto final da descrição, em parágrafos curtos, sem título, sem aspas e sem comentários." },
           { role: "user", content: `INSTRUÇÕES DO CORRETOR:\n${obs}\n\nDADOS DO IMÓVEL:\n${dados}\n\nTEXTO ORIGINAL:\n${texto || "(sem descrição — escreva uma curta, só com os dados acima)"}` }

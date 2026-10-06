@@ -98,6 +98,8 @@ def higieniza(paragrafos):
         if RE_PROIBIDO.search(p) and (RE_FONE.search(p) or RE_MAIL.search(p) or len(p) < 120):
             continue
         p = RE_MAIL.sub("", RE_URL.sub("", RE_FONE.sub("", p)))
+        p = re.sub(r"(?<!\w)[#@][\w.]+", "", p)                       # hashtags e @perfis
+        p = re.sub("[🀀-🫿☀-➿️‍⬀-⯿⌀-⏿]", "", p)  # emojis
         p = re.sub(r"\s{2,}", " ", p).strip(" -–|•")
         if len(p) > 1:
             saida.append(p)
@@ -314,6 +316,35 @@ def de_flip(dados):
         "fotos": [f.get("url") for f in fotos if f.get("url") and (f.get("tipo") in (None, "FOTO"))],
         "lat": loc.get("lat"), "lon": loc.get("lon"),
     }
+
+
+def de_instagram(blocos, url):
+    """Post do Instagram (carrossel): fotos na ordem do post e legenda. Ignora outros posts da página."""
+    m = re.search(r"instagram\.com/(?:[^/]+/)?(?:p|reel|tv)/([A-Za-z0-9_-]+)", url)
+    if not m:
+        return {}
+    codigo = m.group(1)
+    post = None
+    for b in blocos:
+        for d in percorre(b):
+            if d.get("code") == codigo and ("carousel_media" in d or "image_versions2" in d):
+                if post is None or ("carousel_media" in d and "carousel_media" not in post):
+                    post = d
+    if not post:
+        return {}
+    def maior(item):
+        cands = ((item.get("image_versions2") or {}).get("candidates") or [])
+        cands = [c for c in cands if isinstance(c, dict) and c.get("url")]
+        return max(cands, key=lambda c: (c.get("width") or 0) * (c.get("height") or 0))["url"] if cands else None
+    itens = post.get("carousel_media") or [post]
+    fotos = [maior(i) for i in itens if not i.get("video_versions")]
+    legenda = ((post.get("caption") or {}).get("text") or "").strip()
+    local = (post.get("location") or {}).get("name") if isinstance(post.get("location"), dict) else None
+    r = {"fotos": [f for f in fotos if f], "descricao": [l.strip() for l in legenda.split("\n") if l.strip()],
+         "_legenda": legenda, "instagram": True}
+    if local:
+        r["_local"] = local
+    return r
 
 
 def de_jsonld(blocos):
@@ -597,6 +628,8 @@ def extrair(url, html_url=None):
         dados = de_flip(j)
         if dados:
             break
+    if not dados and "instagram.com" in final:
+        dados = de_instagram(blocos_json, final)
     camadas = [dados, de_portais(texto_html, final), de_jsonld(ld)]
     meta = {k: v[0] for k, v in col.meta.items()}
     camadas.append({
@@ -616,7 +649,7 @@ def extrair(url, html_url=None):
     if junto.get("quartos") and junto.get("suites") and junto["suites"] > junto["quartos"]:
         junto["suites"] = None
     estruturadas = [urljoin(final, u) for u in (dados.get("fotos") or []) if isinstance(u, str)]
-    if len(estruturadas) >= 3:
+    if len(estruturadas) >= 3 or (dados.get("instagram") and estruturadas):
         # o site entrega a lista exata de fotos do imóvel -> usa só ela (evita fotos de "imóveis similares")
         junto["_fotos_urls"] = estruturadas
     else:
@@ -720,6 +753,15 @@ def cf_publicar(pedido, slug, entrada):
     return ok
 
 
+def ia(pedido, tarefa, texto):
+    """Pede à IA do Worker (só funciona durante a execução deste pedido)."""
+    try:
+        r = requests.post(SITE_MOTOR + "/ia", timeout=90, json={"pedido": pedido, "tarefa": tarefa, "texto": texto[:6000]})
+        return r.json().get("resultado") if r.ok else None
+    except Exception:
+        return None
+
+
 def excluir(slug):
     slug = re.sub(r"[^a-z0-9-]", "", slug or "")
     pasta = os.path.join(PASTA, slug)
@@ -762,9 +804,24 @@ def renderizar(slug):
 
 
 def gerar(url, codigo=None, valor=None, html_url=None, pedido=None, obs=False):
+    instrucoes = (ia(pedido, "instrucoes", "") or {}) if (obs and pedido) else {}
     if not re.match(r"https?://", url or ""):
         url = "https://" + (url or "").strip()
     d = extrair(url, html_url)
+    faltam = [k for k in ("quartos", "bairro", "cidade", "valorVenda") if not d.get(k)]
+    texto_livre = d.get("_legenda") or " ".join(d.get("descricao") or [])
+    if pedido and texto_livre and (faltam or d.get("instagram")):
+        progresso("Entendendo o texto do anúncio…", True)
+        ex = ia(pedido, "extrair", texto_livre) or {}
+        for k in ("tipo", "quartos", "suites", "banheiros", "vagas", "areaConstruida", "areaTerreno", "areaUtil",
+                  "valorVenda", "valorCondominio", "valorIptu", "bairro", "cidade", "condominio", "endereco"):
+            v = ex.get(k)
+            if v not in (None, "", 0) and not d.get(k):
+                d[k] = v
+        if ex.get("caracteristicas") and not d.get("caracteristicas"):
+            d["caracteristicas"] = [c for c in ex["caracteristicas"] if isinstance(c, str)][:30]
+    if d.get("_local") and not d.get("bairro"):
+        d["bairro"] = d["_local"]
     d["tipo"] = d.get("tipo") or tipo_de(d.get("titulo_fonte"), url, " ".join(d.get("descricao") or [])[:300])
     d["tipo"] = corrige_texto(d["tipo"]).strip().capitalize() if d["tipo"] else "Imóvel"
     for k in ("endereco", "bairro", "cidade", "condominio", "titulo_fonte"):
@@ -796,7 +853,20 @@ def gerar(url, codigo=None, valor=None, html_url=None, pedido=None, obs=False):
     if os.path.isdir(fotos_dir):
         for f in os.listdir(fotos_dir):
             os.remove(os.path.join(fotos_dir, f))
-    fotos = baixa_fotos(d["_sessao"], d["_fotos_urls"], fotos_dir, d["_final"])
+    urls_fotos = list(d["_fotos_urls"])
+    tirar = instrucoes.get("remover_fotos") if isinstance(instrucoes, dict) else None
+    if tirar and urls_fotos:
+        n = len(urls_fotos)
+        idx = set()
+        for k in tirar:
+            try:
+                k = int(k)
+            except (TypeError, ValueError):
+                continue
+            if 1 <= k <= n: idx.add(k - 1)
+            elif -n <= k <= -1: idx.add(n + k)
+        urls_fotos = [u for i, u in enumerate(urls_fotos) if i not in idx]
+    fotos = baixa_fotos(d["_sessao"], urls_fotos, fotos_dir, d["_final"])
     if not fotos:
         raise Falha("Não encontrei fotos do imóvel nesse link.")
     descricao = higieniza(d.get("descricao") or [])
