@@ -233,7 +233,12 @@ window.LANCAMENTOS = [
 
   // ── PARQUE PRADO ──────────────────────────────────────
   { n:"Casa Prado", c:"Riva", b:"Parque Prado", t:"apto", m:[69,96], d:[2,3], v:"1 e 2", e:"2028-08", p:[[69,750],[96,1000]], vis:"stand_dec" },
-  { n:"Florae Jambeiro", c:"Vitta", b:"Parque Prado", t:"apto", m:[44], d:[2,2], v:"1", e:"2028-12", p:[[null,340]], vis:"virtual" },
+  { n:"Florae Jambeiro", c:"Vitta", b:"Parque Prado", t:"apto", m:[42.99,45.02], d:[2,2], v:"1", e:"2028-12", p:[[null,340]], vis:"virtual",
+    cmp:{tor:"2", dif:"Plantas de 2 dormitórios de 42,99 a 45,02 m² · gardens privativos no térreo · planta adaptável PcD · infraestrutura Mercado Vitta"},
+    tip:"2 dormitórios · plantas tipo de 42,99, 43,82, 43,89, 44,86 e 45,02 m² · térreo com garden privativo (44,86 m² + 4,25 m² ou + 20,28 m² + 4,25 m², entregue gramado e descoberto) · planta PcD de 45,02 m² (1 dormitório, mediante adaptação)",
+    end:"Rua Florindo Matos Pereira, 570 — Parque Prado (região do Jambeiro)",
+    ficha:[["Torres","2"],["Por andar","Finais 01 a 10"],["Segurança","Guarita com vidro reflexivo, controle de acesso com porteiro eletrônico, espera de segurança para pedestres e previsão para automação condominial"],["Piscinas","Adulto com raia de aprox. 14 m, solarium e prainha; acessível; infantil; fechadas em gradil"],["Área verde","Área de preservação permanente no terreno"],["Localização","Rodovia Anhanguera 2 min · Av. Baden Powell 5 min · Shopping 7 min (de carro)"]],
+    lazer:["Piscina adulto com raia e prainha","Piscina infantil","Deck molhado e solarium","Espaço fitness","Fitness ao ar livre","Salão de festas","Churrasqueira e espaço churrasco","Pub torcedor","Espaço cinema","Brinquedoteca","Play kids","Oficina criativa","Praça de encontro","Espaço repouso","Espaço mirante","Espaço pet","Car wash","Mini mercado (infraestrutura Mercado Vitta)","Bicicletário"] },
   { n:"Portal dos Jatobás", suite:true, c:"MRV", b:"Parque Prado", t:"apto", m:[44], d:[2,2], v:"até 1", e:"2029-12", el:"2029", p:[[null,290],[null,360]], vis:"stand", obs:"Com ou sem suíte. Preço de R$ 290 mil a R$ 360 mil." },
 
   // ── CASAS ─────────────────────────────────────────────
@@ -282,4 +287,10 @@ window.LANCAMENTOS = [
     ficha:[["Casas","36 em condomínio"],["Unidades","Pontos de ar-condicionado na sala e dormitórios, piso em todos os ambientes, ralo linear, fechadura digital, entrada de serviço separada"],["Infraestrutura","Fiação subterrânea, pressurizador de água, estrutura para portaria remota"]],
     lazer:["Piscinas adulto e infantil com deck molhado","Academia","Espaço gourmet e salão de festas","Open office com sala de reunião e copa","Estúdio","Brinquedoteca","Sala games","Brinquedão externo","Pet place","Vending machines"],
     cmp:{tor:"Casas (36)", un:"36", var:"Quintal privativo", dif:"2 ou 3 suítes · opção com office · pontos de ar-condicionado · ralo linear · fechadura digital · fiação subterrânea"} },
+  { n:"TopLife Nova Campinas Park", c:"TopLife", b:"Nova Campinas", t:"apto", m:[46.71,46.77,49.02,49.11,50.65], d:[2,2], su:true, suite:true, v:"1 ou 2", e:"2029-12", el:"2029", p:[[null,488],[null,613]], vis:"nenhum", vo:"A confirmar",
+    tip:"2 dorms com suíte e varanda gourmet (46,71 a 50,65 m²) · 4 gardens no térreo com área privativa descoberta (62,50 a 71,13 m²)",
+    end:"Avenida Imperatriz Dona Tereza Cristina, 980 — Nova Campinas",
+    ficha:[["Unidades","64 em torre única (subsolo + térreo + 10 pavimentos tipo, 6 por andar, 4 gardens)"],["Terreno","1.494,60 m²"],["Arquitetura","TBR Arquitetura"],["Registro","R.13 da matrícula 29.900 (02/03/2026)"],["Tabela","Pré-lançamento, válida até 31/10/2026"]],
+    lazer:["Piscina com solário e deck","Mini quadra esportiva","Playground","Espaço kids","Espaço fitness","Coworking","Espaço gourmet","Lavanderia","Marketplace","Bicicletário","Portaria"],
+    cmp:{ter:"1.494,60 m²", tor:"1 (subsolo + térreo + 10 pavimentos)", un:"64", var:"Sim — varanda gourmet", dif:"2 dorms com suíte · opção garden com área privativa descoberta · 1 ou 2 vagas"} },
 ];

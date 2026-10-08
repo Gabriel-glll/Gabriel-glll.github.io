@@ -68,7 +68,12 @@ window.MATERIAIS = {
         "url": "materiais/florae-jambeiro/tabela/tabela-florae-jambeiro-2026-10-associativo-e-sfh.pdf",
         "titulo": "Tabela Out/2026 — Associativo e SFH"
       }
-    ]
+    ],
+    "fotos": 9,
+    "book": {
+      "url": "materiais/florae-jambeiro/book.pdf",
+      "titulo": "Book Florae Jambeiro"
+    }
   },
   "freedom": {
     "tabela": [
@@ -485,5 +490,18 @@ window.MATERIAIS = {
       "url": "https://zff-books.zffrealty.workers.dev/city-galleria.pdf?v=1791290347",
       "titulo": "Book City Galleria"
     }
+  },
+  "toplife-nova-campinas-park": {
+    "fotos": 17,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/toplife-nova-campinas-park.pdf?v=1791495770",
+      "titulo": "Book TopLife Nova Campinas Park"
+    },
+    "tabela": [
+      {
+        "url": "materiais/toplife-nova-campinas-park/tabela/tabela-toplife-nova-campinas-park-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      }
+    ]
   }
 };
