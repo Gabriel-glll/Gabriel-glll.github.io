@@ -71,7 +71,7 @@ window.MATERIAIS = {
     ],
     "fotos": 9,
     "book": {
-      "url": "materiais/florae-jambeiro/book.pdf",
+      "url": "https://zff-books.zffrealty.workers.dev/florae-jambeiro.pdf?v=1791484591",
       "titulo": "Book Florae Jambeiro"
     }
   },
