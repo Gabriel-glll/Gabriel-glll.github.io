@@ -287,7 +287,7 @@ window.LANCAMENTOS = [
     ficha:[["Casas","36 em condomínio"],["Unidades","Pontos de ar-condicionado na sala e dormitórios, piso em todos os ambientes, ralo linear, fechadura digital, entrada de serviço separada"],["Infraestrutura","Fiação subterrânea, pressurizador de água, estrutura para portaria remota"]],
     lazer:["Piscinas adulto e infantil com deck molhado","Academia","Espaço gourmet e salão de festas","Open office com sala de reunião e copa","Estúdio","Brinquedoteca","Sala games","Brinquedão externo","Pet place","Vending machines"],
     cmp:{tor:"Casas (36)", un:"36", var:"Quintal privativo", dif:"2 ou 3 suítes · opção com office · pontos de ar-condicionado · ralo linear · fechadura digital · fiação subterrânea"} },
-  { n:"TopLife Nova Campinas Park", c:"TopLife", b:"Nova Campinas", t:"apto", m:[46.71,46.77,49.02,49.11,50.65], d:[2,2], su:true, suite:true, v:"1 ou 2", e:"2029-12", el:"2029", p:[[null,488],[null,613]], vis:"nenhum", vo:"A confirmar",
+  { n:"TopLife Nova Campinas Park", c:"TopLife", b:"Nova Campinas", t:"apto", m:[46.71,46.77,49.02,49.11,50.65], d:[2,2], su:true, suite:true, v:"1 ou 2", vc:"ambas", fgts:false, inv:true, e:"2029-12", el:"2029", p:[[null,488],[null,613]], vis:"nenhum", vo:"A confirmar",
     tip:"2 dorms com suíte e varanda gourmet (46,71 a 50,65 m²) · 4 gardens no térreo com área privativa descoberta (62,50 a 71,13 m²)",
     end:"Avenida Imperatriz Dona Tereza Cristina, 980 — Nova Campinas",
     ficha:[["Unidades","64 em torre única (subsolo + térreo + 10 pavimentos tipo, 6 por andar, 4 gardens)"],["Terreno","1.494,60 m²"],["Arquitetura","TBR Arquitetura"],["Registro","R.13 da matrícula 29.900 (02/03/2026)"],["Tabela","Pré-lançamento, válida até 31/10/2026"]],
