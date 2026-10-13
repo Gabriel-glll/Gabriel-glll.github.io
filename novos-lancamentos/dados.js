@@ -26,7 +26,12 @@ window.ATUALIZADO_EM = "Out/2026";
 
 window.LANCAMENTOS = [
   // ── MANSÕES SANTO ANTÔNIO ─────────────────────────────
-  { n:"Alentejo", c:"Riva", b:"Mansões Santo Antônio", t:"apto", m:[58,74], d:[2,3], v:"1 e 2", e:"2027-06", p:[[null,800]], vis:"stand" },
+  { n:"Alentejo", c:"Riva", b:"Mansões Santo Antônio", t:"apto", m:[58,72], d:[2,3], suite:true, v:"1 e 2", e:"2027-06", p:[[null,800]], vis:"stand",
+    tip:"2 dorms com terraço 58 m² (1 vaga) · 3 dorms com terraço 72 m² (2 vagas) · gardens: 2 dorms 74 m² e 3 dorms 92 m² · com suíte e varanda gourmet",
+    end:"Avenida Ricardo Rocha Bomfim, 420 — Campinas",
+    ficha:[["Unidades","184 em 2 torres (92 por torre: 4 gardens + 8 por andar, do 1º ao 11º)"],["Pavimentos","Térreo + 11"],["Tipologias","88 de 3 dorms 72 m² · 88 de 2 dorms 58 m² · 4 gardens 3 dorms 92 m² · 4 gardens 2 dorms 74 m²"],["Vagas","310 no total: 3 dorms 2 vagas, 2 dorms 1 vaga · edifício garagem"],["Terreno","6.624,69 m²"],["Arquitetura","Primi Appoloni Arquitetura"],["Interiores","Quattrino Arquitetura"],["Paisagismo","Paola Silva Landscape"],["Realização","Riva Incorporadora (Direcional) e ACRO"]],
+    lazer:["Piscinas adulto e infantil","Deck molhado e solarium","Churrasqueira","Praça central","Praça da fogueira","Quadra de areia","Playground","Brinquedoteca","Salão de festas","Salão de jogos","Espaço gamer","Espaço streaming","Coworking","Fitness","Fitness externo","Pet place","Mini market","Bicicletário","Portaria com acesso social e serviço","Ponto para churrasqueira elétrica ou a gás nos terraços","Wi-Fi nas áreas comuns","Infra para ar-condicionado nos quartos, sala e áreas de lazer","Fechadura eletrônica nos aptos","Tomada USB na suíte e sala"],
+    cmp:{ter:"6.624,69 m²", tor:"2 (térreo + 11 pavimentos)", un:"184", var:"Sim — terraço com ponto p/ churrasqueira", dif:"Suíte · infra ar-condicionado em quartos e sala · fechadura eletrônica · tomada USB · opção garden"} },
   { n:"San Pietro", c:"Caprem", b:"Mansões Santo Antônio", t:"apto", m:[51,60], d:[2,3], v:"1 (vinculada)", vc:"ambas", e:"2027-12", p:[[null,620]], vis:"stand_dec",
     cmp:{ter:"10.756,27 m²", tor:"4 (A, B, C e D)", var:"Sim — ponto de gás para grill ou cooktop (suporta fechamento)", dif:"Previsão de ar-condicionado na sala e dormitórios · água quente a gás nos chuveiros e na pia da cozinha · persiana integrada nos dormitórios · laje técnica · pé-direito de 2,70 m"},
     tip:"Plantas de 51 m² e 60 m² (2 e 3 dormitórios) · previsão de ar-condicionado na sala e dormitórios · ponto de água quente nos chuveiros e na pia da cozinha",

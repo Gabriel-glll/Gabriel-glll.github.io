@@ -352,7 +352,13 @@ window.MATERIAIS = {
     "book": {
       "url": "https://zff-books.zffrealty.workers.dev/san-pietro.pdf?v=1791290633",
       "titulo": "Book San Pietro"
-    }
+    },
+    "tabela": [
+      {
+        "url": "materiais/san-pietro/tabela/tabela-san-pietro-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      }
+    ]
   },
   "casa-da-mata-gramado": {
     "fotos": 21,
@@ -503,5 +509,12 @@ window.MATERIAIS = {
         "titulo": "Tabela Out/2026"
       }
     ]
+  },
+  "alentejo": {
+    "fotos": 22,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/alentejo.pdf?v=1791921884",
+      "titulo": "Book Alentejo"
+    }
   }
 };
