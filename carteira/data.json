@@ -5,10 +5,10 @@
    "id": "adriana",
    "nome": "Adriana",
    "tel": "(19) 99347-3539",
-   "obs": "Perfil claro, mas ainda não recebeu opções concretas.",
+   "obs": "13/10 16:05 recebeu projeto perto da Cidade Universitária (entrega dez/2027, 13 meses de fluxo). Aguardando retorno.",
    "dica": "Investidora objetiva. Mande 2 opções concretas com rentabilidade e prazo de entrega, sem textão.",
    "temp": "Morno",
-   "etapa": "Qualificando",
+   "etapa": "Opções enviadas",
    "origem": "Investidora",
    "faixa": "",
    "regiao": "Unicamp / Mansões / D. Pedro",
@@ -81,7 +81,7 @@
    "id": "ana",
    "nome": "Ana",
    "tel": "(19) 99970-0081",
-   "obs": "Muitas mensagens sem resposta; 13/10 'Pode ligar! Não tem problema'.",
+   "obs": "Ela te ligou 13/10 10:48 (perdida) e o retorno 10:49 também não foi atendido. 18:14 mandei pergunta direta: tem interesse? o que motivou clicar na campanha?",
    "dica": "Disse que pode ligar. Ligue no fim da manhã e qualifique: morar ou investir, faixa, prazo.",
    "temp": "Morno",
    "etapa": "Qualificando",
@@ -347,7 +347,7 @@
    "id": "edgar-luce-cambui",
    "nome": "Edgar Luce Cambuí",
    "tel": "(16) 99994-3993",
-   "obs": "Falamos por telefone; material do Luce enviado. Luce tem 2 vagas + depósito.",
+   "obs": "Estava em Araraquara, voltou na terça 13/10. Combinamos falar esta semana para marcar o Luce. Precisa de 2 vagas.",
    "dica": "Prefere telefone. Destaque 2 vagas + depósito do Luce e o desconto da Tegra.",
    "temp": "Quente",
    "etapa": "Opções enviadas",
@@ -417,6 +417,25 @@
    "tipo": "repique",
    "cadInicio": "2026-10-27",
    "prioridade": 5,
+   "encerrado": ""
+  },
+  {
+   "id": "fatima",
+   "nome": "Fátima",
+   "tel": "(16) 99115-9460",
+   "obs": "Repique enviado 13/10 13:12, sem resposta.",
+   "dica": "Lead antigo de repique: ligação curta, pergunte se já comprou.",
+   "temp": "Frio",
+   "etapa": "Novo lead",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "repique",
+   "cadInicio": "2026-10-13",
+   "prioridade": 3,
    "encerrado": ""
   },
   {
@@ -499,19 +518,38 @@
    "id": "gustavo",
    "nome": "Gustavo",
    "tel": "(19) 98242-0231",
-   "obs": "Visita marcada qua 07/10 12h; sem confirmação dele depois. Teto 1,1 mi (nem com carro na troca).",
+   "obs": "Pediu um tempo ('momentos'). Para comprar a casa em Paulínia (até 1,1 mi) precisa vender o imóvel dele: pedi IPTU, fotos, condomínio e valor (07-08/10), ainda não mandou.",
    "dica": "Cliente de maior VGV. Ligue, não mande texto. Respeite o teto de R$ 1,1 mi: mostre só casas até esse valor.",
-   "temp": "Quente",
-   "etapa": "Visita agendada",
+   "temp": "Morno",
+   "etapa": "Pausado",
    "origem": "Casa Paulínia (condomínio)",
    "faixa": "até 1,1 mi",
    "regiao": "Paulínia",
-   "proxAcao": "Ligar: a visita aconteceu? Feedback das casas / reagendar",
+   "proxAcao": "Pegar dados do imóvel dele (IPTU, fotos, condomínio, valor) para avaliar/anunciar",
    "proxData": "2026-10-14",
    "ultResp": "2026-10-05",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
+   "encerrado": ""
+  },
+  {
+   "id": "ines",
+   "nome": "Inês",
+   "tel": "(16) 99320-7181",
+   "obs": "Repique enviado 13/10 13:12, sem resposta.",
+   "dica": "Lead antigo de repique: ligação curta, pergunte se já comprou.",
+   "temp": "Frio",
+   "etapa": "Novo lead",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "repique",
+   "cadInicio": "2026-10-13",
+   "prioridade": 3,
    "encerrado": ""
   },
   {
@@ -803,7 +841,7 @@
    "id": "matheus",
    "nome": "Matheus",
    "tel": "(19) 98924-6834",
-   "obs": "Recebeu fluxo unid. 108 (saldo 403k) e tabela de andares (6º 618k). Quer custos de cartório.",
+   "obs": "Fluxo Yees unid. 108 (saldo 403k) e tabela de andares enviados. 13/10 18:12 recusou a ligação: seguir por mensagem.",
    "dica": "Já negocia fluxo. Leve números prontos (ato, mensais, ITBI, cartório) e chame para o decorado para formalizar proposta.",
    "temp": "Quente",
    "etapa": "Proposta",
@@ -1069,7 +1107,7 @@
    "id": "rosangela",
    "nome": "Rosângela",
    "tel": "(19) 99167-6269",
-   "obs": "Respondeu 10/10, depois parou.",
+   "obs": "Respondeu 10/10 (morar, depois investir). 13/10: 2 ligações não atendidas (14:03 e 18:09).",
    "dica": "Respondeu uma vez (morar, depois investir). Ligue e descubra faixa de valor e região.",
    "temp": "Morno",
    "etapa": "Qualificando",
@@ -1107,7 +1145,7 @@
    "id": "sergio",
    "nome": "Sergio",
    "tel": "(19) 99150-0843",
-   "obs": "Topou conhecer o Luce, mas viajou no fds.",
+   "obs": "Depende de vender casas. 13/10 15:25 perguntei como estão as negociações. Aguardando.",
    "dica": "Depende de vender casas. Convide só para conhecer o Luce, sem pressão de compra.",
    "temp": "Morno",
    "etapa": "Visita a agendar",
@@ -1258,7 +1296,7 @@
  ],
  "plano": {
   "2026-10-14": {
-   "foco": "61 contatos. Prioridade: fechar 3 agendamentos (Carlos, Rogério, Denilson) e o retorno do Gustavo. Ligue antes de mandar texto.",
+   "foco": "Prioridade: agendar Carlos (Parque Prado), Edgar (Luce) e Rogério (Maxi Bonfim), e pegar os dados do imóvel do Gustavo. Quem não atender de dia vai para a lista das 18:20.",
    "itens": [
     {
      "hora": "09:00",
@@ -1270,7 +1308,7 @@
      "hora": "09:06",
      "id": "gustavo",
      "canal": "lig",
-     "texto": "Ligar: a visita de quarta (07/10) aconteceu? Pegar feedback das casas de Paulínia ou reagendar esta semana (teto R$ 1,1 mi)."
+     "texto": "Ele pediu um tempo. Ligar rápido só para pegar os dados do imóvel dele (IPTU, fotos, condomínio e valor): vendendo o dele, a casa em Paulínia sai."
     },
     {
      "hora": "09:12",
@@ -1282,19 +1320,19 @@
      "hora": "09:18",
      "id": "rogerio-maxi",
      "canal": "wpp",
-     "texto": "Propor sábado 17/10 às 9h no Maxi Bonfim, com a esposa."
+     "texto": "Ele não respondeu ontem. Proposta direta: sábado 17/10 às 9h no Maxi Bonfim, com a esposa?"
     },
     {
      "hora": "09:24",
      "id": "edgar-luce-cambui",
      "canal": "lig",
-     "texto": "Ligar e convidar para o decorado do Luce Cambuí (2 vagas + depósito, desconto Tegra)."
+     "texto": "Voltou de Araraquara ontem. Ligar e marcar a visita ao decorado do Luce esta semana (2 vagas + depósito)."
     },
     {
      "hora": "09:30",
      "id": "matheus",
      "canal": "wpp",
-     "texto": "Enviar simulação completa do Yees (ato, mensais, ITBI e cartório) e convidar para o decorado."
+     "texto": "Recusou ligação ontem: seguir por mensagem. Mandar simulação completa do Yees (ato, mensais, ITBI, cartório) e convidar para o decorado."
     },
     {
      "hora": "09:36",
@@ -1312,37 +1350,31 @@
      "hora": "09:48",
      "id": "ana",
      "canal": "lig",
-     "texto": "Ligar (ela disse que pode): morar ou investir, faixa, prazo."
-    },
-    {
-     "hora": "09:54",
-     "id": "rosangela",
-     "canal": "lig",
-     "texto": "Ligar: descobrir faixa de valor e região. Florae ainda faz sentido?"
+     "texto": "Ela te ligou ontem 10:48 e não deu certo. Ligar cedo; se não atender, nova tentativa às 18:30."
     },
     {
      "hora": "10:00",
      "id": "mari",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): mensagem curta perguntando se ainda busca imóvel na faixa de R$ 450 mil no Guanabara."
+     "canal": "lig",
+     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
     },
     {
      "hora": "10:06",
      "id": "bryan",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): ainda busca imóvel no Nova Campinas, ~R$ 550 mil?"
+     "canal": "lig",
+     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
     },
     {
      "hora": "10:12",
      "id": "claudia",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): ainda busca imóvel no Taquaral, ~R$ 600 mil?"
+     "canal": "lig",
+     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
     },
     {
      "hora": "10:18",
      "id": "gabriel",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): TopLife ainda faz sentido? Morar ou investir?"
+     "canal": "lig",
+     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
     },
     {
      "hora": "10:24",
@@ -1396,7 +1428,7 @@
      "hora": "14:00",
      "id": "adriana",
      "canal": "wpp",
-     "texto": "Enviar 2 opções concretas na planta perto da Unicamp (Mansões / D. Pedro) com prazo de entrega."
+     "texto": "Perguntar o que achou do projeto enviado ontem (perto da Cidade Universitária, entrega dez/2027, 13 meses de fluxo). Oferecer visita."
     },
     {
      "hora": "14:06",
@@ -1432,7 +1464,7 @@
      "hora": "14:36",
      "id": "sergio",
      "canal": "wpp",
-     "texto": "Convidar para conhecer o Luce Cambuí no fim de semana, sem compromisso."
+     "texto": "Se ele respondeu sobre a venda das casas, convidar para o Luce no fim de semana; se não, só um toque leve."
     },
     {
      "hora": "14:42",
@@ -1525,6 +1557,18 @@
      "texto": "Mandar a tabela atualizada do Viva Verde (lote 212 m²)."
     },
     {
+     "hora": "16:30",
+     "id": "fatima",
+     "canal": "lig",
+     "texto": "Repique dia 2: ligar. Como está a busca por imóvel? Já comprou?"
+    },
+    {
+     "hora": "16:36",
+     "id": "ines",
+     "canal": "lig",
+     "texto": "Repique dia 2: ligar. Como está a busca por imóvel? Já comprou?"
+    },
+    {
      "hora": "18:20",
      "id": "caio",
      "canal": "lig",
@@ -1559,6 +1603,18 @@
      "id": "neide",
      "canal": "lig",
      "texto": "Não atende de dia: ligar depois das 18:20. qual região e faixa ela procura?"
+    },
+    {
+     "hora": "18:56",
+     "id": "rosangela",
+     "canal": "lig",
+     "texto": "Não atendeu 2 ligações ontem (14:03 e 18:09): tentar à noite. Descobrir faixa de valor e região."
+    },
+    {
+     "hora": "18:59",
+     "id": "ana",
+     "canal": "lig",
+     "texto": "Segunda tentativa se não atendeu de manhã."
     },
     {
      "hora": "19:00",
