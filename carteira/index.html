@@ -6,39 +6,85 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Carteira ZFF</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 <style>
-/* Mesa de prospecção: placar de contatos do dia no topo, fila de clientes com botões grandes de contato */
+/* Mesa de prospecção: placar do dia no topo; "Meu dia" é uma agenda por período com horário, canal e roteiro; "Contatos" é a carteira inteira */
 :root{
   --bg:#f3f5f8; --surface:#fff; --ink:#14223a; --muted:#5b6778; --line:#dde3ea; --soft:#e9eef4;
-  --navy:#1d4a73; --navy-ink:#fff; --call:#1f7ae0; --wpp:#1fa855; --resp:#7b4bd6; --na:#8a94a3;
-  --hot:#d9482b; --warm:#c98a0b; --cold:#3c7fb8; --lost:#8a94a3; --late:#c0392b; --tip-bg:#fff6dc; --tip-ink:#6b4e00;
-  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --f-body:"IBM Plex Sans",system-ui,Arial,sans-serif;
+  --navy:#1d4a73; --navy-ink:#fff; --call:#1f7ae0; --wpp:#1fa855; --resp:#7b4bd6; --na:#8a94a3; --task:#1d4a73;
+  --hot:#d9482b; --warm:#c98a0b; --cold:#3c7fb8; --lost:#8a94a3; --late:#c0392b; --tip-bg:#fff6dc; --tip-ink:#6b4e00; --done-bg:#e8f7ee;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --f-body:"IBM Plex Sans",system-ui,Arial,sans-serif; --f-mono:"IBM Plex Mono",Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0e1622; --surface:#16212f; --ink:#e6ecf3; --muted:#9aa7b7; --line:#283648; --soft:#1d2b3c;
-  --navy:#2a6299; --call:#4b9bf5; --wpp:#33c46c; --resp:#a07cf0; --na:#7d8796;
-  --hot:#f06a4c; --warm:#e0a73a; --cold:#6aa6dc; --lost:#7d8796; --late:#ef6a5a; --tip-bg:#33290f; --tip-ink:#f3d58a; color-scheme:dark}}
+  --navy:#2a6299; --call:#4b9bf5; --wpp:#33c46c; --resp:#a07cf0; --na:#7d8796; --task:#6aa6dc;
+  --hot:#f06a4c; --warm:#e0a73a; --cold:#6aa6dc; --lost:#7d8796; --late:#ef6a5a; --tip-bg:#33290f; --tip-ink:#f3d58a; --done-bg:#12301f; color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.45 var(--f-body)}
 button,input,select{font:inherit;color:inherit}
+a{color:inherit}
 :focus-visible{outline:2px solid var(--call);outline-offset:2px}
 header{background:var(--navy);color:var(--navy-ink);position:sticky;top:0;z-index:5;padding-top:env(safe-area-inset-top,0px)}
-.hd{max-width:1000px;margin:0 auto;padding:12px 16px;display:grid;gap:10px}
-.hd .l1{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.hd{max-width:1000px;margin:0 auto;padding:12px 16px 0;display:grid;gap:10px}
+.l1{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
 .brand{font:700 26px/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
 .brand small{display:block;font:500 13px var(--f-body);opacity:.8;text-transform:none;letter-spacing:0;margin-top:3px}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap}
 .score{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .score b{font:700 34px/1 var(--f-display);font-variant-numeric:tabular-nums}
-.score .of{opacity:.8;font-size:14px}
+.score .of{opacity:.85;font-size:14px}
 .meter{flex:1 1 200px;height:10px;background:rgba(255,255,255,.2);border-radius:6px;overflow:hidden;min-width:120px}
 .meter i{display:block;height:100%;background:#7fe0a6;transition:width .3s}
 .goal input{width:54px;padding:2px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.4);background:transparent;color:var(--navy-ink)}
+.views{display:flex;gap:2px}
+.views button{font:600 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase;background:transparent;color:var(--navy-ink);opacity:.7;border:0;padding:9px 16px;border-radius:8px 8px 0 0;cursor:pointer}
+.views button[aria-selected="true"]{background:var(--bg);color:var(--ink);opacity:1}
 .btn{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px}
 .btn.x{background:#fff;color:#14223a;border-color:#fff}
+.btn.ghost{background:transparent;color:var(--navy-ink);border-color:rgba(255,255,255,.5)}
+.btn.sm{padding:5px 10px;font-size:13px}
 main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
+/* Meu dia */
+.daybar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.daybar .date{font:700 24px var(--f-display);text-transform:uppercase;letter-spacing:.03em;margin-right:auto}
+.foco{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:8px;padding:10px 12px;margin:12px 0;font-weight:500}
+.pertabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+.pertabs button{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:10px;cursor:pointer;text-align:left}
+.pertabs button b{display:block;font:700 20px var(--f-display);text-transform:uppercase;letter-spacing:.05em}
+.pertabs button span{color:var(--muted);font-size:13px}
+.pertabs button[aria-selected="true"]{border-color:var(--navy);background:var(--navy);color:var(--navy-ink)}
+.pertabs button[aria-selected="true"] span{color:var(--navy-ink);opacity:.85}
+.item{display:grid;grid-template-columns:62px 36px minmax(0,1fr);gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.item.done{background:var(--done-bg);border-color:var(--wpp)}
+.item .hr{font:600 17px var(--f-mono);font-variant-numeric:tabular-nums;padding-top:6px}
+.item .hr.now{color:var(--late)}
+.ch{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.ch.lig{background:var(--call)}.ch.wpp{background:var(--wpp)}.ch.acao{background:var(--task)}
+.ch svg{width:19px;height:19px}
+.it{display:grid;gap:6px;min-width:0}
+.it .verb{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.it .nm{font-weight:600;font-size:17px}
+.it .txt{font-size:15px}
+.contact{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.contact .num{font:500 14px var(--f-mono);color:var(--muted)}
+.lnk{display:inline-flex;align-items:center;gap:5px;border-radius:8px;padding:6px 10px;font-weight:600;font-size:14px;text-decoration:none;color:#fff}
+.lnk svg{width:16px;height:16px}
+.lnk.lig{background:var(--call)}.lnk.wpp{background:var(--wpp)}
+.copy{border:1px solid var(--line);background:transparent;border-radius:8px;padding:5px 9px;font-size:13px;cursor:pointer;color:var(--muted)}
+.tip{background:var(--tip-bg);color:var(--tip-ink);border-radius:8px;padding:6px 10px;font-size:14px}
+.tip b,.obs b{font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-right:6px;opacity:.8}
+.marks{display:flex;gap:6px;flex-wrap:wrap}
+.mk{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);background:var(--surface);border-radius:9px;padding:6px 11px;cursor:pointer;font-weight:600;font-size:14px}
+.mk svg{width:16px;height:16px}
+.mk.ok{color:var(--wpp)}.mk.resp{color:var(--resp)}.mk.na{color:var(--na)}
+.mk[aria-pressed="true"].ok{background:var(--wpp);border-color:var(--wpp);color:#fff}
+.mk[aria-pressed="true"].resp{background:var(--resp);border-color:var(--resp);color:#fff}
+.mk[aria-pressed="true"].na{background:var(--na);border-color:var(--na);color:#fff}
+.empty{color:var(--muted);padding:12px 2px}
+.note{color:var(--muted);font-size:13px;margin-top:10px}
+/* Contatos */
 .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .tools input[type=search]{flex:1 1 220px;min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
@@ -52,64 +98,76 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
 .stripe.Quente{background:var(--hot)}.stripe.Morno{background:var(--warm)}.stripe.Frio{background:var(--cold)}.stripe.Perdido{background:var(--lost)}
 .body{padding:12px 14px;display:grid;gap:8px;min-width:0}
 .top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;justify-content:space-between}
-.nm{font-weight:600;font-size:17px}
 .tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:20px;border:1px solid var(--line);color:var(--muted);margin-left:6px}
+.tag.done{color:var(--wpp);border-color:var(--wpp)}
 .tag.today{color:var(--call);border-color:var(--call)}
 .tag.late{color:var(--late);border-color:var(--late)}
-.tag.done{color:var(--wpp);border-color:var(--wpp)}
-.tel{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-variant-numeric:tabular-nums}
-.tel a{color:var(--call);font-weight:500}
-.tel .none{color:var(--muted);font-style:italic}
-.obs{font-size:14px}
-.obs b,.tip b{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-right:6px}
-.tip{background:var(--tip-bg);color:var(--tip-ink);border-radius:8px;padding:7px 10px;font-size:14px}
-.tip b{color:inherit;opacity:.8}
-.next{font-size:14px}
-.acts{display:flex;flex-wrap:wrap;gap:8px}
-.act{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:600;font-size:14px;min-height:42px}
-.act svg{width:18px;height:18px}
-.act.lig{color:var(--call)}.act.wpp{color:var(--wpp)}.act.resp{color:var(--resp)}.act.na{color:var(--na)}
-.act[aria-pressed="true"].lig{background:var(--call);border-color:var(--call);color:#fff}
-.act[aria-pressed="true"].wpp{background:var(--wpp);border-color:var(--wpp);color:#fff}
-.act[aria-pressed="true"].resp{background:var(--resp);border-color:var(--resp);color:#fff}
-.act[aria-pressed="true"].na{background:var(--na);border-color:var(--na);color:#fff}
-.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
-.empty{color:var(--muted);padding:12px 2px}
+.obs,.next{font-size:14px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:500;z-index:20;max-width:calc(100vw - 32px)}
+@media (max-width:560px){.item{grid-template-columns:48px minmax(0,1fr)}.item .ch{display:none}.pertabs button b{font-size:17px}}
 @media (prefers-reduced-motion:reduce){.meter i{transition:none}}
 </style>
 </head>
 <body>
-<div id="app">
 <header>
   <div class="hd">
     <div class="l1">
       <div class="brand">Carteira ZFF<small id="hoje"></small></div>
-      <button class="btn x" id="xlsx">Baixar planilha (.xlsx)</button>
+      <div class="hbtns">
+        <button class="btn ghost" id="bNotif">Ativar lembretes</button>
+        <button class="btn ghost" id="bIcs">Pôr no calendário</button>
+        <button class="btn x" id="xlsx">Baixar planilha (.xlsx)</button>
+      </div>
     </div>
     <div class="score">
       <b id="nCont">0</b><span class="of">contatados hoje · meta <span class="goal"><input type="number" min="1" id="meta" aria-label="Meta de contatos do dia"></span></span>
       <div class="meter" aria-hidden="true"><i id="bar" style="width:0"></i></div>
       <span class="of" id="nResp"></span>
     </div>
+    <div class="views" role="tablist">
+      <button role="tab" data-v="dia" aria-selected="true">Meu dia</button>
+      <button role="tab" data-v="contatos" aria-selected="false">Contatos</button>
+    </div>
   </div>
 </header>
+
 <main>
-  <div class="tools"><input type="search" id="q" placeholder="Buscar nome, observação, região…"></div>
-  <div class="chips" id="fil"></div>
-  <div class="chips" id="temps"></div>
-  <p class="meta" id="info"></p>
-  <div class="list" id="list"></div>
+  <section id="v-dia">
+    <div class="daybar">
+      <div class="date" id="dLabel"></div>
+      <button class="btn sm" data-d="-1">‹ Anterior</button>
+      <button class="btn sm" data-d="0">Hoje</button>
+      <button class="btn sm" data-d="1">Amanhã ›</button>
+    </div>
+    <div id="foco"></div>
+    <div class="pertabs" role="tablist" id="pertabs"></div>
+    <div id="itens"></div>
+    <p class="note" id="dNote"></p>
+  </section>
+
+  <section id="v-contatos" hidden>
+    <div class="tools"><input type="search" id="q" placeholder="Buscar nome, telefone, observação, região…"></div>
+    <div class="chips" id="fil"></div>
+    <div class="chips" id="temps"></div>
+    <p class="meta" id="info"></p>
+    <div class="list" id="list"></div>
+  </section>
 </main>
-</div>
 
 <script>
-const CAD={inbound:{nome:"Inbound",steps:[[1,"manhã","lig"],[1,"manhã","wpp"],[1,"tarde","lig"],[2,"tarde","wpp"],[4,"tarde","lig"],[4,"tarde","wpp"],[5,"noite","wpp"]]},
-  repique:{nome:"Repique",steps:[[1,"manhã","wpp"],[2,"manhã","lig"],[2,"tarde","lig"],[3,"noite","wpp"],[4,"tarde","lig"],[4,"noite","wpp"]]}};
+const CAD={inbound:{nome:"Inbound",steps:[[1,"Manhã","lig"],[1,"Manhã","wpp"],[1,"Tarde","lig"],[2,"Tarde","wpp"],[4,"Tarde","lig"],[4,"Tarde","wpp"],[5,"Noite","wpp"]]},
+  repique:{nome:"Repique",steps:[[1,"Manhã","wpp"],[2,"Manhã","lig"],[2,"Tarde","lig"],[3,"Noite","wpp"],[4,"Tarde","lig"],[4,"Noite","wpp"]]}};
+const HORA_PADRAO={"Manhã":"10:00","Tarde":"15:00","Noite":"19:30"};
+const PERIODOS=["Manhã","Tarde","Noite"];
+const per=h=>h<"12:00"?"Manhã":h<"18:00"?"Tarde":"Noite";
 const IC={lig:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
  wpp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.1z"/></svg>',
+ acao:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14zM7 11h5v5H7z"/></svg>',
+ ok:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>',
  resp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2zm3 5v2h10V9zm0 4v2h7v-2z"/></svg>',
  na:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm5 13.6L15.6 17 12 13.4 8.4 17 7 15.6 10.6 12 7 8.4 8.4 7 12 10.6 15.6 7 17 8.4 13.4 12z"/></svg>'};
-const ACTS=[["lig","Liguei"],["wpp","WhatsApp"],["resp","Respondeu"],["na","Não atendeu"]];
+const VERB={lig:"Ligar",wpp:"WhatsApp",acao:"Tarefa"};
+const MARKS=[["ok","Feito"],["resp","Respondeu"],["na","Não atendeu"]];
 const $=s=>document.querySelector(s);
 const pad=n=>String(n).padStart(2,"0");
 const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
@@ -118,137 +176,190 @@ const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
 const br=s=>s?s.slice(8,10)+"/"+s.slice(5,7):"";
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const HOJE=iso(new Date());
-let DATA=null,FIL=LS.get("fil","acontatar"),TEMP="";
-let LOG=LS.get("log",{}); // {data:{id:{lig,wpp,resp,na}}}
-const today=()=>LOG[HOJE]||(LOG[HOJE]={});
-const contacted=id=>{const t=today()[id];return !!(t&&(t.lig||t.wpp||t.resp||t.na))};
+const nowHM=()=>{const d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes())};
+function toast(t){const el=document.createElement("div");el.className="toast";el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2600)}
 
-function cadHoje(c){
-  const cad=CAD[c.tipo]; if(!cad||!c.cadInicio) return [];
-  return cad.steps.filter(([d])=>addDays(c.cadInicio,d-1)===HOJE).map(([d,p,t])=>({d,p,t}));
-}
-function dueHoje(c){return (c.proxAcao&&c.proxData&&c.proxData<=HOJE)||cadHoje(c).length>0}
+let HOJE=iso(new Date());
+let DATA=null, BY={}, VIEW=LS.get("view","dia"), DIA=HOJE, PER=null, FIL=LS.get("fil","todos"), TEMP="";
+let LOG=LS.get("log",{}); // {data:{id:{lig,wpp,resp,na,ok, itens:{key:status}}}}
+const day=d=>LOG[d]||(LOG[d]={});
+const contactedOn=(d,id)=>{const t=(LOG[d]||{})[id];return !!(t&&(t.lig||t.wpp||t.resp||t.na||t.ok||Object.keys(t.itens||{}).length))};
+const save=()=>LS.set("log",LOG);
 
-function counts(){
-  const cs=DATA.clientes.filter(c=>c.temp!=="Perdido");
-  return {todos:DATA.clientes.length,acontatar:cs.filter(c=>!contacted(c.id)).length,
-    hoje:cs.filter(c=>dueHoje(c)).length,feitos:DATA.clientes.filter(c=>contacted(c.id)).length};
+/* ---------- telefone ---------- */
+const digits=t=>(t||"").replace(/\D/g,"");
+const intl=t=>{const n=digits(t);return !n?"":n.length<=11?"55"+n:n};
+function contactHTML(c){
+  const n=intl(c.tel); if(!n) return '<div class="contact"><span class="num">sem telefone cadastrado</span></div>';
+  return `<div class="contact"><a class="lnk lig" href="tel:+${n}">${IC.lig}Ligar</a><a class="lnk wpp" href="https://wa.me/${n}" target="_blank" rel="noopener">${IC.wpp}WhatsApp</a><span class="num">${esc(c.tel)}</span><button class="copy" data-copy="${esc(c.tel)}">Copiar</button></div>`;
 }
+
+/* ---------- agenda do dia ---------- */
+function itensDo(d){
+  const out=[], noPlano=new Set();
+  const plano=(DATA.plano||{})[d];
+  if(plano) plano.itens.forEach((x,i)=>{out.push({key:"p"+i,hora:x.hora,canal:x.canal,id:x.id,texto:x.texto,fonte:"plano"});if(x.id)noPlano.add(x.id)});
+  for(const c of DATA.clientes){
+    if(noPlano.has(c.id)||c.temp==="Perdido") continue;
+    const cad=CAD[c.tipo];
+    if(cad&&c.cadInicio) cad.steps.forEach(([dd,p,t],i)=>{if(addDays(c.cadInicio,dd-1)===d) out.push({key:"c"+c.id+i,hora:HORA_PADRAO[p],canal:t,id:c.id,texto:`${cad.nome} dia ${dd}: ${t==="lig"?"ligar":"mandar WhatsApp"}. ${c.dica||""}`,fonte:"cad"})});
+    if(c.proxAcao&&c.proxData===d) out.push({key:"a"+c.id,hora:"16:00",canal:/whats|mensag|enviar/i.test(c.proxAcao)?"wpp":/lig/i.test(c.proxAcao)?"lig":"acao",id:c.id,texto:c.proxAcao,fonte:"acao"});
+  }
+  out.sort((a,b)=>a.hora.localeCompare(b.hora));
+  return out;
+}
+const status=(d,x)=>(((LOG[d]||{})[x.id||"_"]||{}).itens||{})[x.key]||"";
+function renderDia(){
+  const t=HOJE, lbl=DIA===t?"Hoje":DIA===addDays(t,1)?"Amanhã":DIA===addDays(t,-1)?"Ontem":"";
+  $("#dLabel").textContent=(lbl?lbl+" · ":"")+parse(DIA).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit"});
+  const plano=(DATA.plano||{})[DIA];
+  $("#foco").innerHTML=plano&&plano.foco?`<div class="foco">${esc(plano.foco)}</div>`:"";
+  const its=itensDo(DIA);
+  if(!PER) PER=DIA===t?per(nowHM()):"Manhã";
+  $("#pertabs").innerHTML=PERIODOS.map(p=>{const l=its.filter(x=>per(x.hora)===p);const f=l.filter(x=>status(DIA,x)).length;
+    return `<button role="tab" data-p="${p}" aria-selected="${PER===p}"><b>${p}</b><span>${l.length?`${f} de ${l.length} feitos`:"nada agendado"}</span></button>`}).join("");
+  const list=its.filter(x=>per(x.hora)===PER), agora=nowHM();
+  $("#itens").innerHTML=list.length?list.map(x=>{
+    const c=BY[x.id]||{nome:"Você",tel:""}, st=status(DIA,x);
+    const late=DIA===t&&!st&&x.hora<=agora;
+    return `<div class="item${st?" done":""}"><div class="hr${late?" now":""}">${x.hora}</div><span class="ch ${x.canal}">${IC[x.canal]}</span>
+      <div class="it"><div><div class="verb">${VERB[x.canal]}${x.fonte==="cad"?" · cadência":x.fonte==="acao"?" · ação combinada":""}</div>
+        <div class="nm">${esc(c.nome)}${c.temp?`<span class="tag">${esc(c.temp)}</span>`:""}</div></div>
+        <div class="txt">${esc(x.texto)}</div>
+        ${x.id?contactHTML(c):""}
+        ${x.id&&c.dica&&x.fonte!=="cad"?`<div class="tip"><b>Dica</b>${esc(c.dica)}</div>`:""}
+        <div class="marks">${MARKS.map(([k,l])=>`<button class="mk ${k}" data-mk="${k}" data-key="${x.key}" data-id="${x.id||"_"}" aria-pressed="${st===k}">${IC[k]}${l}</button>`).join("")}</div>
+      </div></div>`}).join(""):`<p class="empty">Nada agendado para a ${PER.toLowerCase()} deste dia.</p>`;
+  $("#dNote").textContent=plano?"":(DIA>=t?"O plano detalhado deste dia ainda não foi montado. Aparecem só as cadências e ações já combinadas. Mande \"atualiza\" para o Claude à noite.":"");
+}
+
+/* ---------- contatos ---------- */
 function renderTop(){
-  const n=DATA.clientes.filter(c=>contacted(c.id)).length, meta=Number(LS.get("meta",30))||30;
-  const r=DATA.clientes.filter(c=>today()[c.id]?.resp).length;
-  $("#nCont").textContent=n; $("#meta").value=meta;
-  $("#bar").style.width=Math.min(100,n/meta*100)+"%";
+  const n=DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length, meta=Number(LS.get("meta",30))||30;
+  const r=DATA.clientes.filter(c=>{const t=(LOG[HOJE]||{})[c.id];return t&&(t.resp||Object.values(t.itens||{}).includes("resp"))}).length;
+  $("#nCont").textContent=n; $("#meta").value=meta; $("#bar").style.width=Math.min(100,n/meta*100)+"%";
   $("#nResp").textContent=r?`${r} responderam`:"";
 }
-function renderChips(){
-  const k=counts();
-  const F=[["acontatar","A contatar hoje",k.acontatar],["hoje","Agenda de hoje",k.hoje],["feitos","Já contatados",k.feitos],["todos","Todos",k.todos]];
+function renderContatos(){
+  const ativos=DATA.clientes.filter(c=>c.temp!=="Perdido");
+  const F=[["todos","Todos",DATA.clientes.length],["acontatar","Ainda não contatados hoje",ativos.filter(c=>!contactedOn(HOJE,c.id)).length],["feitos","Contatados hoje",DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length]];
   $("#fil").innerHTML=F.map(([v,l,n])=>`<button class="chip" data-f="${v}" aria-pressed="${FIL===v}">${l}<span class="n">${n}</span></button>`).join("");
   $("#temps").innerHTML=["","Quente","Morno","Frio","Perdido"].map(t=>`<button class="chip" data-t="${t}" aria-pressed="${TEMP===t}">${t||"Todas as temperaturas"}</button>`).join("");
-}
-function card(c){
-  const t=today()[c.id]||{}, ok=contacted(c.id), ch=cadHoje(c);
-  const late=c.proxData&&c.proxData<HOJE;
-  const telN=(c.tel||"").replace(/\D/g,"");
-  const wa=telN?`https://wa.me/${telN.length<=11?"55"+telN:telN}`:"";
-  const tags=[ok?'<span class="tag done">contatado hoje</span>':"",
-    ch.length?`<span class="tag today">${CAD[c.tipo].nome} dia ${ch[0].d}: ${ch.map(s=>(s.t==="lig"?"ligar ":"WhatsApp ")+s.p).join(" + ")}</span>`:"",
-    c.proxData===HOJE?'<span class="tag today">ação hoje</span>':"",late?`<span class="tag late">ação atrasada (${br(c.proxData)})</span>`:""].join("");
-  return `<article class="card${ok?" ok":""}"><span class="stripe ${esc(c.temp)}"></span><div class="body">
-    <div class="top"><div><span class="nm">${esc(c.nome)}</span><span class="tag">${esc(c.temp)}</span><span class="tag">${esc(c.etapa)}</span></div><div>${tags}</div></div>
-    <div class="tel">${telN?`<span>${esc(c.tel)}</span><a href="tel:+${telN.length<=11?"55"+telN:telN}">Ligar</a><a href="${wa}" target="_blank" rel="noopener">Abrir WhatsApp</a>`:'<span class="none">sem telefone cadastrado</span>'}</div>
-    ${c.obs?`<div class="obs"><b>Observação</b>${esc(c.obs)}</div>`:""}
-    ${c.dica?`<div class="tip"><b>Dica</b>${esc(c.dica)}</div>`:""}
-    ${c.proxAcao?`<div class="next"><b>Próxima ação:</b> ${esc(c.proxAcao)}${c.proxData?` · ${br(c.proxData)}`:""}</div>`:""}
-    <div class="acts">${ACTS.map(([k,l])=>`<button class="act ${k}" data-id="${c.id}" data-k="${k}" aria-pressed="${!!t[k]}">${IC[k]}${l}</button>`).join("")}</div>
-  </div></article>`;
-}
-function render(){
-  renderTop(); renderChips();
   const q=$("#q").value.trim().toLowerCase();
-  let arr=DATA.clientes.filter(c=>{
+  const arr=DATA.clientes.filter(c=>{
     if(TEMP&&c.temp!==TEMP) return false;
-    if(FIL==="acontatar"&&(contacted(c.id)||c.temp==="Perdido")) return false;
-    if(FIL==="hoje"&&!(dueHoje(c)&&c.temp!=="Perdido")) return false;
-    if(FIL==="feitos"&&!contacted(c.id)) return false;
-    if(q&&!JSON.stringify([c.nome,c.obs,c.dica,c.regiao,c.origem,c.faixa]).toLowerCase().includes(q)) return false;
-    return true});
-  const ordT={Quente:0,Morno:1,Frio:2,Perdido:3};
-  arr.sort((a,b)=>(dueHoje(b)-dueHoje(a))||(ordT[a.temp]??4)-(ordT[b.temp]??4)||(a.prioridade-b.prioridade)||a.nome.localeCompare(b.nome));
-  $("#info").textContent=`${arr.length} clientes nesta lista · dados de ${br(DATA.atualizado)}/${DATA.atualizado.slice(0,4)}`;
-  $("#list").innerHTML=arr.length?arr.map(card).join(""):`<p class="empty">${FIL==="acontatar"?"Todo mundo já foi contatado hoje.":"Nenhum cliente nesta lista."}</p>`;
+    if(FIL==="acontatar"&&(contactedOn(HOJE,c.id)||c.temp==="Perdido")) return false;
+    if(FIL==="feitos"&&!contactedOn(HOJE,c.id)) return false;
+    if(q&&!JSON.stringify([c.nome,c.tel,digits(c.tel),c.obs,c.dica,c.regiao,c.origem,c.faixa]).toLowerCase().includes(q)) return false;
+    return true}).sort((a,b)=>({Quente:0,Morno:1,Frio:2,Perdido:3}[a.temp]??4)-({Quente:0,Morno:1,Frio:2,Perdido:3}[b.temp]??4)||a.prioridade-b.prioridade||a.nome.localeCompare(b.nome));
+  $("#info").textContent=`${arr.length} clientes · dados atualizados em ${br(DATA.atualizado)}`;
+  $("#list").innerHTML=arr.length?arr.map(c=>{const ok=contactedOn(HOJE,c.id),late=c.proxData&&c.proxData<HOJE;
+    return `<article class="card${ok?" ok":""}"><span class="stripe ${esc(c.temp)}"></span><div class="body">
+      <div class="top"><div><span class="nm" style="font-weight:600;font-size:17px">${esc(c.nome)}</span><span class="tag">${esc(c.temp)}</span><span class="tag">${esc(c.etapa)}</span></div>
+      <div>${ok?'<span class="tag done">contatado hoje</span>':""}${late?`<span class="tag late">ação atrasada (${br(c.proxData)})</span>`:""}</div></div>
+      ${contactHTML(c)}
+      ${c.obs?`<div class="obs"><b>Observação</b>${esc(c.obs)}</div>`:""}
+      ${c.dica?`<div class="tip"><b>Dica</b>${esc(c.dica)}</div>`:""}
+      ${c.proxAcao?`<div class="next"><b>Próxima ação:</b> ${esc(c.proxAcao)}${c.proxData?` · ${br(c.proxData)}`:""}</div>`:""}
+      <div class="marks"><button class="mk ok" data-cmark="${c.id}" aria-pressed="${!!((LOG[HOJE]||{})[c.id]||{}).ok}">${IC.ok}Contatei hoje</button></div>
+    </div></article>`}).join(""):'<p class="empty">Nenhum cliente com esses filtros.</p>';
 }
+function render(){renderTop(); if(VIEW==="dia")renderDia(); else renderContatos()}
+
+/* ---------- lembretes ---------- */
+let notifTimer=null;
+function checkNotif(){
+  if(!("Notification" in window)||Notification.permission!=="granted"||!DATA) return;
+  HOJE=iso(new Date()); const agora=nowHM(), sent=LS.get("sent",{});
+  for(const x of itensDo(HOJE)){
+    const k=HOJE+x.key; if(sent[k]||status(HOJE,x)||x.hora>agora) continue;
+    const mins=(Number(agora.slice(0,2))*60+Number(agora.slice(3)))-(Number(x.hora.slice(0,2))*60+Number(x.hora.slice(3)));
+    sent[k]=1; if(mins>20) continue;
+    const c=BY[x.id]||{nome:""};
+    try{new Notification(`${x.hora} · ${VERB[x.canal]}${c.nome?" "+c.nome:""}`,{body:x.texto,tag:k})}catch(e){}
+  }
+  LS.set("sent",sent);
+}
+function startNotif(){clearInterval(notifTimer);notifTimer=setInterval(checkNotif,30000);checkNotif();$("#bNotif").textContent="Lembretes ativos"}
+$("#bNotif").onclick=async()=>{
+  if(!("Notification" in window)){toast("Este navegador não mostra notificações. Use 'Pôr no calendário'.");return}
+  const p=await Notification.requestPermission();
+  if(p==="granted"){startNotif();toast("Lembretes ativos enquanto o site estiver aberto");try{new Notification("Carteira ZFF",{body:"Você vai ser avisado no horário de cada contato."})}catch(e){}}
+  else toast("Notificações bloqueadas. Libere nas configurações do navegador ou use 'Pôr no calendário'.");
+};
+
+/* ---------- calendário (.ics) ---------- */
+$("#bIcs").onclick=()=>{
+  const its=itensDo(DIA); if(!its.length){toast("Nada agendado neste dia");return}
+  const d=DIA.replace(/-/g,""), stamp=new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z";
+  const icsEsc=s=>String(s).replace(/\\/g,"\\\\").replace(/[,;]/g,m=>"\\"+m).replace(/\n/g,"\\n");
+  const ev=its.map(x=>{const c=BY[x.id]||{nome:"",tel:""};const hh=x.hora.replace(":","");
+    const end=(()=>{let m=Number(x.hora.slice(0,2))*60+Number(x.hora.slice(3))+10;return pad(Math.floor(m/60))+pad(m%60)})();
+    return ["BEGIN:VEVENT",`UID:${d}-${x.key}@carteira-zff`,`DTSTAMP:${stamp}`,`DTSTART:${d}T${hh}00`,`DTEND:${d}T${end}00`,
+      `SUMMARY:${icsEsc(VERB[x.canal]+(c.nome?" "+c.nome:""))}`,`DESCRIPTION:${icsEsc(x.texto+(c.tel?"\nTel: "+c.tel:""))}`,
+      "BEGIN:VALARM","ACTION:DISPLAY","TRIGGER:PT0M",`DESCRIPTION:${icsEsc(VERB[x.canal]+" "+(c.nome||""))}`,"END:VALARM","END:VEVENT"].join("\r\n")});
+  const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Carteira ZFF//PT-BR","CALSCALE:GREGORIAN",...ev,"END:VCALENDAR"].join("\r\n");
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"})); a.download=`Plano ${br(DIA).replace("/","-")}.ics`;
+  document.body.appendChild(a); a.click(); a.remove(); toast("Abra o arquivo baixado para colocar os lembretes no calendário");
+};
 
 /* ---------- planilha ---------- */
 function exportXlsx(){
-  if(!window.XLSX){alert("A biblioteca da planilha não carregou. Verifique a internet.");return}
-  const C={navy:"1D4A73",white:"FFFFFF",hot:"F8CBAD",warm:"FFE699",cold:"BDD7EE",lost:"D9D9D9",ok:"C6EFCE",no:"FDE2E1",tip:"FFF6DC",grey:"F3F5F8"};
-  const tf={Quente:C.hot,Morno:C.warm,Frio:C.cold,Perdido:C.lost};
-  const border={top:{style:"thin",color:{rgb:"D0D7DE"}},bottom:{style:"thin",color:{rgb:"D0D7DE"}},left:{style:"thin",color:{rgb:"D0D7DE"}},right:{style:"thin",color:{rgb:"D0D7DE"}}};
+  if(!window.XLSX){toast("A biblioteca da planilha não carregou. Verifique a internet.");return}
+  const C={navy:"1D4A73",white:"FFFFFF",ok:"C6EFCE",no:"FDE2E1",tip:"FFF6DC",lig:"DCEBFB",wpp:"DDF5E6",acao:"E9EEF4"};
+  const tf={Quente:"F8CBAD",Morno:"FFE699",Frio:"BDD7EE",Perdido:"D9D9D9"};
+  const bd={style:"thin",color:{rgb:"D0D7DE"}}, border={top:bd,bottom:bd,left:bd,right:bd};
   const H=v=>({v,t:"s",s:{font:{bold:true,color:{rgb:C.white},name:"Arial",sz:11},fill:{fgColor:{rgb:C.navy}},alignment:{horizontal:"center",vertical:"center",wrapText:true},border}});
-  const V=(v,fill,extra={})=>({v:v??"",t:typeof v==="number"?"n":"s",s:{font:{name:"Arial",sz:10,...(extra.font||{})},fill:fill?{fgColor:{rgb:fill}}:undefined,alignment:{vertical:"top",wrapText:true,...(extra.al||{})},border}});
-  const sim=b=>b?"Sim":"";
+  const V=(v,fill,o={})=>({v:v??"",t:typeof v==="number"?"n":"s",s:{font:{name:"Arial",sz:10,...(o.font||{})},fill:fill?{fgColor:{rgb:fill}}:undefined,alignment:{vertical:"top",wrapText:true,...(o.al||{})},border}});
+  const ctr={al:{horizontal:"center"}};
   const wb=XLSX.utils.book_new();
-
-  // Aba 1: Resumo
-  const n=DATA.clientes.filter(c=>contacted(c.id)).length, meta=Number(LS.get("meta",30))||30;
-  const T=k=>DATA.clientes.filter(c=>c.temp===k).length;
-  const r1=[[{v:"Carteira ZFF — resumo de "+br(HOJE)+"/"+HOJE.slice(0,4),t:"s",s:{font:{bold:true,sz:16,name:"Arial",color:{rgb:C.navy}}}}],[],
-    [H("Indicador"),H("Valor")],
-    [V("Contatados hoje"),V(n,C.ok,{font:{bold:true}})],[V("Meta do dia"),V(meta)],
-    [V("Responderam hoje"),V(DATA.clientes.filter(c=>today()[c.id]?.resp).length)],
-    [V("Ligações feitas"),V(DATA.clientes.filter(c=>today()[c.id]?.lig).length)],
-    [V("WhatsApps enviados"),V(DATA.clientes.filter(c=>today()[c.id]?.wpp).length)],
-    [V("Não atenderam"),V(DATA.clientes.filter(c=>today()[c.id]?.na).length)],
-    [V("Faltam contatar (ativos)"),V(DATA.clientes.filter(c=>c.temp!=="Perdido"&&!contacted(c.id)).length,C.no)],[],
-    [H("Temperatura"),H("Clientes")],
-    ...["Quente","Morno","Frio","Perdido"].map(k=>[V(k,tf[k],{font:{bold:true}}),V(T(k))])];
-  const ws1=XLSX.utils.aoa_to_sheet(r1); ws1["!cols"]=[{wch:30},{wch:14}];
-  XLSX.utils.book_append_sheet(wb,ws1,"Resumo");
-
-  // Aba 2: Contatos de hoje
-  const hdr=["Cliente","Telefone","Temperatura","Contatado hoje?","Ligou","WhatsApp","Respondeu","Não atendeu","Agenda de hoje","Próxima ação","Data","Dica","Observação"];
-  const ordT={Quente:0,Morno:1,Frio:2,Perdido:3};
-  const all=[...DATA.clientes].sort((a,b)=>(ordT[a.temp]??4)-(ordT[b.temp]??4)||a.prioridade-b.prioridade||a.nome.localeCompare(b.nome));
-  const rows=[hdr.map(H),...all.map(c=>{const t=today()[c.id]||{},ok=contacted(c.id),ch=cadHoje(c);
-    const ag=[ch.length?`${CAD[c.tipo].nome} dia ${ch[0].d}: `+ch.map(s=>(s.t==="lig"?"ligar ":"WhatsApp ")+s.p).join(" + "):"",c.proxData&&c.proxData<=HOJE?"ação "+(c.proxData<HOJE?"atrasada":"de hoje"):""].filter(Boolean).join(" · ");
-    return [V(c.nome,null,{font:{bold:true}}),V(c.tel||""),V(c.temp,tf[c.temp],{al:{horizontal:"center"}}),V(ok?"Sim":"Não",ok?C.ok:C.no,{font:{bold:true},al:{horizontal:"center"}}),
-      V(sim(t.lig),null,{al:{horizontal:"center"}}),V(sim(t.wpp),null,{al:{horizontal:"center"}}),V(sim(t.resp),null,{al:{horizontal:"center"}}),V(sim(t.na),null,{al:{horizontal:"center"}}),
-      V(ag),V(c.proxAcao),V(br(c.proxData)),V(c.dica,c.dica?C.tip:null),V(c.obs)]})];
-  const ws2=XLSX.utils.aoa_to_sheet(rows);
-  ws2["!cols"]=[22,15,12,11,7,9,10,10,30,36,8,50,50].map(w=>({wch:w}));
-  ws2["!autofilter"]={ref:`A1:M${rows.length}`}; ws2["!freeze"]={xSplit:1,ySplit:1};
-  ws2["!views"]=[{state:"frozen",xSplit:1,ySplit:1}];
-  XLSX.utils.book_append_sheet(wb,ws2,"Contatos de hoje");
-
-  // Aba 3: Carteira completa
-  const h3=["Cliente","Telefone","Temperatura","Etapa","Origem / produto","Faixa","Região","Última resposta","Próxima ação","Data","Dica","Observação"];
-  const rows3=[h3.map(H),...all.map(c=>[V(c.nome,null,{font:{bold:true}}),V(c.tel||""),V(c.temp,tf[c.temp],{al:{horizontal:"center"}}),V(c.etapa),V(c.origem),V(c.faixa),V(c.regiao),V(br(c.ultResp)),V(c.proxAcao),V(br(c.proxData)),V(c.dica,c.dica?C.tip:null),V(c.obs)])];
-  const ws3=XLSX.utils.aoa_to_sheet(rows3);
-  ws3["!cols"]=[22,15,12,18,24,14,20,10,36,8,50,50].map(w=>({wch:w}));
-  ws3["!autofilter"]={ref:`A1:L${rows3.length}`}; ws3["!views"]=[{state:"frozen",xSplit:1,ySplit:1}];
-  XLSX.utils.book_append_sheet(wb,ws3,"Carteira");
-
-  XLSX.writeFile(wb,`Carteira ZFF ${HOJE}.xlsx`);
+  // Plano do dia
+  const its=itensDo(DIA), lab={ok:"Feito",resp:"Respondeu",na:"Não atendeu"};
+  const r1=[[{v:`Plano de ${parse(DIA).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit"})}`,t:"s",s:{font:{bold:true,sz:16,name:"Arial",color:{rgb:C.navy}}}}],
+    [{v:((DATA.plano||{})[DIA]||{}).foco||"",t:"s",s:{font:{italic:true,name:"Arial",sz:10}}}],[],
+    ["Horário","Período","Canal","Cliente","Telefone","O que fazer","Dica","Status"].map(H),
+    ...its.map(x=>{const c=BY[x.id]||{nome:"",tel:"",dica:""},st=status(DIA,x);
+      return [V(x.hora,null,{font:{bold:true},...ctr}),V(per(x.hora),null,ctr),V(VERB[x.canal],C[x.canal],{font:{bold:true},...ctr}),V(c.nome,null,{font:{bold:true}}),V(c.tel),V(x.texto),V(c.dica,c.dica?C.tip:null),V(st?lab[st]:"Pendente",st?C.ok:C.no,{font:{bold:true},...ctr})]})];
+  const ws1=XLSX.utils.aoa_to_sheet(r1); ws1["!cols"]=[8,9,11,22,17,55,45,12].map(w=>({wch:w})); ws1["!merges"]=[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}}];
+  ws1["!views"]=[{state:"frozen",ySplit:4}];
+  XLSX.utils.book_append_sheet(wb,ws1,"Plano do dia");
+  // Contatos
+  const all=[...DATA.clientes].sort((a,b)=>({Quente:0,Morno:1,Frio:2,Perdido:3}[a.temp]??4)-({Quente:0,Morno:1,Frio:2,Perdido:3}[b.temp]??4)||a.prioridade-b.prioridade||a.nome.localeCompare(b.nome));
+  const r2=[["Cliente","Telefone","Temperatura","Etapa","Contatado hoje?","Próxima ação","Data","Dica","Observação"].map(H),
+    ...all.map(c=>{const ok=contactedOn(HOJE,c.id);return [V(c.nome,null,{font:{bold:true}}),V(c.tel),V(c.temp,tf[c.temp],ctr),V(c.etapa),V(ok?"Sim":"Não",ok?C.ok:C.no,{font:{bold:true},...ctr}),V(c.proxAcao),V(br(c.proxData),null,ctr),V(c.dica,c.dica?C.tip:null),V(c.obs)]})];
+  const ws2=XLSX.utils.aoa_to_sheet(r2); ws2["!cols"]=[22,17,12,18,11,36,8,50,50].map(w=>({wch:w}));
+  ws2["!autofilter"]={ref:`A1:I${r2.length}`}; ws2["!views"]=[{state:"frozen",xSplit:1,ySplit:1}];
+  XLSX.utils.book_append_sheet(wb,ws2,"Contatos");
+  XLSX.writeFile(wb,`Carteira ZFF ${DIA}.xlsx`);
 }
 
 /* ---------- eventos ---------- */
-document.addEventListener("click",e=>{
-  const a=e.target.closest(".act"); if(a){const id=a.dataset.id,k=a.dataset.k;const t=today();t[id]=t[id]||{};t[id][k]=!t[id][k];t[id].hora=new Date().toTimeString().slice(0,5);LS.set("log",LOG);render();return}
-  const f=e.target.closest("[data-f]"); if(f){FIL=f.dataset.f;LS.set("fil",FIL);render();return}
-  const tp=e.target.closest("[data-t]"); if(tp){TEMP=tp.dataset.t;render();return}
+function setView(v){VIEW=v;LS.set("view",v);document.querySelectorAll(".views button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v));$("#v-dia").hidden=v!=="dia";$("#v-contatos").hidden=v!=="contatos";render()}
+document.addEventListener("click",async e=>{
+  const v=e.target.closest(".views [data-v]"); if(v){setView(v.dataset.v);return}
+  const dd=e.target.closest("[data-d]"); if(dd){const n=+dd.dataset.d;DIA=n===0?HOJE:addDays(DIA,n);PER=null;renderDia();return}
+  const p=e.target.closest("[data-p]"); if(p){PER=p.dataset.p;renderDia();return}
+  const mk=e.target.closest("[data-mk]"); if(mk){const id=mk.dataset.id,k=mk.dataset.mk,key=mk.dataset.key;const t=day(DIA);t[id]=t[id]||{};t[id].itens=t[id].itens||{};
+    if(t[id].itens[key]===k)delete t[id].itens[key];else t[id].itens[key]=k;save();render();return}
+  const cm=e.target.closest("[data-cmark]"); if(cm){const id=cm.dataset.cmark,t=day(HOJE);t[id]=t[id]||{};t[id].ok=!t[id].ok;save();render();return}
+  const f=e.target.closest("[data-f]"); if(f){FIL=f.dataset.f;LS.set("fil",FIL);renderContatos();return}
+  const tp=e.target.closest("[data-t]"); if(tp){TEMP=tp.dataset.t;renderContatos();return}
+  const cp=e.target.closest("[data-copy]"); if(cp){try{await navigator.clipboard.writeText(cp.dataset.copy);toast("Número copiado")}catch(err){toast(cp.dataset.copy)}return}
 });
-$("#q").addEventListener("input",render);
+$("#q").addEventListener("input",renderContatos);
 $("#meta").addEventListener("change",()=>{LS.set("meta",Number($("#meta").value)||30);renderTop()});
 $("#xlsx").addEventListener("click",exportXlsx);
 $("#hoje").textContent=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"});
+setInterval(()=>{const h=iso(new Date());if(h!==HOJE){HOJE=h;DIA=h;PER=null}if(DATA)render()},60000);
 
-/* ---------- dados ---------- */
 (async()=>{
-  try{const r=await fetch("data.json?v="+Date.now(),{cache:"no-store"});DATA=await r.json();render()}
-  catch(e){$("#list").innerHTML='<p class="empty">Não consegui carregar a lista de clientes. Recarregue a página.</p>'}
+  try{const r=await fetch("data.json?v="+Date.now(),{cache:"no-store"});DATA=await r.json()}
+  catch(e){$("#itens").innerHTML='<p class="empty">Não consegui carregar a lista de clientes. Recarregue a página.</p>';return}
+  BY=Object.fromEntries(DATA.clientes.map(c=>[c.id,c]));
+  // abre direto no próximo dia com plano se hoje já não tiver nada
+  if(!(DATA.plano||{})[HOJE]&&(DATA.plano||{})[addDays(HOJE,1)]&&new Date().getHours()>=18) DIA=addDays(HOJE,1);
+  setView(VIEW);
+  if("Notification" in window&&Notification.permission==="granted") startNotif();
 })();
 </script>
 </body>
