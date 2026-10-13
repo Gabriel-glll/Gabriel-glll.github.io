@@ -35,9 +35,9 @@ header{background:var(--navy);color:var(--navy-ink);position:sticky;top:0;z-inde
 .score{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .score b{font:700 34px/1 var(--f-display);font-variant-numeric:tabular-nums}
 .score .of{opacity:.85;font-size:14px}
-.meter{flex:1 1 200px;height:10px;background:rgba(255,255,255,.2);border-radius:6px;overflow:hidden;min-width:120px}
+.meterx{flex:1 1 200px;height:10px;background:rgba(255,255,255,.2);border-radius:6px;overflow:hidden;min-width:120px}
 .meter i{display:block;height:100%;background:#7fe0a6;transition:width .3s}
-.goal input{width:54px;padding:2px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.4);background:transparent;color:var(--navy-ink)}
+.goalx{width:54px;padding:2px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.4);background:transparent;color:var(--navy-ink)}
 .views{display:flex;gap:2px}
 .views button{font:600 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase;background:transparent;color:var(--navy-ink);opacity:.7;border:0;padding:9px 16px;border-radius:8px 8px 0 0;cursor:pointer}
 .views button[aria-selected="true"]{background:var(--bg);color:var(--ink);opacity:1}
@@ -120,8 +120,7 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
       </div>
     </div>
     <div class="score">
-      <b id="nCont">0</b><span class="of">contatados hoje · meta <span class="goal"><input type="number" min="1" id="meta" aria-label="Meta de contatos do dia"></span></span>
-      <div class="meter" aria-hidden="true"><i id="bar" style="width:0"></i></div>
+      <b id="nCont">0</b><span class="of">contatados hoje</span>
       <span class="of" id="nResp"></span>
     </div>
     <div class="views" role="tablist">
@@ -135,9 +134,6 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
   <section id="v-dia">
     <div class="daybar">
       <div class="date" id="dLabel"></div>
-      <button class="btn sm" data-d="-1">‹ Anterior</button>
-      <button class="btn sm" data-d="0">Hoje</button>
-      <button class="btn sm" data-d="1">Amanhã ›</button>
     </div>
     <div id="foco"></div>
     <div class="pertabs" role="tablist" id="pertabs"></div>
@@ -196,17 +192,8 @@ function contactHTML(c){
 
 /* ---------- agenda do dia ---------- */
 function itensDo(d){
-  const out=[], noPlano=new Set();
-  const plano=(DATA.plano||{})[d];
-  if(plano) plano.itens.forEach((x,i)=>{out.push({key:"p"+i,hora:x.hora,canal:x.canal,id:x.id,texto:x.texto,fonte:"plano"});if(x.id)noPlano.add(x.id)});
-  for(const c of DATA.clientes){
-    if(noPlano.has(c.id)||c.temp==="Perdido") continue;
-    const cad=CAD[c.tipo];
-    if(cad&&c.cadInicio) cad.steps.forEach(([dd,p,t],i)=>{if(addDays(c.cadInicio,dd-1)===d) out.push({key:"c"+c.id+i,hora:HORA_PADRAO[p],canal:t,id:c.id,texto:`${cad.nome} dia ${dd}: ${t==="lig"?"ligar":"mandar WhatsApp"}. ${c.dica||""}`,fonte:"cad"})});
-    if(c.proxAcao&&c.proxData===d) out.push({key:"a"+c.id,hora:"16:00",canal:/whats|mensag|enviar/i.test(c.proxAcao)?"wpp":/lig/i.test(c.proxAcao)?"lig":"acao",id:c.id,texto:c.proxAcao,fonte:"acao"});
-  }
-  out.sort((a,b)=>a.hora.localeCompare(b.hora));
-  return out;
+  const plano=(DATA.plano||{})[d]; if(!plano) return [];
+  return plano.itens.map((x,i)=>({key:"p"+i,hora:x.hora,canal:x.canal,id:x.id,texto:x.texto,fonte:"plano"})).sort((a,b)=>a.hora.localeCompare(b.hora));
 }
 const status=(d,x)=>(((LOG[d]||{})[x.id||"_"]||{}).itens||{})[x.key]||"";
 function renderDia(){
@@ -230,14 +217,14 @@ function renderDia(){
         ${x.id&&c.dica&&x.fonte!=="cad"?`<div class="tip"><b>Dica</b>${esc(c.dica)}</div>`:""}
         <div class="marks">${MARKS.map(([k,l])=>`<button class="mk ${k}" data-mk="${k}" data-key="${x.key}" data-id="${x.id||"_"}" aria-pressed="${st===k}">${IC[k]}${l}</button>`).join("")}</div>
       </div></div>`}).join(""):`<p class="empty">Nada agendado para a ${PER.toLowerCase()} deste dia.</p>`;
-  $("#dNote").textContent=plano?"":(DIA>=t?"O plano detalhado deste dia ainda não foi montado. Aparecem só as cadências e ações já combinadas. Mande \"atualiza\" para o Claude à noite.":"");
+  $("#dNote").textContent=plano?"":"O plano ainda não foi montado. Mande \"atualiza\" para o Claude à noite.";
 }
 
 /* ---------- contatos ---------- */
 function renderTop(){
-  const n=DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length, meta=Number(LS.get("meta",30))||30;
+  const n=DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length;
   const r=DATA.clientes.filter(c=>{const t=(LOG[HOJE]||{})[c.id];return t&&(t.resp||Object.values(t.itens||{}).includes("resp"))}).length;
-  $("#nCont").textContent=n; $("#meta").value=meta; $("#bar").style.width=Math.min(100,n/meta*100)+"%";
+  $("#nCont").textContent=n;
   $("#nResp").textContent=r?`${r} responderam`:"";
 }
 function renderContatos(){
@@ -337,7 +324,6 @@ function exportXlsx(){
 function setView(v){VIEW=v;LS.set("view",v);document.querySelectorAll(".views button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v));$("#v-dia").hidden=v!=="dia";$("#v-contatos").hidden=v!=="contatos";render()}
 document.addEventListener("click",async e=>{
   const v=e.target.closest(".views [data-v]"); if(v){setView(v.dataset.v);return}
-  const dd=e.target.closest("[data-d]"); if(dd){const n=+dd.dataset.d;DIA=n===0?HOJE:addDays(DIA,n);PER=null;renderDia();return}
   const p=e.target.closest("[data-p]"); if(p){PER=p.dataset.p;renderDia();return}
   const mk=e.target.closest("[data-mk]"); if(mk){const id=mk.dataset.id,k=mk.dataset.mk,key=mk.dataset.key;const t=day(DIA);t[id]=t[id]||{};t[id].itens=t[id].itens||{};
     if(t[id].itens[key]===k)delete t[id].itens[key];else t[id].itens[key]=k;save();render();return}
@@ -347,17 +333,15 @@ document.addEventListener("click",async e=>{
   const cp=e.target.closest("[data-copy]"); if(cp){try{await navigator.clipboard.writeText(cp.dataset.copy);toast("Número copiado")}catch(err){toast(cp.dataset.copy)}return}
 });
 $("#q").addEventListener("input",renderContatos);
-$("#meta").addEventListener("change",()=>{LS.set("meta",Number($("#meta").value)||30);renderTop()});
 $("#xlsx").addEventListener("click",exportXlsx);
 $("#hoje").textContent=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"});
-setInterval(()=>{const h=iso(new Date());if(h!==HOJE){HOJE=h;DIA=h;PER=null}if(DATA)render()},60000);
+setInterval(()=>{HOJE=iso(new Date());if(DATA)render()},60000);
 
 (async()=>{
   try{const r=await fetch("data.json?v="+Date.now(),{cache:"no-store"});DATA=await r.json()}
   catch(e){$("#itens").innerHTML='<p class="empty">Não consegui carregar a lista de clientes. Recarregue a página.</p>';return}
   BY=Object.fromEntries(DATA.clientes.map(c=>[c.id,c]));
-  // abre direto no próximo dia com plano se hoje já não tiver nada
-  if(!(DATA.plano||{})[HOJE]&&(DATA.plano||{})[addDays(HOJE,1)]&&new Date().getHours()>=18) DIA=addDays(HOJE,1);
+  const dias=Object.keys(DATA.plano||{}).sort(); DIA=dias.length?dias[dias.length-1]:HOJE;
   setView(VIEW);
   if("Notification" in window&&Notification.permission==="granted") startNotif();
 })();

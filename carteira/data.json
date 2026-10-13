@@ -1192,7 +1192,7 @@
  ],
  "plano": {
   "2026-10-14": {
-   "foco": "Meta do dia: 3 agendamentos (Carlos, Rogério, Denilson) e o retorno do Gustavo. Ligue antes de mandar texto.",
+   "foco": "61 contatos. Prioridade: fechar 3 agendamentos (Carlos, Rogério, Denilson) e o retorno do Gustavo. Ligue antes de mandar texto.",
    "itens": [
     {
      "hora": "09:00",
@@ -1201,82 +1201,148 @@
      "texto": "Confirmar visita às 2 opções do Parque Prado: 'Carlos, consigo te levar nas duas quinta à tarde ou sábado de manhã. Qual fica melhor?'"
     },
     {
-     "hora": "09:15",
+     "hora": "09:06",
      "id": "gustavo",
      "canal": "lig",
      "texto": "Ligar: a visita de quarta (07/10) aconteceu? Pegar feedback das casas de Paulínia ou reagendar esta semana (teto R$ 1,1 mi)."
     },
     {
-     "hora": "09:30",
+     "hora": "09:12",
      "id": "denilson",
      "canal": "lig",
      "texto": "Ligar e marcar a visita do apto do 19º andar. Ofereça 2 horários fechados."
     },
     {
-     "hora": "09:45",
+     "hora": "09:18",
      "id": "rogerio-maxi",
      "canal": "wpp",
      "texto": "Propor sábado 17/10 às 9h no Maxi Bonfim, com a esposa."
     },
     {
-     "hora": "10:00",
+     "hora": "09:24",
      "id": "edgar-luce-cambui",
      "canal": "lig",
      "texto": "Ligar e convidar para o decorado do Luce Cambuí (2 vagas + depósito, desconto Tegra)."
     },
     {
-     "hora": "10:15",
-     "id": "mari",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): mensagem curta perguntando se ainda busca imóvel na faixa de R$ 450 mil no Guanabara."
-    },
-    {
-     "hora": "10:20",
-     "id": "bryan",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): ainda busca imóvel no Nova Campinas, ~R$ 550 mil?"
-    },
-    {
-     "hora": "10:25",
-     "id": "claudia",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): ainda busca imóvel no Taquaral, ~R$ 600 mil?"
-    },
-    {
-     "hora": "10:30",
-     "id": "gabriel",
-     "canal": "wpp",
-     "texto": "Repique dia 1 (WhatsApp): TopLife ainda faz sentido? Morar ou investir?"
-    },
-    {
-     "hora": "10:45",
+     "hora": "09:30",
      "id": "matheus",
      "canal": "wpp",
      "texto": "Enviar simulação completa do Yees (ato, mensais, ITBI e cartório) e convidar para o decorado."
     },
     {
-     "hora": "11:00",
+     "hora": "09:36",
      "id": "max",
      "canal": "lig",
      "texto": "Ligar: perguntar como foi a viagem e reagendar a visita ao stand."
     },
     {
-     "hora": "11:15",
+     "hora": "09:42",
      "id": "gilmar",
      "canal": "wpp",
      "texto": "Propor sábado 17/10 no stand do Florae (Cambuí), com horário fixo."
     },
     {
-     "hora": "11:30",
+     "hora": "09:48",
      "id": "ana",
      "canal": "lig",
      "texto": "Ligar (ela disse que pode): morar ou investir, faixa, prazo."
     },
     {
-     "hora": "11:45",
+     "hora": "09:54",
      "id": "rosangela",
      "canal": "lig",
      "texto": "Ligar: descobrir faixa de valor e região. Florae ainda faz sentido?"
+    },
+    {
+     "hora": "10:00",
+     "id": "mari",
+     "canal": "wpp",
+     "texto": "Repique dia 1 (WhatsApp): mensagem curta perguntando se ainda busca imóvel na faixa de R$ 450 mil no Guanabara."
+    },
+    {
+     "hora": "10:06",
+     "id": "bryan",
+     "canal": "wpp",
+     "texto": "Repique dia 1 (WhatsApp): ainda busca imóvel no Nova Campinas, ~R$ 550 mil?"
+    },
+    {
+     "hora": "10:12",
+     "id": "claudia",
+     "canal": "wpp",
+     "texto": "Repique dia 1 (WhatsApp): ainda busca imóvel no Taquaral, ~R$ 600 mil?"
+    },
+    {
+     "hora": "10:18",
+     "id": "gabriel",
+     "canal": "wpp",
+     "texto": "Repique dia 1 (WhatsApp): TopLife ainda faz sentido? Morar ou investir?"
+    },
+    {
+     "hora": "10:24",
+     "id": "luiza",
+     "canal": "lig",
+     "texto": "Pergunte direto se já comprou. Se comprou, parabenize e peça indicação; se não, retome a documentação que faltava."
+    },
+    {
+     "hora": "10:30",
+     "id": "ivani",
+     "canal": "lig",
+     "texto": "Pergunte da venda da casa e ofereça avaliar/captar a casa dela pela ZFF."
+    },
+    {
+     "hora": "10:36",
+     "id": "caio",
+     "canal": "lig",
+     "texto": "Ligação curta: prefere pronto com 2 vagas ou lançamento com 1 vaga?"
+    },
+    {
+     "hora": "10:42",
+     "id": "wesley",
+     "canal": "lig",
+     "texto": "Retomar a conversa da reunião na imobiliária e convidar para visitar uma opção."
+    },
+    {
+     "hora": "10:48",
+     "id": "walter-luiz",
+     "canal": "lig",
+     "texto": "Ele não responde texto: ligar e confirmar se ainda quer investir."
+    },
+    {
+     "hora": "10:54",
+     "id": "dinei",
+     "canal": "lig",
+     "texto": "Lead sem resposta: ligar e qualificar (morar ou investir, região, faixa)."
+    },
+    {
+     "hora": "11:00",
+     "id": "erika",
+     "canal": "lig",
+     "texto": "Ligar: chegou a conhecer o Oni Dijon (casas no Taquaral)? Morar ou investir?"
+    },
+    {
+     "hora": "11:06",
+     "id": "mateus",
+     "canal": "lig",
+     "texto": "Ligar: conheceu o Yees? Qual a faixa e se é para morar ou investir."
+    },
+    {
+     "hora": "11:12",
+     "id": "joao",
+     "canal": "lig",
+     "texto": "Ligar: chegou a visitar o Florae? Convidar para o stand."
+    },
+    {
+     "hora": "11:18",
+     "id": "aline",
+     "canal": "lig",
+     "texto": "Ligar: Nova Campinas é a região que busca? Faixa de valor?"
+    },
+    {
+     "hora": "11:24",
+     "id": "junior",
+     "canal": "lig",
+     "texto": "Ligar: ainda quer visitar? Remarcar a visita que não aconteceu."
     },
     {
      "hora": "14:00",
@@ -1285,31 +1351,217 @@
      "texto": "Enviar 2 opções concretas na planta perto da Unicamp (Mansões / D. Pedro) com prazo de entrega."
     },
     {
-     "hora": "14:30",
+     "hora": "14:06",
      "id": "daniele",
      "canal": "wpp",
      "texto": "Captação: pedir as fotos do apto ou propor ir fotografar."
     },
     {
-     "hora": "15:00",
+     "hora": "14:12",
      "id": "maria-toplife",
      "canal": "lig",
      "texto": "Ligar: destravar a documentação da análise de crédito. Oferecer ajuda para juntar os papéis."
     },
     {
-     "hora": "15:30",
-     "id": "priscila",
-     "canal": "wpp",
-     "texto": "Agradecer o retorno e pedir indicação de alguém que esteja procurando imóvel."
-    },
-    {
-     "hora": "16:00",
+     "hora": "14:18",
      "id": "keila",
      "canal": "acao",
      "texto": "Planejar a ida amanhã à R. Alberto Ferraz de Abreu, 44 (Guanabara). Não falar com a Keila sobre isso por mensagem."
     },
     {
+     "hora": "14:24",
+     "id": "lucas-fernandes",
+     "canal": "lig",
+     "texto": "Ligar: ainda está olhando imóvel? Remarcar a visita."
+    },
+    {
+     "hora": "14:30",
+     "id": "fabio-henrique",
+     "canal": "lig",
+     "texto": "Ligar: busca apartamento perto do centro? Qual faixa?"
+    },
+    {
+     "hora": "14:36",
+     "id": "neide",
+     "canal": "lig",
+     "texto": "Ligar: qual região e faixa ela procura?"
+    },
+    {
+     "hora": "14:42",
+     "id": "davi",
+     "canal": "lig",
+     "texto": "Ligar: como está a busca? Já comprou?"
+    },
+    {
+     "hora": "14:48",
+     "id": "allan",
+     "canal": "wpp",
+     "texto": "Perguntar como está a restrição no nome e oferecer indicar assessoria de crédito."
+    },
+    {
+     "hora": "14:54",
+     "id": "sergio",
+     "canal": "wpp",
+     "texto": "Convidar para conhecer o Luce Cambuí no fim de semana, sem compromisso."
+    },
+    {
+     "hora": "15:00",
+     "id": "luiz",
+     "canal": "wpp",
+     "texto": "Mandar o folder da Tegra e perguntar quando estará em Campinas."
+    },
+    {
+     "hora": "15:06",
+     "id": "silvio-maxi-bonfim",
+     "canal": "wpp",
+     "texto": "Mandar 3 casas concretas: condomínio fechado, 3q, sem escada, com quintal."
+    },
+    {
+     "hora": "15:12",
+     "id": "patricia",
+     "canal": "wpp",
+     "texto": "Avisar se há condição nova na faixa de R$ 475 mil e sugerir uma proposta formal."
+    },
+    {
+     "hora": "15:18",
+     "id": "juliana",
+     "canal": "wpp",
+     "texto": "Perguntar a região e mandar 2 opções de 3 dormitórios."
+    },
+    {
+     "hora": "15:24",
+     "id": "ursula-webwer",
+     "canal": "wpp",
+     "texto": "Uma pergunta só: qual região a senhora prefere?"
+    },
+    {
+     "hora": "15:30",
+     "id": "celio",
+     "canal": "wpp",
+     "texto": "Mandar opção de casa na planta no Taquaral."
+    },
+    {
+     "hora": "15:36",
+     "id": "rose-silva",
+     "canal": "wpp",
+     "texto": "Pedir o contato da filha para falar direto com ela."
+    },
+    {
+     "hora": "15:42",
+     "id": "giselda",
+     "canal": "wpp",
+     "texto": "Pedir o contato da filha para falar direto com ela."
+    },
+    {
+     "hora": "15:48",
+     "id": "elizabete",
+     "canal": "wpp",
+     "texto": "Pedir o contato da filha, conforme combinado por telefone."
+    },
+    {
+     "hora": "15:54",
+     "id": "suzana",
+     "canal": "wpp",
+     "texto": "Perguntar região e valor para mandar projetos na planta."
+    },
+    {
+     "hora": "16:00",
+     "id": "priscila",
+     "canal": "wpp",
+     "texto": "Agradecer o retorno e pedir indicação de alguém que esteja procurando imóvel."
+    },
+    {
+     "hora": "16:06",
+     "id": "mayara",
+     "canal": "wpp",
+     "texto": "Parabenizar pela compra e pedir indicação."
+    },
+    {
+     "hora": "16:12",
+     "id": "vitor",
+     "canal": "wpp",
+     "texto": "Pedir indicação de alguém que esteja procurando imóvel."
+    },
+    {
+     "hora": "16:18",
+     "id": "leopoldo-luz",
+     "canal": "wpp",
+     "texto": "Mandar uma oportunidade com desconto real (ele só quer abaixo do mercado)."
+    },
+    {
+     "hora": "16:24",
+     "id": "renato-set",
+     "canal": "wpp",
+     "texto": "Mandar a tabela atualizada do Viva Verde (lote 212 m²)."
+    },
+    {
      "hora": "19:00",
+     "id": "nathalia",
+     "canal": "wpp",
+     "texto": "Toque leve: ainda pensa em visitar a obra do Taquaral?"
+    },
+    {
+     "hora": "19:04",
+     "id": "aline-dijon",
+     "canal": "wpp",
+     "texto": "Perguntar se ainda procura casa nova e mandar novidade se tiver."
+    },
+    {
+     "hora": "19:08",
+     "id": "lucas-cioban",
+     "canal": "wpp",
+     "texto": "Repique: ainda tem interesse no Mangará?"
+    },
+    {
+     "hora": "19:12",
+     "id": "mirela",
+     "canal": "wpp",
+     "texto": "Repique: ainda busca imóvel? Morar ou investir?"
+    },
+    {
+     "hora": "19:16",
+     "id": "roberta",
+     "canal": "wpp",
+     "texto": "Repique: como está a busca por imóvel?"
+    },
+    {
+     "hora": "19:20",
+     "id": "michele-almeida",
+     "canal": "wpp",
+     "texto": "Repique: ainda tem interesse no Yees?"
+    },
+    {
+     "hora": "19:24",
+     "id": "dimas",
+     "canal": "wpp",
+     "texto": "Repique: convite para conhecer o Liv/My Way Guanabara."
+    },
+    {
+     "hora": "19:28",
+     "id": "claudemir",
+     "canal": "wpp",
+     "texto": "Repique: oportunidade de investimento no Swiss Park."
+    },
+    {
+     "hora": "19:32",
+     "id": "mauricio",
+     "canal": "wpp",
+     "texto": "Repique: ainda tem interesse no Maxi Bonfim?"
+    },
+    {
+     "hora": "19:36",
+     "id": "tiago",
+     "canal": "wpp",
+     "texto": "Repique: como está a busca por imóvel?"
+    },
+    {
+     "hora": "19:40",
+     "id": "gabriel-mangara",
+     "canal": "wpp",
+     "texto": "Repique: ainda tem interesse no Mangará?"
+    },
+    {
+     "hora": "20:00",
      "id": "",
      "canal": "acao",
      "texto": "Fechamento: marcar no site o que foi feito e mandar 'atualiza' para o Claude."
