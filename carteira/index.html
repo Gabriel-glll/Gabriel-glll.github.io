@@ -73,28 +73,13 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
 .act[aria-pressed="true"].wpp{background:var(--wpp);border-color:var(--wpp);color:#fff}
 .act[aria-pressed="true"].resp{background:var(--resp);border-color:var(--resp);color:#fff}
 .act[aria-pressed="true"].na{background:var(--na);border-color:var(--na);color:#fff}
-.gate{max-width:380px;margin:12vh auto;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:14px;display:grid;gap:12px}
-.gate h1{font:700 28px var(--f-display);text-transform:uppercase;margin:0}
-.gate input{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
-.gate .err{color:var(--late);font-size:14px;min-height:1em}
-.gate label{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:14px}
 .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
 .empty{color:var(--muted);padding:12px 2px}
 @media (prefers-reduced-motion:reduce){.meter i{transition:none}}
 </style>
 </head>
 <body>
-<div id="gate" class="gate" hidden>
-  <h1>Carteira ZFF</h1>
-  <form id="gForm" style="display:grid;gap:10px">
-    <input type="password" id="gPass" placeholder="Senha" autocomplete="current-password" required>
-    <label><input type="checkbox" id="gKeep" checked> Lembrar neste aparelho</label>
-    <button class="btn primary" type="submit">Entrar</button>
-    <div class="err" id="gErr"></div>
-  </form>
-</div>
-
-<div id="app" hidden>
+<div id="app">
 <header>
   <div class="hd">
     <div class="l1">
@@ -260,25 +245,10 @@ $("#meta").addEventListener("change",()=>{LS.set("meta",Number($("#meta").value)
 $("#xlsx").addEventListener("click",exportXlsx);
 $("#hoje").textContent=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"});
 
-/* ---------- dados (criptografados no site publicado) ---------- */
-const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-async function decrypt(enc,senha){
-  const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(senha),"PBKDF2",false,["deriveKey"]);
-  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(enc.salt),iterations:enc.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
-  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(enc.iv)},key,b64(enc.ct));
-  return JSON.parse(new TextDecoder().decode(pt));
-}
-function start(d){DATA=d;$("#gate").hidden=true;$("#app").hidden=false;render()}
+/* ---------- dados ---------- */
 (async()=>{
-  let enc=null;
-  try{const r=await fetch("data.enc.json",{cache:"no-store"}); if(r.ok) enc=await r.json()}catch(e){}
-  if(!enc){try{const r=await fetch("data.json",{cache:"no-store"});if(r.ok){start(await r.json());return}}catch(e){}
-    document.body.innerHTML='<p class="empty" style="padding:24px">Não encontrei os dados da carteira.</p>';return}
-  const saved=LS.get("k","");
-  if(saved){try{start(await decrypt(enc,saved));return}catch(e){LS.set("k","")}}
-  $("#gate").hidden=false;$("#gPass").focus();
-  $("#gForm").addEventListener("submit",async ev=>{ev.preventDefault();const s=$("#gPass").value;
-    try{const d=await decrypt(enc,s);if($("#gKeep").checked)LS.set("k",s);start(d)}catch(err){$("#gErr").textContent="Senha incorreta."}});
+  try{const r=await fetch("data.json?v="+Date.now(),{cache:"no-store"});DATA=await r.json();render()}
+  catch(e){$("#list").innerHTML='<p class="empty">Não consegui carregar a lista de clientes. Recarregue a página.</p>'}
 })();
 </script>
 </body>
