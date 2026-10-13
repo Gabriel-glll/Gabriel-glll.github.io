@@ -114,14 +114,11 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
     <div class="l1">
       <div class="brand">Carteira ZFF<small id="hoje"></small></div>
       <div class="hbtns">
+        <button class="btn x" id="bResumo">Resumo do dia</button>
         <button class="btn ghost" id="bNotif">Ativar lembretes</button>
         <button class="btn ghost" id="bIcs">Pôr no calendário</button>
         <button class="btn x" id="xlsx">Baixar planilha (.xlsx)</button>
       </div>
-    </div>
-    <div class="score">
-      <b id="nCont">0</b><span class="of">contatados hoje</span>
-      <span class="of" id="nResp"></span>
     </div>
     <div class="views" role="tablist">
       <button role="tab" data-v="dia" aria-selected="true">Meu dia</button>
@@ -155,6 +152,14 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
   </section>
 </main>
 
+<dialog id="dRes" style="border:0;border-radius:14px;padding:0;width:min(680px,calc(100vw - 32px));background:var(--surface);color:var(--ink)">
+  <div style="padding:18px 20px;display:grid;gap:12px">
+    <div style="font:700 22px var(--f-display);text-transform:uppercase;letter-spacing:.03em">Resumo do dia</div>
+    <p style="margin:0;color:var(--muted);font-size:14px">Copie e mande para o Claude. Ele atualiza a carteira, lê as conversas do dia e monta o plano de amanhã.</p>
+    <textarea id="resTxt" readonly style="width:100%;min-height:320px;font:13px/1.5 var(--f-mono);padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" id="resClose">Fechar</button><button class="btn" style="background:var(--navy);color:#fff;border-color:var(--navy)" id="resCopy">Copiar resumo</button></div>
+  </div>
+</dialog>
 <script>
 const CAD={inbound:{nome:"Inbound",steps:[[1,"Manhã","lig"],[1,"Manhã","wpp"],[1,"Tarde","lig"],[2,"Tarde","wpp"],[4,"Tarde","lig"],[4,"Tarde","wpp"],[5,"Noite","wpp"]]},
   repique:{nome:"Repique",steps:[[1,"Manhã","wpp"],[2,"Manhã","lig"],[2,"Tarde","lig"],[3,"Noite","wpp"],[4,"Tarde","lig"],[4,"Noite","wpp"]]}};
@@ -192,7 +197,7 @@ const RELIGAR=90;
 let ENC=LS.get("enc",{}); // id -> data ISO (encerrado) ou "" (reativado)
 const encDate=c=>c.id in ENC?ENC[c.id]:(c.encerrado||"");
 const isEnc=c=>!!encDate(c);
-function encerrar(id,on){ENC[id]=on?HOJE:"";LS.set("enc",ENC);toast(on?BY[id].nome+" foi para Encerrados":BY[id].nome+" voltou para a carteira");render()}
+function encerrar(id,on){const t=day(HOJE);t._reat=(t._reat||[]).filter(x=>x!==id);if(!on)t._reat.push(id);save();ENC[id]=on?HOJE:"";LS.set("enc",ENC);toast(on?BY[id].nome+" foi para Encerrados":BY[id].nome+" voltou para a carteira");render()}
 function renderEnc(){
   const arr=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
   $("#encList").innerHTML=arr.length?arr.map(({c,d,r})=>{const due=r<=HOJE;
@@ -244,7 +249,7 @@ function renderDia(){
 }
 
 /* ---------- contatos ---------- */
-function renderTop(){
+function renderTop(){return;
   const n=DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length;
   const r=DATA.clientes.filter(c=>{const t=(LOG[HOJE]||{})[c.id];return t&&(t.resp||Object.values(t.itens||{}).includes("resp"))}).length;
   $("#nCont").textContent=n;
@@ -275,6 +280,26 @@ function renderContatos(){
     </div></article>`}).join(""):'<p class="empty">Nenhum cliente com esses filtros.</p>';
 }
 function render(){renderTop(); if(VIEW==="dia")renderDia(); else if(VIEW==="encerrados")renderEnc(); else renderContatos()}
+
+/* ---------- resumo ---------- */
+function resumo(){
+  const its=itensDo(DIA).filter(x=>x.id), lab={ok:"feito",resp:"respondeu",na:"não atendeu"};
+  const linha=x=>`${x.hora} ${BY[x.id].nome} (${VERB[x.canal]})`;
+  const g={ok:[],resp:[],na:[],"":[]}; its.forEach(x=>g[status(DIA,x)].push(x));
+  const noPlano=new Set(its.map(x=>x.id));
+  const fora=DATA.clientes.filter(c=>!noPlano.has(c.id)&&contactedOn(HOJE,c.id)).map(c=>c.nome);
+  const enc=DATA.clientes.filter(c=>ENC[c.id]===HOJE).map(c=>c.nome);
+  const reat=((LOG[HOJE]||{})._reat||[]).map(id=>BY[id]?.nome).filter(Boolean);
+  const sec=(t,arr)=>arr.length?`\n\n${t} (${arr.length}):\n`+arr.map(a=>"- "+a).join("\n"):"";
+  return `RESUMO CARTEIRA ZFF — ${parse(HOJE).toLocaleDateString("pt-BR")}
+Plano de ${br(DIA)}: ${its.length} contatos · ${g.ok.length} feitos · ${g.resp.length} responderam · ${g.na.length} não atenderam · ${g[""].length} pendentes`
+  +sec("RESPONDERAM",g.resp.map(linha))+sec("FEITOS",g.ok.map(linha))+sec("NÃO ATENDERAM",g.na.map(linha))
+  +sec("PENDENTES (não fiz)",g[""].map(linha))+sec("CONTATEI FORA DO PLANO",fora)
+  +sec("ENCERREI HOJE (sem interesse)",enc)+sec("REATIVEI",reat);
+}
+$("#bResumo").onclick=()=>{$("#resTxt").value=resumo();$("#dRes").showModal()};
+$("#resClose").onclick=()=>$("#dRes").close();
+$("#resCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("#resTxt").value);toast("Resumo copiado. Cole na conversa com o Claude.")}catch(e){$("#resTxt").select();toast("Selecionei o texto: copie com Ctrl+C")}};
 
 /* ---------- lembretes ---------- */
 let notifTimer=null;
