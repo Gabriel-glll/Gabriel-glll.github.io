@@ -126,6 +126,7 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
     <div class="views" role="tablist">
       <button role="tab" data-v="dia" aria-selected="true">Meu dia</button>
       <button role="tab" data-v="contatos" aria-selected="false">Contatos</button>
+      <button role="tab" data-v="encerrados" aria-selected="false">Encerrados</button>
     </div>
   </div>
 </header>
@@ -147,6 +148,10 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
     <div class="chips" id="temps"></div>
     <p class="meta" id="info"></p>
     <div class="list" id="list"></div>
+  </section>
+  <section id="v-encerrados" hidden>
+    <p class="meta">Clientes sem interesse no momento. Depois de 90 dias eles voltam a aparecer aqui como "hora de religar". Use "Reativar" para devolver à carteira.</p>
+    <div class="list" id="encList"></div>
   </section>
 </main>
 
@@ -182,6 +187,24 @@ const day=d=>LOG[d]||(LOG[d]={});
 const contactedOn=(d,id)=>{const t=(LOG[d]||{})[id];return !!(t&&(t.lig||t.wpp||t.resp||t.na||t.ok||Object.keys(t.itens||{}).length))};
 const save=()=>LS.set("log",LOG);
 
+/* ---------- encerrados ---------- */
+const RELIGAR=90;
+let ENC=LS.get("enc",{}); // id -> data ISO (encerrado) ou "" (reativado)
+const encDate=c=>c.id in ENC?ENC[c.id]:(c.encerrado||"");
+const isEnc=c=>!!encDate(c);
+function encerrar(id,on){ENC[id]=on?HOJE:"";LS.set("enc",ENC);toast(on?BY[id].nome+" foi para Encerrados":BY[id].nome+" voltou para a carteira");render()}
+function renderEnc(){
+  const arr=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
+  $("#encList").innerHTML=arr.length?arr.map(({c,d,r})=>{const due=r<=HOJE;
+    return `<article class="card"><span class="stripe Perdido"></span><div class="body">
+      <div class="top"><div><span style="font-weight:600;font-size:17px">${esc(c.nome)}</span><span class="tag">encerrado em ${br(d)}</span></div>
+      <div>${due?'<span class="tag late">hora de religar</span>':`<span class="tag">religar a partir de ${br(r)}</span>`}</div></div>
+      ${contactHTML(c)}
+      ${c.obs?`<div class="obs"><b>Observação</b>${esc(c.obs)}</div>`:""}
+      <div class="marks"><button class="mk ok" data-reat="${c.id}">${IC.ok}Reativar</button></div>
+    </div></article>`}).join(""):'<p class="empty">Nenhum cliente encerrado.</p>';
+}
+
 /* ---------- telefone ---------- */
 const digits=t=>(t||"").replace(/\D/g,"");
 const intl=t=>{const n=digits(t);return !n?"":n.length<=11?"55"+n:n};
@@ -193,7 +216,7 @@ function contactHTML(c){
 /* ---------- agenda do dia ---------- */
 function itensDo(d){
   const plano=(DATA.plano||{})[d]; if(!plano) return [];
-  return plano.itens.map((x,i)=>({key:"p"+i,hora:x.hora,canal:x.canal,id:x.id,texto:x.texto,fonte:"plano"})).sort((a,b)=>a.hora.localeCompare(b.hora));
+  return plano.itens.map((x,i)=>({key:"p"+i,hora:x.hora,canal:x.canal,id:x.id,texto:x.texto,fonte:"plano"})).filter(x=>!x.id||!BY[x.id]||!isEnc(BY[x.id])).sort((a,b)=>a.hora.localeCompare(b.hora));
 }
 const status=(d,x)=>(((LOG[d]||{})[x.id||"_"]||{}).itens||{})[x.key]||"";
 function renderDia(){
@@ -215,7 +238,7 @@ function renderDia(){
         <div class="txt">${esc(x.texto)}</div>
         ${x.id?contactHTML(c):""}
         ${x.id&&c.dica&&x.fonte!=="cad"?`<div class="tip"><b>Dica</b>${esc(c.dica)}</div>`:""}
-        <div class="marks">${MARKS.map(([k,l])=>`<button class="mk ${k}" data-mk="${k}" data-key="${x.key}" data-id="${x.id||"_"}" aria-pressed="${st===k}">${IC[k]}${l}</button>`).join("")}</div>
+        <div class="marks">${MARKS.map(([k,l])=>`<button class="mk ${k}" data-mk="${k}" data-key="${x.key}" data-id="${x.id||"_"}" aria-pressed="${st===k}">${IC[k]}${l}</button>`).join("")}${x.id?`<button class="mk na" data-enc="${x.id}">${IC.na}Sem interesse</button>`:""}</div>
       </div></div>`}).join(""):`<p class="empty">Nada agendado para a ${PER.toLowerCase()} deste dia.</p>`;
   $("#dNote").textContent=plano?"":"O plano ainda não foi montado. Mande \"atualiza\" para o Claude à noite.";
 }
@@ -228,14 +251,14 @@ function renderTop(){
   $("#nResp").textContent=r?`${r} responderam`:"";
 }
 function renderContatos(){
-  const ativos=DATA.clientes.filter(c=>c.temp!=="Perdido");
-  const F=[["todos","Todos",DATA.clientes.length],["acontatar","Ainda não contatados hoje",ativos.filter(c=>!contactedOn(HOJE,c.id)).length],["feitos","Contatados hoje",DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length]];
+  const base=DATA.clientes.filter(c=>!isEnc(c)), ativos=base;
+  const F=[["todos","Todos",base.length],["acontatar","Ainda não contatados hoje",ativos.filter(c=>!contactedOn(HOJE,c.id)).length],["feitos","Contatados hoje",DATA.clientes.filter(c=>contactedOn(HOJE,c.id)).length]];
   $("#fil").innerHTML=F.map(([v,l,n])=>`<button class="chip" data-f="${v}" aria-pressed="${FIL===v}">${l}<span class="n">${n}</span></button>`).join("");
-  $("#temps").innerHTML=["","Quente","Morno","Frio","Perdido"].map(t=>`<button class="chip" data-t="${t}" aria-pressed="${TEMP===t}">${t||"Todas as temperaturas"}</button>`).join("");
+  $("#temps").innerHTML=["","Quente","Morno","Frio"].map(t=>`<button class="chip" data-t="${t}" aria-pressed="${TEMP===t}">${t||"Todas as temperaturas"}</button>`).join("");
   const q=$("#q").value.trim().toLowerCase();
-  const arr=DATA.clientes.filter(c=>{
+  const arr=base.filter(c=>{
     if(TEMP&&c.temp!==TEMP) return false;
-    if(FIL==="acontatar"&&(contactedOn(HOJE,c.id)||c.temp==="Perdido")) return false;
+    if(FIL==="acontatar"&&contactedOn(HOJE,c.id)) return false;
     if(FIL==="feitos"&&!contactedOn(HOJE,c.id)) return false;
     if(q&&!JSON.stringify([c.nome,c.tel,digits(c.tel),c.obs,c.dica,c.regiao,c.origem,c.faixa]).toLowerCase().includes(q)) return false;
     return true}).sort((a,b)=>({Quente:0,Morno:1,Frio:2,Perdido:3}[a.temp]??4)-({Quente:0,Morno:1,Frio:2,Perdido:3}[b.temp]??4)||a.prioridade-b.prioridade||a.nome.localeCompare(b.nome));
@@ -248,10 +271,10 @@ function renderContatos(){
       ${c.obs?`<div class="obs"><b>Observação</b>${esc(c.obs)}</div>`:""}
       ${c.dica?`<div class="tip"><b>Dica</b>${esc(c.dica)}</div>`:""}
       ${c.proxAcao?`<div class="next"><b>Próxima ação:</b> ${esc(c.proxAcao)}${c.proxData?` · ${br(c.proxData)}`:""}</div>`:""}
-      <div class="marks"><button class="mk ok" data-cmark="${c.id}" aria-pressed="${!!((LOG[HOJE]||{})[c.id]||{}).ok}">${IC.ok}Contatei hoje</button></div>
+      <div class="marks"><button class="mk ok" data-cmark="${c.id}" aria-pressed="${!!((LOG[HOJE]||{})[c.id]||{}).ok}">${IC.ok}Contatei hoje</button><button class="mk na" data-enc="${c.id}">${IC.na}Sem interesse</button></div>
     </div></article>`}).join(""):'<p class="empty">Nenhum cliente com esses filtros.</p>';
 }
-function render(){renderTop(); if(VIEW==="dia")renderDia(); else renderContatos()}
+function render(){renderTop(); if(VIEW==="dia")renderDia(); else if(VIEW==="encerrados")renderEnc(); else renderContatos()}
 
 /* ---------- lembretes ---------- */
 let notifTimer=null;
@@ -311,22 +334,28 @@ function exportXlsx(){
   ws1["!views"]=[{state:"frozen",ySplit:4}];
   XLSX.utils.book_append_sheet(wb,ws1,"Plano do dia");
   // Contatos
-  const all=[...DATA.clientes].sort((a,b)=>({Quente:0,Morno:1,Frio:2,Perdido:3}[a.temp]??4)-({Quente:0,Morno:1,Frio:2,Perdido:3}[b.temp]??4)||a.prioridade-b.prioridade||a.nome.localeCompare(b.nome));
+  const all=DATA.clientes.filter(c=>!isEnc(c)).sort((a,b)=>({Quente:0,Morno:1,Frio:2,Perdido:3}[a.temp]??4)-({Quente:0,Morno:1,Frio:2,Perdido:3}[b.temp]??4)||a.prioridade-b.prioridade||a.nome.localeCompare(b.nome));
   const r2=[["Cliente","Telefone","Temperatura","Etapa","Contatado hoje?","Próxima ação","Data","Dica","Observação"].map(H),
     ...all.map(c=>{const ok=contactedOn(HOJE,c.id);return [V(c.nome,null,{font:{bold:true}}),V(c.tel),V(c.temp,tf[c.temp],ctr),V(c.etapa),V(ok?"Sim":"Não",ok?C.ok:C.no,{font:{bold:true},...ctr}),V(c.proxAcao),V(br(c.proxData),null,ctr),V(c.dica,c.dica?C.tip:null),V(c.obs)]})];
   const ws2=XLSX.utils.aoa_to_sheet(r2); ws2["!cols"]=[22,17,12,18,11,36,8,50,50].map(w=>({wch:w}));
   ws2["!autofilter"]={ref:`A1:I${r2.length}`}; ws2["!views"]=[{state:"frozen",xSplit:1,ySplit:1}];
   XLSX.utils.book_append_sheet(wb,ws2,"Contatos");
+  const encs=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
+  const r3=[["Cliente","Telefone","Encerrado em","Religar a partir de","Observação"].map(H),...encs.map(({c,d,r})=>[V(c.nome,null,{font:{bold:true}}),V(c.tel),V(br(d),null,ctr),V(br(r),r<=HOJE?C.ok:null,{font:{bold:true},...ctr}),V(c.obs)])];
+  const ws3=XLSX.utils.aoa_to_sheet(r3); ws3["!cols"]=[22,17,12,16,60].map(w=>({wch:w})); ws3["!views"]=[{state:"frozen",ySplit:1}];
+  XLSX.utils.book_append_sheet(wb,ws3,"Encerrados");
   XLSX.writeFile(wb,`Carteira ZFF ${DIA}.xlsx`);
 }
 
 /* ---------- eventos ---------- */
-function setView(v){VIEW=v;LS.set("view",v);document.querySelectorAll(".views button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v));$("#v-dia").hidden=v!=="dia";$("#v-contatos").hidden=v!=="contatos";render()}
+function setView(v){VIEW=v;LS.set("view",v);document.querySelectorAll(".views button").forEach(b=>b.setAttribute("aria-selected",b.dataset.v===v));$("#v-dia").hidden=v!=="dia";$("#v-contatos").hidden=v!=="contatos";$("#v-encerrados").hidden=v!=="encerrados";render()}
 document.addEventListener("click",async e=>{
   const v=e.target.closest(".views [data-v]"); if(v){setView(v.dataset.v);return}
   const p=e.target.closest("[data-p]"); if(p){PER=p.dataset.p;renderDia();return}
   const mk=e.target.closest("[data-mk]"); if(mk){const id=mk.dataset.id,k=mk.dataset.mk,key=mk.dataset.key;const t=day(DIA);t[id]=t[id]||{};t[id].itens=t[id].itens||{};
     if(t[id].itens[key]===k)delete t[id].itens[key];else t[id].itens[key]=k;save();render();return}
+  const en=e.target.closest("[data-enc]"); if(en){encerrar(en.dataset.enc,true);return}
+  const ra=e.target.closest("[data-reat]"); if(ra){encerrar(ra.dataset.reat,false);return}
   const cm=e.target.closest("[data-cmark]"); if(cm){const id=cm.dataset.cmark,t=day(HOJE);t[id]=t[id]||{};t[id].ok=!t[id].ok;save();render();return}
   const f=e.target.closest("[data-f]"); if(f){FIL=f.dataset.f;LS.set("fil",FIL);renderContatos();return}
   const tp=e.target.closest("[data-t]"); if(tp){TEMP=tp.dataset.t;renderContatos();return}

@@ -17,7 +17,8 @@
    "ultResp": "2026-09-29",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "aline-dijon",
@@ -35,7 +36,8 @@
    "ultResp": "2026-10-10",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "aline",
@@ -53,7 +55,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-15",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "allan",
@@ -71,7 +74,8 @@
    "ultResp": "2026-10-01",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "ana",
@@ -89,7 +93,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "bryan",
@@ -107,7 +112,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-14",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "caio",
@@ -125,7 +131,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "carlos-toplife",
@@ -143,7 +150,8 @@
    "ultResp": "2026-10-13",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "celio",
@@ -161,7 +169,8 @@
    "ultResp": "2026-09-12",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "claudemir",
@@ -179,7 +188,8 @@
    "ultResp": "2026-09-16",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "claudia",
@@ -197,7 +207,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-14",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "constantino",
@@ -215,7 +226,8 @@
    "ultResp": "2026-08-19",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "daniela-set",
@@ -233,7 +245,8 @@
    "ultResp": "2026-09-18",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "daniele",
@@ -251,7 +264,8 @@
    "ultResp": "2026-09-22",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "davi",
@@ -269,7 +283,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-16",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "denilson",
@@ -287,7 +302,8 @@
    "ultResp": "2026-09-29",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "dimas",
@@ -305,7 +321,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "dinei",
@@ -323,7 +340,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-16",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "edgar-luce-cambui",
@@ -341,7 +359,8 @@
    "ultResp": "2026-10-08",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "elizabete",
@@ -359,7 +378,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-15",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "erika",
@@ -377,7 +397,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-15",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "fabio-henrique",
@@ -395,7 +416,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-27",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "gabriel-mangara",
@@ -413,7 +435,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-27",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "gabriel",
@@ -431,7 +454,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-14",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "gilmar",
@@ -449,7 +473,8 @@
    "ultResp": "2026-09-28",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "giselda",
@@ -467,7 +492,8 @@
    "ultResp": "2026-09-24",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "gustavo",
@@ -485,7 +511,8 @@
    "ultResp": "2026-10-05",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "ivani",
@@ -503,7 +530,8 @@
    "ultResp": "2026-09-15",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "joao",
@@ -521,7 +549,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-15",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "juliana",
@@ -539,7 +568,8 @@
    "ultResp": "2026-09-29",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "junior",
@@ -557,7 +587,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "keila",
@@ -575,7 +606,8 @@
    "ultResp": "2026-09-24",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "leopoldo-luz",
@@ -593,7 +625,8 @@
    "ultResp": "2026-10-01",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "lucas-cioban",
@@ -611,7 +644,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "lucas-fernandes",
@@ -629,7 +663,8 @@
    "ultResp": "2026-09-19",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "luiz",
@@ -647,7 +682,8 @@
    "ultResp": "2026-09-25",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "luiza",
@@ -665,7 +701,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "marco-cesar",
@@ -683,7 +720,8 @@
    "ultResp": "2026-09-22",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": "2026-09-22"
   },
   {
    "id": "mari",
@@ -701,7 +739,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-14",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "maria-toplife",
@@ -719,7 +758,8 @@
    "ultResp": "2026-09-03",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "marly-correa",
@@ -737,7 +777,8 @@
    "ultResp": "2026-09-22",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": "2026-09-22"
   },
   {
    "id": "mateus",
@@ -755,7 +796,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-15",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "matheus",
@@ -773,7 +815,8 @@
    "ultResp": "2026-10-08",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "mauricio",
@@ -791,7 +834,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-20",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "max",
@@ -809,7 +853,8 @@
    "ultResp": "2026-10-05",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "mayara",
@@ -827,7 +872,8 @@
    "ultResp": "2026-10-09",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": "2026-10-09"
   },
   {
    "id": "michele-almeida",
@@ -845,7 +891,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-20",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "mirela",
@@ -863,7 +910,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-20",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "nathalia",
@@ -881,7 +929,8 @@
    "ultResp": "2026-09-19",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "neide",
@@ -899,7 +948,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-27",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "patricia",
@@ -917,7 +967,8 @@
    "ultResp": "2026-09-23",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "priscila",
@@ -935,7 +986,8 @@
    "ultResp": "2026-10-13",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": "2026-10-13"
   },
   {
    "id": "renato-set",
@@ -953,7 +1005,8 @@
    "ultResp": "2026-09-17",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "roberta",
@@ -971,7 +1024,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-20",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "rogerio-maxi",
@@ -989,7 +1043,8 @@
    "ultResp": "2026-10-06",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 1
+   "prioridade": 1,
+   "encerrado": ""
   },
   {
    "id": "ronaldo",
@@ -1007,7 +1062,8 @@
    "ultResp": "2026-10-13",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": "2026-10-13"
   },
   {
    "id": "rosangela",
@@ -1025,7 +1081,8 @@
    "ultResp": "2026-10-10",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "rose-silva",
@@ -1043,7 +1100,8 @@
    "ultResp": "2026-09-15",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "sergio",
@@ -1061,7 +1119,8 @@
    "ultResp": "2026-09-28",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2
+   "prioridade": 2,
+   "encerrado": ""
   },
   {
    "id": "silvio-maxi-bonfim",
@@ -1079,7 +1138,8 @@
    "ultResp": "2026-08-26",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "suzana",
@@ -1097,7 +1157,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-15",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   },
   {
    "id": "tiago",
@@ -1115,7 +1176,8 @@
    "ultResp": "",
    "tipo": "repique",
    "cadInicio": "2026-10-27",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "ursula-webwer",
@@ -1133,7 +1195,8 @@
    "ultResp": "2026-09-10",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "vitor",
@@ -1151,7 +1214,8 @@
    "ultResp": "2026-09-25",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 5
+   "prioridade": 5,
+   "encerrado": ""
   },
   {
    "id": "walter-luiz",
@@ -1169,7 +1233,8 @@
    "ultResp": "",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4
+   "prioridade": 4,
+   "encerrado": ""
   },
   {
    "id": "wesley",
@@ -1187,7 +1252,8 @@
    "ultResp": "2026-09-08",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 3
+   "prioridade": 3,
+   "encerrado": ""
   }
  ],
  "plano": {
