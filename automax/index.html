@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automax Multimarcas | Carros e motos seminovos em Sumaré-SP</title>
+<meta name="description" content="Seminovos com procedência em Sumaré-SP. Veja o estoque de carros e motos, faça sua proposta online e fale com um vendedor. Compra, venda, troca e consignação.">
+<meta property="og:title" content="Automax Multimarcas — Sumaré/SP">
+<meta property="og:description" content="Você sonha, nós realizamos. Estoque completo, propostas online e atendimento pelo WhatsApp.">
+<meta property="og:image" content="img/logo.png">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topo" id="topo">
+  <div class="wrap topo__in">
+    <a href="#" class="logo"><img src="img/logo.png" alt="Automax Multimarcas"></a>
+    <nav class="menu" id="menu">
+      <a href="#estoque">Estoque</a>
+      <a href="#vender">Venda seu veículo</a>
+      <a href="#financiamento">Financiamento</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="btn btn--wa topo__cta" data-wa="Olá! Vim pelo site da Automax e gostaria de falar com um vendedor." href="#">
+      <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg> Falar com vendedor
+    </a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__bg" id="heroBg"></div>
+  <div class="wrap hero__in">
+    <p class="eyebrow">Seminovos com procedência · Sumaré-SP</p>
+    <h1>Você sonha,<br><em>nós realizamos.</em></h1>
+    <p class="hero__sub">Carros e motos revisados, financiamento facilitado e aceitamos seu usado na troca. Escolha, faça sua proposta e um vendedor te responde no WhatsApp.</p>
+    <form class="busca" id="buscaHero">
+      <div class="seg" role="tablist">
+        <button type="button" class="on" data-tipo="todos">Todos</button>
+        <button type="button" data-tipo="carro">Carros</button>
+        <button type="button" data-tipo="moto">Motos</button>
+      </div>
+      <input type="search" id="qHero" placeholder="Busque por modelo ou marca — ex.: Corolla, HB20, Honda">
+      <button class="btn btn--red" type="submit">Ver estoque</button>
+    </form>
+    <ul class="hero__nums">
+      <li><b id="nTotal">–</b> veículos no estoque</li>
+      <li><b>7.800+</b> seguidores no Instagram</li>
+      <li><b>Compra · Venda</b> troca e consignação</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="estoque">
+  <div class="wrap">
+    <div class="sec__head">
+      <div>
+        <p class="eyebrow">Estoque</p>
+        <h2>Encontre o seu</h2>
+      </div>
+      <p class="sec__count" id="count"></p>
+    </div>
+
+    <div class="filtros" id="filtros">
+      <div class="seg" id="segTipo">
+        <button type="button" class="on" data-tipo="todos">Todos</button>
+        <button type="button" data-tipo="carro">Carros</button>
+        <button type="button" data-tipo="moto">Motos</button>
+      </div>
+      <input type="search" id="q" placeholder="Modelo ou marca">
+      <select id="fMarca"><option value="">Todas as marcas</option></select>
+      <select id="fPreco">
+        <option value="">Qualquer preço</option>
+        <option value="0-40000">Até R$ 40 mil</option>
+        <option value="40000-60000">R$ 40 a 60 mil</option>
+        <option value="60000-100000">R$ 60 a 100 mil</option>
+        <option value="100000-99999999">Acima de R$ 100 mil</option>
+      </select>
+      <select id="fCambio">
+        <option value="">Câmbio</option>
+        <option>Automático</option>
+        <option>Manual</option>
+      </select>
+      <select id="fOrdem">
+        <option value="rec">Mais recentes</option>
+        <option value="menor">Menor preço</option>
+        <option value="maior">Maior preço</option>
+        <option value="ano">Mais novos</option>
+        <option value="km">Menor km</option>
+      </select>
+    </div>
+
+    <div class="grid" id="grid"></div>
+    <div class="vazio" id="vazio" hidden>
+      <h3 id="vazioTit">Nenhum veículo encontrado</h3>
+      <p id="vazioTxt">Não achou o que procura? A gente encontra para você.</p>
+      <a class="btn btn--wa" id="vazioBtn" href="#"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg> Encomendar com um vendedor</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--dark" id="vender">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Venda, troca ou consignação</p>
+      <h2>Seu usado vale mais aqui</h2>
+      <p class="lead">Avaliamos seu carro ou moto na hora. Você pode vender direto para a Automax, dar como entrada na troca ou deixar consignado com a gente — nós cuidamos de anúncio, visitas e documentação.</p>
+      <ul class="checks">
+        <li>Avaliação justa e sem compromisso</li>
+        <li>Pagamento rápido e seguro</li>
+        <li>Quitamos seu financiamento</li>
+        <li>Consignação com exposição na loja e nas redes</li>
+      </ul>
+    </div>
+    <form class="card form" id="formVender">
+      <h3>Avalie seu veículo</h3>
+      <div class="seg seg--sm" id="segOp">
+        <button type="button" class="on" data-v="Vender">Vender</button>
+        <button type="button" data-v="Trocar">Trocar</button>
+        <button type="button" data-v="Consignar">Consignar</button>
+      </div>
+      <div class="row2">
+        <label>Seu nome<input name="nome" required></label>
+        <label>WhatsApp<input name="tel" type="tel" required placeholder="(19) 9...."></label>
+      </div>
+      <label>Veículo (marca / modelo / versão)<input name="modelo" required placeholder="Ex.: Onix LT 1.0"></label>
+      <div class="row2">
+        <label>Ano<input name="ano" inputmode="numeric" required></label>
+        <label>Quilometragem<input name="km" inputmode="numeric"></label>
+      </div>
+      <label>Observações<textarea name="obs" rows="2" placeholder="Estado, revisões, se é financiado..."></textarea></label>
+      <button class="btn btn--red btn--full" type="submit">Enviar para avaliação</button>
+      <small>Você será levado ao WhatsApp com a mensagem pronta. Envie fotos do veículo por lá.</small>
+    </form>
+  </div>
+</section>
+
+<section class="sec" id="financiamento">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Financiamento</p>
+      <h2>Simule sua parcela</h2>
+      <p class="lead">Trabalhamos com os principais bancos. A simulação é uma estimativa — a taxa final depende da análise de crédito.</p>
+      <a class="btn btn--ghost" data-wa="Olá! Quero fazer uma análise de crédito para financiamento." href="#">Fazer análise de crédito</a>
+    </div>
+    <div class="card sim">
+      <label>Valor do veículo <output id="oValor"></output><input type="range" id="sValor" min="20000" max="250000" step="1000" value="60000"></label>
+      <label>Entrada <output id="oEntrada"></output><input type="range" id="sEntrada" min="0" max="100" step="5" value="30"></label>
+      <div class="sim__prazos" id="prazos">
+        <button type="button" data-p="24">24x</button><button type="button" data-p="36">36x</button><button type="button" class="on" data-p="48">48x</button><button type="button" data-p="60">60x</button>
+      </div>
+      <div class="sim__res"><span>Parcela estimada</span><b id="oParcela"></b><small>Taxa de referência 1,89% a.m.</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--soft" id="sobre">
+  <div class="wrap">
+    <p class="eyebrow">Sobre a Automax</p>
+    <h2>Transparência do início ao fim</h2>
+    <p class="lead lead--w">A Automax é referência em credibilidade no mercado de veículos de Sumaré e região. Fazemos uma seleção rigorosa de cada carro e moto e oferecemos um atendimento próximo, para que a compra do seu veículo seja uma experiência segura e tranquila.</p>
+    <div class="pilares">
+      <div><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg><h3>Procedência</h3><p>Veículos periciados e com documentação conferida.</p></div>
+      <div><svg viewBox="0 0 24 24"><use href="#i-swap"/></svg><h3>Troca facilitada</h3><p>Seu usado entra como parte do pagamento.</p></div>
+      <div><svg viewBox="0 0 24 24"><use href="#i-card"/></svg><h3>Financiamento</h3><p>Aprovação rápida com os principais bancos.</p></div>
+      <div><svg viewBox="0 0 24 24"><use href="#i-key"/></svg><h3>Consignação</h3><p>Vendemos seu veículo por você, com segurança.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contato">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Contato</p>
+      <h2>Venha nos visitar</h2>
+      <ul class="contato">
+        <li><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg><span id="cEnd"></span></li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg><a id="cTel"></a></li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-mail"/></svg><a id="cMail"></a></li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg><span id="cHora"></span></li>
+      </ul>
+      <div class="vendedores" id="vendedores"></div>
+    </div>
+    <iframe class="mapa" id="mapa" loading="lazy" title="Mapa da loja"></iframe>
+  </div>
+</section>
+
+<footer class="rodape">
+  <div class="wrap rodape__in">
+    <img src="img/logo.png" alt="Automax" class="rodape__logo">
+    <p>Automax Multimarcas · Sumaré-SP · <a id="fIg" target="_blank" rel="noopener">@automax.sumare</a></p>
+    <p class="mini">Preços e disponibilidade sujeitos a alteração sem aviso. Fotos meramente ilustrativas do veículo anunciado.</p>
+  </div>
+</footer>
+
+<a class="fab" data-wa="Olá! Vim pelo site da Automax." href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></a>
+
+<!-- Modal do veículo -->
+<div class="modal" id="modal" hidden>
+  <div class="modal__box" role="dialog" aria-modal="true">
+    <button class="modal__x" id="fechar" aria-label="Fechar">×</button>
+    <div class="det">
+      <div class="gal">
+        <div class="gal__main"><img id="gImg" alt=""><button class="gal__nav gal__nav--l" id="gPrev">‹</button><button class="gal__nav gal__nav--r" id="gNext">›</button><span class="gal__cnt" id="gCnt"></span></div>
+        <div class="gal__thumbs" id="gThumbs"></div>
+      </div>
+      <div class="det__info">
+        <p class="eyebrow" id="dMarca"></p>
+        <h2 id="dNome"></h2>
+        <p class="det__preco" id="dPreco"></p>
+        <ul class="specs" id="dSpecs"></ul>
+        <div class="det__acoes">
+          <a class="btn btn--wa btn--full" id="dWa" href="#"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg> Tenho interesse</a>
+          <button class="btn btn--ghost btn--full" id="dShare" type="button">Compartilhar</button>
+        </div>
+        <form class="card form form--prop" id="formProp">
+          <h3>Faça sua proposta</h3>
+          <div class="row2">
+            <label>Seu nome<input name="nome" required></label>
+            <label>WhatsApp<input name="tel" type="tel" required></label>
+          </div>
+          <div class="row2">
+            <label>Valor oferecido<input name="valor" inputmode="numeric" required placeholder="R$"></label>
+            <label>Forma de pagamento
+              <select name="pag"><option>À vista</option><option>Financiado</option><option>Entrada + financiamento</option><option>Troca + diferença</option></select>
+            </label>
+          </div>
+          <label class="troca" hidden>Veículo na troca<input name="troca" placeholder="Modelo, ano e km"></label>
+          <label>Vendedor
+            <select name="vend" id="selVend"></select>
+          </label>
+          <button class="btn btn--red btn--full" type="submit">Enviar proposta</button>
+          <small>A proposta é enviada direto ao WhatsApp do vendedor.</small>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3a8.2 8.2 0 1 1 7 3.9Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 8h14l-3-3M20 16H6l3 3"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M7 15h4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 12 9-9M17 6l3 3M15 8l2 2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-road" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 1 9-9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m12 12 4-4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="M6 4v16M12 4v16M18 4v8M6 12h12" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M4 10h10M14 8l4 3v7a1.5 1.5 0 0 0 3 0V9l-3-3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+</svg>
+
+<script src="data/config.js"></script>
+<script src="data/estoque.js"></script>
+<script src="data/extras.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
