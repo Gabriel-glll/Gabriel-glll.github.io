@@ -147,7 +147,7 @@ main{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:14px 60px}
     <div class="list" id="list"></div>
   </section>
   <section id="v-encerrados" hidden>
-    <p class="meta">Clientes sem interesse no momento. Depois de 90 dias eles voltam a aparecer aqui como "hora de religar". Use "Reativar" para devolver à carteira.</p>
+    <p class="meta">Clientes sem interesse ou que pediram um tempo. Cada um tem a data para religar (o que o cliente pediu, ou 90 dias). Quando chega a data, aparece "hora de religar". "Reativar" devolve para a carteira.</p>
     <div class="list" id="encList"></div>
   </section>
 </main>
@@ -199,10 +199,10 @@ const encDate=c=>c.id in ENC?ENC[c.id]:(c.encerrado||"");
 const isEnc=c=>!!encDate(c);
 function encerrar(id,on){const t=day(HOJE);t._reat=(t._reat||[]).filter(x=>x!==id);if(!on)t._reat.push(id);save();ENC[id]=on?HOJE:"";LS.set("enc",ENC);toast(on?BY[id].nome+" foi para Encerrados":BY[id].nome+" voltou para a carteira");render()}
 function renderEnc(){
-  const arr=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
+  const arr=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:(!(c.id in ENC)&&c.religar)||addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
   $("#encList").innerHTML=arr.length?arr.map(({c,d,r})=>{const due=r<=HOJE;
     return `<article class="card"><span class="stripe Perdido"></span><div class="body">
-      <div class="top"><div><span style="font-weight:600;font-size:17px">${esc(c.nome)}</span><span class="tag">encerrado em ${br(d)}</span></div>
+      <div class="top"><div><span style="font-weight:600;font-size:17px">${esc(c.nome)}</span><span class="tag">${c.etapa==="Pausado"?"pausado":"sem interesse"} desde ${br(d)}</span></div>
       <div>${due?'<span class="tag late">hora de religar</span>':`<span class="tag">religar a partir de ${br(r)}</span>`}</div></div>
       ${contactHTML(c)}
       ${c.obs?`<div class="obs"><b>Observação</b>${esc(c.obs)}</div>`:""}
@@ -365,7 +365,7 @@ function exportXlsx(){
   const ws2=XLSX.utils.aoa_to_sheet(r2); ws2["!cols"]=[22,17,12,18,11,36,8,50,50].map(w=>({wch:w}));
   ws2["!autofilter"]={ref:`A1:I${r2.length}`}; ws2["!views"]=[{state:"frozen",xSplit:1,ySplit:1}];
   XLSX.utils.book_append_sheet(wb,ws2,"Contatos");
-  const encs=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
+  const encs=DATA.clientes.filter(isEnc).map(c=>({c,d:encDate(c),r:(!(c.id in ENC)&&c.religar)||addDays(encDate(c),RELIGAR)})).sort((a,b)=>a.r.localeCompare(b.r));
   const r3=[["Cliente","Telefone","Encerrado em","Religar a partir de","Observação"].map(H),...encs.map(({c,d,r})=>[V(c.nome,null,{font:{bold:true}}),V(c.tel),V(br(d),null,ctr),V(br(r),r<=HOJE?C.ok:null,{font:{bold:true},...ctr}),V(c.obs)])];
   const ws3=XLSX.utils.aoa_to_sheet(r3); ws3["!cols"]=[22,17,12,16,60].map(w=>({wch:w})); ws3["!views"]=[{state:"frozen",ySplit:1}];
   XLSX.utils.book_append_sheet(wb,ws3,"Encerrados");

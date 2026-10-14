@@ -1,43 +1,45 @@
 {
- "atualizado": "2026-10-13",
+ "atualizado": "2026-10-14",
  "clientes": [
   {
    "id": "adriana",
    "nome": "Adriana",
    "tel": "(19) 99347-3539",
-   "obs": "13/10 16:05 recebeu projeto perto da Cidade Universitária (entrega dez/2027, 13 meses de fluxo). Aguardando retorno.",
+   "obs": "14/10 pediu valores: San Pietro unid. 03 R$ 621 mil (entrada 7% R$ 43,5 mil + 13% em 24x R$ 3.366, saldo R$ 497 mil, entrega dez/2027). Você perguntou 2 ou 3 quartos — aguardando.",
    "dica": "Investidora objetiva. Mande 2 opções concretas com rentabilidade e prazo de entrega, sem textão.",
-   "temp": "Morno",
+   "temp": "Quente",
    "etapa": "Opções enviadas",
    "origem": "Investidora",
-   "faixa": "",
+   "faixa": "~R$ 620 mil",
    "regiao": "Unicamp / Mansões / D. Pedro",
    "proxAcao": "Enviar 2 opções concretas (Mansões/D. Pedro) + ligar",
    "proxData": "2026-10-14",
-   "ultResp": "2026-09-29",
+   "ultResp": "2026-10-14",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2,
-   "encerrado": ""
+   "prioridade": 1,
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "aline-dijon",
    "nome": "Aline Dijon",
    "tel": "(11) 99191-3130",
-   "obs": "Achou opção antiga; foco em casas novas.",
+   "obs": "Pausou para pagar consórcio e aumentar a entrada; retomar em março/abril. Tinha proposta no Arborais. Só casa nova.",
    "dica": "Só casa nova e moderna. Só chame quando tiver casa nova de verdade.",
-   "temp": "Morno",
-   "etapa": "Opções enviadas",
+   "temp": "Frio",
+   "etapa": "Pausado",
    "origem": "Oni Dijon",
    "faixa": "",
    "regiao": "Taquaral",
-   "proxAcao": "Enviar casas novas quando surgir",
-   "proxData": "2026-10-20",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-10-10",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "2026-10-09",
+   "religar": "2027-03-01"
   },
   {
    "id": "aline",
@@ -56,32 +58,34 @@
    "tipo": "repique",
    "cadInicio": "2026-10-15",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "allan",
    "nome": "Allan",
    "tel": "(19) 98199-9073",
-   "obs": "Descobriu restrição no nome.",
+   "obs": "Restrição no nome; não aprova na Caixa, suspendeu até 2030 (01/10).",
    "dica": "Restrição no nome. Indique assessoria de crédito e combine retorno quando limpar.",
-   "temp": "Morno",
-   "etapa": "Pausado",
+   "temp": "Perdido",
+   "etapa": "Perdido",
    "origem": "Alto Galeria (FGTS)",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Indicar assessoria de crédito p/ limpar restrição",
-   "proxData": "2026-10-16",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-10-01",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "2026-10-01",
+   "religar": ""
   },
   {
    "id": "ana",
    "nome": "Ana",
    "tel": "(19) 99970-0081",
-   "obs": "Ela te ligou 13/10 10:48 (perdida) e o retorno 10:49 também não foi atendido. 18:14 mandei pergunta direta: tem interesse? o que motivou clicar na campanha?",
+   "obs": "Nunca respondeu por escrito. 13/10 10:48 ela LIGOU (perdida) e seu retorno não foi atendido. 13/10 18:14 pergunta direta, sem resposta.",
    "dica": "Disse que pode ligar. Ligue no fim da manhã e qualifique: morar ou investir, faixa, prazo.",
    "temp": "Morno",
    "etapa": "Qualificando",
@@ -94,7 +98,48 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
+  },
+  {
+   "id": "beatriz",
+   "nome": "Beatriz",
+   "tel": "(19) 97407-3350",
+   "obs": "Lead novo 14/10. Pronto seria ideal, mas a entrada é alta. Financiamento só no nome do namorado, com FGTS dele. Você pediu a renda familiar — ela está pegando com ele.",
+   "dica": "Lead quente de hoje. Assim que tiver a renda, mande 2 opções (planta com entrega breve, 3q ou 2q + escritório) e já proponha visita.",
+   "temp": "Quente",
+   "etapa": "Qualificando",
+   "origem": "Roleta — Maxi Bonfim (14/10)",
+   "faixa": "abaixo de R$ 490 mil",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "2026-10-14",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 1,
+   "encerrado": "",
+   "religar": ""
+  },
+  {
+   "id": "bruno",
+   "nome": "Bruno",
+   "tel": "(19) 99627-0056",
+   "obs": "'Vou ficar no meu, ano que vem volto a buscar' (27/09). Gostou do Hípica.",
+   "dica": "",
+   "temp": "Perdido",
+   "etapa": "Perdido",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-27",
+   "religar": "2027-01-15"
   },
   {
    "id": "bryan",
@@ -113,13 +158,14 @@
    "tipo": "repique",
    "cadInicio": "2026-10-14",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "caio",
    "nome": "Caio",
    "tel": "(21) 96422-9082",
-   "obs": "Não responde desde 17/09.",
+   "obs": "Mangará / Cores da Mata. Sem resposta desde 17/09.",
    "dica": "Quer 2 vagas. Uma ligação curta: pronto com 2 vagas ou lançamento com 1?",
    "temp": "Frio",
    "etapa": "Opções enviadas",
@@ -132,16 +178,17 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "carlos-toplife",
    "nome": "Carlos Toplife",
    "tel": "(19) 98744-9984",
-   "obs": "Respondeu tudo; 2 opções enviadas 13/10. Perguntei se prefere visitar semana ou fds.",
+   "obs": "Achou as 2 primeiras grandes; gostou do apto no Jd. Proença (R. Antônio Francisco de Andrade, 243): 'parece boa, mas vou pesquisar outro'. Topou visitar ('eu aviso'). 14/10 você sugeriu sábado — sem resposta.",
    "dica": "Está pronto para visitar. Ofereça 2 horários fechados (qui à tarde ou sáb de manhã). Ele quer armários e suíte.",
    "temp": "Quente",
-   "etapa": "Opções enviadas",
+   "etapa": "Visita a agendar",
    "origem": "Form TopLife Nova Campinas",
    "faixa": "400-450 mil",
    "regiao": "Parque Prado",
@@ -151,26 +198,28 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "celio",
    "nome": "Celio",
    "tel": "(19) 99692-1880",
-   "obs": "Não há casa na planta no Proença.",
+   "obs": "Só quer Jardim Proença (perdeu um Patriani lá). Casa na planta não existe. Mandar só se surgir casa pronta no Proença.",
    "dica": "Quer casa na planta. Ofereça Taquaral ou outra região com lançamento de casas.",
    "temp": "Frio",
-   "etapa": "Qualificando",
+   "etapa": "Pausado",
    "origem": "",
    "faixa": "",
    "regiao": "Proença/Taquaral",
-   "proxAcao": "Toque leve",
-   "proxData": "2026-10-20",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-12",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "2026-09-14",
+   "religar": "2026-11-15"
   },
   {
    "id": "claudemir",
@@ -189,7 +238,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "claudia",
@@ -208,26 +258,48 @@
    "tipo": "repique",
    "cadInicio": "2026-10-14",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "constantino",
    "nome": "Constantino",
    "tel": "(19) 99294-5355",
-   "obs": "Pediu retorno em 3 meses (a partir de 19/08).",
+   "obs": "'Sem chances agora, organizando finanças; daqui uns 90 dias pode contatar' (05/10).",
    "dica": "Pediu retorno em ~3 meses (meados de novembro).",
    "temp": "Frio",
    "etapa": "Pausado",
    "origem": "",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Retomar contato",
-   "proxData": "2026-11-19",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-08-19",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "2026-10-05",
+   "religar": "2027-01-05"
+  },
+  {
+   "id": "cristina",
+   "nome": "Cristina",
+   "tel": "(19) 99687-9133",
+   "obs": "'No momento não tenho interesse' (25/09).",
+   "dica": "",
+   "temp": "Perdido",
+   "etapa": "Perdido",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-25",
+   "religar": ""
   },
   {
    "id": "daniela-set",
@@ -246,13 +318,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "daniele",
    "nome": "Daniele",
    "tel": "(19) 98418-0240",
-   "obs": "Ia mandar fotos 'amanhã' (23/09) e não mandou.",
+   "obs": "Captação: ia mandar fotos do apto em 23/09 e não mandou.",
    "dica": "Captação. Peça fotos ou proponha você mesmo ir fotografar.",
    "temp": "Morno",
    "etapa": "Captação",
@@ -265,7 +338,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "davi",
@@ -284,13 +358,14 @@
    "tipo": "repique",
    "cadInicio": "2026-10-16",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "denilson",
    "nome": "Denilson",
    "tel": "(19) 99636-4321",
-   "obs": "Disse 'Gostei' do apto em 29/09; nunca marcou visita.",
+   "obs": "'Gostei' do apto do 19º andar (29/09); depois áudios até 02/10. Recebeu Tegra norte-sul e apto 7º andar com R$ 105 mil de desconto. Sem resposta.",
    "dica": "Disse que gostou do apto. Ligue e marque a visita na hora; não pergunte 'quando pode', dê duas opções.",
    "temp": "Quente",
    "etapa": "Visita a agendar",
@@ -303,13 +378,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "dimas",
    "nome": "Dimas",
    "tel": "(19) 99144-9507",
-   "obs": "Convites p/ stand sem resposta.",
+   "obs": "Liv Guanabara (1 unidade de 2 vagas, desconto R$ 50 mil). Sem resposta desde 07/10.",
    "dica": "",
    "temp": "Frio",
    "etapa": "Opções enviadas",
@@ -322,7 +398,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "dinei",
@@ -341,13 +418,14 @@
    "tipo": "repique",
    "cadInicio": "2026-10-16",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "edgar-luce-cambui",
    "nome": "Edgar Luce Cambuí",
    "tel": "(16) 99994-3993",
-   "obs": "Estava em Araraquara, voltou na terça 13/10. Combinamos falar esta semana para marcar o Luce. Precisa de 2 vagas.",
+   "obs": "Correria (vários áudios curtos). Voltou de Araraquara 13/10. 14/10 você ofereceu atendimento na imobiliária às 18h/19h/20h — sem resposta.",
    "dica": "Prefere telefone. Destaque 2 vagas + depósito do Luce e o desconto da Tegra.",
    "temp": "Quente",
    "etapa": "Opções enviadas",
@@ -360,7 +438,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "elizabete",
@@ -379,16 +458,17 @@
    "tipo": "repique",
    "cadInicio": "2026-10-15",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "erika",
    "nome": "Erika",
    "tel": "(19) 98712-8482",
-   "obs": "Sem resposta.",
-   "dica": "Lead sem resposta: ligue primeiro (lead atende mais ligação do que texto). Seja curto: morar ou investir, região, faixa.",
-   "temp": "Frio",
-   "etapa": "Novo lead",
+   "obs": "Mudando de país (14/10).",
+   "dica": "",
+   "temp": "Perdido",
+   "etapa": "Perdido",
    "origem": "Oni Dijon",
    "faixa": "",
    "regiao": "Taquaral",
@@ -398,16 +478,17 @@
    "tipo": "repique",
    "cadInicio": "2026-10-15",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "2026-10-14",
+   "religar": ""
   },
   {
    "id": "fabio-henrique",
    "nome": "Fabio Henrique",
    "tel": "(19) 99737-6749",
-   "obs": "Nunca respondeu.",
-   "dica": "Lead sem resposta: ligue primeiro (lead atende mais ligação do que texto). Seja curto: morar ou investir, região, faixa.",
+   "obs": "'Não vou ver imóveis agora, te chamo quando estiver interessado' (25/09).",
+   "dica": "",
    "temp": "Frio",
-   "etapa": "Novo lead",
+   "etapa": "Pausado",
    "origem": "Indicação da mãe",
    "faixa": "",
    "regiao": "Centro",
@@ -417,7 +498,8 @@
    "tipo": "repique",
    "cadInicio": "2026-10-27",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "2026-09-25",
+   "religar": "2026-11-10"
   },
   {
    "id": "fatima",
@@ -436,7 +518,48 @@
    "tipo": "repique",
    "cadInicio": "2026-10-13",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
+  },
+  {
+   "id": "fernando-dias",
+   "nome": "Fernando Dias",
+   "tel": "(19) 98139-3317",
+   "obs": "Terreno p/ barracão (pé-direito 6 m) com sócio; recuperando capital (29/09).",
+   "dica": "",
+   "temp": "Frio",
+   "etapa": "Pausado",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-29",
+   "religar": "2026-11-01"
+  },
+  {
+   "id": "flavia",
+   "nome": "Flavia",
+   "tel": "(19) 99177-1991",
+   "obs": "Fora do orçamento; pausou (25/09). Viu unid. 59 m² R$ 683 mil e TopLife R$ 475 mil.",
+   "dica": "",
+   "temp": "Perdido",
+   "etapa": "Perdido",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-25",
+   "religar": ""
   },
   {
    "id": "gabriel-mangara",
@@ -455,7 +578,8 @@
    "tipo": "repique",
    "cadInicio": "2026-10-27",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "gabriel",
@@ -474,16 +598,17 @@
    "tipo": "repique",
    "cadInicio": "2026-10-14",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "gilmar",
    "nome": "Gilmar",
    "tel": "(19) 99314-2802",
-   "obs": "Desmarcou sáb 26/09; 'vou ver meus horários'.",
+   "obs": "VISITA MARCADA sábado 17/10 às 9:30 no stand do Florae (combinado 07/10). 14/10 você pediu confirmação — sem resposta.",
    "dica": "Responde mas adia. Proponha sábado com horário fixo e confirme na véspera.",
-   "temp": "Morno",
-   "etapa": "Visita a agendar",
+   "temp": "Quente",
+   "etapa": "Visita agendada",
    "origem": "Florae",
    "faixa": "a partir 325 mil",
    "regiao": "Parque Jambeiro",
@@ -492,14 +617,15 @@
    "ultResp": "2026-09-28",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 2,
-   "encerrado": ""
+   "prioridade": 1,
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "giselda",
    "nome": "Giselda",
    "tel": "(19) 99710-8485",
-   "obs": "Travou; ofereci falar com a filha.",
+   "obs": "Imóvel p/ a filha (perto Unip/Shopping Prado; queria lazer completo). 28/09 ia viajar (áudio). 06/10 pediu para retomar depois do dia 15.",
    "dica": "Imóvel para a filha. Peça o contato da filha.",
    "temp": "Frio",
    "etapa": "Opções enviadas",
@@ -511,14 +637,15 @@
    "ultResp": "2026-09-24",
    "tipo": "carteira",
    "cadInicio": "",
-   "prioridade": 4,
-   "encerrado": ""
+   "prioridade": 2,
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "gustavo",
    "nome": "Gustavo",
    "tel": "(19) 98242-0231",
-   "obs": "Pediu um tempo ('momentos'). Para comprar a casa em Paulínia (até 1,1 mi) precisa vender o imóvel dele: pedi IPTU, fotos, condomínio e valor (07-08/10), ainda não mandou.",
+   "obs": "Pediu tempo (ÁUDIO 08/10, 0:46). Para comprar a casa em Paulínia precisa vender o imóvel dele; você pediu IPTU, fotos, condomínio e valor 4x. 09/10 só 'tudo bem sim'.",
    "dica": "Cliente de maior VGV. Ligue, não mande texto. Respeite o teto de R$ 1,1 mi: mostre só casas até esse valor.",
    "temp": "Morno",
    "etapa": "Pausado",
@@ -531,7 +658,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "ines",
@@ -550,26 +678,28 @@
    "tipo": "repique",
    "cadInicio": "2026-10-13",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "ivani",
    "nome": "Ivani",
    "tel": "(19) 99103-1339",
-   "obs": "Quis visitar à tarde (15/09). Depende da venda da casa dela.",
+   "obs": "Visitou apto Vila Lemos 18/09 e descartou (rachadura). Não colocaram a casa à venda: 'vou aguardar' (14/10). Oferecer avaliação da casa.",
    "dica": "Só compra depois de vender a casa. Ofereça avaliar e captar a casa dela: resolve as duas pontas.",
-   "temp": "Morno",
+   "temp": "Frio",
    "etapa": "Pausado",
    "origem": "Apto Vila Lemos",
    "faixa": "",
    "regiao": "Vila Lemos",
-   "proxAcao": "Oferecer avaliação/captação da casa dela",
-   "proxData": "2026-10-15",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-15",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "2026-10-14",
+   "religar": "2026-10-21"
   },
   {
    "id": "joao",
@@ -588,13 +718,14 @@
    "tipo": "repique",
    "cadInicio": "2026-10-15",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "juliana",
    "nome": "Juliana",
    "tel": "(12) 98265-1202",
-   "obs": "TopLife só tem 2q; sem resposta desde 29/09.",
+   "obs": "Quer 3 dormitórios (TopLife só tem 2). Sem resposta desde 29/09.",
    "dica": "Busca 3 dormitórios; TopLife não tem. Ofereça opções de 3q na região dela.",
    "temp": "Frio",
    "etapa": "Qualificando",
@@ -607,13 +738,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "junior",
    "nome": "Junior",
    "tel": "(19) 99598-5982",
-   "obs": "Visita não confirmada; sem resposta.",
+   "obs": "Visita do stand (03/10) nunca confirmada. Sem resposta desde 24/09.",
    "dica": "Sumiu antes da visita. Uma ligação; se não atender, repique.",
    "temp": "Frio",
    "etapa": "Visita a agendar",
@@ -626,26 +758,28 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "keila",
    "nome": "Keila",
    "tel": "(19) 98968-2294",
-   "obs": "Compra pausada 6-8 meses (aposentadoria PCD). Indicou captar a casa: ir 'por acaso', falar c/ vizinha, NÃO citar o nome dela.",
+   "obs": "Compra pausada (aposentadoria PCD). Captação da casa do Guanabara RECUSADA ('deixa quieto'). 09/10: buscando médico para cirurgia. Só contato humano.",
    "dica": "Não citar o nome dela na captação. Vá ao endereço como se estivesse passando e fale com a vizinha.",
-   "temp": "Quente",
-   "etapa": "Captação",
+   "temp": "Frio",
+   "etapa": "Pausado",
    "origem": "Captação (casa herança)",
    "faixa": "",
    "regiao": "Guanabara - R. Alberto Ferraz de Abreu, 44",
-   "proxAcao": "Passar no endereço e tentar contato do responsável",
-   "proxData": "2026-10-15",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-24",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "2026-10-09",
+   "religar": "2026-11-10"
   },
   {
    "id": "leopoldo-luz",
@@ -664,7 +798,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "lucas-cioban",
@@ -683,13 +818,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "lucas-fernandes",
    "nome": "Lucas Fernandes",
    "tel": "(19) 99387-6131",
-   "obs": "Sumiu depois de marcar.",
+   "obs": "Faltou à visita de 21/09 (estava em SP). Sem resposta desde então.",
    "dica": "Sumiu depois de marcar visita. Uma ligação objetiva.",
    "temp": "Frio",
    "etapa": "Visita a agendar",
@@ -702,13 +838,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "luiz",
    "nome": "Luiz",
    "tel": "(19) 99873-5400",
-   "obs": "Não conseguiu vir; 'na próxima me programo'.",
+   "obs": "Quer conhecer o Lazur (Tegra): 'na próxima vamos até lá'. 14/10 você convidou para ir no mesmo dia — sem resposta.",
    "dica": "Mande o folder da Tegra e pergunte quando estará em Campinas.",
    "temp": "Morno",
    "etapa": "Pausado",
@@ -721,13 +858,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "luiza",
    "nome": "Luiza",
    "tel": "(19) 98128-4393",
-   "obs": "Sumiu desde 01/10; pode ter comprado outro.",
+   "obs": "Faltava 1 documento. Sem resposta desde 01/10. 14/10 você perguntou se comprou outro.",
    "dica": "Pode ter comprado com outro. Pergunte direto e, se comprou, peça indicação.",
    "temp": "Frio",
    "etapa": "Documentação/Crédito",
@@ -740,7 +878,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "marco-cesar",
@@ -753,13 +892,14 @@
    "origem": "",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Pedir indicação (feito)",
+   "proxAcao": "",
    "proxData": "",
    "ultResp": "2026-09-22",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": "2026-09-22"
+   "encerrado": "2026-09-22",
+   "religar": ""
   },
   {
    "id": "mari",
@@ -778,13 +918,34 @@
    "tipo": "repique",
    "cadInicio": "2026-10-14",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
+  },
+  {
+   "id": "maria-nc",
+   "nome": "Maria (TopLife Nova Campinas)",
+   "tel": "(19) 99932-0505",
+   "obs": "'Obrigada pela atenção, encerramos aqui' (28/09). Recebeu TopLife unid. 16 R$ 475 mil.",
+   "dica": "",
+   "temp": "Perdido",
+   "etapa": "Perdido",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-28",
+   "religar": ""
   },
   {
    "id": "maria-toplife",
    "nome": "Maria TopLife",
    "tel": "(16) 99765-5066",
-   "obs": "Docs para análise de crédito nunca enviados.",
+   "obs": "Análise de crédito via Meet 03/09. Travou em 12/09 na 'certidão de estado civil' (ela é solteira → certidão de nascimento). Sumiu. 14/10 você pediu feedback.",
    "dica": "Travou na documentação. Ofereça ajuda prática: lista curta e você busca os papéis com ela.",
    "temp": "Morno",
    "etapa": "Documentação/Crédito",
@@ -797,7 +958,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "marly-correa",
@@ -816,7 +978,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": "2026-09-22"
+   "encerrado": "2026-09-22",
+   "religar": ""
   },
   {
    "id": "mateus",
@@ -835,13 +998,14 @@
    "tipo": "repique",
    "cadInicio": "2026-10-15",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "matheus",
    "nome": "Matheus",
    "tel": "(19) 98924-6834",
-   "obs": "Fluxo Yees unid. 108 (saldo 403k) e tabela de andares enviados. 13/10 18:12 recusou a ligação: seguir por mensagem.",
+   "obs": "Yees Mansões: fluxo da unid. 108 e tabela de andares (6º R$ 618 mil). Áudios 08/10. Depois Alto Galleria. Sem resposta desde 08/10; 13/10 não atendeu; 14/10 você perguntou se ainda tem interesse.",
    "dica": "Já negocia fluxo. Leve números prontos (ato, mensais, ITBI, cartório) e chame para o decorado para formalizar proposta.",
    "temp": "Quente",
    "etapa": "Proposta",
@@ -854,7 +1018,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "mauricio",
@@ -873,26 +1038,28 @@
    "tipo": "repique",
    "cadInicio": "2026-10-20",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "max",
    "nome": "Max",
    "tel": "(19) 99248-5350",
-   "obs": "Cancelou visita de 06/10 por viagem emergencial; voltaria sex 09/10.",
+   "obs": "'Estou com outras prioridades agora, eu te aviso' (09/10). Recebeu Florae 14/10.",
    "dica": "Voltou de viagem emergencial. Pergunte como foi antes de falar de imóvel, depois reagende.",
-   "temp": "Morno",
-   "etapa": "Visita a agendar",
+   "temp": "Frio",
+   "etapa": "Pausado",
    "origem": "Stand (visita)",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Reagendar visita ao stand",
-   "proxData": "2026-10-14",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-10-05",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "2026-10-09",
+   "religar": "2026-10-26"
   },
   {
    "id": "mayara",
@@ -905,13 +1072,14 @@
    "origem": "",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Pedir indicação",
-   "proxData": "2026-10-20",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-10-09",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": "2026-10-09"
+   "encerrado": "2026-10-09",
+   "religar": ""
   },
   {
    "id": "michele-almeida",
@@ -930,7 +1098,8 @@
    "tipo": "repique",
    "cadInicio": "2026-10-20",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "mirela",
@@ -949,32 +1118,34 @@
    "tipo": "repique",
    "cadInicio": "2026-10-20",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "nathalia",
    "nome": "Nathalia",
    "tel": "(11) 94390-5115",
-   "obs": "Disse que chamaria mais pra frente.",
+   "obs": "'Não vou conseguir evoluir agora, surgiram outras prioridades, entro em contato' (09/10).",
    "dica": "Horários imprevisíveis. Toque leve, sem cobrar.",
    "temp": "Frio",
    "etapa": "Pausado",
    "origem": "Obra Taquaral",
    "faixa": "",
    "regiao": "Taquaral",
-   "proxAcao": "Toque leve no fim do mês",
-   "proxData": "2026-10-27",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-19",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "2026-10-09",
+   "religar": "2026-11-09"
   },
   {
    "id": "neide",
    "nome": "Neide",
    "tel": "(19) 98948-6567",
-   "obs": "Sem resposta.",
+   "obs": "ÁUDIO 25/09. Sem resposta depois.",
    "dica": "Lead sem resposta: ligue primeiro (lead atende mais ligação do que texto). Seja curto: morar ou investir, região, faixa.",
    "temp": "Frio",
    "etapa": "Novo lead",
@@ -987,13 +1158,54 @@
    "tipo": "repique",
    "cadInicio": "2026-10-27",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
+  },
+  {
+   "id": "nilo",
+   "nome": "Nilo",
+   "tel": "(11) 94820-7789",
+   "obs": "Investimento p/ estudantes; recusou por ora (áudio 28/09).",
+   "dica": "",
+   "temp": "Frio",
+   "etapa": "Pausado",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-28",
+   "religar": "2026-12-28"
+  },
+  {
+   "id": "osvaldo",
+   "nome": "Osvaldo",
+   "tel": "(19) 99852-8256",
+   "obs": "Esperando o cenário pós-eleição.",
+   "dica": "",
+   "temp": "Frio",
+   "etapa": "Pausado",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-09-25",
+   "religar": "2026-11-03"
   },
   {
    "id": "patricia",
    "nome": "Patricia",
    "tel": "(19) 99713-6668",
-   "obs": "Quis negociar valor sem proposta formal.",
+   "obs": "Unid. 51 m² ~R$ 475 mil; queria desconto sem proposta. Sem resposta desde 23/09.",
    "dica": "Quer desconto sem proposta formal. Explique que a construtora só negocia com proposta.",
    "temp": "Frio",
    "etapa": "Opções enviadas",
@@ -1006,45 +1218,68 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "priscila",
    "nome": "Priscila",
    "tel": "(19) 98227-7555",
-   "obs": "'Não tenho interesse' (13/10).",
+   "obs": "Sem interesse (13/10).",
    "dica": "Disse que não tem interesse. Agradeça e peça indicação.",
    "temp": "Perdido",
    "etapa": "Perdido",
    "origem": "Bonfim",
    "faixa": "~600 mil",
    "regiao": "Bonfim",
-   "proxAcao": "Ver o motivo; pedir indicação",
-   "proxData": "2026-10-14",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-10-13",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": "2026-10-13"
+   "encerrado": "2026-10-13",
+   "religar": ""
   },
   {
    "id": "renato-set",
    "nome": "Renato (set)",
    "tel": "",
-   "obs": "Ato 8% + parcelas 2.300.",
+   "obs": "Viva Verde lote 212 m². Ficou doente, depois o cachorro: 'outras prioridades, eu entro em contato' (01/10).",
    "dica": "Lote 212 m² no Viva Verde. Mande tabela atualizada quando mudar.",
    "temp": "Frio",
-   "etapa": "Opções enviadas",
+   "etapa": "Pausado",
    "origem": "Viva Verde (terreno)",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Toque leve com tabela nova",
-   "proxData": "2026-10-20",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-17",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "2026-10-01",
+   "religar": "2026-10-28"
+  },
+  {
+   "id": "ricardo-louriva",
+   "nome": "Ricardo Louriva",
+   "tel": "(19) 97402-6663",
+   "obs": "28/09 respondeu 'como posso ajudar?' e parou.",
+   "dica": "Ele respondeu 'como posso ajudar?': ligue e qualifique em 1 minuto.",
+   "temp": "Frio",
+   "etapa": "Novo lead",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "2026-09-28",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "roberta",
@@ -1063,32 +1298,34 @@
    "tipo": "repique",
    "cadInicio": "2026-10-20",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "rogerio-maxi",
    "nome": "Rogério Maxi",
    "tel": "(11) 97505-6947",
-   "obs": "Achou interessante, vai ver dia com esposa. Visitas seg-sex 9-16h45, sáb 9-11h45.",
+   "obs": "Maxi Bonfim com a esposa: 'ainda estamos avaliando, se necessário eu te aviso' (14/10).",
    "dica": "Decide com a esposa. Convide os dois e proponha um horário fechado no sábado de manhã.",
-   "temp": "Quente",
-   "etapa": "Visita a agendar",
+   "temp": "Frio",
+   "etapa": "Pausado",
    "origem": "Maxi Bonfim",
    "faixa": "500-510 mil",
    "regiao": "Bonfim",
-   "proxAcao": "Propor horário fechado: sáb 17/10 às 9h com a esposa",
-   "proxData": "2026-10-14",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-10-06",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 1,
-   "encerrado": ""
+   "encerrado": "2026-10-14",
+   "religar": "2026-10-21"
   },
   {
    "id": "ronaldo",
    "nome": "Ronaldo",
    "tel": "(19) 99119-1269",
-   "obs": "Encerrado educadamente.",
+   "obs": "Encerrado.",
    "dica": "Encerrado. Não insistir.",
    "temp": "Perdido",
    "etapa": "Perdido",
@@ -1101,7 +1338,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": "2026-10-13"
+   "encerrado": "2026-10-13",
+   "religar": ""
   },
   {
    "id": "rosangela",
@@ -1120,13 +1358,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "rose-silva",
    "nome": "Rose Silva",
    "tel": "(19) 99795-4296",
-   "obs": "Aguardando a filha.",
+   "obs": "Florae p/ a filha. Sem resposta desde 15/09.",
    "dica": "Imóvel para a filha. Peça o contato da filha e fale direto com ela.",
    "temp": "Frio",
    "etapa": "Qualificando",
@@ -1139,32 +1378,34 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "sergio",
    "nome": "Sergio",
    "tel": "(19) 99150-0843",
-   "obs": "Depende de vender casas. 13/10 15:25 perguntei como estão as negociações. Aguardando.",
+   "obs": "Luce Cambuí. Depende da venda das casas (em andamento): 'vou aguardar' (14/10).",
    "dica": "Depende de vender casas. Convide só para conhecer o Luce, sem pressão de compra.",
-   "temp": "Morno",
-   "etapa": "Visita a agendar",
+   "temp": "Frio",
+   "etapa": "Pausado",
    "origem": "Luce Cambuí",
    "faixa": "~1 mi",
    "regiao": "Cambuí",
-   "proxAcao": "Convidar p/ conhecer Luce no fds 17-18/10",
-   "proxData": "2026-10-15",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-28",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 2,
-   "encerrado": ""
+   "encerrado": "2026-10-14",
+   "religar": "2026-10-28"
   },
   {
    "id": "silvio-maxi-bonfim",
    "nome": "Silvio Maxi Bonfim",
    "tel": "(19) 99782-4980",
-   "obs": "Pede contato por mensagem (em reunião).",
+   "obs": "Casa em cond. fechado, 3q, sem escada, quintal. Última resposta 07/09.",
    "dica": "Prefere mensagem (vive em reunião). Mande 3 casas concretas: cond. fechado, 3q, sem escada, quintal.",
    "temp": "Morno",
    "etapa": "Qualificando",
@@ -1177,7 +1418,8 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "suzana",
@@ -1196,7 +1438,28 @@
    "tipo": "repique",
    "cadInicio": "2026-10-15",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
+  },
+  {
+   "id": "thiago-moreton",
+   "nome": "Thiago Moreton",
+   "tel": "(19) 99166-4772",
+   "obs": "01/10 você pediu condomínio e valor do apto da tia; ele mandou o link às 20:59 e ficou SEM RESPOSTA.",
+   "dica": "Captação esquecida desde 01/10: peça desculpas pela demora, pegue condomínio e valor e marque visita para fotografar.",
+   "temp": "Quente",
+   "etapa": "Captação",
+   "origem": "Captação — apto da tia",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "2026-10-01",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 1,
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "tiago",
@@ -1215,26 +1478,48 @@
    "tipo": "repique",
    "cadInicio": "2026-10-27",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "ursula-webwer",
    "nome": "Ursula Webwer",
    "tel": "(19) 99108-3954",
-   "obs": "Não informou região.",
+   "obs": "Sem recursos no momento (14/10).",
    "dica": "Moradia, imóvel pronto. Falta só a região: pergunte isso e mais nada.",
-   "temp": "Frio",
-   "etapa": "Qualificando",
+   "temp": "Perdido",
+   "etapa": "Perdido",
    "origem": "",
    "faixa": "",
    "regiao": "",
-   "proxAcao": "Toque leve",
-   "proxData": "2026-10-20",
+   "proxAcao": "",
+   "proxData": "",
    "ultResp": "2026-09-10",
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "2026-10-14",
+   "religar": ""
+  },
+  {
+   "id": "vanessa",
+   "nome": "Vanessa",
+   "tel": "(19) 99730-7474",
+   "obs": "Não é o momento (áudio 03/10). Busca privacidade/exclusividade.",
+   "dica": "",
+   "temp": "Frio",
+   "etapa": "Pausado",
+   "origem": "Repique",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 3,
+   "encerrado": "2026-10-03",
+   "religar": "2026-11-03"
   },
   {
    "id": "vitor",
@@ -1253,13 +1538,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 5,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "walter-luiz",
    "nome": "Walter Luiz",
    "tel": "(19) 99410-1017",
-   "obs": "Nunca respondeu por mensagem.",
+   "obs": "Investimento. ÁUDIO 07/10 (0:16). Sem resposta depois.",
    "dica": "Não responde texto. Tente ligação em horário comercial.",
    "temp": "Frio",
    "etapa": "Qualificando",
@@ -1272,13 +1558,14 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 4,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   },
   {
    "id": "wesley",
    "nome": "Wesley",
    "tel": "(19) 99271-6401",
-   "obs": "Reunião na imobiliária 09/09 14h. Sem resposta à msg de 07/10.",
+   "obs": "Faltou à reunião de 09/09. Recebeu book Miami Residence 25/09. Sem resposta.",
    "dica": "Já veio à imobiliária. Ligue para retomar o que conversaram pessoalmente.",
    "temp": "Morno",
    "etapa": "Visitou",
@@ -1291,402 +1578,319 @@
    "tipo": "carteira",
    "cadInicio": "",
    "prioridade": 3,
-   "encerrado": ""
+   "encerrado": "",
+   "religar": ""
   }
  ],
  "plano": {
-  "2026-10-14": {
-   "foco": "Prioridade: agendar Carlos (Parque Prado), Edgar (Luce) e Rogério (Maxi Bonfim), e pegar os dados do imóvel do Gustavo. Quem não atender de dia vai para a lista das 18:20.",
+  "2026-10-15": {
+   "foco": "Prioridade: Adriana (San Pietro), Beatriz (lead novo), captação do Thiago Moreton e visita do Carlos no sábado. Confirmar Gilmar (sábado 9:30). Quem não atende de dia está na lista das 18:20.",
    "itens": [
     {
      "hora": "09:00",
-     "id": "carlos-toplife",
+     "id": "adriana",
      "canal": "wpp",
-     "texto": "Confirmar visita às 2 opções do Parque Prado: 'Carlos, consigo te levar nas duas quinta à tarde ou sábado de manhã. Qual fica melhor?'"
+     "texto": "Ela pediu valores ontem e você mandou o San Pietro (R$ 621 mil, entrada 7% + 13% em 24x). Pergunte 2 ou 3 quartos e já convide para o stand/decorado neste sábado."
     },
     {
      "hora": "09:06",
-     "id": "gustavo",
-     "canal": "lig",
-     "texto": "Ele pediu um tempo. Ligar rápido só para pegar os dados do imóvel dele (IPTU, fotos, condomínio e valor): vendendo o dele, a casa em Paulínia sai."
+     "id": "beatriz",
+     "canal": "wpp",
+     "texto": "Lead de ontem (Maxi Bonfim). Cobre a renda e o FGTS do namorado. Com isso, mande 2 opções na planta com entrega breve (3q ou 2q + escritório, abaixo de R$ 490 mil)."
     },
     {
      "hora": "09:12",
-     "id": "denilson",
+     "id": "thiago-moreton",
      "canal": "lig",
-     "texto": "Ligar e marcar a visita do apto do 19º andar. Ofereça 2 horários fechados."
+     "texto": "CAPTAÇÃO parada desde 01/10: ele mandou o link do apto da tia e ficou sem resposta. Ligue, peça desculpas, pegue condomínio e valor e marque visita para fotografar."
     },
     {
      "hora": "09:18",
-     "id": "rogerio-maxi",
-     "canal": "wpp",
-     "texto": "Ele não respondeu ontem. Proposta direta: sábado 17/10 às 9h no Maxi Bonfim, com a esposa?"
+     "id": "carlos-toplife",
+     "canal": "lig",
+     "texto": "Gostou do apto no Jd. Proença (R. Antônio Francisco de Andrade, 243) e topou visitar. Ligue e feche horário no sábado 17/10."
     },
     {
      "hora": "09:24",
-     "id": "edgar-luce-cambui",
+     "id": "giselda",
      "canal": "lig",
-     "texto": "Voltou de Araraquara ontem. Ligar e marcar a visita ao decorado do Luce esta semana (2 vagas + depósito)."
+     "texto": "Ela pediu para retomar depois do dia 15. Ligue: a filha ainda procura? Perto da Unip/Shopping Prado, com lazer completo."
     },
     {
      "hora": "09:30",
-     "id": "matheus",
+     "id": "luiz",
      "canal": "wpp",
-     "texto": "Recusou ligação ontem: seguir por mensagem. Mandar simulação completa do Yees (ato, mensais, ITBI, cartório) e convidar para o decorado."
+     "texto": "Ontem você convidou para o Lazur e ele não respondeu. Proponha sábado ou a próxima vinda dele a Campinas."
     },
     {
      "hora": "09:36",
-     "id": "max",
+     "id": "daniele",
      "canal": "lig",
-     "texto": "Ligar: perguntar como foi a viagem e reagendar a visita ao stand."
+     "texto": "Captação: ela ia mandar fotos do apto em 23/09. Ligue e proponha ir fotografar."
     },
     {
      "hora": "09:42",
-     "id": "gilmar",
+     "id": "maria-toplife",
      "canal": "wpp",
-     "texto": "Propor sábado 17/10 no stand do Florae (Cambuí), com horário fixo."
+     "texto": "Ela travou na 'certidão de estado civil'. Explique que, solteira, é a certidão de nascimento, e ofereça buscar os documentos com ela. Última tentativa."
     },
     {
      "hora": "09:48",
-     "id": "ana",
+     "id": "mateus",
      "canal": "lig",
-     "texto": "Ela te ligou ontem 10:48 e não deu certo. Ligar cedo; se não atender, nova tentativa às 18:30."
+     "texto": "Nunca respondeu (Yees). Primeira ligação."
+    },
+    {
+     "hora": "09:54",
+     "id": "joao",
+     "canal": "lig",
+     "texto": "Nunca respondeu (Florae). Primeira ligação."
     },
     {
      "hora": "10:00",
-     "id": "mari",
+     "id": "aline",
      "canal": "lig",
-     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
+     "texto": "Falou por telefone em 08/10 e não respondeu mais (TopLife Nova Campinas). Ligar."
     },
     {
      "hora": "10:06",
-     "id": "bryan",
+     "id": "davi",
      "canal": "lig",
-     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
+     "texto": "Nunca respondeu. Primeira ligação."
     },
     {
      "hora": "10:12",
-     "id": "claudia",
+     "id": "dinei",
      "canal": "lig",
-     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
+     "texto": "Ativou mensagens temporárias e não respondeu. Primeira ligação."
     },
     {
      "hora": "10:18",
-     "id": "gabriel",
+     "id": "suzana",
      "canal": "lig",
-     "texto": "Recebeu mensagem ontem e não respondeu: agora ligar."
+     "texto": "Falou por telefone em 09/10 (quer planta). Ligar e pegar região e valor."
     },
     {
      "hora": "10:24",
-     "id": "luiza",
+     "id": "elizabete",
      "canal": "lig",
-     "texto": "Pergunte direto se já comprou. Se comprou, parabenize e peça indicação; se não, retome a documentação que faltava."
+     "texto": "Falou por telefone em 08/10: ia passar o contato da filha. Ligar e pegar o contato."
     },
     {
      "hora": "10:30",
-     "id": "ivani",
+     "id": "ricardo-louriva",
      "canal": "lig",
-     "texto": "Pergunte da venda da casa e ofereça avaliar/captar a casa dela pela ZFF."
+     "texto": "Respondeu 'como posso ajudar?' em 28/09 e parou. Ligar e qualificar."
     },
     {
      "hora": "10:36",
-     "id": "wesley",
+     "id": "fatima",
      "canal": "lig",
-     "texto": "Retomar a conversa da reunião na imobiliária e convidar para visitar uma opção."
+     "texto": "Repique sem resposta (13/10). Ligar."
     },
     {
      "hora": "10:42",
-     "id": "dinei",
+     "id": "ines",
      "canal": "lig",
-     "texto": "Lead sem resposta: ligar e qualificar (morar ou investir, região, faixa)."
-    },
-    {
-     "hora": "10:48",
-     "id": "erika",
-     "canal": "lig",
-     "texto": "Ligar: chegou a conhecer o Oni Dijon (casas no Taquaral)? Morar ou investir?"
-    },
-    {
-     "hora": "10:54",
-     "id": "mateus",
-     "canal": "lig",
-     "texto": "Ligar: conheceu o Yees? Qual a faixa e se é para morar ou investir."
-    },
-    {
-     "hora": "11:00",
-     "id": "joao",
-     "canal": "lig",
-     "texto": "Ligar: chegou a visitar o Florae? Convidar para o stand."
-    },
-    {
-     "hora": "11:06",
-     "id": "aline",
-     "canal": "lig",
-     "texto": "Ligar: Nova Campinas é a região que busca? Faixa de valor?"
+     "texto": "Repique sem resposta (13/10). Ligar."
     },
     {
      "hora": "14:00",
-     "id": "adriana",
+     "id": "gilmar",
      "canal": "wpp",
-     "texto": "Perguntar o que achou do projeto enviado ontem (perto da Cidade Universitária, entrega dez/2027, 13 meses de fluxo). Oferecer visita."
+     "texto": "Confirmar a visita de SÁBADO 17/10 às 9:30 no stand do Florae (Cambuí). Mande o endereço."
     },
     {
      "hora": "14:06",
-     "id": "daniele",
+     "id": "vitor",
      "canal": "wpp",
-     "texto": "Captação: pedir as fotos do apto ou propor ir fotografar."
+     "texto": "Amigo, sem resposta desde 25/09. Mensagem leve e peça indicação."
     },
     {
      "hora": "14:12",
-     "id": "maria-toplife",
-     "canal": "lig",
-     "texto": "Ligar: destravar a documentação da análise de crédito. Oferecer ajuda para juntar os papéis."
-    },
-    {
-     "hora": "14:18",
-     "id": "keila",
-     "canal": "acao",
-     "texto": "Planejar a ida amanhã à R. Alberto Ferraz de Abreu, 44 (Guanabara). Não falar com a Keila sobre isso por mensagem."
-    },
-    {
-     "hora": "14:24",
-     "id": "davi",
-     "canal": "lig",
-     "texto": "Ligar: como está a busca? Já comprou?"
-    },
-    {
-     "hora": "14:30",
-     "id": "allan",
-     "canal": "wpp",
-     "texto": "Perguntar como está a restrição no nome e oferecer indicar assessoria de crédito."
-    },
-    {
-     "hora": "14:36",
-     "id": "sergio",
-     "canal": "wpp",
-     "texto": "Se ele respondeu sobre a venda das casas, convidar para o Luce no fim de semana; se não, só um toque leve."
-    },
-    {
-     "hora": "14:42",
-     "id": "luiz",
-     "canal": "wpp",
-     "texto": "Mandar o folder da Tegra e perguntar quando estará em Campinas."
-    },
-    {
-     "hora": "14:48",
-     "id": "silvio-maxi-bonfim",
-     "canal": "wpp",
-     "texto": "Mandar 3 casas concretas: condomínio fechado, 3q, sem escada, com quintal."
-    },
-    {
-     "hora": "14:54",
-     "id": "patricia",
-     "canal": "wpp",
-     "texto": "Avisar se há condição nova na faixa de R$ 475 mil e sugerir uma proposta formal."
-    },
-    {
-     "hora": "15:00",
-     "id": "juliana",
-     "canal": "wpp",
-     "texto": "Perguntar a região e mandar 2 opções de 3 dormitórios."
-    },
-    {
-     "hora": "15:06",
-     "id": "ursula-webwer",
-     "canal": "wpp",
-     "texto": "Uma pergunta só: qual região a senhora prefere?"
-    },
-    {
-     "hora": "15:12",
-     "id": "celio",
-     "canal": "wpp",
-     "texto": "Mandar opção de casa na planta no Taquaral."
-    },
-    {
-     "hora": "15:18",
-     "id": "rose-silva",
-     "canal": "wpp",
-     "texto": "Pedir o contato da filha para falar direto com ela."
-    },
-    {
-     "hora": "15:24",
-     "id": "giselda",
-     "canal": "wpp",
-     "texto": "Pedir o contato da filha para falar direto com ela."
-    },
-    {
-     "hora": "15:30",
-     "id": "elizabete",
-     "canal": "wpp",
-     "texto": "Pedir o contato da filha, conforme combinado por telefone."
-    },
-    {
-     "hora": "15:36",
-     "id": "suzana",
-     "canal": "wpp",
-     "texto": "Perguntar região e valor para mandar projetos na planta."
-    },
-    {
-     "hora": "15:42",
-     "id": "priscila",
-     "canal": "wpp",
-     "texto": "Agradecer o retorno e pedir indicação de alguém que esteja procurando imóvel."
-    },
-    {
-     "hora": "15:48",
-     "id": "mayara",
-     "canal": "wpp",
-     "texto": "Parabenizar pela compra e pedir indicação."
-    },
-    {
-     "hora": "15:54",
-     "id": "vitor",
-     "canal": "wpp",
-     "texto": "Pedir indicação de alguém que esteja procurando imóvel."
-    },
-    {
-     "hora": "16:00",
-     "id": "leopoldo-luz",
-     "canal": "wpp",
-     "texto": "Mandar uma oportunidade com desconto real (ele só quer abaixo do mercado)."
-    },
-    {
-     "hora": "16:06",
-     "id": "renato-set",
-     "canal": "wpp",
-     "texto": "Mandar a tabela atualizada do Viva Verde (lote 212 m²)."
-    },
-    {
-     "hora": "16:30",
-     "id": "fatima",
-     "canal": "lig",
-     "texto": "Repique dia 2: ligar. Como está a busca por imóvel? Já comprou?"
-    },
-    {
-     "hora": "16:36",
-     "id": "ines",
-     "canal": "lig",
-     "texto": "Repique dia 2: ligar. Como está a busca por imóvel? Já comprou?"
-    },
-    {
-     "hora": "18:20",
-     "id": "caio",
-     "canal": "lig",
-     "texto": "Não atende de dia: ligar depois das 18:20. prefere pronto com 2 vagas ou lançamento com 1 vaga?"
-    },
-    {
-     "hora": "18:26",
-     "id": "walter-luiz",
-     "canal": "lig",
-     "texto": "Não atende de dia: ligar depois das 18:20. ligar e confirmar se ainda quer investir."
-    },
-    {
-     "hora": "18:32",
-     "id": "junior",
-     "canal": "lig",
-     "texto": "Não atende de dia: ligar depois das 18:20. ainda quer visitar? Remarcar a visita que não aconteceu."
-    },
-    {
-     "hora": "18:38",
-     "id": "lucas-fernandes",
-     "canal": "lig",
-     "texto": "Não atende de dia: ligar depois das 18:20. ainda está olhando imóvel? Remarcar a visita."
-    },
-    {
-     "hora": "18:44",
-     "id": "fabio-henrique",
-     "canal": "lig",
-     "texto": "Não atende de dia: ligar depois das 18:20. busca apartamento perto do centro? Qual faixa?"
-    },
-    {
-     "hora": "18:50",
-     "id": "neide",
-     "canal": "lig",
-     "texto": "Não atende de dia: ligar depois das 18:20. qual região e faixa ela procura?"
-    },
-    {
-     "hora": "18:56",
-     "id": "rosangela",
-     "canal": "lig",
-     "texto": "Não atendeu 2 ligações ontem (14:03 e 18:09): tentar à noite. Descobrir faixa de valor e região."
-    },
-    {
-     "hora": "18:59",
-     "id": "ana",
-     "canal": "lig",
-     "texto": "Segunda tentativa se não atendeu de manhã."
-    },
-    {
-     "hora": "19:00",
-     "id": "nathalia",
-     "canal": "wpp",
-     "texto": "Toque leve: ainda pensa em visitar a obra do Taquaral?"
-    },
-    {
-     "hora": "19:04",
-     "id": "aline-dijon",
-     "canal": "wpp",
-     "texto": "Perguntar se ainda procura casa nova e mandar novidade se tiver."
-    },
-    {
-     "hora": "19:08",
      "id": "lucas-cioban",
      "canal": "wpp",
      "texto": "Repique: ainda tem interesse no Mangará?"
     },
     {
-     "hora": "19:12",
+     "hora": "14:18",
      "id": "mirela",
      "canal": "wpp",
-     "texto": "Repique: ainda busca imóvel? Morar ou investir?"
+     "texto": "Repique (TopLife): ainda busca imóvel?"
     },
     {
-     "hora": "19:16",
+     "hora": "14:24",
      "id": "roberta",
      "canal": "wpp",
-     "texto": "Repique: como está a busca por imóvel?"
+     "texto": "Repique: como está a busca?"
+    },
+    {
+     "hora": "14:30",
+     "id": "michele-almeida",
+     "canal": "wpp",
+     "texto": "Repique (Yees): ainda tem interesse?"
+    },
+    {
+     "hora": "14:36",
+     "id": "claudemir",
+     "canal": "wpp",
+     "texto": "Repique: oportunidade de investimento no Swiss Park/Sensia."
+    },
+    {
+     "hora": "14:42",
+     "id": "mauricio",
+     "canal": "wpp",
+     "texto": "Repique (Maxi Bonfim): ainda tem interesse?"
+    },
+    {
+     "hora": "14:48",
+     "id": "tiago",
+     "canal": "wpp",
+     "texto": "Repique: como está a busca?"
+    },
+    {
+     "hora": "14:54",
+     "id": "gabriel-mangara",
+     "canal": "wpp",
+     "texto": "Repique (Mangará): ainda tem interesse?"
+    },
+    {
+     "hora": "18:20",
+     "id": "edgar-luce-cambui",
+     "canal": "lig",
+     "texto": "Prefere fim do dia. Ligue e marque a visita ao Luce (ou na imobiliária às 19h/20h)."
+    },
+    {
+     "hora": "18:25",
+     "id": "gustavo",
+     "canal": "lig",
+     "texto": "Antes, ouça o áudio dele de 08/10 (0:46). Ligação rápida: só os dados do imóvel dele (IPTU, fotos, condomínio, valor)."
+    },
+    {
+     "hora": "18:30",
+     "id": "ana",
+     "canal": "lig",
+     "texto": "Ela te ligou dia 13 e não deu certo. Tentar à noite."
+    },
+    {
+     "hora": "18:35",
+     "id": "rosangela",
+     "canal": "lig",
+     "texto": "Não atendeu 2 ligações de dia. Faixa de valor e região."
+    },
+    {
+     "hora": "18:40",
+     "id": "matheus",
+     "canal": "lig",
+     "texto": "Recusou ligação dia 13 e não responde desde 08/10 (Yees / Alto Galleria). Tentar à noite."
+    },
+    {
+     "hora": "18:45",
+     "id": "denilson",
+     "canal": "lig",
+     "texto": "Gostou do apto do 19º e sumiu. Ligar à noite e marcar visita."
+    },
+    {
+     "hora": "18:50",
+     "id": "mari",
+     "canal": "lig",
+     "texto": "Nunca respondeu (09, 13, 14/10). Ligar à noite."
+    },
+    {
+     "hora": "18:55",
+     "id": "bryan",
+     "canal": "lig",
+     "texto": "Nunca respondeu. Ligar à noite."
+    },
+    {
+     "hora": "19:00",
+     "id": "claudia",
+     "canal": "lig",
+     "texto": "Nunca respondeu. Ligar à noite."
+    },
+    {
+     "hora": "19:05",
+     "id": "gabriel",
+     "canal": "lig",
+     "texto": "Nunca respondeu. Ligar à noite."
+    },
+    {
+     "hora": "19:10",
+     "id": "dimas",
+     "canal": "lig",
+     "texto": "Liv Guanabara, última unidade de 2 vagas. Sem resposta desde 07/10."
+    },
+    {
+     "hora": "19:15",
+     "id": "walter-luiz",
+     "canal": "lig",
+     "texto": "Ouça o áudio dele de 07/10 antes. Ligar à noite."
     },
     {
      "hora": "19:20",
-     "id": "michele-almeida",
-     "canal": "wpp",
-     "texto": "Repique: ainda tem interesse no Yees?"
+     "id": "neide",
+     "canal": "lig",
+     "texto": "Ouça o áudio dela de 25/09 antes. Ligar à noite."
     },
     {
-     "hora": "19:24",
-     "id": "dimas",
-     "canal": "wpp",
-     "texto": "Repique: convite para conhecer o Liv/My Way Guanabara."
+     "hora": "19:25",
+     "id": "caio",
+     "canal": "lig",
+     "texto": "Sem resposta desde 17/09. Ligar à noite."
     },
     {
-     "hora": "19:28",
-     "id": "claudemir",
-     "canal": "wpp",
-     "texto": "Repique: oportunidade de investimento no Swiss Park."
+     "hora": "19:30",
+     "id": "wesley",
+     "canal": "lig",
+     "texto": "Faltou à reunião de 09/09; sem resposta. Ligar à noite."
     },
     {
-     "hora": "19:32",
-     "id": "mauricio",
-     "canal": "wpp",
-     "texto": "Repique: ainda tem interesse no Maxi Bonfim?"
-    },
-    {
-     "hora": "19:36",
-     "id": "tiago",
-     "canal": "wpp",
-     "texto": "Repique: como está a busca por imóvel?"
+     "hora": "19:35",
+     "id": "junior",
+     "canal": "lig",
+     "texto": "Visita de 03/10 nunca confirmada. Ligar; se não atender, encerrar."
     },
     {
      "hora": "19:40",
-     "id": "gabriel-mangara",
-     "canal": "wpp",
-     "texto": "Repique: ainda tem interesse no Mangará?"
+     "id": "lucas-fernandes",
+     "canal": "lig",
+     "texto": "Faltou à visita de 21/09. Ligar à noite."
+    },
+    {
+     "hora": "19:45",
+     "id": "luiza",
+     "canal": "lig",
+     "texto": "Sem resposta desde 01/10. Perguntar se comprou; se sim, pedir indicação e encerrar."
+    },
+    {
+     "hora": "19:50",
+     "id": "juliana",
+     "canal": "lig",
+     "texto": "Quer 3 dormitórios. Sem resposta desde 29/09. Ligar."
+    },
+    {
+     "hora": "19:55",
+     "id": "patricia",
+     "canal": "lig",
+     "texto": "Sem resposta desde 23/09. Ligar."
     },
     {
      "hora": "20:00",
+     "id": "rose-silva",
+     "canal": "lig",
+     "texto": "Florae p/ a filha. Pedir o contato da filha."
+    },
+    {
+     "hora": "20:05",
+     "id": "silvio-maxi-bonfim",
+     "canal": "lig",
+     "texto": "Última resposta 07/09. Ligar à noite."
+    },
+    {
+     "hora": "20:30",
      "id": "",
      "canal": "acao",
-     "texto": "Fechamento: marcar no site o que foi feito e mandar 'atualiza' para o Claude."
+     "texto": "Fechamento: Resumo do dia → copiar e mandar para o Claude."
     }
    ]
   }
