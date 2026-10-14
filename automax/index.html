@@ -38,20 +38,6 @@
     <p class="eyebrow">Seminovos com procedência · Sumaré-SP</p>
     <h1>Você sonha,<br><em>nós realizamos.</em></h1>
     <p class="hero__sub">Carros e motos revisados, financiamento facilitado e aceitamos seu usado na troca. Escolha, faça sua proposta e um vendedor te responde no WhatsApp.</p>
-    <form class="busca" id="buscaHero">
-      <div class="seg" role="tablist">
-        <button type="button" class="on" data-tipo="todos">Todos</button>
-        <button type="button" data-tipo="carro">Carros</button>
-        <button type="button" data-tipo="moto">Motos</button>
-      </div>
-      <input type="search" id="qHero" placeholder="Busque por modelo ou marca — ex.: Corolla, HB20, Honda">
-      <button class="btn btn--red" type="submit">Ver estoque</button>
-    </form>
-    <ul class="hero__nums">
-      <li><b id="nTotal">–</b> veículos no estoque</li>
-      <li><b>7.800+</b> seguidores no Instagram</li>
-      <li><b>Compra · Venda</b> troca e consignação</li>
-    </ul>
   </div>
 </section>
 
@@ -62,36 +48,55 @@
         <p class="eyebrow">Estoque</p>
         <h2>Encontre o seu</h2>
       </div>
-      <p class="sec__count" id="count"></p>
     </div>
 
     <div class="filtros" id="filtros">
-      <div class="seg" id="segTipo">
-        <button type="button" class="on" data-tipo="todos">Todos</button>
-        <button type="button" data-tipo="carro">Carros</button>
-        <button type="button" data-tipo="moto">Motos</button>
+      <div class="filtros__row">
+        <div class="seg" id="segTipo">
+          <button type="button" class="on" data-tipo="todos">Todos</button>
+          <button type="button" data-tipo="carro">Carros</button>
+          <button type="button" data-tipo="moto">Motos</button>
+        </div>
+        <input type="search" id="q" placeholder="Busque por modelo ou marca">
+        <select id="fMarca" data-f="marca"><option value="">Marca</option></select>
+        <select id="fModelo" data-f="modelo"><option value="">Modelo</option></select>
+        <select id="fPreco" data-f="preco">
+          <option value="">Preço</option>
+          <option value="0-40000">Até R$ 40 mil</option>
+          <option value="40000-60000">R$ 40 a 60 mil</option>
+          <option value="60000-100000">R$ 60 a 100 mil</option>
+          <option value="100000-99999999">Acima de R$ 100 mil</option>
+        </select>
+        <button type="button" class="btn-mais" id="btnMais">Mais filtros <span id="nAtivos"></span></button>
       </div>
-      <input type="search" id="q" placeholder="Modelo ou marca">
-      <select id="fMarca"><option value="">Todas as marcas</option></select>
-      <select id="fPreco">
-        <option value="">Qualquer preço</option>
-        <option value="0-40000">Até R$ 40 mil</option>
-        <option value="40000-60000">R$ 40 a 60 mil</option>
-        <option value="60000-100000">R$ 60 a 100 mil</option>
-        <option value="100000-99999999">Acima de R$ 100 mil</option>
-      </select>
-      <select id="fCambio">
-        <option value="">Câmbio</option>
-        <option>Automático</option>
-        <option>Manual</option>
-      </select>
-      <select id="fOrdem">
-        <option value="rec">Mais recentes</option>
-        <option value="menor">Menor preço</option>
-        <option value="maior">Maior preço</option>
-        <option value="ano">Mais novos</option>
-        <option value="km">Menor km</option>
-      </select>
+      <div class="filtros__row filtros__mais" id="maisFiltros" hidden>
+        <select id="fAnoDe" data-f="anoDe"><option value="">Ano a partir de</option></select>
+        <select id="fAnoAte" data-f="anoAte"><option value="">Ano até</option></select>
+        <select id="fKm" data-f="km">
+          <option value="">Quilometragem</option>
+          <option value="50000">Até 50.000 km</option>
+          <option value="100000">Até 100.000 km</option>
+          <option value="150000">Até 150.000 km</option>
+          <option value="200000">Até 200.000 km</option>
+        </select>
+        <select id="fMotor" data-f="motor"><option value="">Motor</option></select>
+        <select id="fCombustivel" data-f="combustivel"><option value="">Combustível</option></select>
+        <select id="fCambio" data-f="cambio"><option value="">Câmbio</option></select>
+        <select id="fCor" data-f="cor"><option value="">Cor</option></select>
+      </div>
+      <div class="filtros__foot">
+        <span class="sec__count" id="count"></span>
+        <button type="button" class="limpar" id="limpar" hidden>Limpar filtros</button>
+        <label class="ordem">Ordenar
+          <select id="fOrdem">
+            <option value="rec">Mais recentes</option>
+            <option value="menor">Menor preço</option>
+            <option value="maior">Maior preço</option>
+            <option value="ano">Mais novos</option>
+            <option value="km">Menor km</option>
+          </select>
+        </label>
+      </div>
     </div>
 
     <div class="grid" id="grid"></div>

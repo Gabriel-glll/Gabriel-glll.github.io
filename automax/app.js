@@ -20,7 +20,6 @@
   $("#vendedores").innerHTML = L.vendedores.map(v =>
     `<a class="btn btn--wa" target="_blank" rel="noopener" href="${waLink("Olá, " + v.nome + "! Vim pelo site da Automax.", v.whatsapp)}"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg> ${v.nome}</a>`).join("");
   $("#selVend").innerHTML = L.vendedores.map((v, i) => `<option value="${i}">${v.nome}</option>`).join("");
-  $("#nTotal").textContent = todos.length;
 
   // menu mobile
   $("#burger").onclick = () => $("#menu").classList.toggle("open");
@@ -33,17 +32,49 @@
   trocaHero(); setInterval(trocaHero, 6000);
 
   // filtros
-  const st = { tipo: "todos", q: "", marca: "", preco: "", cambio: "", ordem: "rec" };
-  const marcas = [...new Set(todos.map(v => v.marca).filter(Boolean))].sort();
-  $("#fMarca").innerHTML += marcas.map(m => `<option>${m}</option>`).join("");
+  const DUAS = ["grand", "range", "civic", "l200"];
+  const capit = w => /^[A-ZÀ-Ú]{3,}$/.test(w) ? w[0] + w.slice(1).toLowerCase() : w;
+  todos.forEach(v => {
+    const p = v.nome.trim().split(/\s+/);
+    v.modelo = v.modelo || (DUAS.includes(p[0].toLowerCase()) && p[1] ? p.slice(0, 2) : [p[0]]).map(capit).join(" ");
+    v.motor = v.motor || (v.nome.match(/\b(\d\.\d)\b/) || [])[1] || (v.cilindradas ? v.cilindradas + " cc" : "");
+  });
+  const st = { tipo: "todos", q: "", ordem: "rec" };
+  const CAMPOS = ["marca", "modelo", "preco", "anoDe", "anoAte", "km", "motor", "combustivel", "cambio", "cor"];
+  const uniq = (arr, f) => [...new Set(arr.map(v => v[f]).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b), "pt", { numeric: true }));
+  const anos = uniq(todos, "ano").reverse();
+  const preenche = (id, vals, rotulo) => {
+    const el = $(id), cur = el.value;
+    el.innerHTML = `<option value="">${rotulo}</option>` + vals.map(x => `<option>${x}</option>`).join("");
+    el.value = vals.map(String).includes(cur) ? cur : "";
+  };
+  preenche("#fMarca", uniq(todos, "marca"), "Marca");
+  preenche("#fAnoDe", anos, "Ano a partir de");
+  preenche("#fAnoAte", anos, "Ano até");
+  preenche("#fMotor", uniq(todos, "motor"), "Motor");
+  preenche("#fCombustivel", uniq(todos, "combustivel"), "Combustível");
+  preenche("#fCambio", uniq(todos, "cambio"), "Câmbio");
+  preenche("#fCor", uniq(todos, "cor"), "Cor");
+  const atualizaModelos = () => {
+    preenche("#fModelo", uniq(todos.filter(v => (st.tipo === "todos" || v.tipo === st.tipo) && (!st.marca || v.marca === st.marca)), "modelo"), "Modelo");
+    st.modelo = $("#fModelo").value;
+  };
+  atualizaModelos();
 
   const norm = s => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   function filtrar() {
     let r = todos.filter(v =>
       (st.tipo === "todos" || v.tipo === st.tipo) &&
       (!st.marca || v.marca === st.marca) &&
+      (!st.modelo || v.modelo === st.modelo) &&
+      (!st.anoDe || v.ano >= +st.anoDe) &&
+      (!st.anoAte || v.ano <= +st.anoAte) &&
+      (!st.km || (v.km && v.km <= +st.km)) &&
+      (!st.motor || v.motor === st.motor) &&
+      (!st.combustivel || v.combustivel === st.combustivel) &&
       (!st.cambio || v.cambio === st.cambio) &&
-      (!st.q || norm(v.nome + " " + v.marca).includes(norm(st.q))));
+      (!st.cor || v.cor === st.cor) &&
+      (!st.q || norm(v.nome + " " + v.marca + " " + v.modelo).includes(norm(st.q))));
     if (st.preco) {
       const [a, b] = st.preco.split("-").map(Number);
       r = r.filter(v => v.preco && v.preco >= a && v.preco < b);
@@ -73,7 +104,10 @@
   function render() {
     const r = filtrar();
     $("#grid").innerHTML = r.map(card).join("");
-    $("#count").textContent = `${r.length} ${r.length === 1 ? "veículo" : "veículos"}`;
+    $("#count").textContent = `${r.length} ${r.length === 1 ? "veículo encontrado" : "veículos encontrados"}`;
+    const extras = ["anoDe", "anoAte", "km", "motor", "combustivel", "cambio", "cor"].filter(k => st[k]).length;
+    $("#nAtivos").textContent = extras ? `(${extras})` : "";
+    $("#limpar").hidden = !(st.q || st.tipo !== "todos" || CAMPOS.some(k => st[k]));
     const vazio = !r.length;
     $("#vazio").hidden = !vazio;
     if (vazio) {
@@ -88,17 +122,20 @@
   function setTipo(t) {
     st.tipo = t;
     $$(".seg [data-tipo]").forEach(b => b.classList.toggle("on", b.dataset.tipo === t));
-    render();
+    atualizaModelos(); render();
   }
   $$("[data-tipo]").forEach(b => b.onclick = () => setTipo(b.dataset.tipo));
   $("#q").oninput = e => { st.q = e.target.value; render(); };
-  $("#fMarca").onchange = e => { st.marca = e.target.value; render(); };
-  $("#fPreco").onchange = e => { st.preco = e.target.value; render(); };
-  $("#fCambio").onchange = e => { st.cambio = e.target.value; render(); };
+  $$("[data-f]").forEach(el => el.onchange = () => {
+    st[el.dataset.f] = el.value;
+    if (el.dataset.f === "marca") atualizaModelos();
+    render();
+  });
   $("#fOrdem").onchange = e => { st.ordem = e.target.value; render(); };
-  $("#buscaHero").onsubmit = e => {
-    e.preventDefault(); st.q = $("#q").value = $("#qHero").value; render();
-    $("#estoque").scrollIntoView();
+  $("#btnMais").onclick = () => { const m = $("#maisFiltros"); m.hidden = !m.hidden; $("#btnMais").classList.toggle("on", !m.hidden); };
+  $("#limpar").onclick = () => {
+    CAMPOS.forEach(k => st[k] = ""); $$("[data-f]").forEach(el => el.value = "");
+    st.q = $("#q").value = ""; setTipo("todos");
   };
 
   // modal / detalhe
@@ -109,7 +146,7 @@
     $("#dMarca").textContent = v.marca + (v.tipo === "moto" ? " · Moto" : "");
     $("#dNome").textContent = titulo(v);
     $("#dPreco").textContent = preco(v);
-    const specs = [["Ano", v.ano], ["Quilometragem", km(v.km)], ["Câmbio", v.cambio], ["Combustível", v.combustivel], ["Cor", v.cor], [v.tipo === "moto" ? "Cilindradas" : "Portas", v.tipo === "moto" ? (v.cilindradas && v.cilindradas + " cc") : v.portas]];
+    const specs = [["Ano", v.ano], ["Motor", v.motor], ["Quilometragem", km(v.km)], ["Câmbio", v.cambio], ["Combustível", v.combustivel], ["Cor", v.cor], [v.tipo === "moto" ? "Cilindradas" : "Portas", v.tipo === "moto" ? (v.cilindradas && v.cilindradas + " cc") : v.portas]];
     $("#dSpecs").innerHTML = specs.filter(s => s[1]).map(([k, x]) => `<li>${k}<b>${x}</b></li>`).join("");
     $("#gThumbs").innerHTML = (v.fotos || []).map((f, i) => `<img src="${f}" data-i="${i}" loading="lazy" alt="">`).join("");
     foto(0);
