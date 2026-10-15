@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-14",
+ "atualizado": "2026-10-15",
  "clientes": [
   {
    "id": "adriana",
@@ -1342,6 +1342,26 @@
    "religar": ""
   },
   {
+   "id": "roni-barbosa",
+   "nome": "Roni Barbosa",
+   "tel": "(19) 98822-2867",
+   "obs": "Respondeu 14/10 16:21 (conversa ainda não lida pelo Claude).",
+   "dica": "Lead sem resposta: ligue primeiro (lead atende mais ligação do que texto). Seja curto: morar ou investir, região, faixa.",
+   "temp": "Morno",
+   "etapa": "Novo lead",
+   "origem": "Novo (14/10)",
+   "faixa": "",
+   "regiao": "",
+   "proxAcao": "",
+   "proxData": "",
+   "ultResp": "2026-10-14",
+   "tipo": "carteira",
+   "cadInicio": "",
+   "prioridade": 1,
+   "encerrado": "",
+   "religar": ""
+  },
+  {
    "id": "rosangela",
    "nome": "Rosângela",
    "tel": "(19) 99167-6269",
@@ -1584,112 +1604,118 @@
  ],
  "plano": {
   "2026-10-15": {
-   "foco": "Prioridade: Adriana (San Pietro), Beatriz (lead novo), captação do Thiago Moreton e visita do Carlos no sábado. Confirmar Gilmar (sábado 9:30). Quem não atende de dia está na lista das 18:20.",
+   "foco": "Hoje: Adriana, Beatriz, Luiz e o contato novo Roni responderam ontem — continue essas conversas primeiro. Confirme o Gilmar (sábado 9:30). À noite, quem não atendeu ontem (Denilson, Ana, Caio, Lucas Fernandes, Rosângela, Lucas Cioban).",
    "itens": [
     {
-     "hora": "09:00",
+     "hora": "10:30",
+     "id": "roni-barbosa",
+     "canal": "wpp",
+     "texto": "Contato NOVO: respondeu ontem às 16:21. Leia a conversa e continue (morar ou investir, região, faixa)."
+    },
+    {
+     "hora": "10:35",
      "id": "adriana",
      "canal": "wpp",
-     "texto": "Ela pediu valores ontem e você mandou o San Pietro (R$ 621 mil, entrada 7% + 13% em 24x). Pergunte 2 ou 3 quartos e já convide para o stand/decorado neste sábado."
+     "texto": "Ela respondeu ontem às 15:39 (San Pietro). Continue de onde ela parou: 2 ou 3 quartos e convite para o stand/decorado no sábado."
     },
     {
-     "hora": "09:06",
+     "hora": "10:40",
      "id": "beatriz",
      "canal": "wpp",
-     "texto": "Lead de ontem (Maxi Bonfim). Cobre a renda e o FGTS do namorado. Com isso, mande 2 opções na planta com entrega breve (3q ou 2q + escritório, abaixo de R$ 490 mil)."
+     "texto": "Ela respondeu ontem às 12:15 e você mandou mensagem às 16:51. Se ela já passou a renda/FGTS, mande as 2 opções na planta; se não, cobre com leveza."
     },
     {
-     "hora": "09:12",
+     "hora": "10:45",
      "id": "thiago-moreton",
      "canal": "lig",
      "texto": "CAPTAÇÃO parada desde 01/10: ele mandou o link do apto da tia e ficou sem resposta. Ligue, peça desculpas, pegue condomínio e valor e marque visita para fotografar."
     },
     {
-     "hora": "09:18",
+     "hora": "10:50",
      "id": "carlos-toplife",
      "canal": "lig",
      "texto": "Gostou do apto no Jd. Proença (R. Antônio Francisco de Andrade, 243) e topou visitar. Ligue e feche horário no sábado 17/10."
     },
     {
-     "hora": "09:24",
+     "hora": "10:55",
      "id": "giselda",
      "canal": "lig",
      "texto": "Ela pediu para retomar depois do dia 15. Ligue: a filha ainda procura? Perto da Unip/Shopping Prado, com lazer completo."
     },
     {
-     "hora": "09:30",
+     "hora": "11:00",
      "id": "luiz",
      "canal": "wpp",
-     "texto": "Ontem você convidou para o Lazur e ele não respondeu. Proponha sábado ou a próxima vinda dele a Campinas."
+     "texto": "Ele respondeu ontem às 18:45 sobre o Lazur. Feche dia e horário da visita."
     },
     {
-     "hora": "09:36",
+     "hora": "11:05",
      "id": "daniele",
      "canal": "lig",
      "texto": "Captação: ela ia mandar fotos do apto em 23/09. Ligue e proponha ir fotografar."
     },
     {
-     "hora": "09:42",
+     "hora": "11:10",
      "id": "maria-toplife",
      "canal": "wpp",
      "texto": "Ela travou na 'certidão de estado civil'. Explique que, solteira, é a certidão de nascimento, e ofereça buscar os documentos com ela. Última tentativa."
     },
     {
-     "hora": "09:48",
+     "hora": "11:15",
      "id": "mateus",
      "canal": "lig",
      "texto": "Nunca respondeu (Yees). Primeira ligação."
     },
     {
-     "hora": "09:54",
+     "hora": "11:20",
      "id": "joao",
      "canal": "lig",
      "texto": "Nunca respondeu (Florae). Primeira ligação."
     },
     {
-     "hora": "10:00",
+     "hora": "11:25",
      "id": "aline",
      "canal": "lig",
      "texto": "Falou por telefone em 08/10 e não respondeu mais (TopLife Nova Campinas). Ligar."
     },
     {
-     "hora": "10:06",
+     "hora": "11:30",
      "id": "davi",
      "canal": "lig",
      "texto": "Nunca respondeu. Primeira ligação."
     },
     {
-     "hora": "10:12",
+     "hora": "11:35",
      "id": "dinei",
      "canal": "lig",
      "texto": "Ativou mensagens temporárias e não respondeu. Primeira ligação."
     },
     {
-     "hora": "10:18",
+     "hora": "11:40",
      "id": "suzana",
      "canal": "lig",
      "texto": "Falou por telefone em 09/10 (quer planta). Ligar e pegar região e valor."
     },
     {
-     "hora": "10:24",
+     "hora": "11:45",
      "id": "elizabete",
      "canal": "lig",
      "texto": "Falou por telefone em 08/10: ia passar o contato da filha. Ligar e pegar o contato."
     },
     {
-     "hora": "10:30",
+     "hora": "11:50",
      "id": "ricardo-louriva",
      "canal": "lig",
      "texto": "Respondeu 'como posso ajudar?' em 28/09 e parou. Ligar e qualificar."
     },
     {
-     "hora": "10:36",
+     "hora": "11:55",
      "id": "fatima",
      "canal": "lig",
      "texto": "Repique sem resposta (13/10). Ligar."
     },
     {
-     "hora": "10:42",
+     "hora": "12:00",
      "id": "ines",
      "canal": "lig",
      "texto": "Repique sem resposta (13/10). Ligar."
@@ -1698,19 +1724,13 @@
      "hora": "14:00",
      "id": "gilmar",
      "canal": "wpp",
-     "texto": "Confirmar a visita de SÁBADO 17/10 às 9:30 no stand do Florae (Cambuí). Mande o endereço."
+     "texto": "Ele respondeu ontem às 20:10 e você escreveu hoje às 10:04. Confirme a visita de SÁBADO 17/10 9:30 no Florae e mande o endereço do stand."
     },
     {
      "hora": "14:06",
      "id": "vitor",
      "canal": "wpp",
      "texto": "Amigo, sem resposta desde 25/09. Mensagem leve e peça indicação."
-    },
-    {
-     "hora": "14:12",
-     "id": "lucas-cioban",
-     "canal": "wpp",
-     "texto": "Repique: ainda tem interesse no Mangará?"
     },
     {
      "hora": "14:18",
@@ -1885,6 +1905,12 @@
      "id": "silvio-maxi-bonfim",
      "canal": "lig",
      "texto": "Última resposta 07/09. Ligar à noite."
+    },
+    {
+     "hora": "20:20",
+     "id": "lucas-cioban",
+     "canal": "lig",
+     "texto": "Não atendeu ontem. Tentar à noite."
     },
     {
      "hora": "20:30",
