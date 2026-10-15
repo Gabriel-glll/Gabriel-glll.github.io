@@ -68,5 +68,6 @@ window.LINKS_CLIENTE = {
  "alpha-housing": "https://lancamentos.zffrealty.workers.dev/alpha-housing-8d88f9/",
  "lauzanne": "https://lancamentos.zffrealty.workers.dev/lauzanne-26b0ff/",
  "villa-vita-taquaral": "https://lancamentos.zffrealty.workers.dev/villa-vita-taquaral-c887f7/",
- "toplife-nova-campinas-park": "https://lancamentos.zffrealty.workers.dev/toplife-nova-campinas-park-7ad52a/"
+ "toplife-nova-campinas-park": "https://lancamentos.zffrealty.workers.dev/toplife-nova-campinas-park-7ad52a/",
+ "douro": "https://lancamentos.zffrealty.workers.dev/douro-2ddf29/"
 };

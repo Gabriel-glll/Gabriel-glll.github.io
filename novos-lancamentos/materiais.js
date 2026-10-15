@@ -516,5 +516,18 @@ window.MATERIAIS = {
       "url": "https://zff-books.zffrealty.workers.dev/alentejo.pdf?v=1791921884",
       "titulo": "Book Alentejo"
     }
+  },
+  "douro": {
+    "fotos": 20,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/douro.pdf?v=1792088572",
+      "titulo": "Book Douro"
+    },
+    "tabela": [
+      {
+        "url": "materiais/douro/tabela/tabela-douro-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      }
+    ]
   }
 };
