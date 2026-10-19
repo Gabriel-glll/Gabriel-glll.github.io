@@ -532,9 +532,25 @@ window.MATERIAIS = {
   },
   "be-mansoes": {
     "fotos": 15,
-    "book": {
-      "url": "https://zff-books.zffrealty.workers.dev/be-mansoes.pdf?v=1792435844",
-      "titulo": "Book Be Mansões"
-    }
+    "book": [
+      {
+        "url": "https://zff-books.zffrealty.workers.dev/be-mansoes.pdf?v=1792435844",
+        "titulo": "Book Be Mansões"
+      },
+      {
+        "url": "https://zff-books.zffrealty.workers.dev/be-mansoes-plantas.pdf?v=1792436698",
+        "titulo": "Book de plantas"
+      }
+    ],
+    "tabela": [
+      {
+        "url": "materiais/be-mansoes/tabela/tabela-be-mansoes-2026-10.pdf",
+        "titulo": "Tabela Out/2026"
+      },
+      {
+        "url": "https://docs.google.com/spreadsheets/d/1txG3ZKOddxzXXk4al874ft09p9gGu5cdhay3C4x8wBs/",
+        "titulo": "Tabela e disponibilidade AO VIVO (planilha Vertaz)"
+      }
+    ]
   }
 };
