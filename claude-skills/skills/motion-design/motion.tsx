@@ -188,6 +188,28 @@ export const PunchZoom: React.FC<Base & {to?: number}> = ({at = 0, dur = 0.22, e
 	return <div style={{position: 'absolute', inset: 0, transform: `scale(${1 + (to - 1) * p})`, ...style}}>{children}</div>;
 };
 
+// ── Textura ──────────────────────────────────────────────────────
+// Granulado de filme animado (muda a cada quadro). Coloque por último, por cima de tudo.
+export const Grain: React.FC<{opacity?: number; freq?: number; blend?: React.CSSProperties['mixBlendMode']}> = ({opacity = 0.18, freq = 0.8, blend = 'overlay'}) => {
+	const f = useCurrentFrame();
+	const {width, height} = useVideoConfig();
+	const id = `grain${f}`;
+	return (
+		<svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{position: 'absolute', left: 0, top: 0, opacity, mixBlendMode: blend, pointerEvents: 'none'}}>
+			<filter id={id} x="0" y="0" width="100%" height="100%" filterUnits="userSpaceOnUse">
+				<feTurbulence type="fractalNoise" baseFrequency={freq} numOctaves={2} seed={f % 60} stitchTiles="stitch" />
+				<feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 0 1" />
+			</filter>
+			<rect x="0" y="0" width={width} height={height} filter={`url(#${id})`} />
+		</svg>
+	);
+};
+
+// Imagem de textura estática (gerada com texturas/texturizar.py --gerar) por cima da cena
+export const TextureOverlay: React.FC<{src: string; opacity?: number; blend?: React.CSSProperties['mixBlendMode']}> = ({src, opacity = 0.5, blend = 'multiply'}) => (
+	<img src={src} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity, mixBlendMode: blend, pointerEvents: 'none'}} />
+);
+
 // Zoom lento em foto (respiração da cena)
 export const KenBurns: React.FC<Base & {from?: number; to?: number; origin?: string}> = ({at = 0, dur = 4, from = 1, to = 1.12, origin = 'center', style, children}) => {
 	const p = prog(useSec(), at, dur, EASE.linear);
