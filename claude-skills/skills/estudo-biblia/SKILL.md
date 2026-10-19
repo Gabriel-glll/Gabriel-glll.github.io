@@ -10,9 +10,10 @@ página nova que se desenvolve rolando (sem clique). Resposta no chat: curta (li
 Dúvidas depois: responda no chat; se a resposta for boa para o estudo, acrescente no próprio estudo.
 
 ## O que todo estudo precisa ter
-1. **Introdução** (4 cartões): quem escreveu · para quem · quando + contexto da época · língua original.
-2. **Contexto da época** (parágrafos + imagem + linha do tempo, destacando o momento do capítulo).
-3. **Texto puro** (sem nenhuma anotação), dividido em parágrafos.
+Ordem fixa na página (pedido dele): introdução → leitura → o resto.
+1. **Introdução** (4 cartões): quem escreveu · para quem · quando · língua original.
+2. **Texto puro** (sem nenhuma anotação), dividido em parágrafos.
+3. **Contexto da época** (parágrafos + imagem + linha do tempo, destacando o momento do capítulo).
 4. **Texto anotado**: blocos de versículos; ao lado, resumo + notas por versículo + comparação ARA × NAA × original.
 5. **Palavras-chave na língua original** (hebraico/aramaico/grego + transliteração + sentido).
 6. **Curiosidade**: UMA só, simples e leve, ligada ao texto (arqueologia, história, cultura), com foto.
@@ -26,6 +27,11 @@ centro aceso; palavras originais em tela cheia; curiosidade abrindo em círculo;
 a capa reaparece e a página volta ao topo). GSAP 3.12.5 + ScrollTrigger + Lenis 1.1.13, carregados pelo JS.
 Ignora "reduzir movimento" do Windows de propósito (ele quer os efeitos); `?simples` na URL desliga.
 Melhorias de efeito vão no motor (valem para todos os estudos), nunca em um estudo só.
+
+## Biblioteca
+O índice agrupa por **livro** (cartão do livro) → ao tocar, mostra os **capítulos** daquele livro (`index.html#isaias`).
+O agrupamento sai do campo `ref` de `estudos/lista.js` ("Isaías 13"), que o `montar.py` preenche sozinho.
+Legibilidade vem antes do efeito: nada pode cobrir texto que ainda está sendo lido.
 
 ## Tradução — regra de direitos autorais
 ARA e NAA são © Sociedade Bíblica do Brasil: **não copiar o capítulo inteiro** delas no site (é público).
