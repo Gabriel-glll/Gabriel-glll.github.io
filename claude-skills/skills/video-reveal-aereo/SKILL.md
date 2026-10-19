@@ -17,7 +17,8 @@ janela do avião (mão abre a persiana) → o prédio aparece entre as nuvens �
    - **Requisito:** vídeo no Weave só funciona em **plano pago** do Figma/Weave. Se der "Video models are only available on paid plans", existem dois caminhos:
      a) o usuário assina o Weave (app.weavy.ai) e o fluxo segue pelo conector;
      b) rota fal.ai: o usuário cria a conta e coloca a chave na variável de ambiente `FAL_KEY` (nunca colar a chave no chat). Depois disso, chame `https://queue.fal.run/bytedance/seedance-2.0/reference-to-video` (ou `fal-ai/kling-video/...`) via curl com o header `Authorization: Key $FAL_KEY`, os mesmos campos e o prompt abaixo.
-     c) sem API: entregue o prompt + a imagem para o usuário colar em kling.ai, Higgsfield ou Seedance (Dreamina/CapCut).
+     c) **GRÁTIS (preferido sem plano pago):** usar os créditos diários grátis de kling.ai (melhor opção, tem first+last frame), Dreamina/CapCut (Seedance), Hailuo, Vidu ou Gemini (Veo). O usuário faz login uma vez no navegador do app, e o Claude opera o site: sobe a foto, cola o prompt, gera e baixa. O Claude NUNCA cria conta nem digita senha. No plano grátis os vídeos têm ~5 s, então gere em 2 partes (avião→cidade, depois rua→fachada, com o último quadro da parte 1 como primeiro quadro da parte 2) e junte com ffmpeg: `ffmpeg -f concat -safe 0 -i lista.txt -c copy final.mp4`.
+     - Rodar localmente (Wan/ComfyUI) exige GPU dedicada; o PC atual do usuário (Intel Iris Xe, 8 GB) não roda.
 3. Gastar créditos exige aprovação: sempre mostre o custo ao usuário e espere o "sim" antes de passar o `acknowledgedCost`.
 
 ## Prompt-base (em inglês; os modelos respondem melhor)
