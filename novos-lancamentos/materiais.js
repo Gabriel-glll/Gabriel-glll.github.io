@@ -529,5 +529,12 @@ window.MATERIAIS = {
         "titulo": "Tabela Out/2026"
       }
     ]
+  },
+  "be-mansoes": {
+    "fotos": 15,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/be-mansoes.pdf?v=1792435844",
+      "titulo": "Book Be Mansões"
+    }
   }
 };
