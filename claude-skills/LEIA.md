@@ -14,6 +14,7 @@ Para cada skill da tabela:
 | `texturas` | Textura na arte/foto/vídeo (papel, grunge, filme, halftone, vidro...). Baixe também `skills/texturas/texturizar.py` para `Documents/claude/motion-studio/texturas/` (precisa de `pip install pillow numpy`). |
 | `fontes-cinematograficas` | Fonte certa para cada clima + pôster/slide de carrossel (foto + título script + adjetivos). Baixe também `skills/fontes-cinematograficas/Poster.tsx` para `motion-studio/src/` e registre como `<Still id="Poster" width={1080} height={1350}>`. |
 | `video-lancamento-site` | Vídeo de lançamento de site/app com /brag + Remotion. Baixe também `skills/video-lancamento-site/trilha.py` para `Documents/claude/motion-studio/audio/`. Instale o /brag e o FFmpeg conforme o SKILL.md. |
+| `estudo-biblia` | Estudo bíblico capítulo a capítulo → página de rolagem em gabriel-glll.github.io/estudos-biblia (clone o repo `Gabriel-glll/estudos-biblia` em Documents/claude). |
 | `video-reveal-aereo` | Vídeo IA plano-sequência: janela do avião → voo → rua → fachada do prédio (criativo de lançamento imobiliário). |
 
 ## 2. Estúdio de mídia (dependências)
