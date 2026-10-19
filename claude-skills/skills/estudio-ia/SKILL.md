@@ -41,6 +41,7 @@ Os erros "Eve/PromptScript does not support global" podem ser ignorados. As skil
 | Qualquer modelo avulso | `muapi-models` |
 | Motion (texto/formas animadas, anúncio com fotos) — GRÁTIS | `motion-design` (Remotion) |
 | Textura / acabamento (papel, grunge, filme, halftone...) — GRÁTIS | `texturas` |
+| Vídeo de lançamento de site/app (/brag) — GRÁTIS | `video-lancamento-site` |
 
 ## Rotas por custo
 1. **Grátis:** créditos diários de kling.ai, Dreamina/CapCut (Seedance), Hailuo, Vidu e Gemini (Veo). O usuário loga uma vez no navegador do app e o Claude opera o site. Os vídeos têm ~5 s, marca d'água e 720p.

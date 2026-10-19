@@ -175,8 +175,8 @@ export const Wipe: React.FC<Base & {from?: 'left' | 'right'; bar?: string}> = ({
 	const clip = from === 'left' ? `inset(0 ${rest}% 0 0)` : `inset(0 0 0 ${rest}%)`;
 	const edge = from === 'left' ? {left: `${p * 100}%`} : {right: `${p * 100}%`};
 	return (
-		<div style={{position: 'absolute', inset: 0, ...style}}>
-			<div style={{position: 'absolute', inset: 0, clipPath: clip}}>{children}</div>
+		<div style={{position: 'absolute', inset: 0}}>
+			<div style={{position: 'absolute', inset: 0, clipPath: clip, ...style}}>{children}</div>
 			{p > 0 && p < 1 && <div style={{position: 'absolute', top: 0, bottom: 0, width: 18, marginLeft: -9, background: bar, ...edge}} />}
 		</div>
 	);
