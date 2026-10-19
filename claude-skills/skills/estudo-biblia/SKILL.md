@@ -18,6 +18,15 @@ Dúvidas depois: responda no chat; se a resposta for boa para o estudo, acrescen
 6. **Curiosidade**: UMA só, simples e leve, ligada ao texto (arqueologia, história, cultura), com foto.
 7. **Para levar** (frase final) + fontes.
 
+## Visual (padrão, baseado no demo gabriel-glll.github.io/vm-scroll)
+O motor `assets/estudo.js` + `estudo.css` já faz tudo, igual para todo estudo — só preencha os dados:
+capa com a foto dentro do número do capítulo + anel de texto girando + mergulho na imagem; faixas que
+aceleram com a rolagem; cartões empilhados; palavras acendendo; linha do tempo horizontal; versículo do
+centro aceso; palavras originais em tela cheia; curiosidade abrindo em círculo; **loop infinito** (no fim,
+a capa reaparece e a página volta ao topo). GSAP 3.12.5 + ScrollTrigger + Lenis 1.1.13, carregados pelo JS.
+Ignora "reduzir movimento" do Windows de propósito (ele quer os efeitos); `?simples` na URL desliga.
+Melhorias de efeito vão no motor (valem para todos os estudos), nunca em um estudo só.
+
 ## Tradução — regra de direitos autorais
 ARA e NAA são © Sociedade Bíblica do Brasil: **não copiar o capítulo inteiro** delas no site (é público).
 - Texto puro e texto anotado: **Bíblia Livre 2018** (revisão aberta da Almeida, CC BY), gerado automaticamente.
