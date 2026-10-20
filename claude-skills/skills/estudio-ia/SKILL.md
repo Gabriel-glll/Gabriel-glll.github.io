@@ -49,6 +49,7 @@ Os erros "Eve/PromptScript does not support global" podem ser ignorados. As skil
 | Site/landing animado (scroll, parallax, texto letra a letra, estilo de referência) — GRÁTIS | `ui-animada` (GSAP, design-dna, genjutsu, threejs, lottie) |
 | Referência/inspiração, fontes grátis comerciais (Fontshare), paletas | `referencias-design` |
 | Cômodo vazio → mobiliado (home staging em vídeo, "ambiente se montando") | `ambiente-montagem` |
+| Reel explicativo/venda com interface, números e CTA ("Comenta X") em código — GRÁTIS | `reel-explicativo` (HyperFrames) |
 | Ilustração em linha fina isométrica e interativa (ícone animado de site/apresentação) — GRÁTIS | `hairline-create` / `hairline-adopt` (lucasmarkes/hairline). Exemplo: `criativos/hairline/hairline-torre.html` (prédio na planta). Regras: sem cor, sem texto no desenho, 1 ideia; checar com `look.mjs` |
 | Editar/gerar IMAGEM por IA hoje (sem chave): Weave Nano Banana 2.1 funciona no plano atual (~10 créditos) | ver `ambiente-montagem` |
 
