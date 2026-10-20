@@ -6,6 +6,7 @@ description: Central de criativos com IA (imagem, vídeo, motion, áudio) — di
 # Estúdio IA — o que usar e como montar
 
 Origem: reel @felipetambara.ia ("comenta CINEMA"). Ele apresenta o **Open-Higgsfield-AI**, hoje chamado **Open Generative AI** (github.com/Anil-matcha/Open-Generative-AI, ~30 mil estrelas, MIT). É o "estúdio de cinema do Higgsfield" de graça e open source: 600+ modelos (Seedance 2.0/2.5, Kling 3, Veo 3, Sora 2, Wan, Hailuo, Flux, Nano Banana, Midjourney...) e um Cinema Studio com câmera, lente, focal e abertura.
+Tem quatro estúdios num app só: **imagem, vídeo, lip sync** (boca sincronizada com áudio) e **cinema**. Funciona com a sua própria chave de API, sem mensalidade (também citado por @fabianocarvalhojr).
 O app é grátis; **gerar custa créditos Muapi (pay-per-use, sem crédito grátis)**. Gerar localmente exige GPU NVIDIA/AMD.
 
 ## Para o Claude: a parte que importa
