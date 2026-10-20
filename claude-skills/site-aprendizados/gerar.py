@@ -129,10 +129,34 @@ def card(i, a):
 </article>'''
 
 
+# prévia de cada efeito nos cards do guia: (arquivo, ajuste) — ajuste "cover" corta para encher, "contain" mostra inteiro
+PREVIAS = {
+    'motion': ('prev/motion.mp4', 'contain'), 'texturas': ('ex/textura-combo.jpg', 'cover'), 'fontes': ('ex/poster-1-elegante.jpg', 'cover'),
+    'anuncio': ('ex/anuncio-lazur-feed.jpg', 'cover'), 'beat': ('prev/beat.mp4', 'contain'), 'brag': ('prev/brag.mp4', 'contain'),
+    'landing': ('prev/landing.mp4', 'cover esq'), 'produto3d': ('prev/celular.mp4', 'cover'), 'hairline': ('prev/hairline.mp4', 'cover'),
+    'reveal': ('prev/reveal-storyboard.jpg', 'contain'), 'kie': ('prev/reveal-storyboard.jpg', 'contain'),
+    'estudio': ('prev/estudio-mosaico.jpg', 'cover'), 'referencias': ('prev/referencias.jpg', 'cover'),
+    'ambiente': None,  # teste feito com foto de apartamento real: não vai para o site público
+}
+
+
+def previa(k, titulo):
+    pv = PREVIAS.get(k)
+    if not pv:
+        return '<div class="pv pv-vazio"><span>Prévia só no PC<br><small>(foi feita com a foto de um apartamento real)</small></span></div>'
+    src, fit = pv
+    if src.endswith('.mp4'):
+        capa = src.replace('.mp4', '-capa.jpg')
+        return f'<div class="pv {fit}"><video data-src="{src}" poster="{capa}" muted loop playsinline preload="none" aria-label="{E(titulo)}"></video></div>'
+    return f'<div class="pv {fit}"><img src="{src}" alt="{E(titulo)}" loading="lazy"></div>'
+
+
 def projeto(p):
-    itens = ''.join(f'<li><a href="#{k}"><b>{E(t)}</b></a><span>{E(d)}</span><em class="custo {CUSTO[porid[k]["custo"]][1]}">{CUSTO[porid[k]["custo"]][0]}</em></li>' for k, t, d in p['top'])
+    cards = ''.join(f'''<a class="ef" href="#{k}">{previa(k, t)}
+      <div class="ef-txt"><span class="rank">{n + 1}</span><b>{E(t)}</b><span class="desc">{E(d)}</span>
+      <em class="custo {CUSTO[porid[k]["custo"]][1]}">{CUSTO[porid[k]["custo"]][0]}</em></div></a>''' for n, (k, t, d) in enumerate(p['top']))
     return f'''<section class="proj" id="p-{p["id"]}"><header><h3>{E(p["n"])}</h3><p>{E(p["sub"])}</p></header>
-  <ol>{itens}</ol><p class="evite"><b>Evite:</b> {E(p["evite"])}</p></section>'''
+  <div class="efs">{cards}</div><p class="evite"><b>Evite:</b> {E(p["evite"])}</p></section>'''
 
 
 cred = []
@@ -167,7 +191,7 @@ pagina = f'''<!doctype html>
 </header>
 
 <section id="guia" class="bloco">
-  <div class="titulo"><span>01</span><h2>Qual efeito usar em cada projeto</h2><p>Em ordem de prioridade. Clique no efeito para ver o exemplo.</p></div>
+  <div class="titulo"><span>01</span><h2>Qual efeito usar em cada projeto</h2><p>Em ordem de prioridade, com a prévia de cada efeito. Clique no card para ver o exemplo completo.</p></div>
   <div class="projs">{''.join(projeto(p) for p in PROJETOS)}</div>
 </section>
 
