@@ -39,7 +39,7 @@ APRENDIZADOS = [
          bom=['sites', 'imoveis', 'produto'], midia=('iframe', 'ex/hairline-torre.html', 'Prédio na planta: passe o mouse nos andares (a torre se abre acima do escolhido)')),
     dict(id='ambiente', n='Ambiente se montando', skill='ambiente-montagem', origem='enrriquesdesign', link='https://www.instagram.com/reel/DdJr5tsuUmG/', custo='misto',
          oque='De 1 foto do imóvel: a IA gera a versão vazia (mesmo ângulo) e o vídeo mostra os móveis surgindo no lugar. Versão grátis em Remotion; versão com IA de vídeo (montagem real) é paga.',
-         bom=['imoveis', 'reels'], midia=('nota', 'O teste foi feito com a foto de um apartamento real, por isso não está publicado aqui. O vídeo está em criativos/sala-montagem no PC.', '')),
+         bom=['imoveis', 'reels'], midia=('video2', ['ex/sala-montagem.mp4', 'ex/sala-antes-vazia.jpg'], 'A sala original e a versão vazia gerada pela IA (mesmo ângulo); no vídeo, os móveis surgem um a um (versão grátis)')),
     dict(id='reveal', n='Reveal aéreo (avião → fachada)', skill='video-reveal-aereo', origem='architect.apollo', link='https://www.instagram.com/reel/Ddiy0T9ioeV/', custo='pago',
          oque='Plano-sequência de IA: janela do avião, nuvens, mergulho de drone sobre a cidade, rua e fachada do empreendimento. Prompt com 5 SHOTS cronometrados + foto da fachada como referência.',
          bom=['imoveis', 'reels'], midia=('nota', 'Exige IA de vídeo paga (Kie/Seedance ~centavos por segundo). O prompt e o comando estão prontos na skill.', 'kie.py video "<prompt>" --fim <fachada> --duracao 10')),
@@ -105,6 +105,8 @@ def midia(a):
     tipo, v, leg = a['midia']
     if tipo == 'video':
         return f'<figure class="m"><video src="{v}" controls muted loop playsinline preload="metadata"></video><figcaption>{E(leg)}</figcaption></figure>'
+    if tipo == 'video2':  # vídeo + imagem de apoio
+        return f'<figure class="m"><video src="{v[0]}" controls muted loop playsinline preload="metadata"></video><img class="apoio" src="{v[1]}" alt="" loading="lazy"><figcaption>{E(leg)}</figcaption></figure>'
     if tipo in ('img2', 'img3'):
         imgs = ''.join(f'<img src="{s}" alt="" loading="lazy">' for s in v)
         return f'<figure class="m {tipo}"><div class="imgs">{imgs}</div><figcaption>{E(leg)}</figcaption></figure>'
@@ -136,7 +138,7 @@ PREVIAS = {
     'landing': ('prev/landing.mp4', 'cover esq'), 'produto3d': ('prev/celular.mp4', 'cover'), 'hairline': ('prev/hairline.mp4', 'cover'),
     'reveal': ('prev/reveal-storyboard.jpg', 'contain'), 'kie': ('prev/reveal-storyboard.jpg', 'contain'),
     'estudio': ('prev/estudio-mosaico.jpg', 'cover'), 'referencias': ('prev/referencias.jpg', 'cover'),
-    'ambiente': None,  # teste feito com foto de apartamento real: não vai para o site público
+    'ambiente': ('prev/sala.mp4', 'cover esq'),  # foto liberada pelo Gabriel em 20/10/2026
 }
 
 

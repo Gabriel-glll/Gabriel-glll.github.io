@@ -100,3 +100,4 @@ footer summary { cursor: pointer; font-weight: 700 }
   .m iframe { aspect-ratio: 3 / 4 }
 }
 .pv.esq img, .pv.esq video { object-position: 18% center }
+.m .apoio { width: 100%; border-radius: 10px; display: block; margin-top: 8px }
