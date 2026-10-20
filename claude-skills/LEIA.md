@@ -12,6 +12,7 @@ Para cada skill da tabela:
 | `estudio-ia` | Central de criativos IA: qual ferramenta usar, instalação do estúdio Muapi e rotas grátis. **Leia primeiro.** |
 | `motion-design` | Motion em código (Remotion), grátis: dicionário de efeitos → componentes. Baixe também `skills/motion-design/motion.tsx` e monte o estúdio conforme o SKILL.md. |
 | `texturas` | Textura na arte/foto/vídeo (papel, grunge, filme, halftone, vidro...). Baixe também `skills/texturas/texturizar.py` para `Documents/claude/motion-studio/texturas/` (precisa de `pip install pillow numpy`). |
+| `produto-3d` | Visualizador 3D interativo em Three.js (360°, troca de cor, vista explodida, dia/noite). Baixe também `skills/produto-3d/predio-3d.html` para `Documents/claude/criativos/3d/`. |
 | `kie-api` | Imagem/vídeo de IA barato pela Kie API (GPT Image 2 + Seedance 2.0). Baixe também `skills/kie-api/kie.py` para `Documents/claude/motion-studio/kie/`. Chave em `KIE_API_KEY` (o Gabriel configura). |
 | `fontes-cinematograficas` | Fonte certa para cada clima + pôster/slide de carrossel (foto + título script + adjetivos). Baixe também `skills/fontes-cinematograficas/Poster.tsx` para `motion-studio/src/` e registre como `<Still id="Poster" width={1080} height={1350}>`. |
 | `video-lancamento-site` | Vídeo de lançamento de site/app com /brag + Remotion. Baixe também `skills/video-lancamento-site/trilha.py` para `Documents/claude/motion-studio/audio/`. Instale o /brag e o FFmpeg conforme o SKILL.md. |

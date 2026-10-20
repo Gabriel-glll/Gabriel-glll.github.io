@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquete 3D</title>
+<style>
+  :root { --bg:#0e1116; --card:rgba(18,22,30,.82); --ink:#f3f1ec; --muted:#a8adb8; --accent:#c8792f; }
+  * { box-sizing:border-box; margin:0; padding:0 }
+  html,body { height:100%; background:var(--bg); color:var(--ink); font-family:Inter,system-ui,sans-serif; overflow:hidden }
+  #cena { position:fixed; inset:0 }
+  .topo { position:fixed; top:20px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:flex-start; pointer-events:none }
+  .topo h1 { font-size:clamp(22px,4vw,34px); font-weight:800; letter-spacing:.5px }
+  .topo p { color:var(--muted); font-size:14px; margin-top:4px }
+  .painel { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:var(--card); backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:14px 16px; display:flex; flex-wrap:wrap; gap:14px 22px; align-items:center;
+    justify-content:center; width:min(760px, calc(100% - 32px)) }
+  .grupo { display:flex; align-items:center; gap:8px }
+  .grupo span { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-right:2px }
+  .cor { width:28px; height:28px; border-radius:50%; border:2px solid transparent; cursor:pointer }
+  .cor.on { border-color:#fff }
+  button { background:rgba(255,255,255,.08); color:var(--ink); border:0; border-radius:10px; padding:8px 12px; font:600 13px Inter,system-ui,sans-serif; cursor:pointer }
+  button.on { background:var(--accent); color:#fff }
+</style>
+</head>
+<body>
+<div id="cena"></div>
+<div class="topo">
+  <div><h1 id="nome">Residencial Exemplo</h1><p id="sub">Arraste para girar · role para aproximar</p></div>
+</div>
+<div class="painel">
+  <div class="grupo" id="cores"><span>Fachada</span></div>
+  <div class="grupo" id="horas"><span>Luz</span></div>
+  <div class="grupo"><span>Vista</span><button id="explodir">Explodir andares</button><button id="girar" class="on">Girar</button></div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ── Configuração (edite aqui) ───────────────────────────────────
+const CFG = {
+  nome: 'Residencial Exemplo',
+  andares: 12,
+  cores: { 'Branco + madeira': ['#eeeae3', '#7a4a2e'], 'Grafite + cobre': ['#5b5f66', '#b87333'], 'Areia + verde': ['#e3d6bf', '#4f6b52'] },
+};
+const p = new URLSearchParams(location.search);
+if (p.get('nome')) CFG.nome = p.get('nome');
+if (p.get('andares')) CFG.andares = Math.max(3, Math.min(30, +p.get('andares')));
+document.getElementById('nome').textContent = CFG.nome;
+
+// ── Cena ────────────────────────────────────────────────────────
+const el = document.getElementById('cena');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+el.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const H = 3.0; // altura do andar
+const alturaTotal = CFG.andares * H;
+const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 2000);
+camera.position.set(55, alturaTotal * 0.75, 70);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, alturaTotal * 0.45, 0);
+controls.enableDamping = true;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.8;
+controls.maxPolarAngle = Math.PI * 0.49;
+controls.minDistance = 20; controls.maxDistance = 160;
+
+const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, 0.8);
+scene.add(hemi);
+const sol = new THREE.DirectionalLight(0xffffff, 2.2);
+sol.position.set(40, 80, 30);
+sol.castShadow = true;
+sol.shadow.mapSize.set(2048, 2048);
+Object.assign(sol.shadow.camera, { left: -60, right: 60, top: 80, bottom: -20, far: 250 });
+scene.add(sol);
+
+// chão + praça
+const chao = new THREE.Mesh(new THREE.CircleGeometry(120, 64), new THREE.MeshStandardMaterial({ color: 0x6f7f5e, roughness: 1 }));
+chao.rotation.x = -Math.PI / 2; chao.receiveShadow = true; scene.add(chao);
+const praca = new THREE.Mesh(new THREE.BoxGeometry(34, 0.3, 26), new THREE.MeshStandardMaterial({ color: 0xcfc8bb, roughness: 0.9 }));
+praca.position.y = 0.15; praca.receiveShadow = true; scene.add(praca);
+const piscina = new THREE.Mesh(new THREE.BoxGeometry(10, 0.32, 5), new THREE.MeshStandardMaterial({ color: 0x3fa7d6, roughness: 0.15, metalness: 0.1 }));
+piscina.position.set(9, 0.17, 8); scene.add(piscina);
+for (let i = 0; i < 14; i++) { // árvores
+  const a = (i / 14) * Math.PI * 2, r = 24 + (i % 3) * 3;
+  const copa = new THREE.Mesh(new THREE.SphereGeometry(1.6 + (i % 2) * 0.6, 12, 10), new THREE.MeshStandardMaterial({ color: 0x3f6b3a, roughness: 1 }));
+  copa.position.set(Math.cos(a) * r, 2.6, Math.sin(a) * r); copa.castShadow = true; scene.add(copa);
+  const tronco = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 2), new THREE.MeshStandardMaterial({ color: 0x5a3d26 }));
+  tronco.position.set(copa.position.x, 1, copa.position.z); scene.add(tronco);
+}
+
+// ── Prédio: um grupo por andar (para a vista explodida) ────────
+const matParede = new THREE.MeshStandardMaterial({ color: '#eeeae3', roughness: 0.8 });
+const matDestaque = new THREE.MeshStandardMaterial({ color: '#7a4a2e', roughness: 0.7 });
+const matVidro = new THREE.MeshStandardMaterial({ color: 0x2b3a48, roughness: 0.1, metalness: 0.6, emissive: 0xffc77a, emissiveIntensity: 0 });
+const matLaje = new THREE.MeshStandardMaterial({ color: 0xd9d4cb, roughness: 0.9 });
+const matGuarda = new THREE.MeshStandardMaterial({ color: 0xbfd3dc, transparent: true, opacity: 0.45, roughness: 0.05 });
+const W = 18, D = 12;
+const andares = [];
+for (let i = 0; i < CFG.andares; i++) {
+  const g = new THREE.Group();
+  const laje = new THREE.Mesh(new THREE.BoxGeometry(W + 3, 0.35, D + 1), matLaje);
+  laje.position.y = 0; laje.castShadow = laje.receiveShadow = true; g.add(laje);
+  const corpo = new THREE.Mesh(new THREE.BoxGeometry(W, H - 0.35, D), i % 4 === 1 ? matDestaque : matParede);
+  corpo.position.y = H / 2; corpo.castShadow = true; g.add(corpo);
+  // faixa de janelas nas 4 faces
+  [[0, D / 2 + 0.01, 0, W - 2], [0, -D / 2 - 0.01, Math.PI, W - 2], [W / 2 + 0.01, 0, Math.PI / 2, D - 2], [-W / 2 - 0.01, 0, -Math.PI / 2, D - 2]].forEach(([x, z, ry, len]) => {
+    const vidro = new THREE.Mesh(new THREE.PlaneGeometry(len, 1.7), matVidro);
+    vidro.position.set(x, H / 2 + 0.1, z); vidro.rotation.y = ry; g.add(vidro);
+  });
+  // varanda com guarda-corpo de vidro (frente)
+  const guarda = new THREE.Mesh(new THREE.BoxGeometry(W + 3, 1.0, 0.08), matGuarda);
+  guarda.position.set(0, 0.7, D / 2 + 0.5); g.add(guarda);
+  g.userData.y0 = i * H + 0.3;
+  g.position.y = g.userData.y0;
+  scene.add(g); andares.push(g);
+}
+const cobertura = new THREE.Mesh(new THREE.BoxGeometry(W + 3, 0.6, D + 1), matLaje);
+cobertura.castShadow = true; scene.add(cobertura);
+
+// ── Controles ───────────────────────────────────────────────────
+const cores = document.getElementById('cores');
+Object.entries(CFG.cores).forEach(([nome, [a, b]], i) => {
+  const s = document.createElement('div');
+  s.className = 'cor' + (i === 0 ? ' on' : ''); s.title = nome;
+  s.style.background = `linear-gradient(135deg, ${a} 50%, ${b} 50%)`;
+  s.onclick = () => { matParede.color.set(a); matDestaque.color.set(b); [...cores.querySelectorAll('.cor')].forEach(c => c.classList.remove('on')); s.classList.add('on'); };
+  cores.appendChild(s);
+});
+
+const LUZ = {
+  Dia:        { ceu: '#a9cbe8', sol: 2.4, solCor: '#ffffff', hemi: 0.9, janelas: 0,   exp: 1.0, pos: [40, 80, 30] },
+  Entardecer: { ceu: '#e8a87c', sol: 1.8, solCor: '#ffb070', hemi: 0.75, janelas: 0.25, exp: 1.05, pos: [70, 35, 40] },
+  Noite:      { ceu: '#0f1626', sol: 0.25, solCor: '#8aa0ff', hemi: 0.35, janelas: 1.6, exp: 1.1, pos: [-30, 60, -20] },
+};
+const horas = document.getElementById('horas');
+function aplicarLuz(k) {
+  const L = LUZ[k];
+  scene.background = new THREE.Color(L.ceu);
+  scene.fog = new THREE.Fog(L.ceu, 120, 320);
+  sol.intensity = L.sol; sol.color.set(L.solCor); sol.position.set(...L.pos);
+  hemi.intensity = L.hemi; matVidro.emissiveIntensity = L.janelas; renderer.toneMappingExposure = L.exp;
+  [...horas.querySelectorAll('button')].forEach(b => b.classList.toggle('on', b.textContent === k));
+}
+Object.keys(LUZ).forEach(k => { const b = document.createElement('button'); b.textContent = k; b.onclick = () => aplicarLuz(k); horas.appendChild(b); });
+aplicarLuz(p.get('luz') || 'Entardecer');
+
+let explodir = 0, alvo = 0;
+const bExp = document.getElementById('explodir');
+bExp.onclick = () => { alvo = alvo ? 0 : 1; bExp.classList.toggle('on', !!alvo); bExp.textContent = alvo ? 'Juntar andares' : 'Explodir andares'; };
+const bGir = document.getElementById('girar');
+bGir.onclick = () => { controls.autoRotate = !controls.autoRotate; bGir.classList.toggle('on', controls.autoRotate); };
+if (p.get('explodido')) bExp.click();
+
+// ── Loop ────────────────────────────────────────────────────────
+const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+function tick() {
+  explodir += (alvo - explodir) * 0.06; // aproxima suave
+  const e = ease(Math.min(1, Math.max(0, explodir)));
+  andares.forEach((g, i) => { g.position.y = g.userData.y0 + i * 1.3 * e; g.rotation.y = (i % 2 ? 1 : -1) * 0.12 * e; });
+  cobertura.position.y = CFG.andares * H + 0.6 + CFG.andares * 1.3 * e;
+  controls.target.y = alturaTotal * (0.45 + 0.25 * e);
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+tick();
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+</script>
+</body>
+</html>
