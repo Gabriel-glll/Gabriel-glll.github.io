@@ -12,6 +12,7 @@ Para cada skill da tabela:
 | `estudio-ia` | Central de criativos IA: qual ferramenta usar, instalação do estúdio Muapi e rotas grátis. **Leia primeiro.** |
 | `motion-design` | Motion em código (Remotion), grátis: dicionário de efeitos → componentes. Baixe também `skills/motion-design/motion.tsx` e monte o estúdio conforme o SKILL.md. |
 | `texturas` | Textura na arte/foto/vídeo (papel, grunge, filme, halftone, vidro...). Baixe também `skills/texturas/texturizar.py` para `Documents/claude/motion-studio/texturas/` (precisa de `pip install pillow numpy`). |
+| `ui-animada` | Guia das 5 skills de animação de interface + landing de lançamento animada (GSAP/scroll). Baixe também `skills/ui-animada/index.html` para `Documents/claude/criativos/gsap-lazur/`. |
 | `edicao-beat-sync` | Edit com cortes sincronizados na música (detecção de bumbo + grade rítmica + Remotion). Baixe também `beatsync.py` e `batida_phonk.py` → `motion-studio/audio/`, `fotos_hd.py` → `motion-studio/tools/`, `BeatEdit.tsx` → `motion-studio/src/`. Rode `pip install librosa soundfile`. |
 | `produto-3d` | Visualizador 3D interativo em Three.js (360°, troca de cor, vista explodida, dia/noite). Baixe também `skills/produto-3d/predio-3d.html` para `Documents/claude/criativos/3d/`. |
 | `kie-api` | Imagem/vídeo de IA barato pela Kie API (GPT Image 2 + Seedance 2.0). Baixe também `skills/kie-api/kie.py` para `Documents/claude/motion-studio/kie/`. Chave em `KIE_API_KEY` (o Gabriel configura). |
@@ -19,6 +20,15 @@ Para cada skill da tabela:
 | `video-lancamento-site` | Vídeo de lançamento de site/app com /brag + Remotion. Baixe também `skills/video-lancamento-site/trilha.py` para `Documents/claude/motion-studio/audio/`. Instale o /brag e o FFmpeg conforme o SKILL.md. |
 | `estudo-biblia` | Estudo bíblico capítulo a capítulo → página de rolagem em gabriel-glll.github.io/estudos-biblia (clone o repo `Gabriel-glll/estudos-biblia` em Documents/claude). |
 | `video-reveal-aereo` | Vídeo IA plano-sequência: janela do avião → voo → rua → fachada do prédio (criativo de lançamento imobiliário). |
+
+## 1b. Skills de terceiros (interface animada) — ver `ui-animada`
+```
+npx -y skills add greensock/gsap-skills --all -g -a claude-code -y
+npx -y skills add zanwei/design-dna --all -g -a claude-code -y
+npx -y skills add AThevon/genjutsu --all -g -a claude-code -y
+npx -y skills add cloudai-x/threejs-skills --all -g -a claude-code -y
+```
+LottieFiles (`lottiefiles/motion-design-skill`): instale numa pasta temporária SEM `-g` e copie para `~/.claude/skills/lottie-motion-design`, trocando o `name:` para `lottie-motion-design`. O nome original `motion-design` sobrescreveria a skill do Gabriel.
 
 ## 2. Estúdio de mídia (dependências)
 Rode no terminal; os detalhes estão na skill `estudio-ia`:

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lazur · Lançamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f6f2ec; --ink:#1d1b18; --muted:#7b7368; --accent:#b0643a; --dark:#14120f }
+  * { box-sizing:border-box; margin:0; padding:0 }
+  html { scroll-behavior:auto }
+  body { background:var(--bg); color:var(--ink); font-family:Inter,system-ui,sans-serif; overflow-x:hidden }
+  img { display:block; width:100%; height:100%; object-fit:cover }
+
+  /* 1. hero */
+  .hero { position:relative; height:100vh; overflow:hidden; background:var(--dark) }
+  .hero .foto { position:absolute; inset:-8% 0 0 0; height:116% }
+  .hero .foto img { filter:brightness(.62) }
+  .hero .txt { position:absolute; left:6vw; bottom:12vh; color:#fff }
+  .hero small { display:block; font-size:12px; letter-spacing:5px; text-transform:uppercase; opacity:.85 }
+  .hero h1 { font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(84px,17vw,230px); line-height:.9; margin:10px 0 18px }
+  .hero p { font-size:clamp(15px,1.6vw,19px); font-weight:300; max-width:440px; line-height:1.55 }
+  .rolar { position:absolute; right:6vw; bottom:12vh; color:#fff; font-size:12px; letter-spacing:3px; text-transform:uppercase; opacity:.8 }
+
+  /* 2. manifesto */
+  .manifesto { padding:22vh 6vw; max-width:1100px }
+  .manifesto h2 { font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(32px,5vw,64px); line-height:1.12 }
+  .manifesto h2 .w { display:inline-block; opacity:.12 }
+
+  /* 3. galeria horizontal fixada */
+  .galeria { height:100vh; overflow:hidden; display:flex; align-items:center; background:var(--dark); color:#fff }
+  .trilho { display:flex; gap:4vw; padding:0 6vw; will-change:transform }
+  .card { flex:0 0 auto; width:min(62vw,820px) }
+  .card .img { height:62vh; overflow:hidden; border-radius:6px }
+  .card .img img { transform:scale(1.001) }
+  .card h3 { font-family:'DM Serif Display',serif; font-weight:400; font-size:30px; margin-top:18px }
+  .card p { color:#b9b1a6; font-size:15px; margin-top:4px }
+  .galeria .intro { flex:0 0 auto; width:min(34vw,420px); align-self:center }
+  .galeria .intro small { font-size:12px; letter-spacing:4px; text-transform:uppercase; color:var(--accent) }
+  .galeria .intro h2 { font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(40px,4.5vw,64px); line-height:1.05; margin-top:12px }
+
+  /* 4. números */
+  .numeros { padding:20vh 6vw; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:48px 32px }
+  .num b { display:block; font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(56px,7vw,96px); line-height:1 }
+  .num span { display:block; margin-top:10px; color:var(--muted); font-size:15px; line-height:1.5; border-top:1px solid #d9d1c5; padding-top:12px }
+
+  /* 5. plantas */
+  .plantas { padding:0 6vw 20vh; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px }
+  .planta { background:#fff; border-radius:8px; padding:36px; border:1px solid #e7e0d5 }
+  .planta b { font-family:'DM Serif Display',serif; font-weight:400; font-size:54px }
+  .planta h4 { font-size:18px; margin:6px 0 10px }
+  .planta p { color:var(--muted); line-height:1.6; font-size:15px }
+
+  /* 6. cta */
+  .cta { position:relative; height:90vh; overflow:hidden; display:flex; align-items:center; justify-content:center; text-align:center; color:#fff; background:var(--dark) }
+  .cta .foto { position:absolute; inset:0 }
+  .cta .foto img { filter:brightness(.45) }
+  .cta .conteudo { position:relative; padding:0 24px }
+  .cta h2 { font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(44px,7vw,96px); line-height:1 }
+  .cta a { display:inline-block; margin-top:32px; background:#fff; color:var(--ink); text-decoration:none; padding:16px 30px; border-radius:999px; font-weight:600 }
+  footer { padding:28px 6vw; font-size:12px; color:var(--muted) }
+
+  @media (max-width:760px) {
+    .galeria .intro { width:78vw } .card { width:80vw } .card .img { height:52vh }
+  }
+  @media (prefers-reduced-motion: reduce) { html:not(.animar) .manifesto h2 .w { opacity:1 } }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="foto"><img src="01.jpg" alt="Fachada do Lazur ao entardecer"></div>
+  <div class="txt">
+    <small>Tegra · Mansões Santo Antônio · Campinas</small>
+    <h1 id="titulo">Lazur</h1>
+    <p id="sub">2 e 3 dormitórios com suíte e penthouses até 116 m². Lazer de clube a poucos passos de casa.</p>
+  </div>
+  <div class="rolar" id="rolar">Role ↓</div>
+</section>
+
+<section class="manifesto">
+  <h2 id="manifesto">Um endereço pensado para quem quer viver o bairro: piscina com raia de 20 metros, quadra, espaço gourmet e praças para os fins de tarde.</h2>
+</section>
+
+<section class="galeria" id="galeria">
+  <div class="trilho" id="trilho">
+    <div class="intro"><small>Lazer completo</small><h2>Seu fim de semana começa no térreo.</h2></div>
+    <div class="card"><div class="img"><img src="05.jpg" alt=""></div><h3>Piscina com raia</h3><p>20 metros para nadar de verdade</p></div>
+    <div class="card"><div class="img"><img src="06.jpg" alt=""></div><h3>Deck e piscina infantil</h3><p>Para as tardes em família</p></div>
+    <div class="card"><div class="img"><img src="08.jpg" alt=""></div><h3>Praças</h3><p>Áreas verdes para desacelerar</p></div>
+    <div class="card"><div class="img"><img src="11.jpg" alt=""></div><h3>Quadra poliesportiva</h3><p>Com piso colorido e alambrado</p></div>
+    <div class="card"><div class="img"><img src="10.jpg" alt=""></div><h3>Playground</h3><p>Brinquedoteca e espaço kids</p></div>
+    <div class="card"><div class="img"><img src="12.jpg" alt=""></div><h3>Pet place</h3><p>O lugar deles também</p></div>
+  </div>
+</section>
+
+<section class="numeros">
+  <div class="num"><b data-n="156">0</b><span>apartamentos em torre única</span></div>
+  <div class="num"><b data-n="57" data-suf=" m²">0</b><span>a partir de, com suíte e ponto grill</span></div>
+  <div class="num"><b data-n="20" data-suf=" m">0</b><span>de raia na piscina</span></div>
+  <div class="num"><b data-n="2027" data-pre="ago/">0</b><span>previsão de entrega</span></div>
+</section>
+
+<section class="plantas">
+  <div class="planta"><b>57 m²</b><h4>2 dormitórios, 1 suíte</h4><p>Sala integrada à varanda com ponto grill, piso laminado e persianas de enrolar.</p></div>
+  <div class="planta"><b>70 m²</b><h4>3 dormitórios, 1 suíte</h4><p>Ou sala ampliada. Previsão para ar-condicionado na sala e nos dormitórios.</p></div>
+  <div class="planta"><b>78–116 m²</b><h4>Penthouses</h4><p>13 unidades exclusivas, com 2 vagas de garagem.</p></div>
+</section>
+
+<section class="cta">
+  <div class="foto"><img src="02.jpg" alt=""></div>
+  <div class="conteudo"><h2 id="ctaTitulo">Venha conhecer o decorado.</h2><a href="#" id="ctaBtn">Falar com o corretor</a></div>
+</section>
+<footer>Demonstração de animação (GSAP + ScrollTrigger). Imagens ilustrativas.</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger, SplitText);
+const mm = gsap.matchMedia();
+// ?animar=1 força as animações mesmo com 'reduzir movimento' ligado no sistema (útil para demonstração)
+const forcar = new URLSearchParams(location.search).has('animar');
+const ANIM = forcar ? '(min-width: 0px)' : '(prefers-reduced-motion: no-preference)';
+const SEM = forcar ? '(max-width: 0px)' : '(prefers-reduced-motion: reduce)';
+if (forcar) document.documentElement.classList.add('animar');
+
+mm.add(ANIM, () => {
+  // 1. hero: letras sobem uma a uma, depois subtítulo e indicador
+  const letras = SplitText.create('#titulo', { type: 'chars', mask: 'chars' });
+  gsap.timeline({ defaults: { ease: 'power4.out' } })
+    .from(letras.chars, { yPercent: 110, duration: 1.1, stagger: 0.06 })
+    .from('.hero small', { y: 16, opacity: 0, duration: 0.8 }, '-=0.7')
+    .from('#sub', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
+    .from('#rolar', { opacity: 0, duration: 0.6 }, '-=0.3');
+  // parallax suave da foto do hero (só deslocamento, sem zoom)
+  gsap.to('.hero .foto', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+  // 2. manifesto: as palavras "acendem" conforme a rolagem
+  const palavras = SplitText.create('#manifesto', { type: 'words', wordsClass: 'w' });
+  gsap.to(palavras.words, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: '.manifesto', start: 'top 75%', end: 'bottom 45%', scrub: true } });
+
+  // 3. galeria horizontal: seção fixada, trilho anda para a esquerda
+  const trilho = document.getElementById('trilho');
+  const distancia = () => trilho.scrollWidth - window.innerWidth;
+  const horizontal = gsap.to(trilho, {
+    x: () => -distancia(), ease: 'none', // ease "none" obrigatório com containerAnimation
+    scrollTrigger: { trigger: '#galeria', start: 'top top', end: () => '+=' + distancia(), pin: true, scrub: 1, invalidateOnRefresh: true }
+  });
+  gsap.utils.toArray('.card').forEach(card => {
+    gsap.from(card.querySelectorAll('h3, p'), {
+      y: 24, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power3.out',
+      scrollTrigger: { trigger: card, containerAnimation: horizontal, start: 'left 70%', toggleActions: 'play none none reverse' }
+    });
+  });
+
+  // 4. números contam ao entrar na tela
+  gsap.utils.toArray('.num b').forEach(el => {
+    const alvo = +el.dataset.n, pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+    const obj = { v: alvo > 1000 ? alvo - 6 : 0 };
+    gsap.to(obj, { v: alvo, duration: 1.6, ease: 'power2.out', onUpdate: () => (el.textContent = pre + Math.round(obj.v) + suf),
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
+  });
+
+  // 5. plantas: entram em sequência
+  ScrollTrigger.batch('.planta', { start: 'top 85%', once: true,
+    onEnter: els => gsap.from(els, { y: 50, opacity: 0, stagger: 0.12, duration: 0.8, ease: 'power3.out' }) });
+
+  // 6. CTA: título revela por linhas
+  const linhas = SplitText.create('#ctaTitulo', { type: 'lines', mask: 'lines' });
+  gsap.from([...linhas.lines, '#ctaBtn'], { yPercent: 100, opacity: 0, stagger: 0.12, duration: 1, ease: 'power4.out',
+    scrollTrigger: { trigger: '.cta', start: 'top 60%' } });
+});
+
+// sem animação (acessibilidade): mostra os números finais
+mm.add(SEM, () => {
+  document.querySelectorAll('.num b').forEach(el => (el.textContent = (el.dataset.pre || '') + el.dataset.n + (el.dataset.suf || '')));
+});
+
+window.addEventListener('load', () => ScrollTrigger.refresh()); // imagens mudam o layout
+</script>
+</body>
+</html>
