@@ -46,5 +46,6 @@ Os erros "Eve/PromptScript does not support global" podem ser ignorados. As skil
 
 ## Rotas por custo
 1. **Grátis:** créditos diários de kling.ai, Dreamina/CapCut (Seedance), Hailuo, Vidu e Gemini (Veo). O usuário loga uma vez no navegador do app e o Claude opera o site. Os vídeos têm ~5 s, marca d'água e 720p.
-2. **Pay-per-use (Muapi):** as skills `muapi-*` acima, totalmente automáticas.
+2. **Pay-per-use mais barato (Kie):** skill `kie-api` (`kie.py`): Seedance 2.0 e GPT Image 2 via `KIE_API_KEY`. Prefira a Kie à Muapi quando a chave existir.
+2b. **Pay-per-use (Muapi):** as skills `muapi-*` acima, totalmente automáticas.
 3. **Conector Figma/Weave:** já está conectado, mas vídeo exige plano pago do Figma.
