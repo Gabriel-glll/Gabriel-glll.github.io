@@ -46,6 +46,7 @@ Os erros "Eve/PromptScript does not support global" podem ser ignorados. As skil
 | 3D interativo (produto/maquete, 360°, cores, vista explodida) — GRÁTIS | `produto-3d` |
 | Edit com cortes no ritmo da música (trend/AMV, fotos de viagem) — GRÁTIS | `edicao-beat-sync` |
 | Site/landing animado (scroll, parallax, texto letra a letra, estilo de referência) — GRÁTIS | `ui-animada` (GSAP, design-dna, genjutsu, threejs, lottie) |
+| Referência/inspiração, fontes grátis comerciais (Fontshare), paletas | `referencias-design` |
 
 ## Rotas por custo
 1. **Grátis:** créditos diários de kling.ai, Dreamina/CapCut (Seedance), Hailuo, Vidu e Gemini (Veo). O usuário loga uma vez no navegador do app e o Claude opera o site. Os vídeos têm ~5 s, marca d'água e 720p.
