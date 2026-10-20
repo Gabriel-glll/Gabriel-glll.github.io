@@ -12,6 +12,7 @@ Para cada skill da tabela:
 | `estudio-ia` | Central de criativos IA: qual ferramenta usar, instalação do estúdio Muapi e rotas grátis. **Leia primeiro.** |
 | `motion-design` | Motion em código (Remotion), grátis: dicionário de efeitos → componentes. Baixe também `skills/motion-design/motion.tsx` e monte o estúdio conforme o SKILL.md. |
 | `texturas` | Textura na arte/foto/vídeo (papel, grunge, filme, halftone, vidro...). Baixe também `skills/texturas/texturizar.py` para `Documents/claude/motion-studio/texturas/` (precisa de `pip install pillow numpy`). |
+| `ambiente-montagem` | Vídeo do cômodo vazio → mobiliado: sala vazia por IA (Weave Nano Banana) + montagem grátis no Remotion, ou vídeo IA com primeiro e último quadro. Baixe também `alinhar.py` → `motion-studio/tools/`, `Montagem.tsx` → `motion-studio/src/`, `mascaras.py` → `criativos/<pasta>/`. Rode `pip install opencv-python-headless`. |
 | `referencias-design` | Banco de 9 sites de referência (Recent/Godly, Awwwards, Muzli, Fontshare...) + fluxo referência → design-dna → fontes → animação. |
 | `ui-animada` | Guia das 5 skills de animação de interface + landing de lançamento animada (GSAP/scroll). Baixe também `skills/ui-animada/index.html` para `Documents/claude/criativos/gsap-lazur/`. |
 | `edicao-beat-sync` | Edit com cortes sincronizados na música (detecção de bumbo + grade rítmica + Remotion). Baixe também `beatsync.py` e `batida_phonk.py` → `motion-studio/audio/`, `fotos_hd.py` → `motion-studio/tools/`, `BeatEdit.tsx` → `motion-studio/src/`. Rode `pip install librosa soundfile`. |
