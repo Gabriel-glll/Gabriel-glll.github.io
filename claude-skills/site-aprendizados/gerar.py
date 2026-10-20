@@ -40,9 +40,9 @@ APRENDIZADOS = [
     dict(id='ambiente', n='Ambiente se montando', skill='ambiente-montagem', origem='enrriquesdesign', link='https://www.instagram.com/reel/DdJr5tsuUmG/', custo='misto',
          oque='De 1 foto do imóvel: a IA gera a versão vazia (mesmo ângulo) e o vídeo mostra os móveis surgindo no lugar. Versão grátis em Remotion; versão com IA de vídeo (montagem real) é paga.',
          bom=['imoveis', 'reels'], midia=('video2', ['ex/sala-montagem.mp4', 'ex/sala-antes-vazia.jpg'], 'A sala original e a versão vazia gerada pela IA (mesmo ângulo); no vídeo, os móveis surgem um a um (versão grátis)')),
-    dict(id='reveal', n='Reveal aéreo (avião → fachada)', skill='video-reveal-aereo', origem='architect.apollo', link='https://www.instagram.com/reel/Ddiy0T9ioeV/', custo='pago',
+    dict(id='reveal', n='Reveal aéreo (avião → fachada)', skill='video-reveal-aereo', origem='architect.apollo', link='https://www.instagram.com/reel/Ddiy0T9ioeV/', custo='misto',
          oque='Plano-sequência de IA: janela do avião, nuvens, mergulho de drone sobre a cidade, rua e fachada do empreendimento. Prompt com 5 SHOTS cronometrados + foto da fachada como referência.',
-         bom=['imoveis', 'reels'], midia=('nota', 'Exige IA de vídeo paga (Kie/Seedance ~centavos por segundo). O prompt e o comando estão prontos na skill.', 'kie.py video "<prompt>" --fim <fachada> --duracao 10')),
+         bom=['imoveis', 'reels'], midia=('img2', ['ex/flow-reveal-2.jpg', 'prev/reveal-storyboard.jpg'], 'O 1º quadro gerado grátis no Google Flow e o roteiro de planos. O vídeo sai no Flow (modo Frames, 10 créditos grátis por clipe) ou na Kie (pago).')),
     dict(id='kie', n='Kie API: IA paga mais barata', skill='kie-api', origem='euguilhermepasin', link='https://www.instagram.com/reel/DdpIqW1z_GO/', custo='pago',
          oque='Os mesmos modelos do Higgsfield (Seedance 2.0, GPT Image 2, Veo, Kling) por API, pagando só o que usar. O Claude vira o "artista gráfico": gera e baixa sozinho.',
          bom=['reels', 'produto', 'imoveis'], midia=('nota', 'Pronto para usar assim que a chave KIE_API_KEY for configurada.', 'python kie.py imagem "..." --proporcao 4:5')),
@@ -52,6 +52,9 @@ APRENDIZADOS = [
     dict(id='referencias', n='Banco de referências de design', skill='referencias-design', origem='kacio.filipe', link='https://www.instagram.com/p/Dd7AobimijR/', custo='gratis',
          oque='Recent/Godly, Awwwards, Muzli, Fontshare, SaaS Frame, Inspotype, Jitter, Design Reviewed, Brik Space, e o fluxo referência → extrair estilo (design-dna) → fontes → animação.',
          bom=['sites', 'criativos', 'marca'], midia=('links', [('Recent (Godly)', 'https://recent.design'), ('Awwwards', 'https://www.awwwards.com'), ('Fontshare', 'https://www.fontshare.com'), ('Inspotype', 'https://inspotype.com'), ('Design Reviewed', 'https://www.designreviewed.com'), ('Jitter', 'https://jitter.video')], '')),
+    dict(id='iagratis', n='IA grátis: Google Flow, Pomelli, Fish Audio', skill='ia-gratis', origem='katecore.ai', link='https://www.instagram.com/reel/DdhoP0ExLKw/', custo='gratis',
+         oque='Troca das pagas pelas grátis: Google Flow (imagem Nano Banana sem custo + 50 créditos/dia de vídeo Veo, com quadro inicial e final), Pomelli (posts com a identidade da marca a partir do site) e Fish Audio (narração com API grátis). Já conectadas na sua conta Google.',
+         bom=['imoveis', 'reels', 'criativos', 'produto'], midia=('img3', ['ex/flow-reveal-1.jpg', 'ex/flow-reveal-2.jpg', 'ex/pomelli-boleros.jpg'], 'Google Flow (grátis): o 1º quadro do reveal aéreo. Pomelli (grátis): post do Bolêros com as cores e o tom da marca, lidos do site')),
 ]
 
 PROJETOS = [
@@ -60,13 +63,15 @@ PROJETOS = [
         ('beat', 'Reels com as fotos do empreendimento no ritmo', 'foto parada, corte na batida, música da biblioteca do Instagram'),
         ('ambiente', 'Sala vazia → mobiliada', 'revenda de imóvel vazio ou "home staging" virtual'),
         ('landing', 'Página do lançamento animada', 'galeria de lazer que trava no scroll, números da obra'),
-        ('reveal', 'Reveal aéreo', 'o "uau" de lançamento grande, quando valer pagar a IA'),
+        ('reveal', 'Reveal aéreo', 'o "uau" de lançamento grande: agora dá para fazer no Google Flow grátis (Frames)'),
+        ('iagratis', 'Imagem e vídeo com IA grátis', 'Google Flow: imagens sem custo + 5 vídeos curtos por dia'),
         ('hairline', 'Ícone vivo "na planta"', 'em apresentação ou site, explica a obra sem palavras'),
     ], evite='zoom e legenda em cima das fotos; layout "corporativo" (painel escuro + tabela); maquete 3D feita à mão.'),
     dict(id='sites', n='Sites para comércio', sub='Negócio de sites (R$ 800 + R$ 99/mês)', top=[
         ('brag', 'Vídeo de lançamento do site', 'vai junto da proposta: o cliente posta e vê o valor na hora'),
         ('landing', 'Animações de scroll (GSAP)', 'título letra a letra, seções que entram em sequência, contadores'),
         ('referencias', 'Referência + fontes Fontshare', 'cada demo com direção de arte própria, não "template"'),
+        ('iagratis', 'Posts da marca do cliente (Pomelli)', 'lê o site do comércio e gera campanhas no estilo dele, grátis'),
         ('hairline', 'Ilustrações em linha nas seções', '"como funciona" sem ícones genéricos'),
         ('produto3d', 'Produto em 3D', 'só para loja com produto físico de destaque'),
     ], evite='3D pesado em site simples; animação que ignora "reduzir movimento"; fontes só para uso pessoal.'),
@@ -80,7 +85,8 @@ PROJETOS = [
         ('beat', 'Cortes na batida', 'o formato que mais prende: 1 foto por golpe de bumbo'),
         ('motion', 'Motion design em código', 'textos e formas animadas, 8–15 s, grátis'),
         ('brag', 'Vídeo de produto/site', 'mostra a coisa funcionando, com trilha própria'),
-        ('kie', 'Cenas geradas por IA', 'quando precisar de imagem que não existe (pago)'),
+        ('iagratis', 'Cenas geradas por IA (grátis)', 'Google Flow primeiro; Kie só se precisar de mais que 5 vídeos/dia'),
+        ('kie', 'Cenas por IA em volume', 'quando o grátis do dia não bastar (pago, barato)'),
     ], evite='zoom/Ken Burns em foto e texto em cima da imagem; música de terceiros fora da biblioteca do app.'),
     dict(id='produto', n='Produto e e-commerce', sub='Lojas, lançamentos de produto', top=[
         ('produto3d', 'Configurador 3D', '360°, cores e vista explodida: parece site de marca grande'),
@@ -136,7 +142,7 @@ PREVIAS = {
     'motion': ('prev/motion.mp4', 'contain'), 'texturas': ('ex/textura-combo.jpg', 'cover'), 'fontes': ('ex/poster-1-elegante.jpg', 'cover'),
     'anuncio': ('ex/anuncio-lazur-feed.jpg', 'cover'), 'beat': ('prev/beat.mp4', 'contain'), 'brag': ('prev/brag.mp4', 'contain'),
     'landing': ('prev/landing.mp4', 'cover esq'), 'produto3d': ('prev/celular.mp4', 'cover'), 'hairline': ('prev/hairline.mp4', 'cover'),
-    'reveal': ('prev/reveal-storyboard.jpg', 'contain'), 'kie': ('prev/reveal-storyboard.jpg', 'contain'),
+    'reveal': ('ex/flow-reveal-2.jpg', 'cover'), 'iagratis': ('ex/flow-reveal-1.jpg', 'cover'), 'kie': ('prev/reveal-storyboard.jpg', 'contain'),
     'estudio': ('prev/estudio-mosaico.jpg', 'cover'), 'referencias': ('prev/referencias.jpg', 'cover'),
     'ambiente': ('prev/sala.mp4', 'cover esq'),  # foto liberada pelo Gabriel em 20/10/2026
 }

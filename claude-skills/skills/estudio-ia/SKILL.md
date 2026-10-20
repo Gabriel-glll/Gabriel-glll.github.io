@@ -53,7 +53,8 @@ Os erros "Eve/PromptScript does not support global" podem ser ignorados. As skil
 | Editar/gerar IMAGEM por IA hoje (sem chave): Weave Nano Banana 2.1 funciona no plano atual (~10 créditos) | ver `ambiente-montagem` |
 
 ## Rotas por custo
-1. **Grátis:** créditos diários de kling.ai, Dreamina/CapCut (Seedance), Hailuo, Vidu e Gemini (Veo). O usuário loga uma vez no navegador do app e o Claude opera o site. Os vídeos têm ~5 s, marca d'água e 720p.
+0. **Grátis e já conectado (preferir sempre):** skill `ia-gratis`: Google Flow (imagem Nano Banana 0 crédito; vídeo Veo 3.1 Lite com quadro inicial e final, 50 créditos/dia), Pomelli (posts com a marca do cliente) e Fish Audio (voz). Contas Google do Gabriel já logadas no navegador do app.
+1. **Grátis (outros):** créditos diários de kling.ai, Dreamina/CapCut (Seedance), Hailuo, Vidu e Gemini (Veo). O usuário loga uma vez no navegador do app e o Claude opera o site. Os vídeos têm ~5 s, marca d'água e 720p.
 2. **Pay-per-use mais barato (Kie):** skill `kie-api` (`kie.py`): Seedance 2.0 e GPT Image 2 via `KIE_API_KEY`. Prefira a Kie à Muapi quando a chave existir.
 2b. **Pay-per-use (Muapi):** as skills `muapi-*` acima, totalmente automáticas.
 3. **Conector Figma/Weave:** já está conectado, mas vídeo exige plano pago do Figma.
