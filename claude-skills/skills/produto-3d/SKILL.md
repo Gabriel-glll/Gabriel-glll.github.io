@@ -11,7 +11,18 @@ Aqui **não precisa do conector**: o Claude escreve o Three.js direto numa pági
 Prompt do reel (adaptável):
 > Use Three.js para criar um protótipo de visualizador 3D de produto para e-commerce. Crie um modelo 3D de [produto] flutuando no centro, com iluminação de estúdio. Painel de controle para: 1) mudar a cor do produto em tempo real; 2) modo "Exploded View" (as peças se separam para mostrar a engenharia interna) ao clicar; 3) rotação automática suave de 360°. Deve parecer um site de luxo.
 
-## Modelo pronto: maquete de prédio
+## ⭐ Modelo principal: produto (celular), igual ao estilo do vídeo
+`Documents/claude/criativos/3d/celular-3d.html` ("Phone 18 Pro", conceito genérico **sem logo/marca**). É o que fica bonito de verdade.
+- **Porquê:** produto = poucas formas lisas + luz de estúdio + reflexos + fundo escuro. Fica com cara de site de luxo.
+- **Formas:** placas arredondadas com `ExtrudeGeometry(rrect)` + bevel; moldura = `rrect` com furo (`shape.holes`); botões = `CapsuleGeometry`. Lentes: anel metálico + vidro preto + domo com `iridescence`. Tela: `CanvasTexture` com papel de parede, hora e ilha, usada como `map` + `emissiveMap`. **Normalize o UV da ShapeGeometry para 0..1.**
+- **Luz:** `RoomEnvironment` (reflexos) + 3 direcionais (principal, contraluz azulado, preenchimento quente), `ACESFilmic`, fundo CSS radial escuro (`alpha: true`) e sombra falsa (plano com gradiente radial).
+- **Materiais:** titânio = `MeshPhysical` metalness 0,85, roughness 0,3, `envMapIntensity` 2,2. Vidro fosco traseiro = clearcoat baixo. Use clearcoat alto só no que deve brilhar.
+- **Vista explodida:** cada peça tem `z0`/`zExp`. As peças abrem em leque (`x = zExp × -0,95`), a câmera recua, a traseira vira 0,85π para mostrar a câmera, e as etiquetas HTML são projetadas (`vector.project(camera)`), alternando cima e baixo.
+- **Cores:** lista `CORES` (aro + costas) com transição suave por `color.lerp`.
+- **URL:** `?cor=N&explodido=1&instantaneo=1` (este último pula a animação, útil para print).
+- **Para outro produto** (tênis, garrafa, fone, relógio): troque a montagem das peças e os textos e mantenha luz, materiais e painel. **Não use logos ou marcas reais.**
+
+## Modelo: maquete de prédio (mais simples, visual de "jogo")
 `Documents/claude/criativos/3d/predio-3d.html` (também está ao lado deste SKILL.md).
 - O prédio é procedural: andares com laje, faixa de vidro e guarda-corpo, mais praça, piscina e árvores.
 - Painel de controle: cores de fachada (pares parede + destaque), luz (Dia / Entardecer / Noite, com janelas acesas), "Explodir andares" (cada andar sobe e gira de leve) e "Girar".
