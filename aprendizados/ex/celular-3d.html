@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phone 18 Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#f4f4f6; --muted:#8d8f98; --line:rgba(255,255,255,.1) }
+  * { box-sizing:border-box; margin:0; padding:0 }
+  html,body { height:100%; overflow:hidden; color:var(--ink); font-family:Inter,system-ui,sans-serif;
+    background: radial-gradient(120% 90% at 50% 40%, #23252c 0%, #0c0d10 55%, #050506 100%) }
+  #cena { position:fixed; inset:0 }
+  header { position:fixed; top:26px; left:32px; right:32px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--muted); letter-spacing:.5px }
+  header b { color:var(--ink); font-weight:600; letter-spacing:2px; text-transform:uppercase; font-size:12px }
+  .hero { position:fixed; left:32px; top:50%; transform:translateY(-50%); max-width:300px; pointer-events:none }
+  .hero small { font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#c9a27a }
+  .hero h1 { font-weight:300; font-size:clamp(34px,4.2vw,60px); line-height:1.02; margin:10px 0 14px; letter-spacing:-1px }
+  .hero p { color:var(--muted); font-size:14px; line-height:1.6 }
+  .hero .nomecor { color:var(--ink); font-weight:600 }
+  .painel { position:fixed; left:50%; bottom:26px; transform:translateX(-50%); display:flex; align-items:center; gap:18px;
+    background:rgba(20,21,26,.65); backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:999px; padding:10px 12px 10px 20px }
+  .cores { display:flex; gap:10px }
+  .cor { width:24px; height:24px; border-radius:50%; cursor:pointer; outline:1px solid rgba(255,255,255,.25); outline-offset:3px; transition:.2s }
+  .cor.on { outline:2px solid #fff }
+  button { border:0; border-radius:999px; padding:10px 18px; font:600 13px Inter,system-ui,sans-serif; cursor:pointer; background:rgba(255,255,255,.08); color:var(--ink); transition:.2s }
+  button.on { background:#f4f4f6; color:#0c0d10 }
+  .etq { position:fixed; pointer-events:none; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink); white-space:nowrap;
+    opacity:0; transition:opacity .4s; display:flex; align-items:center; gap:8px }
+  .etq i { display:block; width:34px; height:1px; background:rgba(255,255,255,.5) }
+  .etq span { color:var(--muted); text-transform:none; letter-spacing:0; font-size:11px }
+  @media (max-width:760px) { .hero { top:90px; transform:none; left:20px; right:20px; max-width:none } .hero p { display:none } .painel { flex-wrap:wrap; justify-content:center; border-radius:22px; width:calc(100% - 32px); padding:12px } }
+</style>
+</head>
+<body>
+<header><b>Phone 18 Pro</b><span>Conceito 3D interativo · arraste para girar</span></header>
+<div class="hero">
+  <small>Titânio. Pro. Leve.</small>
+  <h1>O mais Pro<br>de todos.</h1>
+  <p>Moldura em titânio, câmera tripla de 48 MP e tela de 6,3". Cor: <span class="nomecor" id="nomeCor">Titânio Natural</span>.</p>
+</div>
+<div id="cena"></div>
+<div class="painel">
+  <div class="cores" id="cores"></div>
+  <button id="bExp">Vista explodida</button>
+  <button id="bGir" class="on">Girar 360°</button>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+// ── Renderizador ───────────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.getElementById('cena').appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.03).texture;
+
+const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.1, 200);
+camera.position.set(0, 1.5, 40);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 22; controls.maxDistance = 60;
+controls.target.set(0, 0.5, 0);
+
+// luzes de estúdio: principal, contraluz e preenchimento
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-8, 12, 14); scene.add(key);
+const rim = new THREE.DirectionalLight(0xbcd2ff, 3.0); rim.position.set(10, 6, -12); scene.add(rim);
+const fill = new THREE.DirectionalLight(0xffe2c4, 0.8); fill.position.set(12, -4, 10); scene.add(fill);
+
+// ── Helpers de forma ──────────────────────────────────────────
+function rrect(w, h, r) {
+  const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s;
+}
+function placa(w, h, r, prof, mat, bevel = 0.03) {
+  const g = new THREE.ExtrudeGeometry(rrect(w, h, r), { depth: prof, bevelEnabled: true, bevelSize: bevel, bevelThickness: bevel, bevelSegments: 4, curveSegments: 24 });
+  g.translate(0, 0, -prof / 2); return new THREE.Mesh(g, mat);
+}
+
+// ── Materiais ─────────────────────────────────────────────────
+const CORES = [
+  { nome: 'Titânio Natural', aro: '#c8c2b8', costas: '#d9d4cb' },
+  { nome: 'Titânio Azul Profundo', aro: '#3b4658', costas: '#2f3a4c' },
+  { nome: 'Titânio Deserto', aro: '#c9a77f', costas: '#d8bc98' },
+  { nome: 'Titânio Preto', aro: '#3a3a3d', costas: '#2a2a2d' },
+  { nome: 'Laranja Cósmico', aro: '#d9773a', costas: '#e08a4e' },
+];
+const mAro = new THREE.MeshPhysicalMaterial({ color: CORES[0].aro, metalness: 0.85, roughness: 0.3, clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 2.2 });
+const mCostas = new THREE.MeshPhysicalMaterial({ color: CORES[0].costas, metalness: 0.1, roughness: 0.5, clearcoat: 0.35, clearcoatRoughness: 0.5, envMapIntensity: 0.7 }); // vidro fosco
+const mVidro = new THREE.MeshPhysicalMaterial({ color: '#05070a', metalness: 0, roughness: 0.05, clearcoat: 1, clearcoatRoughness: 0.02, transparent: true, opacity: 0.35 });
+const mPreto = new THREE.MeshPhysicalMaterial({ color: '#0b0c0f', roughness: 0.25, metalness: 0.3, clearcoat: 1 });
+const mLente = new THREE.MeshPhysicalMaterial({ color: '#0d1420', roughness: 0.02, metalness: 0.4, clearcoat: 1, iridescence: 1, iridescenceIOR: 1.6, iridescenceThicknessRange: [200, 600] });
+const mAnelLente = new THREE.MeshPhysicalMaterial({ color: '#c8c2b8', metalness: 1, roughness: 0.18 });
+const mPCB = new THREE.MeshStandardMaterial({ color: '#163a2b', roughness: 0.55, metalness: 0.2 });
+const mChip = new THREE.MeshStandardMaterial({ color: '#141518', roughness: 0.35, metalness: 0.6 });
+const mOuro = new THREE.MeshStandardMaterial({ color: '#d4a64a', roughness: 0.25, metalness: 1 });
+const mBat = new THREE.MeshStandardMaterial({ color: '#2b2c30', roughness: 0.5, metalness: 0.5 });
+const mBatLabel = new THREE.MeshStandardMaterial({ color: '#cfd2d8', roughness: 0.6 });
+
+// tela: papel de parede em canvas
+function texTela() {
+  const c = document.createElement('canvas'); c.width = 600; c.height = 1250; const x = c.getContext('2d');
+  const g = x.createLinearGradient(0, 0, 600, 1250); g.addColorStop(0, '#1b1f4a'); g.addColorStop(0.45, '#6a2f7a'); g.addColorStop(0.75, '#e0794a'); g.addColorStop(1, '#f2b866');
+  x.fillStyle = g; x.fillRect(0, 0, 600, 1250);
+  [[150, 380, 260, 'rgba(255,140,90,.55)'], [470, 860, 300, 'rgba(90,120,255,.45)'], [330, 1120, 240, 'rgba(255,210,120,.5)']].forEach(([a, b, r, col]) => {
+    const rg = x.createRadialGradient(a, b, 0, a, b, r); rg.addColorStop(0, col); rg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = rg; x.fillRect(0, 0, 600, 1250);
+  });
+  x.fillStyle = '#fff'; x.textAlign = 'center';
+  x.font = '300 34px Inter, sans-serif'; x.fillText('terça-feira, 20 de outubro', 300, 250);
+  x.font = '600 190px Inter, sans-serif'; x.fillText('9:41', 300, 420);
+  x.fillStyle = 'rgba(255,255,255,.18)'; [[150, 1130], [450, 1130]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 48, 0, 7); x.fill(); });
+  x.fillStyle = 'rgba(255,255,255,.85)'; x.fillRect(220, 1215, 160, 10);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const mTela = new THREE.MeshStandardMaterial({ map: texTela(), emissive: '#ffffff', emissiveMap: null, emissiveIntensity: 0, roughness: 0.4 });
+mTela.emissiveMap = mTela.map; mTela.emissiveIntensity = 0.85;
+
+// ── Montagem do aparelho (camadas ao longo de z; tela em +z) ─────
+const W = 7.15, H = 14.7, R = 1.15, P = 0.82;
+const fone = new THREE.Group(); scene.add(fone);
+const pecas = []; // { obj, z0, zExp, xExp, rotul, info }
+function peca(obj, z0, zExp, rotulo, info, xExp = 0) { obj.position.z = z0; fone.add(obj); pecas.push({ obj, z0, zExp, xExp, rotulo, info }); return obj; }
+
+// moldura de titânio (anel com furo)
+{
+  const s = rrect(W, H, R); s.holes.push(rrect(W - 0.36, H - 0.36, R - 0.18));
+  const g = new THREE.ExtrudeGeometry(s, { depth: P - 0.24, bevelEnabled: true, bevelSize: 0.12, bevelThickness: 0.12, bevelSegments: 8, curveSegments: 32 });
+  g.translate(0, 0, -(P - 0.24) / 2);
+  const aro = new THREE.Group(); aro.add(new THREE.Mesh(g, mAro));
+  // botões laterais (ação, volume +/-, power, controle de câmera)
+  [[-1, 4.1, 0.75], [-1, 2.6, 1.15], [-1, 1.1, 1.15], [1, 2.7, 1.9], [1, -1.6, 1.2]].forEach(([lado, y, h]) => {
+    const b = new THREE.Mesh(new THREE.CapsuleGeometry(0.09, h, 6, 12), mAro); b.position.set(lado * (W / 2 + 0.1), y, 0); aro.add(b);
+  });
+  // portas/antenas
+  const usb = new THREE.Mesh(new THREE.CapsuleGeometry(0.11, 0.7, 6, 12), mPreto); usb.rotation.z = Math.PI / 2; usb.position.set(0, -H / 2 - 0.08, 0); aro.add(usb);
+  peca(aro, 0, 0, 'Moldura', 'titânio grau 5');
+}
+// traseira: vidro fosco + platô da câmera
+{
+  const g = new THREE.Group();
+  const costas = placa(W - 0.3, H - 0.3, R - 0.15, 0.08, mCostas, 0.02); g.add(costas);
+  const plato = placa(3.35, 3.35, 0.85, 0.16, mCostas, 0.04); plato.position.set(-W / 2 + 0.25 + 1.75, H / 2 - 0.25 - 1.75, -0.14); g.add(plato);
+  const cx = plato.position.x, cy = plato.position.y;
+  [[-0.78, 0.78], [-0.78, -0.78], [0.82, 0]].forEach(([dx, dy]) => {
+    const anel = new THREE.Mesh(new THREE.CylinderGeometry(0.66, 0.68, 0.36, 48), mAnelLente); anel.rotation.x = Math.PI / 2; anel.position.set(cx + dx, cy + dy, -0.32); g.add(anel);
+    const vid = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.38, 48), mPreto); vid.rotation.x = Math.PI / 2; vid.position.set(cx + dx, cy + dy, -0.33); g.add(vid);
+    const lente = new THREE.Mesh(new THREE.SphereGeometry(0.34, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), mLente); lente.rotation.x = -Math.PI / 2; lente.position.set(cx + dx, cy + dy, -0.5); lente.scale.set(1, 0.35, 1); g.add(lente);
+  });
+  const flash = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.2, 32), new THREE.MeshStandardMaterial({ color: '#f3ead2', roughness: 0.3 })); flash.rotation.x = Math.PI / 2; flash.position.set(cx + 0.85, cy + 1.05, -0.24); g.add(flash);
+  const lidar = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.2, 32), mPreto); lidar.rotation.x = Math.PI / 2; lidar.position.set(cx + 0.85, cy - 1.05, -0.24); g.add(lidar);
+  peca(g, -P / 2 + 0.02, -8.5, 'Traseira', 'vidro fosco + câmera tripla 48 MP');
+}
+// bateria
+{
+  const g = new THREE.Group();
+  const b = placa(4.6, 7.4, 0.35, 0.34, mBat, 0.04); g.add(b);
+  const l = placa(3.2, 2.0, 0.15, 0.02, mBatLabel, 0.01); l.position.set(0, 0.6, -0.2); g.add(l);
+  g.position.y = -2.2;
+  peca(g, -0.1, -5.6, 'Bateria', '4.685 mAh · carregamento rápido');
+}
+// placa lógica
+{
+  const g = new THREE.Group();
+  const pcb = placa(2.4, 5.6, 0.3, 0.08, mPCB, 0.02); g.add(pcb);
+  [[0, 1.4, 1.5, 1.5, 'A19 Pro'], [0, -0.4, 1.1, 0.9], [-0.5, -1.7, 0.6, 0.6], [0.55, -1.8, 0.5, 0.8], [0, 2.6, 1.6, 0.35]].forEach(([x, y, w, h]) => {
+    const c = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.14), mChip); c.position.set(x, y, 0.1); g.add(c);
+  });
+  for (let k = 0; k < 9; k++) { const p = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.05, 0.03), mOuro); p.position.set(-0.9 + k * 0.22, -2.55, 0.06); g.add(p); }
+  g.position.set(1.9, 3.6, 0);
+  peca(g, 0.05, -2.8, 'Placa lógica', 'chip A19 Pro · 3 nm');
+}
+// display OLED
+{
+  const g = new THREE.Group();
+  const painel = placa(W - 0.5, H - 0.5, R - 0.25, 0.06, mPreto, 0.01); g.add(painel);
+  const tela = new THREE.Mesh(new THREE.ShapeGeometry(rrect(W - 0.62, H - 0.62, R - 0.3), 24), mTela);
+  // UV da ShapeGeometry vem em coordenadas do mundo: normaliza para 0..1
+  const uv = tela.geometry.attributes.uv, pos = tela.geometry.attributes.position;
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, pos.getX(i) / (W - 0.62) + 0.5, pos.getY(i) / (H - 0.62) + 0.5);
+  tela.position.z = 0.045; g.add(tela);
+  const ilha = new THREE.Mesh(new THREE.CapsuleGeometry(0.3, 1.5, 8, 16), mPreto); ilha.rotation.z = Math.PI / 2; ilha.scale.set(1, 1, 0.2); ilha.position.set(0, H / 2 - 0.95, 0.06); g.add(ilha);
+  peca(g, P / 2 - 0.12, 3.2, 'Tela', 'Super Retina XDR 6,3" · 120 Hz');
+}
+// vidro frontal
+{
+  const v = placa(W - 0.26, H - 0.26, R - 0.12, 0.04, mVidro, 0.02);
+  peca(v, P / 2 - 0.02, 6.0, 'Vidro frontal', 'Ceramic Shield');
+}
+
+// sombra suave no "chão"
+{
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
+  const g = x.createRadialGradient(128, 128, 0, 128, 128, 128); g.addColorStop(0, 'rgba(0,0,0,.55)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+  const s = new THREE.Mesh(new THREE.PlaneGeometry(14, 5), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  s.rotation.x = -Math.PI / 2; s.position.y = -10.5; scene.add(s); var sombra = s;
+}
+
+// ── Etiquetas da vista explodida ──────────────────────────────
+pecas.forEach(p => {
+  const el = document.createElement('div'); el.className = 'etq'; el.innerHTML = `<i></i><div>${p.rotulo}<br><span>${p.info}</span></div>`;
+  document.body.appendChild(el); p.el = el;
+});
+
+// ── Controles da página ────────────────────────────────────────
+const elCores = document.getElementById('cores'), elNome = document.getElementById('nomeCor');
+const alvoCor = { aro: new THREE.Color(CORES[0].aro), costas: new THREE.Color(CORES[0].costas) };
+CORES.forEach((c, i) => {
+  const d = document.createElement('div'); d.className = 'cor' + (i ? '' : ' on'); d.title = c.nome;
+  d.style.background = `linear-gradient(135deg, ${c.costas}, ${c.aro})`;
+  d.onclick = () => { alvoCor.aro.set(c.aro); alvoCor.costas.set(c.costas); mAnelLente.color.set(c.aro); elNome.textContent = c.nome; elCores.querySelectorAll('.cor').forEach(e => e.classList.remove('on')); d.classList.add('on'); };
+  elCores.appendChild(d);
+});
+let explodido = 0, alvoExp = 0, girar = true;
+const bExp = document.getElementById('bExp'), bGir = document.getElementById('bGir');
+bExp.onclick = () => { alvoExp = alvoExp ? 0 : 1; bExp.classList.toggle('on', !!alvoExp); };
+bGir.onclick = () => { girar = !girar; bGir.classList.toggle('on', girar); };
+const qs = new URLSearchParams(location.search);
+if (qs.get('explodido')) bExp.click();
+if (qs.get('cor')) elCores.children[+qs.get('cor')]?.click();
+
+// ── Animação ───────────────────────────────────────────────────
+const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const clock = new THREE.Clock(); let rotY = 0.5; const heroEl = document.querySelector('.hero');
+const v = new THREE.Vector3();
+function tick() {
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  explodido += (alvoExp - explodido) * Math.min(1, dt * 3.2); if (qs.get('instantaneo')) explodido = alvoExp;
+  const e = ease(Math.min(1, Math.max(0, explodido)));
+  // giro contínuo; ao explodir, vai para vista 3/4 lateral para mostrar as camadas
+  if (girar && e < 0.02) rotY += dt * 0.45;
+  const alvoRot = e > 0.02 ? -0.62 + Math.sin(t * 0.4) * 0.08 : rotY;
+  fone.rotation.y += ((e > 0.02 ? alvoRot : rotY) - fone.rotation.y) * Math.min(1, dt * (e > 0.02 ? 2.5 : 60));
+  fone.rotation.x = 0.12 * e - 0.05 + Math.sin(t * 0.8) * 0.02;
+  fone.position.y = 0.5 + Math.sin(t * 1.1) * 0.25;
+  pecas.forEach(p => { if (p.rotulo === 'Traseira') p.obj.rotation.y = Math.PI * 0.85 * e; p.obj.position.z = p.z0 + (p.zExp - p.z0) * e; p.obj.position.x = p.zExp * -0.95 * e; p.obj.position.y = 0; });
+  mAro.color.lerp(alvoCor.aro, 0.08); mCostas.color.lerp(alvoCor.costas, 0.08);
+  sombra.material.opacity = 0.9 - (fone.position.y - 0.25) * 0.4;
+  camera.position.z += ((e > 0.02 ? 64 : 40) - camera.position.z) * 0.04; heroEl.style.opacity = 1 - e;
+  controls.update();
+  renderer.render(scene, camera);
+  // etiquetas: projeta a borda direita de cada peça
+  pecas.forEach((p, i) => {
+    p.obj.getWorldPosition(v); v.x -= 1.0; v.y += ({ 'Vidro frontal': 1, 'Moldura': 1, 'Bateria': 1 }[p.rotulo] ? 8.0 : -7.9); v.project(camera);
+    const x = (v.x * 0.5 + 0.5) * innerWidth, y = (-v.y * 0.5 + 0.5) * innerHeight;
+    p.el.style.transform = `translate(${x}px, ${y - 20}px)`; p.el.style.opacity = e > 0.85 ? 1 : 0;
+  });
+  requestAnimationFrame(tick);
+}
+tick();
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+</script>
+</body>
+</html>

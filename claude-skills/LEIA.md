@@ -2,6 +2,8 @@
 
 Claude, se você está lendo isto porque o Gabriel mandou: **instale tudo abaixo neste computador**.
 
+Catálogo visual com um exemplo de cada aprendizado e qual efeito usar em cada tipo de projeto: https://gabriel-glll.github.io/aprendizados/ (gerado por `Documents/claude/criativos/site-aprendizados/gerar.py`: ao aprender algo novo, acrescente lá e rode de novo).
+
 ## 1. Skills do Gabriel
 Para cada skill da tabela:
 1. Baixe `https://raw.githubusercontent.com/Gabriel-glll/Gabriel-glll.github.io/main/claude-skills/skills/<nome>/SKILL.md`
@@ -29,6 +31,7 @@ npx -y skills add greensock/gsap-skills --all -g -a claude-code -y
 npx -y skills add zanwei/design-dna --all -g -a claude-code -y
 npx -y skills add AThevon/genjutsu --all -g -a claude-code -y
 npx -y skills add cloudai-x/threejs-skills --all -g -a claude-code -y
+npx -y skills add lucasmarkes/hairline --all -g -a claude-code -y   # ilustração em linha animada (hairline-create / hairline-adopt)
 ```
 LottieFiles (`lottiefiles/motion-design-skill`): instale numa pasta temporária SEM `-g` e copie para `~/.claude/skills/lottie-motion-design`, trocando o `name:` para `lottie-motion-design`. O nome original `motion-design` sobrescreveria a skill do Gabriel.
 
