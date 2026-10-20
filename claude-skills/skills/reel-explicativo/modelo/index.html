@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<title>Reel: seu comércio sem site</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-500.ttf") format("truetype"); font-weight: 500; }
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-800.ttf") format("truetype"); font-weight: 600 800; }
+  @font-face { font-family: "Inter"; src: url("fonts/Inter-900.ttf") format("truetype"); font-weight: 900; }
+  :root { --creme: #f4efe7; --tinta: #1d1b18; --suave: #7d756b; --laranja: #d4642a; --branco: #fffdf9; }
+  body { margin: 0; background: var(--creme); font-family: "Inter", sans-serif; color: var(--tinta); }
+  #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--creme); }
+  .fundo { position: absolute; inset: 0; }
+  .fundo svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 420px; }
+  .clip { position: absolute; inset: 0; box-sizing: border-box; padding: 140px 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 56px; text-align: center; }
+  .w { display: inline-block; }
+  .lj { color: var(--laranja); }
+  h1, h2, p { margin: 0; }
+  .t1 { font-size: 124px; font-weight: 900; line-height: 1.02; letter-spacing: -3px; }
+  .t2 { font-size: 72px; font-weight: 800; line-height: 1.08; letter-spacing: -1.5px; }
+  .sub { font-size: 44px; font-weight: 500; color: var(--suave); line-height: 1.35; max-width: 860px; }
+  .pill { display: inline-block; background: var(--laranja); color: #fff; font-weight: 800; border-radius: 999px; padding: 18px 44px; font-size: 64px; }
+  .card { background: var(--branco); border-radius: 40px; box-shadow: 0 30px 80px rgba(60,40,20,.14); }
+  .chips { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; max-width: 900px; }
+  .chip { display: flex; align-items: center; gap: 14px; background: var(--branco); border-radius: 999px; padding: 16px 30px 16px 18px; font-size: 38px; font-weight: 700; box-shadow: 0 12px 30px rgba(60,40,20,.10); }
+  .ok { width: 46px; height: 46px; border-radius: 50%; background: #1f8a4c; color: #fff; display: grid; place-items: center; font-size: 30px; font-weight: 900; }
+
+  /* cena 2: celular com busca */
+  .celular { width: 600px; height: 860px; border-radius: 70px; background: var(--tinta); padding: 22px; box-sizing: border-box; }
+  .tela { width: 100%; height: 100%; border-radius: 52px; background: var(--branco); padding: 60px 36px; box-sizing: border-box; display: flex; flex-direction: column; gap: 26px; }
+  .busca { display: flex; align-items: center; gap: 18px; border: 3px solid #e3dcd2; border-radius: 999px; padding: 22px 30px; font-size: 36px; font-weight: 600; text-align: left; }
+  .lupa { width: 34px; height: 34px; border: 5px solid var(--suave); border-radius: 50%; box-sizing: border-box; flex: none; }
+  .res { background: #f6f2ec; border-radius: 24px; padding: 26px 28px; text-align: left; }
+  .res b { display: block; font-size: 32px; } .res span { display: block; font-size: 26px; color: var(--suave); margin-top: 6px; }
+  .risco { position: relative; display: inline-block; font-size: 68px; font-weight: 800; color: var(--suave); }
+  .risco i { position: absolute; left: -10px; right: -10px; top: 50%; height: 9px; margin-top: -4px; background: var(--laranja); border-radius: 9px; display: block; transform-origin: left center; }
+
+  /* cena 3: navegador com o site real */
+  .nav { width: 800px; overflow: hidden; }
+  .barra { display: flex; align-items: center; gap: 12px; padding: 24px 28px; background: #efe8de; }
+  .barra i { width: 22px; height: 22px; border-radius: 50%; display: block; }
+  .url { flex: 1; margin-left: 16px; background: var(--branco); border-radius: 999px; padding: 10px 24px; font-size: 26px; color: var(--suave); text-align: left; }
+  .vista { height: 880px; overflow: hidden; }
+  .vista img { width: 100%; display: block; }
+
+  /* cena 4: painel */
+  .painel { width: 860px; background: var(--tinta); color: #fff; border-radius: 44px; padding: 56px; box-sizing: border-box; text-align: left; }
+  .painel small { font-size: 34px; color: #b8b0a5; font-weight: 600; }
+  .num { font-size: 168px; font-weight: 900; letter-spacing: -4px; font-variant-numeric: tabular-nums; line-height: 1.05; margin: 10px 0 24px; }
+  .grafico { width: 100%; height: 320px; display: block; }
+
+  /* cena 6: celulares orbitando */
+  .hub { position: relative; width: 860px; height: 860px; }
+  .anel { position: absolute; inset: 0; }
+  .mini { position: absolute; width: 150px; height: 270px; margin: -135px 0 0 -75px; border-radius: 30px; border: 8px solid var(--tinta); background: url("assets/boleros-site.jpg") center top / cover; box-sizing: border-box; }
+  .centro { position: absolute; left: 50%; top: 50%; width: 190px; height: 190px; margin: -95px 0 0 -95px; border-radius: 50%; background: var(--laranja); display: grid; place-items: center; box-shadow: 0 20px 60px rgba(232,115,46,.4); }
+  .centro svg { width: 100px; height: 100px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="reel" data-start="0" data-width="1080" data-height="1920" data-duration="20.5">
+
+  <!-- fundo fixo: creme + linha de prédios -->
+  <div class="fundo">
+    <svg viewBox="0 0 1080 420" preserveAspectRatio="none"><polyline fill="none" stroke="#d9cfc1" stroke-width="3" points="0,400 60,400 60,300 130,300 130,250 190,250 190,330 250,330 250,200 330,200 330,280 380,280 380,160 470,160 470,260 520,260 520,220 600,220 600,320 650,320 650,180 740,180 740,290 800,290 800,240 860,240 860,340 920,340 920,210 1000,210 1000,310 1080,310"/><line x1="0" y1="400" x2="1080" y2="400" stroke="#d9cfc1" stroke-width="3"/></svg>
+  </div>
+
+  <!-- 1. gancho -->
+  <section id="s1" class="clip" data-start="0" data-duration="3.4">
+    <div id="s1in">
+      <h1 class="t1"><span class="w">Seu</span> <span class="w">comércio</span> <span class="w">sem</span> <span class="w">site</span></h1>
+      <h1 class="t1 lj" style="margin-top:24px"><span class="w">tá</span> <span class="w">perdendo</span> <span class="w">cliente</span></h1>
+    </div>
+  </section>
+
+  <!-- 2. problema -->
+  <section id="s2" class="clip" data-start="3.3" data-duration="4.2">
+    <div class="celular" id="cel"><div class="tela">
+      <div class="busca"><div class="lupa"></div><span id="digita">bolo caseiro sumaré</span></div>
+      <div class="res r2"><b>Doceria concorrente</b><span>site · cardápio · pedir agora</span></div>
+      <div class="res r2"><b>Outra confeitaria</b><span>site · avaliações · WhatsApp</span></div>
+      <div class="res r2"><b>Padaria do bairro</b><span>site · horário · como chegar</span></div>
+    </div></div>
+    <div><div class="risco" id="risco">"só Instagram resolve"<i id="linha"></i></div></div>
+    <div class="pill" id="naoresolve">não resolve não</div>
+  </section>
+
+  <!-- 3. solução: o site de verdade -->
+  <section id="s3" class="clip" data-start="7.4" data-duration="4.5">
+    <h2 class="t2" id="s3t">Com site, o cliente <span class="lj">te acha</span></h2>
+    <div class="card nav" id="navegador">
+      <div class="barra"><i style="background:#ef6a5a"></i><i style="background:#f2b84b"></i><i style="background:#5cc46b"></i><div class="url">gabriel-glll.github.io/bolerosbom</div></div>
+      <div class="vista"><img id="siteimg" src="assets/boleros-site.jpg" alt=""></div>
+    </div>
+    <div class="chips">
+      <div class="chip c3"><span class="ok">✓</span>cardápio online</div>
+      <div class="chip c3"><span class="ok">✓</span>pedido no WhatsApp</div>
+      <div class="chip c3"><span class="ok">✓</span>aparece no Google</div>
+    </div>
+  </section>
+
+  <!-- 4. prova: painel de visitas -->
+  <section id="s4" class="clip" data-start="11.8" data-duration="3.7">
+    <div class="painel" id="painel">
+      <small>visitas no mês</small>
+      <div class="num" id="contador">0</div>
+      <svg class="grafico" viewBox="0 0 760 320">
+        <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8732e" stop-opacity=".55"/><stop offset="1" stop-color="#e8732e" stop-opacity="0"/></linearGradient></defs>
+        <g id="graf">
+          <path d="M0,300 C80,290 120,270 180,262 C260,250 300,232 360,210 C430,186 470,190 530,140 C590,92 650,80 760,30 L760,320 L0,320 Z" fill="url(#ga)"/>
+          <path d="M0,300 C80,290 120,270 180,262 C260,250 300,232 360,210 C430,186 470,190 530,140 C590,92 650,80 760,30" fill="none" stroke="#e8732e" stroke-width="7" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <p class="sub" id="s4s">quem te acha no Google vira pedido no WhatsApp</p>
+  </section>
+
+  <!-- 5. oferta -->
+  <section id="s5" class="clip" data-start="15.4" data-duration="2.3">
+    <h1 class="t1" id="s5t">Site pronto</h1>
+    <div class="pill" id="s5p">em poucos dias</div>
+    <p class="sub" id="s5s">feito do jeito do seu negócio</p>
+  </section>
+
+  <!-- 6. CTA -->
+  <section id="s6" class="clip" data-start="17.6" data-duration="2.9">
+    <div class="hub">
+      <div class="anel" id="anel">
+        <div class="mini m6" style="left:430px;top:90px"></div>
+        <div class="mini m6" style="left:762px;top:265px"></div>
+        <div class="mini m6" style="left:762px;top:595px"></div>
+        <div class="mini m6" style="left:430px;top:770px"></div>
+        <div class="mini m6" style="left:98px;top:595px"></div>
+        <div class="mini m6" style="left:98px;top:265px"></div>
+      </div>
+      <div class="centro" id="centro"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></div>
+    </div>
+    <div><h1 class="t1" id="s6t">Comenta <span class="pill" style="font-size:110px;padding:10px 46px">SITE</span></h1></div>
+    <p class="sub" id="s6s">que eu te mando um exemplo do seu ramo</p>
+  </section>
+</div>
+
+<script>
+  const tl = gsap.timeline({ paused: true });
+  const E = "power3.out";
+
+  // 1. gancho: palavras sobem uma a uma
+  tl.fromTo("#s1 .t1:first-child .w", { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E, stagger: 0.08 }, 0.15);
+  tl.fromTo("#s1 .lj .w", { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E, stagger: 0.1 }, 1.0);
+  tl.fromTo("#s1in", { scale: 1 }, { scale: 1.04, duration: 3.4, ease: "none" }, 0);
+  tl.to("#s1in", { opacity: 0, duration: 0.3 }, 3.05);
+
+  // 2. busca: celular entra, texto digita, resultados sem a sua loja, risco e pill
+  tl.fromTo("#cel", { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 3.35);
+  tl.fromTo("#digita", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: "steps(19)" }, 3.8);
+  tl.fromTo(".r2", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: E, stagger: 0.15 }, 4.75);
+  tl.fromTo("#risco", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: E }, 5.5);
+  tl.fromTo("#linha", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, 6.0);
+  tl.fromTo("#naoresolve", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 6.35);
+
+  // 3. site real: navegador sobe, página rola, selos entram
+  tl.fromTo("#s3t", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 7.45);
+  tl.fromTo("#navegador", { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: E }, 7.6);
+  tl.fromTo("#siteimg", { y: 0 }, { y: -900, duration: 2.6, ease: "power2.inOut" }, 8.5);
+  tl.fromTo(".c3", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.2 }, 9.2);
+
+  // 4. painel: contador 0 → 1.248 e gráfico desenhando
+  tl.fromTo("#painel", { y: 140, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: E }, 11.85);
+  const cont = { v: 0 }, el = document.getElementById("contador");
+  tl.fromTo(cont, { v: 0 }, { v: 1248, duration: 2.0, ease: "power2.out", onUpdate: () => { el.textContent = Math.round(cont.v).toLocaleString("pt-BR"); } }, 12.3);
+  tl.fromTo("#graf", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 2.0, ease: "power2.out" }, 12.3);
+  tl.fromTo("#s4s", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: E }, 13.6);
+
+  // 5. oferta
+  tl.fromTo("#s5t", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 15.45);
+  tl.fromTo("#s5p", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 15.85);
+  tl.fromTo("#s5s", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 16.3);
+
+  // 6. CTA: celulares orbitando o ícone, depois "Comenta SITE"
+  tl.fromTo("#centro", { scale: 0 }, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 17.65);
+  tl.fromTo(".m6", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.8)", stagger: 0.07 }, 17.8);
+  tl.fromTo("#anel", { rotation: -8 }, { rotation: 10, duration: 2.9, ease: "none" }, 17.6);
+  tl.fromTo("#s6t", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: E }, 18.4);
+  tl.fromTo("#s6s", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 18.8);
+
+  window.__timelines["reel"] = tl;
+</script>
+</body>
+</html>
