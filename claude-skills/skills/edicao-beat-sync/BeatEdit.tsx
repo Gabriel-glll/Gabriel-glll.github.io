@@ -21,18 +21,21 @@ export type BeatEditProps = {
 	subtitulo?: string;
 	final: string;
 	duracao: number;
+	rotulos?: boolean; // nome sobre cada foto (padrão: desligado)
+	movimento?: boolean; // zoom/rotação nas fotos (padrão: desligado)
 };
 
 // Clipe: foto com zoom contínuo (alterna aproximar/afastar), "punch" no início se for golpe forte
-const Clipe: React.FC<{src: string; foco?: string; dur: number; i: number; forte: boolean; rotulo?: string}> = ({src, foco, dur, i, forte, rotulo}) => {
+const Clipe: React.FC<{src: string; foco?: string; dur: number; i: number; forte: boolean; rotulo?: string; movimento?: boolean}> = ({src, foco, dur, i, forte, rotulo, movimento = false}) => {
 	const f = useCurrentFrame();
 	const {fps} = useVideoConfig();
 	const t = f / fps;
 	const p = Math.min(1, t / Math.max(dur, 0.01));
+	// imagem PARADA (o usuário não gostou de zoom/rotação); ligue `movimento` só se pedirem
 	const dentro = i % 2 === 0;
-	const zoom = dentro ? 1.06 + 0.14 * p : 1.2 - 0.14 * p;
-	const punch = forte ? interpolate(t, [0, 0.12], [0.12, 0], {extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)}) : 0;
-	const rot = (i % 3 - 1) * 0.6 * p;
+	const zoom = movimento ? (dentro ? 1.06 + 0.14 * p : 1.2 - 0.14 * p) : 1;
+	const punch = movimento && forte ? interpolate(t, [0, 0.12], [0.12, 0], {extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)}) : 0;
+	const rot = movimento ? (i % 3 - 1) * 0.6 * p : 0;
 	const flash = forte ? interpolate(t, [0, 0.07], [0.85, 0], {extrapolateRight: 'clamp'}) : interpolate(t, [0, 0.04], [0.25, 0], {extrapolateRight: 'clamp'});
 	const eti = interpolate(t, [0.03, 0.15], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(2))});
 	return (
@@ -41,7 +44,7 @@ const Clipe: React.FC<{src: string; foco?: string; dur: number; i: number; forte
 				src={staticFile(src)}
 				style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: foco || 'center', transform: `scale(${zoom + punch}) rotate(${rot}deg)`, filter: 'saturate(1.15) contrast(1.06)'}}
 			/>
-			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0) 62%, rgba(0,0,0,.55) 100%)'}} />
+			{rotulo && <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0) 62%, rgba(0,0,0,.55) 100%)'}} />}
 			{rotulo && (
 				<div style={{position: 'absolute', bottom: 230, width: '100%', textAlign: 'center', transform: `scale(${0.7 + 0.3 * eti})`, opacity: eti}}>
 					<span style={{fontFamily: TITLE, fontSize: 110, color: '#fff', letterSpacing: 6, textShadow: '0 6px 30px rgba(0,0,0,.6)'}}>{rotulo.toUpperCase()}</span>
@@ -60,7 +63,7 @@ const Abertura: React.FC<{src: string; titulo: string; sub?: string; dur: number
 	const letras = Math.floor(interpolate(t, [0.1, dur * 0.7], [0, titulo.length], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
 	return (
 		<AbsoluteFill style={{background: '#000'}}>
-			<Img src={staticFile(src)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${1.25 - 0.1 * p})`, filter: 'brightness(.55) saturate(1.1)'}} />
+			<Img src={staticFile(src)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(.55) saturate(1.1)'}} />
 			<AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
 				<div style={{fontFamily: TITLE, fontSize: 150, color: '#fff', letterSpacing: 4, lineHeight: 1}}>{titulo.slice(0, letras)}</div>
 				{sub && <div style={{fontFamily: BODY, fontWeight: 500, fontSize: 40, color: '#fff', opacity: interpolate(t, [dur * 0.6, dur * 0.9], [0, 0.9], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}), marginTop: 20, letterSpacing: 8}}>{sub}</div>}
@@ -82,7 +85,7 @@ const Final: React.FC<{texto: string}> = ({texto}) => {
 	);
 };
 
-export const BeatEdit: React.FC<BeatEditProps> = ({pasta, audio, fotos, cortes, fortes = [], titulo, subtitulo, final, duracao}) => {
+export const BeatEdit: React.FC<BeatEditProps> = ({pasta, audio, fotos, cortes, fortes = [], titulo, subtitulo, final, duracao, rotulos = false, movimento = false}) => {
 	const {fps} = useVideoConfig();
 	const fr = (s: number) => Math.round(s * fps);
 	const fins = [...cortes, duracao]; // cada clipe vai de um corte até o próximo (o último vai até o fim)
@@ -99,7 +102,7 @@ export const BeatEdit: React.FC<BeatEditProps> = ({pasta, audio, fotos, cortes, 
 				const foto = fotos[(k + 1) % fotos.length];
 				return (
 					<Sequence key={k} from={fr(ini)} durationInFrames={Math.max(1, fr(fim) - fr(ini))}>
-						<Clipe src={`${pasta}/${foto.arquivo}`} foco={foto.foco} dur={fim - ini} i={k} forte={ehForte(ini, k)} rotulo={fim <= iniFinal + 0.05 ? foto.rotulo : undefined} />
+						<Clipe src={`${pasta}/${foto.arquivo}`} foco={foto.foco} dur={fim - ini} i={k} forte={ehForte(ini, k)} rotulo={rotulos && fim <= iniFinal + 0.05 ? foto.rotulo : undefined} movimento={movimento} />
 					</Sequence>
 				);
 			})}

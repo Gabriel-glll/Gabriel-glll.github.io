@@ -7,9 +7,14 @@ description: Edição de vídeo com CORTES SINCRONIZADOS NA MÚSICA (estilo tren
 
 Origem: reel @madforamv (edit de olhos de anime). Os cortes caem nos **golpes do bumbo**, não em todo tempo da música. Ali o padrão é **6+4+6 semicolcheias** a ~153 BPM (variação do 3+3+2, típica de phonk e funk). O que mais pesa:
 1. **Série visual coerente:** imagens do mesmo tipo e enquadramento parecido (olhos, paisagens), para um corte "rimar" com o outro.
-2. **Movimento contínuo dentro de cada clipe:** zoom lento, alternando aproximar e afastar, com leve rotação.
+2. (No reel há zoom contínuo nos clipes, mas o Gabriel NÃO quer isso: veja abaixo.)
 3. **Corte seco no golpe**, com flash branco curto nos golpes fortes (início do compasso).
 4. **Cortar ~1 quadro antes do golpe** (o editor do reel corta ~50 ms antes): a imagem já está na tela quando o som bate.
+
+## ⚠️ Preferência do Gabriel (obrigatório)
+- **Sem legendas/rótulos sobre as fotos** (nome de país etc.): ele achou feio.
+- **Sem zoom, rotação ou "punch" nas imagens.** As fotos ficam PARADAS e o impacto vem só do **corte seco na batida** (+ flash curto nos golpes fortes).
+- No `BeatEdit` isso já é o padrão (`rotulos=false`, `movimento=false`). Só ligue se ele pedir.
 
 ## Ferramentas (em `Documents/claude/motion-studio/`)
 | Arquivo | O que faz |
