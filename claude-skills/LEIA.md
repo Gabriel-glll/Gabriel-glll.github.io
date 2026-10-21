@@ -26,6 +26,16 @@ Para cada skill da tabela:
 | `video-lancamento-site` | Vídeo de lançamento de site/app com /brag + Remotion. Baixe também `skills/video-lancamento-site/trilha.py` para `Documents/claude/motion-studio/audio/`. Instale o /brag e o FFmpeg conforme o SKILL.md. |
 | `estudo-biblia` | Estudo bíblico capítulo a capítulo → página de rolagem em gabriel-glll.github.io/estudos-biblia (clone o repo `Gabriel-glll/estudos-biblia` em Documents/claude). |
 | `video-reveal-aereo` | Vídeo IA plano-sequência: janela do avião → voo → rua → fachada do prédio (criativo de lançamento imobiliário). |
+| `motion-narrado` | **(veio do PC do Desktop, aprovado 17/10/2026)** Texto/roteiro narrado → Reel motion 9:16 em Remotion, cada frase com uma metáfora visual própria sincronizada palavra a palavra (exemplo: "2º Turno", estilo Editorial vinho+areia). Baixe a pasta inteira `skills/motion-narrado/` (lib/, scripts/, exemplo/, GUIA-ESTUDIO.md, TECNICAS.md) e monte o estúdio conforme o SKILL.md. Precisa de `npm i msedge-tts` (voz grátis). |
+| `efeitos-aprendidos` | **(veio do PC do Desktop)** Caderno de efeitos tirados das referências: `SKILL.md` (receitas + status de aprovação), `DIRECAO.md` (como editar sozinho quando ele manda só "edite esse vídeo"), `CORES-E-DESIGN.md` (7 pares de cor + 20 estilos: escolher SEMPRE antes dos efeitos), `REFERENCIAS.md` (análise quadro a quadro das referências). Baixe os 4 arquivos. |
+
+### Preferências do Gabriel (aprendidas no PC do Desktop — guarde na memória)
+- Responder sempre em português, inclusive status curtos.
+- Não ficar pedindo confirmação: decidir e executar; só pedir o que é impossível sem ele (gravar voz, login, clique, logos/fotos).
+- "Edite esse vídeo" sem lista de efeitos = escolher sozinho estilo, cor e efeitos (DIRECAO.md) e entregar.
+- No motion, o objetivo é aprender técnicas reaproveitáveis das referências, não fazer vídeo de uma marca.
+- Vídeo de imóvel tem que ficar PARECIDO com a referência: foto parada com Ken Burns foi reprovada.
+- Mapa de pastas: no PC do Desktop o estúdio fica em `OneDrive/Área de Trabalho/motion-studio`; no outro PC, em `Documents/claude/motion-studio`. Troque os caminhos das skills conforme a máquina.
 
 ## 1b. Skills de terceiros (interface animada) — ver `ui-animada`
 ```

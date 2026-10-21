@@ -1,0 +1,877 @@
+[
+ {
+  "text": "O",
+  "startMs": 47.625,
+  "endMs": 142.875
+ },
+ {
+  "text": "Brasil",
+  "startMs": 154.75,
+  "endMs": 607.125
+ },
+ {
+  "text": "vai",
+  "startMs": 619.041,
+  "endMs": 761.916
+ },
+ {
+  "text": "ter",
+  "startMs": 773.791,
+  "endMs": 892.8320000000001
+ },
+ {
+  "text": "um",
+  "startMs": 904.75,
+  "endMs": 964.2909999999999
+ },
+ {
+  "text": "segundo",
+  "startMs": 976.208,
+  "endMs": 1488.124
+ },
+ {
+  "text": "turno",
+  "startMs": 1500,
+  "endMs": 1869.041
+ },
+ {
+  "text": "A",
+  "startMs": 2690.458,
+  "endMs": 2809.4990000000003
+ },
+ {
+  "text": "Bíblia",
+  "startMs": 2821.416,
+  "endMs": 3178.541
+ },
+ {
+  "text": "nos",
+  "startMs": 3190.458,
+  "endMs": 3273.791
+ },
+ {
+  "text": "ensina",
+  "startMs": 3285.708,
+  "endMs": 3749.9990000000003
+ },
+ {
+  "text": "que",
+  "startMs": 3761.916,
+  "endMs": 3833.3320000000003
+ },
+ {
+  "text": "devemos",
+  "startMs": 3845.25,
+  "endMs": 4226.208
+ },
+ {
+  "text": "nos",
+  "startMs": 4238.083,
+  "endMs": 4380.958
+ },
+ {
+  "text": "posicionar",
+  "startMs": 4392.875,
+  "endMs": 5023.833
+ },
+ {
+  "text": "e",
+  "startMs": 5297.625,
+  "endMs": 5369.041
+ },
+ {
+  "text": "isso",
+  "startMs": 5380.958,
+  "endMs": 5559.540999999999
+ },
+ {
+  "text": "inclui",
+  "startMs": 5571.416,
+  "endMs": 5880.957
+ },
+ {
+  "text": "a",
+  "startMs": 5892.875,
+  "endMs": 5964.291
+ },
+ {
+  "text": "política",
+  "startMs": 5976.208,
+  "endMs": 6464.290999999999
+ },
+ {
+  "text": "O",
+  "startMs": 7285.708,
+  "endMs": 7380.958
+ },
+ {
+  "text": "Brasil",
+  "startMs": 7392.875,
+  "endMs": 7809.541
+ },
+ {
+  "text": "tem",
+  "startMs": 7821.416,
+  "endMs": 7976.166
+ },
+ {
+  "text": "passado",
+  "startMs": 7988.083,
+  "endMs": 8488.082999999999
+ },
+ {
+  "text": "por",
+  "startMs": 8500,
+  "endMs": 8619.041
+ },
+ {
+  "text": "um",
+  "startMs": 8630.958,
+  "endMs": 8690.499
+ },
+ {
+  "text": "cenário",
+  "startMs": 8702.375,
+  "endMs": 9083.333
+ },
+ {
+  "text": "político",
+  "startMs": 9095.25,
+  "endMs": 9511.916
+ },
+ {
+  "text": "muito",
+  "startMs": 9523.791,
+  "endMs": 9845.206999999999
+ },
+ {
+  "text": "caótico",
+  "startMs": 9857.125,
+  "endMs": 10428.541
+ },
+ {
+  "text": "ou",
+  "startMs": 10654.75,
+  "endMs": 10761.875
+ },
+ {
+  "text": "você",
+  "startMs": 10773.791,
+  "endMs": 11023.791
+ },
+ {
+  "text": "escolhe",
+  "startMs": 11035.708,
+  "endMs": 11369.041000000001
+ },
+ {
+  "text": "a",
+  "startMs": 11380.958,
+  "endMs": 11404.749
+ },
+ {
+  "text": "esquerda",
+  "startMs": 11416.666,
+  "endMs": 11916.666
+ },
+ {
+  "text": "ou",
+  "startMs": 12119.041,
+  "endMs": 12273.791
+ },
+ {
+  "text": "a",
+  "startMs": 12285.708,
+  "endMs": 12345.249
+ },
+ {
+  "text": "direita",
+  "startMs": 12357.125,
+  "endMs": 12797.583
+ },
+ {
+  "text": "Ou",
+  "startMs": 13619.041,
+  "endMs": 13773.791
+ },
+ {
+  "text": "uma",
+  "startMs": 13785.708,
+  "endMs": 13904.749
+ },
+ {
+  "text": "opção",
+  "startMs": 13916.666,
+  "endMs": 14273.791
+ },
+ {
+  "text": "ruim",
+  "startMs": 14285.708,
+  "endMs": 14571.416000000001
+ },
+ {
+  "text": "ou",
+  "startMs": 14857.125,
+  "endMs": 14964.25
+ },
+ {
+  "text": "uma",
+  "startMs": 14976.208,
+  "endMs": 15119.083
+ },
+ {
+  "text": "ainda",
+  "startMs": 15130.958,
+  "endMs": 15404.749
+ },
+ {
+  "text": "pior",
+  "startMs": 15416.666,
+  "endMs": 15714.291
+ },
+ {
+  "text": "Se",
+  "startMs": 16535.708,
+  "endMs": 16726.165999999997
+ },
+ {
+  "text": "você",
+  "startMs": 16738.083,
+  "endMs": 17047.624
+ },
+ {
+  "text": "é",
+  "startMs": 17059.541,
+  "endMs": 17107.166
+ },
+ {
+  "text": "um",
+  "startMs": 17119.041,
+  "endMs": 17214.291
+ },
+ {
+  "text": "cristão",
+  "startMs": 17226.208,
+  "endMs": 17583.333
+ },
+ {
+  "text": "atento",
+  "startMs": 17595.25,
+  "endMs": 18023.833
+ },
+ {
+  "text": "sabe",
+  "startMs": 18321.416,
+  "endMs": 18571.416
+ },
+ {
+  "text": "que",
+  "startMs": 18583.333,
+  "endMs": 18690.458
+ },
+ {
+  "text": "nenhum",
+  "startMs": 18702.375,
+  "endMs": 19000
+ },
+ {
+  "text": "dos",
+  "startMs": 19011.916,
+  "endMs": 19190.499
+ },
+ {
+  "text": "lados",
+  "startMs": 19202.375,
+  "endMs": 19535.708
+ },
+ {
+  "text": "é",
+  "startMs": 19547.625,
+  "endMs": 19678.583
+ },
+ {
+  "text": "o",
+  "startMs": 19690.458,
+  "endMs": 19773.790999999997
+ },
+ {
+  "text": "ideal",
+  "startMs": 19785.708,
+  "endMs": 20190.458
+ },
+ {
+  "text": "Porém",
+  "startMs": 21011.916,
+  "endMs": 21380.957000000002
+ },
+ {
+  "text": "tem",
+  "startMs": 21642.875,
+  "endMs": 21821.458
+ },
+ {
+  "text": "sim",
+  "startMs": 21833.333,
+  "endMs": 22059.540999999997
+ },
+ {
+  "text": "um",
+  "startMs": 22071.416,
+  "endMs": 22190.457000000002
+ },
+ {
+  "text": "lado",
+  "startMs": 22202.375,
+  "endMs": 22511.916
+ },
+ {
+  "text": "que",
+  "startMs": 22523.791,
+  "endMs": 22595.207000000002
+ },
+ {
+  "text": "o",
+  "startMs": 22607.125,
+  "endMs": 22642.833
+ },
+ {
+  "text": "cristão",
+  "startMs": 22654.75,
+  "endMs": 23023.791
+ },
+ {
+  "text": "não",
+  "startMs": 23035.708,
+  "endMs": 23261.915999999997
+ },
+ {
+  "text": "vota",
+  "startMs": 23273.791,
+  "endMs": 23690.457000000002
+ },
+ {
+  "text": "Em",
+  "startMs": 24511.916,
+  "endMs": 24630.957000000002
+ },
+ {
+  "text": "meados",
+  "startMs": 24642.875,
+  "endMs": 25130.958
+ },
+ {
+  "text": "de",
+  "startMs": 25142.875,
+  "endMs": 25238.125
+ },
+ {
+  "text": "1790",
+  "startMs": 25250,
+  "endMs": 26559.5409
+ },
+ {
+  "text": "ocorre",
+  "startMs": 26857.125,
+  "endMs": 27261.875
+ },
+ {
+  "text": "a",
+  "startMs": 27273.791,
+  "endMs": 27309.499
+ },
+ {
+  "text": "Revolução",
+  "startMs": 27321.416,
+  "endMs": 27833.332000000002
+ },
+ {
+  "text": "Francesa",
+  "startMs": 27845.25,
+  "endMs": 28416.666
+ },
+ {
+  "text": "onde",
+  "startMs": 28726.208,
+  "endMs": 28964.290999999997
+ },
+ {
+  "text": "surge",
+  "startMs": 28976.208,
+  "endMs": 29321.458
+ },
+ {
+  "text": "essa",
+  "startMs": 29333.333,
+  "endMs": 29476.208
+ },
+ {
+  "text": "ideia",
+  "startMs": 29488.083,
+  "endMs": 29809.499
+ },
+ {
+  "text": "de",
+  "startMs": 29821.416,
+  "endMs": 29892.832000000002
+ },
+ {
+  "text": "esquerda",
+  "startMs": 29904.75,
+  "endMs": 30369.041
+ },
+ {
+  "text": "e",
+  "startMs": 30380.958,
+  "endMs": 30452.374
+ },
+ {
+  "text": "direita",
+  "startMs": 30464.291,
+  "endMs": 30916.666
+ },
+ {
+  "text": "A",
+  "startMs": 31738.083,
+  "endMs": 31845.208
+ },
+ {
+  "text": "esquerda",
+  "startMs": 31857.125,
+  "endMs": 32333.333
+ },
+ {
+  "text": "vem",
+  "startMs": 32345.25,
+  "endMs": 32559.541
+ },
+ {
+  "text": "com",
+  "startMs": 32571.416,
+  "endMs": 32690.457000000002
+ },
+ {
+  "text": "uma",
+  "startMs": 32702.375,
+  "endMs": 32785.708
+ },
+ {
+  "text": "ideia",
+  "startMs": 32797.625,
+  "endMs": 33071.416
+ },
+ {
+  "text": "de",
+  "startMs": 33083.333,
+  "endMs": 33154.748999999996
+ },
+ {
+  "text": "estado",
+  "startMs": 33166.666,
+  "endMs": 33499.998999999996
+ },
+ {
+  "text": "revolucionário",
+  "startMs": 33511.916,
+  "endMs": 34261.916
+ },
+ {
+  "text": "e",
+  "startMs": 34619.041,
+  "endMs": 34702.373999999996
+ },
+ {
+  "text": "nessa",
+  "startMs": 34714.291,
+  "endMs": 34976.206999999995
+ },
+ {
+  "text": "revolução",
+  "startMs": 34988.083,
+  "endMs": 35607.123999999996
+ },
+ {
+  "text": "o",
+  "startMs": 35904.75,
+  "endMs": 35976.166
+ },
+ {
+  "text": "cristianismo",
+  "startMs": 35988.083,
+  "endMs": 36702.373999999996
+ },
+ {
+  "text": "não",
+  "startMs": 36714.291,
+  "endMs": 36916.666
+ },
+ {
+  "text": "se",
+  "startMs": 36928.583,
+  "endMs": 37035.708
+ },
+ {
+  "text": "encaixava",
+  "startMs": 37047.625,
+  "endMs": 37666.666
+ },
+ {
+  "text": "Igrejas",
+  "startMs": 38488.083,
+  "endMs": 38964.291
+ },
+ {
+  "text": "fechadas",
+  "startMs": 38976.208,
+  "endMs": 39607.166
+ },
+ {
+  "text": "cristãos",
+  "startMs": 39833.333,
+  "endMs": 40309.541
+ },
+ {
+  "text": "sendo",
+  "startMs": 40321.416,
+  "endMs": 40583.331999999995
+ },
+ {
+  "text": "perseguidos",
+  "startMs": 40595.25,
+  "endMs": 41166.666
+ },
+ {
+  "text": "e",
+  "startMs": 41178.583,
+  "endMs": 41285.708
+ },
+ {
+  "text": "exilados",
+  "startMs": 41297.625,
+  "endMs": 42000
+ },
+ {
+  "text": "Isso",
+  "startMs": 42821.416,
+  "endMs": 43119.041
+ },
+ {
+  "text": "por",
+  "startMs": 43130.958,
+  "endMs": 43273.833
+ },
+ {
+  "text": "si",
+  "startMs": 43285.708,
+  "endMs": 43452.373999999996
+ },
+ {
+  "text": "só",
+  "startMs": 43464.291,
+  "endMs": 43678.581999999995
+ },
+ {
+  "text": "já",
+  "startMs": 43690.458,
+  "endMs": 43857.123999999996
+ },
+ {
+  "text": "é",
+  "startMs": 43869.041,
+  "endMs": 43940.456999999995
+ },
+ {
+  "text": "o",
+  "startMs": 43952.375,
+  "endMs": 44000
+ },
+ {
+  "text": "suficiente",
+  "startMs": 44011.916,
+  "endMs": 44607.166
+ },
+ {
+  "text": "para",
+  "startMs": 44619.041,
+  "endMs": 44761.916
+ },
+ {
+  "text": "entender",
+  "startMs": 44773.791,
+  "endMs": 45238.081999999995
+ },
+ {
+  "text": "que",
+  "startMs": 45250,
+  "endMs": 45345.25
+ },
+ {
+  "text": "esquerda",
+  "startMs": 45357.125,
+  "endMs": 45750
+ },
+ {
+  "text": "e",
+  "startMs": 45761.916,
+  "endMs": 45821.456999999995
+ },
+ {
+  "text": "Cristo",
+  "startMs": 45833.333,
+  "endMs": 46214.291
+ },
+ {
+  "text": "não",
+  "startMs": 46226.208,
+  "endMs": 46464.291
+ },
+ {
+  "text": "andam",
+  "startMs": 46476.208,
+  "endMs": 46797.623999999996
+ },
+ {
+  "text": "juntos",
+  "startMs": 46809.541,
+  "endMs": 47309.541
+ },
+ {
+  "text": "Mas",
+  "startMs": 48130.958,
+  "endMs": 48309.541
+ },
+ {
+  "text": "além",
+  "startMs": 48321.416,
+  "endMs": 48642.831999999995
+ },
+ {
+  "text": "disso",
+  "startMs": 48654.75,
+  "endMs": 49011.875
+ },
+ {
+  "text": "a",
+  "startMs": 49297.625,
+  "endMs": 49369.041
+ },
+ {
+  "text": "esquerda",
+  "startMs": 49380.958,
+  "endMs": 49809.541
+ },
+ {
+  "text": "dos",
+  "startMs": 49821.416,
+  "endMs": 49988.081999999995
+ },
+ {
+  "text": "dias",
+  "startMs": 50000,
+  "endMs": 50285.708
+ },
+ {
+  "text": "de",
+  "startMs": 50297.625,
+  "endMs": 50392.875
+ },
+ {
+  "text": "hoje",
+  "startMs": 50404.75,
+  "endMs": 50642.833
+ },
+ {
+  "text": "apoia",
+  "startMs": 50654.75,
+  "endMs": 50916.666
+ },
+ {
+  "text": "aborto",
+  "startMs": 50928.583,
+  "endMs": 51380.958
+ },
+ {
+  "text": "igualdade",
+  "startMs": 51678.583,
+  "endMs": 52238.123999999996
+ },
+ {
+  "text": "de",
+  "startMs": 52250,
+  "endMs": 52333.333
+ },
+ {
+  "text": "gênero",
+  "startMs": 52345.25,
+  "endMs": 52750
+ },
+ {
+  "text": "feminismo",
+  "startMs": 53059.541,
+  "endMs": 53666.666
+ },
+ {
+  "text": "doutrinas",
+  "startMs": 53880.958,
+  "endMs": 54380.958
+ },
+ {
+  "text": "distorcidas",
+  "startMs": 54392.875,
+  "endMs": 55047.625
+ },
+ {
+  "text": "dentro",
+  "startMs": 55059.541,
+  "endMs": 55357.166
+ },
+ {
+  "text": "das",
+  "startMs": 55369.041,
+  "endMs": 55464.291
+ },
+ {
+  "text": "escolas",
+  "startMs": 55476.208,
+  "endMs": 56107.166
+ },
+ {
+  "text": "pequenos",
+  "startMs": 56297.625,
+  "endMs": 56750
+ },
+ {
+  "text": "furtos",
+  "startMs": 56761.916,
+  "endMs": 57214.291
+ },
+ {
+  "text": "e",
+  "startMs": 57535.708,
+  "endMs": 57630.958
+ },
+ {
+  "text": "várias",
+  "startMs": 57642.875,
+  "endMs": 57892.875
+ },
+ {
+  "text": "outras",
+  "startMs": 57904.75,
+  "endMs": 58226.166
+ },
+ {
+  "text": "deturpações",
+  "startMs": 58238.083,
+  "endMs": 58928.541
+ },
+ {
+  "text": "dos",
+  "startMs": 58940.458,
+  "endMs": 59083.333
+ },
+ {
+  "text": "nossos",
+  "startMs": 59095.25,
+  "endMs": 59392.875
+ },
+ {
+  "text": "princípios",
+  "startMs": 59404.75,
+  "endMs": 59940.458
+ },
+ {
+  "text": "e",
+  "startMs": 59952.375,
+  "endMs": 60047.625
+ },
+ {
+  "text": "valores",
+  "startMs": 60059.541,
+  "endMs": 60630.956999999995
+ },
+ {
+  "text": "Não",
+  "startMs": 61452.375,
+  "endMs": 61738.083
+ },
+ {
+  "text": "quero",
+  "startMs": 61750,
+  "endMs": 62023.791
+ },
+ {
+  "text": "te",
+  "startMs": 62035.708,
+  "endMs": 62130.958
+ },
+ {
+  "text": "dizer",
+  "startMs": 62142.875,
+  "endMs": 62440.5
+ },
+ {
+  "text": "em",
+  "startMs": 62452.375,
+  "endMs": 62559.5
+ },
+ {
+  "text": "quem",
+  "startMs": 62571.416,
+  "endMs": 62749.998999999996
+ },
+ {
+  "text": "votar",
+  "startMs": 62761.916,
+  "endMs": 63142.873999999996
+ },
+ {
+  "text": "Mas",
+  "startMs": 63964.291,
+  "endMs": 64452.373999999996
+ },
+ {
+  "text": "se",
+  "startMs": 64642.875,
+  "endMs": 64773.833
+ },
+ {
+  "text": "você",
+  "startMs": 64785.708,
+  "endMs": 65071.416
+ },
+ {
+  "text": "vota",
+  "startMs": 65083.333,
+  "endMs": 65452.373999999996
+ },
+ {
+  "text": "na",
+  "startMs": 65464.291,
+  "endMs": 65535.706999999995
+ },
+ {
+  "text": "esquerda",
+  "startMs": 65547.625,
+  "endMs": 66047.625
+ },
+ {
+  "text": "cristão",
+  "startMs": 66250,
+  "endMs": 66619.041
+ },
+ {
+  "text": "você",
+  "startMs": 66630.958,
+  "endMs": 66928.583
+ },
+ {
+  "text": "não",
+  "startMs": 66940.5,
+  "endMs": 67142.875
+ },
+ {
+  "text": "é",
+  "startMs": 67154.75,
+  "endMs": 67333.333
+ }
+]
