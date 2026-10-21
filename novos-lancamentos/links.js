@@ -69,5 +69,6 @@ window.LINKS_CLIENTE = {
  "lauzanne": "https://lancamentos.zffrealty.workers.dev/lauzanne-26b0ff/",
  "villa-vita-taquaral": "https://lancamentos.zffrealty.workers.dev/villa-vita-taquaral-c887f7/",
  "toplife-nova-campinas-park": "https://lancamentos.zffrealty.workers.dev/toplife-nova-campinas-park-7ad52a/",
- "douro": "https://lancamentos.zffrealty.workers.dev/douro-2ddf29/"
+ "douro": "https://lancamentos.zffrealty.workers.dev/douro-2ddf29/",
+ "portal-jardim-de-antares": "https://lancamentos.zffrealty.workers.dev/portal-jardim-de-antares-8a79d4/"
 };

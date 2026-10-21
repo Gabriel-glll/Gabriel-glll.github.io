@@ -552,5 +552,12 @@ window.MATERIAIS = {
         "titulo": "Tabela e disponibilidade AO VIVO (planilha Vertaz)"
       }
     ]
+  },
+  "portal-jardim-de-antares": {
+    "fotos": 20,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/portal-jardim-de-antares.pdf?v=1792590394",
+      "titulo": "Book Portal Jardim de Antares"
+    }
   }
 };
