@@ -28,6 +28,7 @@ Para cada skill da tabela:
 | `video-reveal-aereo` | Vídeo IA plano-sequência: janela do avião → voo → rua → fachada do prédio (criativo de lançamento imobiliário). |
 | `motion-narrado` | **(veio do PC do Desktop, aprovado 17/10/2026)** Texto/roteiro narrado → Reel motion 9:16 em Remotion, cada frase com uma metáfora visual própria sincronizada palavra a palavra (exemplo: "2º Turno", estilo Editorial vinho+areia). Baixe a pasta inteira `skills/motion-narrado/` (lib/, scripts/, exemplo/, GUIA-ESTUDIO.md, TECNICAS.md) e monte o estúdio conforme o SKILL.md. Precisa de `npm i msedge-tts` (voz grátis). |
 | `efeitos-aprendidos` | **(veio do PC do Desktop)** Caderno de efeitos tirados das referências: `SKILL.md` (receitas + status de aprovação), `DIRECAO.md` (como editar sozinho quando ele manda só "edite esse vídeo"), `CORES-E-DESIGN.md` (7 pares de cor + 20 estilos: escolher SEMPRE antes dos efeitos), `REFERENCIAS.md` (análise quadro a quadro das referências). Baixe os 4 arquivos. |
+| `viabilidade-primeiro` | **Regra do Gabriel (22/10/2026)**: antes de qualquer criativo/trend, checar se dá para fazer EXATAMENTE igual com o que está pago hoje. Se dá, faz; se não, diz na hora e aponta o caminho (ferramenta, plano, preço). Tem o mapa grátis x pago. |
 
 ### Preferências do Gabriel (aprendidas no PC do Desktop — guarde na memória)
 - Responder sempre em português, inclusive status curtos.
