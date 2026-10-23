@@ -4,6 +4,13 @@ Claude, se você está lendo isto porque o Gabriel mandou: **instale tudo abaixo
 
 Catálogo visual com um exemplo de cada aprendizado e qual efeito usar em cada tipo de projeto: https://gabriel-glll.github.io/aprendizados/ (gerado por `Documents/claude/criativos/site-aprendizados/gerar.py`: ao aprender algo novo, acrescente lá e rode de novo).
 
+## 0. Memória compartilhada entre os PCs (FAÇA PRIMEIRO — pedido do Gabriel em 22/10/2026)
+A memória do Claude (andamento dos projetos, o que já foi configurado) agora fica no repo **privado** `Gabriel-glll/claude-memoria`, para os dois PCs saberem o que o outro fez.
+1. Descubra a pasta de memória deste PC (`~/.claude/projects/<projeto>/memory/`, a que tem o `MEMORY.md`).
+2. Junte com o repo: `git clone https://github.com/Gabriel-glll/claude-memoria <pasta-temporária>`, copie para a temporária os `.md` deste PC que não existem lá, e para os que existem nos dois, junte o conteúdo (não apague nada deste PC — ex.: a configuração do e-mail Resend da loja VM foi feita aqui). No `MEMORY.md`, junte as linhas das duas listas.
+3. Mova o `.git` da temporária para a pasta de memória (ela vira o clone), faça commit e `git push`.
+4. A partir daí: `git pull` nessa pasta no início de cada conversa e commit + push depois de salvar memória (regra em `memoria-sincronizada.md`).
+
 ## 1. Skills do Gabriel
 Para cada skill da tabela:
 1. Baixe `https://raw.githubusercontent.com/Gabriel-glll/Gabriel-glll.github.io/main/claude-skills/skills/<nome>/SKILL.md`
