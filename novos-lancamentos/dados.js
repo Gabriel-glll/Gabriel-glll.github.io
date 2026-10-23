@@ -191,7 +191,12 @@ window.LANCAMENTOS = [
   { n:"Hípica Boulevard", c:"Santo André", b:"Iguatemi", t:"apto", m:[91], d:[3,3], v:"2", e:"pronto", p:[[null,1100]], vis:"nenhum" },
 
   // ── GALLERIA ──────────────────────────────────────────
-  { n:"Sensia Galleria", c:"Sensia", b:"Galleria", t:"apto", m:[61,74], d:[2,3], v:"1 e 2", e:"pronto", p:[[61,510],[74,650]], vis:"stand" },
+  { n:"Sensia Galleria", c:"Sensia", b:"Galleria", t:"apto", m:[45.97,61.17,74.32], d:[1,3], suite:true, v:"1 ou 2", e:"pronto", p:[[61,510],[74,650]], vis:"stand",
+    tip:"1 quarto com varanda 45,97 m² · 2 quartos com suíte e varanda 61,17 m² · 3 quartos com suíte e varanda 74,32 m² · varanda gourmet · paredes removíveis (planta flexível) · 1 ou 2 vagas",
+    end:"Rua Carlos Luiz Barroso Ehrenberg, 33 — Campinas (acesso pela Rua Antônio Santos Carvalhinho, 175; perto do Shopping Galleria)",
+    ficha:[["Unidades","104 em torre única, 8 por andar"],["Pavimentos","13 + edifício garagem com 4 pavimentos"],["Elevadores","4 na torre + 1 no edifício garagem"],["Vagas","184 privativas + 8 de uso comum · previsão para carro elétrico"],["Terreno","4.164,00 m²"],["Diferenciais","Fechadura digital em todas as unidades · energia fotovoltaica nas áreas comuns · espaço delivery · personalização de acabamentos"],["Realização","Sensia (grupo MRV&CO)"]],
+    lazer:["Piscina adulto","Piscina infantil","Prainha","Academia coberta","Garrafão de basquete","Playground","Espaço kids","Pet place","Pet care","Gazebos","Praça","Vestiário","Bicicletário coberto","Salão de festas","Gourmet multimídia","Churrasqueira","Espaço delivery"],
+    cmp:{ter:"4.164,00 m²", tor:"1 (13 pavimentos + edifício garagem)", un:"104", el:"4 + 1 no edifício garagem", var:"Sim — varanda gourmet", dif:"Planta flexível (paredes removíveis) · fechadura digital · energia fotovoltaica · previsão p/ carro elétrico · personalização de acabamentos"} },
   { n:"City Galleria", c:"MRV", b:"Galleria", t:"apto", m:[45.49,45.7,53.28,53.59], d:[2,2], v:"1", e:"2028-07", p:[[45,430],[53,530]], vis:"stand_dec",
     tip:"2 dormitórios com opção de suíte e de varanda: 45,70 m² · 45,49 m² com varanda · 53,59 m² com suíte · 53,28 m² com suíte e varanda · térreo com área privativa de 12,45 a 27,73 m² (sem varanda)",
     end:"Rua Carlos Luiz Barroso Ehrenberg, 181 — Residencial Galeria Garden",

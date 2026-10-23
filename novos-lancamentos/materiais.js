@@ -215,7 +215,12 @@ window.MATERIAIS = {
         "url": "materiais/sensia-galleria/tabela/tabela-sensia-galleria-2026-09.pdf",
         "titulo": "Tabela Set/2026"
       }
-    ]
+    ],
+    "fotos": 12,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/sensia-galleria.pdf?v=1792763428",
+      "titulo": "Book Sensia Galleria"
+    }
   },
   "sensia-taquaral": {
     "tabela": [
