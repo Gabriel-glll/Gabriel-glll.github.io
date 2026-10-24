@@ -564,5 +564,12 @@ window.MATERIAIS = {
       "url": "https://zff-books.zffrealty.workers.dev/portal-jardim-de-antares.pdf?v=1792590394",
       "titulo": "Book Portal Jardim de Antares"
     }
+  },
+  "toplife-mansoes": {
+    "fotos": 21,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/toplife-mansoes.pdf?v=1792852708",
+      "titulo": "Book TopLife Mansões"
+    }
   }
 };
