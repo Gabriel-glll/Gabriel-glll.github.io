@@ -78,6 +78,13 @@ def corrige_texto(s):
             return s.encode("latin-1").decode("utf-8")
         except Exception:
             pass
+        # texto misturado (parte certa, parte quebrada): conserta só as sequências quebradas
+        def um(m):
+            try:
+                return m.group().encode("latin-1").decode("utf-8")
+            except Exception:
+                return m.group()
+        s = re.sub(r"[ÂÃ][\x80-\xbf]", um, s)
     return s
 
 
@@ -253,6 +260,12 @@ def de_portais(h, url):
                 r["endereco"] = partes[0]
         if len(partes) >= 3:
             r["bairro"], r["cidade"] = partes[-2], partes[-1]
+    # VivaReal/ZAP: números marcados com itemprop (o texto solto engana: "Quartos 3 Banheiros 2")
+    for prop, k in (("numberOfRooms", "quartos"), ("numberOfSuites", "suites"),
+                    ("numberOfBathroomsTotal", "banheiros"), ("numberOfParkingSpaces", "vagas")):
+        m = re.search(r'itemprop="' + prop + r'"[^>]*>(?:\s|<[^>]*>)*(\d+)', h)
+        if m:
+            r[k] = int(m.group(1))
     carac = texto_de(h, r"reactGeneralFeatures")
     if carac:
         itens = [re.sub(r"\s*\(.*?\)", "", c).strip() for c in carac]
