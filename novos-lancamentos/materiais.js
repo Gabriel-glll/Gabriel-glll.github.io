@@ -81,7 +81,12 @@ window.MATERIAIS = {
         "url": "materiais/freedom/tabela/tabela-freedom-2026-10.pdf",
         "titulo": "Tabela Out/2026"
       }
-    ]
+    ],
+    "fotos": 18,
+    "book": {
+      "url": "materiais/freedom/book.pdf",
+      "titulo": "Book Freedom Mansões"
+    }
   },
   "grand-paysage": {
     "tabela": [
