@@ -71,5 +71,6 @@ window.LINKS_CLIENTE = {
  "toplife-nova-campinas-park": "https://lancamentos.zffrealty.workers.dev/toplife-nova-campinas-park-7ad52a/",
  "douro": "https://lancamentos.zffrealty.workers.dev/douro-2ddf29/",
  "portal-jardim-de-antares": "https://lancamentos.zffrealty.workers.dev/portal-jardim-de-antares-8a79d4/",
- "toplife-mansoes": "https://lancamentos.zffrealty.workers.dev/toplife-mansoes-d76b1c/"
+ "toplife-mansoes": "https://lancamentos.zffrealty.workers.dev/toplife-mansoes-d76b1c/",
+ "una-mansoes": "https://lancamentos.zffrealty.workers.dev/una-mansoes-05960d/"
 };

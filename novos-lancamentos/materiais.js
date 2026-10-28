@@ -26,6 +26,13 @@
   },
 */
 window.MATERIAIS = {
+  "una-mansoes": {
+    "fotos": 18,
+    "book": {
+      "url": "materiais/una-mansoes/book.pdf",
+      "titulo": "Book Una Mansões"
+    }
+  },
   "luce-cambui": {
     "fotos": 16,
     "book": {
