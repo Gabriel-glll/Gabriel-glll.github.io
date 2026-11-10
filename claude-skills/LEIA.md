@@ -65,6 +65,13 @@ npx -y skills add SamurAIGPT/muapi-skills --all -a claude-code -g -y
 - Adicione `%APPDATA%\Python\Python3xx\Scripts` ao PATH do usuário. Não use `npm install -g muapi-cli`: quebra no Windows.
 - A chave Muapi o Gabriel configura ele mesmo (`muapi auth configure --api-key ...`). Nunca peça a chave no chat.
 
+## 4. Entregas compartilhadas (vídeos e projetos prontos)
+| Data | Entrega | Arquivos |
+|---|---|---|
+| 10/11/2026 | **Motion "Prazer… eu sou o Gabriel"** (apresentação do Instagram, 1min07, 9:16, laranja + leite, narração ElevenLabs voz *Will - Dramatic Storyteller* `luS7emxs7T0hCBde2NTQ` eleven_v3, trilha original ElevenLabs Music). Aprovado em v4 (sem "Gil", foto de perfil, "idéias" com é aberto, pausa no final). | `entregas/apresentacao-gabriel/`: `apresentacao-gabriel.mp4` (vídeo final) · `ApresentacaoGabriel.tsx` → `motion-narrado/src/videos/` · `apres-final.mp3` + `apres-final.words.json` → `public/audio/` · `apresentacao-trilha68.mp3` → `public/music/` · `perfil.jpg` → `public/foto/`. SFX usados vêm da skill `sons-reels` (copiar para `public/sfx/`). Registrar em `src/Root.tsx` como `ApresentacaoGabriel`. |
+
+Link direto do vídeo: https://raw.githubusercontent.com/Gabriel-glll/Gabriel-glll.github.io/main/claude-skills/entregas/apresentacao-gabriel/apresentacao-gabriel.mp4
+
 ## 3. No fim
 Diga o que foi instalado ou atualizado. As skills ficam disponíveis na próxima sessão; nesta, leia o SKILL.md e siga.
 

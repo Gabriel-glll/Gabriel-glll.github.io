@@ -1,0 +1,782 @@
+[
+ {
+  "text": "Prazer",
+  "startMs": 90,
+  "endMs": 710
+ },
+ {
+  "text": "eu",
+  "startMs": 710,
+  "endMs": 800
+ },
+ {
+  "text": "sou",
+  "startMs": 800,
+  "endMs": 1040
+ },
+ {
+  "text": "o",
+  "startMs": 1040,
+  "endMs": 1130
+ },
+ {
+  "text": "Gabriel",
+  "startMs": 1130,
+  "endMs": 1960
+ },
+ {
+  "text": "Gil",
+  "startMs": 1960,
+  "endMs": 1960
+ },
+ {
+  "text": "E",
+  "startMs": 1960,
+  "endMs": 2150
+ },
+ {
+  "text": "antes",
+  "startMs": 2150,
+  "endMs": 2420
+ },
+ {
+  "text": "de",
+  "startMs": 2420,
+  "endMs": 2560
+ },
+ {
+  "text": "qualquer",
+  "startMs": 2560,
+  "endMs": 3170
+ },
+ {
+  "text": "coisa",
+  "startMs": 3170,
+  "endMs": 3780
+ },
+ {
+  "text": "deixa",
+  "startMs": 3780,
+  "endMs": 4510
+ },
+ {
+  "text": "eu",
+  "startMs": 3780,
+  "endMs": 4510
+ },
+ {
+  "text": "te",
+  "startMs": 3780,
+  "endMs": 4510
+ },
+ {
+  "text": "contar",
+  "startMs": 4510,
+  "endMs": 5040
+ },
+ {
+  "text": "quem",
+  "startMs": 5040,
+  "endMs": 5610
+ },
+ {
+  "text": "eu",
+  "startMs": 5610,
+  "endMs": 5610
+ },
+ {
+  "text": "sou",
+  "startMs": 5610,
+  "endMs": 6200
+ },
+ {
+  "text": "Sou",
+  "startMs": 6460,
+  "endMs": 6540
+ },
+ {
+  "text": "cristão",
+  "startMs": 6540,
+  "endMs": 7580
+ },
+ {
+  "text": "Servo",
+  "startMs": 7580,
+  "endMs": 8010
+ },
+ {
+  "text": "de",
+  "startMs": 8010,
+  "endMs": 8250
+ },
+ {
+  "text": "Deus",
+  "startMs": 8250,
+  "endMs": 9100
+ },
+ {
+  "text": "Tudo",
+  "startMs": 9100,
+  "endMs": 9440
+ },
+ {
+  "text": "o",
+  "startMs": 9440,
+  "endMs": 9520
+ },
+ {
+  "text": "que",
+  "startMs": 9520,
+  "endMs": 9780
+ },
+ {
+  "text": "eu",
+  "startMs": 9780,
+  "endMs": 10060
+ },
+ {
+  "text": "construo",
+  "startMs": 10060,
+  "endMs": 10610
+ },
+ {
+  "text": "começa",
+  "startMs": 10610,
+  "endMs": 11160
+ },
+ {
+  "text": "Nele",
+  "startMs": 11160,
+  "endMs": 11840
+ },
+ {
+  "text": "É",
+  "startMs": 11840,
+  "endMs": 12100
+ },
+ {
+  "text": "por",
+  "startMs": 12100,
+  "endMs": 12290
+ },
+ {
+  "text": "Ele",
+  "startMs": 12290,
+  "endMs": 12590
+ },
+ {
+  "text": "que",
+  "startMs": 12590,
+  "endMs": 12830
+ },
+ {
+  "text": "eu",
+  "startMs": 12830,
+  "endMs": 13010
+ },
+ {
+  "text": "sigo",
+  "startMs": 13010,
+  "endMs": 13500
+ },
+ {
+  "text": "e",
+  "startMs": 13500,
+  "endMs": 13540
+ },
+ {
+  "text": "tudo",
+  "startMs": 13540,
+  "endMs": 13960
+ },
+ {
+  "text": "o",
+  "startMs": 13960,
+  "endMs": 14080
+ },
+ {
+  "text": "que",
+  "startMs": 14080,
+  "endMs": 14380
+ },
+ {
+  "text": "eu",
+  "startMs": 14380,
+  "endMs": 14600
+ },
+ {
+  "text": "faço",
+  "startMs": 14600,
+  "endMs": 15120
+ },
+ {
+  "text": "é",
+  "startMs": 15120,
+  "endMs": 15330
+ },
+ {
+  "text": "para",
+  "startMs": 15330,
+  "endMs": 15500
+ },
+ {
+  "text": "Ele",
+  "startMs": 15500,
+  "endMs": 16440
+ },
+ {
+  "text": "Sou",
+  "startMs": 16440,
+  "endMs": 16670
+ },
+ {
+  "text": "casado",
+  "startMs": 16670,
+  "endMs": 17140
+ },
+ {
+  "text": "com",
+  "startMs": 17140,
+  "endMs": 17360
+ },
+ {
+  "text": "a",
+  "startMs": 17360,
+  "endMs": 17430
+ },
+ {
+  "text": "Melissa",
+  "startMs": 17430,
+  "endMs": 18210
+ },
+ {
+  "text": "a",
+  "startMs": 18210,
+  "endMs": 18260
+ },
+ {
+  "text": "mulher",
+  "startMs": 18260,
+  "endMs": 18740
+ },
+ {
+  "text": "que",
+  "startMs": 18740,
+  "endMs": 18870
+ },
+ {
+  "text": "Deus",
+  "startMs": 18870,
+  "endMs": 19160
+ },
+ {
+  "text": "colocou",
+  "startMs": 19160,
+  "endMs": 19670
+ },
+ {
+  "text": "do",
+  "startMs": 19670,
+  "endMs": 19810
+ },
+ {
+  "text": "meu",
+  "startMs": 19810,
+  "endMs": 20030
+ },
+ {
+  "text": "lado",
+  "startMs": 20030,
+  "endMs": 20380
+ },
+ {
+  "text": "pra",
+  "startMs": 20380,
+  "endMs": 20700
+ },
+ {
+  "text": "construir",
+  "startMs": 20700,
+  "endMs": 21410
+ },
+ {
+  "text": "uma",
+  "startMs": 21410,
+  "endMs": 21650
+ },
+ {
+  "text": "vida",
+  "startMs": 21650,
+  "endMs": 21970
+ },
+ {
+  "text": "inteira",
+  "startMs": 21970,
+  "endMs": 22780
+ },
+ {
+  "text": "Tenho",
+  "startMs": 22780,
+  "endMs": 23280
+ },
+ {
+  "text": "muito",
+  "startMs": 23280,
+  "endMs": 23790
+ },
+ {
+  "text": "orgulho",
+  "startMs": 23790,
+  "endMs": 24560
+ },
+ {
+  "text": "dela",
+  "startMs": 24560,
+  "endMs": 24900
+ },
+ {
+  "text": "e",
+  "startMs": 24900,
+  "endMs": 25000
+ },
+ {
+  "text": "sou",
+  "startMs": 25000,
+  "endMs": 25350
+ },
+ {
+  "text": "muito",
+  "startMs": 25350,
+  "endMs": 26320
+ },
+ {
+  "text": "feliz",
+  "startMs": 26320,
+  "endMs": 26680
+ },
+ {
+  "text": "Sou",
+  "startMs": 26690,
+  "endMs": 26710
+ },
+ {
+  "text": "empresário",
+  "startMs": 26710,
+  "endMs": 27860
+ },
+ {
+  "text": "Gosto",
+  "startMs": 27860,
+  "endMs": 28150
+ },
+ {
+  "text": "de",
+  "startMs": 28150,
+  "endMs": 28310
+ },
+ {
+  "text": "criar",
+  "startMs": 28310,
+  "endMs": 28880
+ },
+ {
+  "text": "de",
+  "startMs": 28880,
+  "endMs": 28980
+ },
+ {
+  "text": "empreender",
+  "startMs": 28980,
+  "endMs": 30030
+ },
+ {
+  "text": "e",
+  "startMs": 30030,
+  "endMs": 30040
+ },
+ {
+  "text": "de",
+  "startMs": 30040,
+  "endMs": 30340
+ },
+ {
+  "text": "transformar",
+  "startMs": 30340,
+  "endMs": 30880
+ },
+ {
+  "text": "idéias",
+  "startMs": 30880,
+  "endMs": 31570
+ },
+ {
+  "text": "em",
+  "startMs": 31570,
+  "endMs": 31650
+ },
+ {
+  "text": "algo",
+  "startMs": 31650,
+  "endMs": 31920
+ },
+ {
+  "text": "real.",
+  "startMs": 31920,
+  "endMs": 32420
+ },
+ {
+  "text": "Hoje",
+  "startMs": 32680,
+  "endMs": 33080
+ },
+ {
+  "text": "tenho",
+  "startMs": 33080,
+  "endMs": 33410
+ },
+ {
+  "text": "a",
+  "startMs": 33410,
+  "endMs": 33470
+ },
+ {
+  "text": "minha",
+  "startMs": 33470,
+  "endMs": 33800
+ },
+ {
+  "text": "loja",
+  "startMs": 33800,
+  "endMs": 34060
+ },
+ {
+  "text": "de",
+  "startMs": 34060,
+  "endMs": 34230
+ },
+ {
+  "text": "roupas",
+  "startMs": 34230,
+  "endMs": 34900
+ },
+ {
+  "text": "mas",
+  "startMs": 34900,
+  "endMs": 35090
+ },
+ {
+  "text": "isso",
+  "startMs": 35090,
+  "endMs": 35520
+ },
+ {
+  "text": "é",
+  "startMs": 35520,
+  "endMs": 35700
+ },
+ {
+  "text": "só",
+  "startMs": 35700,
+  "endMs": 36010
+ },
+ {
+  "text": "o",
+  "startMs": 36010,
+  "endMs": 36110
+ },
+ {
+  "text": "começo",
+  "startMs": 36110,
+  "endMs": 37180
+ },
+ {
+  "text": "E",
+  "startMs": 37180,
+  "endMs": 37330
+ },
+ {
+  "text": "agora",
+  "startMs": 37330,
+  "endMs": 37790
+ },
+ {
+  "text": "começo",
+  "startMs": 37790,
+  "endMs": 38340
+ },
+ {
+  "text": "um",
+  "startMs": 38340,
+  "endMs": 38490
+ },
+ {
+  "text": "novo",
+  "startMs": 38490,
+  "endMs": 38870
+ },
+ {
+  "text": "capítulo",
+  "startMs": 38870,
+  "endMs": 39710
+ },
+ {
+  "text": "corretor",
+  "startMs": 39710,
+  "endMs": 40410
+ },
+ {
+  "text": "de",
+  "startMs": 40410,
+  "endMs": 40600
+ },
+ {
+  "text": "imóveis",
+  "startMs": 40600,
+  "endMs": 41720
+ },
+ {
+  "text": "Quero",
+  "startMs": 41720,
+  "endMs": 42040
+ },
+ {
+  "text": "ajudar",
+  "startMs": 42040,
+  "endMs": 42430
+ },
+ {
+  "text": "pessoas",
+  "startMs": 42430,
+  "endMs": 42880
+ },
+ {
+  "text": "e",
+  "startMs": 42880,
+  "endMs": 42940
+ },
+ {
+  "text": "famílias",
+  "startMs": 42940,
+  "endMs": 43620
+ },
+ {
+  "text": "a",
+  "startMs": 43620,
+  "endMs": 43630
+ },
+ {
+  "text": "encontrar",
+  "startMs": 43630,
+  "endMs": 44280
+ },
+ {
+  "text": "o",
+  "startMs": 44280,
+  "endMs": 44350
+ },
+ {
+  "text": "lugar",
+  "startMs": 44350,
+  "endMs": 44820
+ },
+ {
+  "text": "onde",
+  "startMs": 44820,
+  "endMs": 45100
+ },
+ {
+  "text": "a",
+  "startMs": 45100,
+  "endMs": 45280
+ },
+ {
+  "text": "história",
+  "startMs": 45280,
+  "endMs": 46040
+ },
+ {
+  "text": "delas",
+  "startMs": 46040,
+  "endMs": 46510
+ },
+ {
+  "text": "vai",
+  "startMs": 46510,
+  "endMs": 46700
+ },
+ {
+  "text": "acontecer",
+  "startMs": 46700,
+  "endMs": 47960
+ },
+ {
+  "text": "Aqui",
+  "startMs": 47960,
+  "endMs": 48330
+ },
+ {
+  "text": "você",
+  "startMs": 48330,
+  "endMs": 48650
+ },
+ {
+  "text": "vai",
+  "startMs": 48650,
+  "endMs": 48840
+ },
+ {
+  "text": "ver",
+  "startMs": 48840,
+  "endMs": 49090
+ },
+ {
+  "text": "um",
+  "startMs": 49090,
+  "endMs": 49150
+ },
+ {
+  "text": "pouco",
+  "startMs": 49150,
+  "endMs": 49590
+ },
+ {
+  "text": "de",
+  "startMs": 49590,
+  "endMs": 49620
+ },
+ {
+  "text": "tudo",
+  "startMs": 49620,
+  "endMs": 49840
+ },
+ {
+  "text": "da",
+  "startMs": 49840,
+  "endMs": 49960
+ },
+ {
+  "text": "minha",
+  "startMs": 49960,
+  "endMs": 50280
+ },
+ {
+  "text": "vida",
+  "startMs": 50280,
+  "endMs": 50800
+ },
+ {
+  "text": "fé",
+  "startMs": 50900,
+  "endMs": 51510
+ },
+ {
+  "text": "casamento",
+  "startMs": 51510,
+  "endMs": 52410
+ },
+ {
+  "text": "negócios",
+  "startMs": 52410,
+  "endMs": 53530
+ },
+ {
+  "text": "imóveis",
+  "startMs": 53530,
+  "endMs": 54340
+ },
+ {
+  "text": "e",
+  "startMs": 54340,
+  "endMs": 54440
+ },
+ {
+  "text": "o",
+  "startMs": 54440,
+  "endMs": 54540
+ },
+ {
+  "text": "dia",
+  "startMs": 54540,
+  "endMs": 54840
+ },
+ {
+  "text": "a",
+  "startMs": 54840,
+  "endMs": 54940
+ },
+ {
+  "text": "dia",
+  "startMs": 54940,
+  "endMs": 55240
+ },
+ {
+  "text": "de",
+  "startMs": 55240,
+  "endMs": 55440
+ },
+ {
+  "text": "verdade",
+  "startMs": 55440,
+  "endMs": 56560
+ },
+ {
+  "text": "Se",
+  "startMs": 56560,
+  "endMs": 56750
+ },
+ {
+  "text": "faz",
+  "startMs": 56750,
+  "endMs": 57070
+ },
+ {
+  "text": "sentido",
+  "startMs": 57070,
+  "endMs": 57720
+ },
+ {
+  "text": "pra",
+  "startMs": 57720,
+  "endMs": 58480
+ },
+ {
+  "text": "você",
+  "startMs": 58480,
+  "endMs": 58790
+ },
+ {
+  "text": "fica",
+  "startMs": 58790,
+  "endMs": 59470
+ },
+ {
+  "text": "por",
+  "startMs": 59470,
+  "endMs": 59470
+ },
+ {
+  "text": "aqui",
+  "startMs": 59470,
+  "endMs": 60600
+ },
+ {
+  "text": "Prazer",
+  "startMs": 59800,
+  "endMs": 60420
+ },
+ {
+  "text": "Gabriel",
+  "startMs": 62060,
+  "endMs": 62840
+ },
+ {
+  "text": "eu",
+  "startMs": 61630,
+  "endMs": 61680
+ },
+ {
+  "text": "Gabriel",
+  "startMs": 62060,
+  "endMs": 62840
+ }
+]
