@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Vídeos do Estúdio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4efe7;--card:#fffdf9;--ink:#1d1a16;--mute:#7a7066;--line:#e4dccf;--acc:#d4642a;--acc-ink:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161412;--card:#201d1a;--ink:#f2ece3;--mute:#a59a8d;--line:#332e29;--acc:#e8773b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:clamp(32px,6vw,56px);font-weight:800;letter-spacing:-.03em;margin:0 0 8px}
+.sub{color:var(--mute);margin:0 0 24px;font-size:16px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:28px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;font:500 14px Inter;cursor:pointer}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cmd{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:32px;font-size:14px;color:var(--mute)}
+.cmd code{display:block;margin-top:6px;color:var(--ink);font:13px ui-monospace,Consolas,monospace;overflow-x:auto;white-space:nowrap}
+h2{font-size:20px;margin:36px 0 14px;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{aspect-ratio:9/16;background:#000 center/cover;position:relative}
+.tag{position:absolute;top:8px;left:8px;background:var(--acc);color:var(--acc-ink);font:700 11px Inter;padding:4px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+.dur{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.65);color:#fff;font:500 12px Inter;padding:3px 7px;border-radius:6px}
+.info{padding:12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.t{font-weight:700;font-size:14px;line-height:1.3}
+.m{color:var(--mute);font-size:12px;word-break:break-all}
+.dl{margin-top:auto;display:block;text-align:center;background:var(--ink);color:var(--bg);text-decoration:none;font:700 13px Inter;padding:10px;border-radius:10px;margin-top:10px}
+.dl:hover{background:var(--acc);color:var(--acc-ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Vídeos do Estúdio</h1>
+  <p class="sub">Todos os vídeos feitos no PC do Desktop. Clique em <b>Baixar</b> para salvar o MP4. Os vídeos são privados: o download só funciona com a conta <b>Gabriel-glll</b> logada no GitHub, no mesmo navegador.</p>
+  <div class="bar" id="bar"></div>
+  <div class="cmd">Baixar tudo de uma vez (terminal do outro PC):
+    <code>gh release download todos -R Gabriel-glll/videos-motion -D videos</code></div>
+  <div id="lista"></div>
+</div>
+<script>
+const BASE="https://github.com/Gabriel-glll/videos-motion/releases/download/todos/";
+// [arquivo, título, grupo, final?, bytes, segundos]
+const V=[
+["os-contos-de-alfredo-parte1","Os contos de Alfredo · Parte 1","Contos de Alfredo",1,46206109,104],
+["os-contos-de-alfredo-parte2","Os contos de Alfredo · Parte 2","Contos de Alfredo",1,38812026,97],
+["os-contos-de-alfredo-parte3","Os contos de Alfredo · Parte 3","Contos de Alfredo",1,34906554,103],
+["os-contos-de-alfredo-parte4","Os contos de Alfredo · Parte 4","Contos de Alfredo",1,31730757,100],
+["os-contos-de-alfredo-parte5","Os contos de Alfredo · Parte 5","Contos de Alfredo",1,32413624,106],
+["alfredo-parte1-v1","Alfredo Parte 1 · rascunho v1","Contos de Alfredo",0,41957332,104],
+["alfredo-parte1-v2","Alfredo Parte 1 · rascunho v2","Contos de Alfredo",0,46109298,104],
+["corretor-6porcento-3d-v1","Corretor merece ganhar 6% · 3D","Narrativas explicativas",1,57250407,137],
+["corretor-6porcento-v4","Corretor 6% · 2D v4","Narrativas explicativas",0,28269316,137],
+["corretor-6porcento-v3","Corretor 6% · 2D v3","Narrativas explicativas",0,28268073,137],
+["corretor-6porcento-v2","Corretor 6% · 2D v2","Narrativas explicativas",0,28269031,137],
+["corretor-6porcento-v1","Corretor 6% · 2D v1","Narrativas explicativas",0,24311318,123],
+["imovel-ap0066","Imóvel AP0066","Imóveis",1,20770044,35],
+["imovel-ap0159","Imóvel AP0159 · Wait","Imóveis",1,17014251,11],
+["imovel-ca0036","Imóvel CA0036","Imóveis",1,25552836,22],
+["imovel-ca0036-carro","Imóvel CA0036 · com carro","Imóveis",0,24967659,30],
+["douro-reel-3d","Reel 3D Douro","Imóveis",1,159740902,46],
+["douro-previa","Douro · prévia","Imóveis",0,79886766,17],
+["comparacao-carro","Comparação carro","Imóveis",0,9420562,30],
+["teste-paralaxe-ca0036","Teste paralaxe CA0036","Imóveis",0,4922865,12],
+["comparativo-wan-paralaxe","Comparativo Wan × paralaxe","Imóveis",0,4984876,9],
+["eleicoes-reels-v8-violin","Reels Eleições · v8 (violino)","Eleições",1,194919179,87],
+["eleicoes-2turno","2º Turno · motion design","Eleições",1,38669784,70],
+["eleicoes-reels-v8-raw","Reels Eleições · v8 sem tratamento","Eleições",0,196267518,87],
+["eleicoes-reels-v7","Reels Eleições · v7","Eleições",0,163431701,87],
+["eleicoes-reels-v7-com-loser","Reels Eleições · v7 com loser","Eleições",0,163461641,87],
+["eleicoes-reels-v7-raw","Reels Eleições · v7 sem tratamento","Eleições",0,164812595,87],
+["eleicoes-reels-v6","Reels Eleições · v6","Eleições",0,156854319,87],
+["eleicoes-reels-v6-com-loser","Reels Eleições · v6 com loser","Eleições",0,156888500,87],
+["eleicoes-reels-v6-raw","Reels Eleições · v6 sem tratamento","Eleições",0,158235213,87],
+["eleicoes-reels-v5","Reels Eleições · v5","Eleições",0,122311745,87],
+["eleicoes-reels-v5-raw","Reels Eleições · v5 sem tratamento","Eleições",0,123692639,87],
+["eleicoes-reels-v4","Reels Eleições · v4","Eleições",0,104767710,87],
+["eleicoes-reels-v4-raw","Reels Eleições · v4 sem tratamento","Eleições",0,106150181,87],
+["eleicoes-reels-v3","Reels Eleições · v3","Eleições",0,67785675,88],
+["eleicoes-reels-v3-raw","Reels Eleições · v3 sem tratamento","Eleições",0,69143453,88],
+["eleicoes-reels-v2","Reels Eleições · v2","Eleições",0,65479851,91],
+["eleicoes-reels-v2-raw","Reels Eleições · v2 sem tratamento","Eleições",0,66882329,91],
+["eleicoes-reels","Reels Eleições · v1","Eleições",0,109534060,76],
+["prazer-gabriel-reels","Prazer, Gabriel Gil","Outros",1,66127290,28],
+["prazer-gabriel-reels-sem-musica","Prazer, Gabriel Gil · sem música","Outros",1,66108655,28],
+["vm-reels-1","VM · Reels 1","Outros",1,18159553,26],
+["jesus-gol","Jesus gol","Outros",1,17206468,11],
+["edit-whats1","Edit WhatsApp 1","Outros",1,79256979,39],
+["edit-whats1-leve","Edit WhatsApp 1 · leve","Outros",0,35882262,39],
+["evolua-demo-v2","EVOLUA demo v2","Outros",1,15599912,26],
+["evolua-demo","EVOLUA demo v1","Outros",0,11032349,26]
+];
+const mb=b=>(b/1048576).toFixed(0)+" MB", tm=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+let filtro="Finais";
+const grupos=[...new Set(V.map(v=>v[2]))];
+function render(){
+  document.getElementById("bar").innerHTML=["Finais","Tudo"].map(f=>`<button class="chip ${f==filtro?"on":""}" data-f="${f}">${f=="Finais"?"Só versões finais":"Tudo, com rascunhos"} (${f=="Finais"?V.filter(v=>v[3]).length:V.length})</button>`).join("");
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filtro=b.dataset.f;render()});
+  document.getElementById("lista").innerHTML=grupos.map(g=>{
+    const it=V.filter(v=>v[2]==g&&(filtro=="Tudo"||v[3]));
+    if(!it.length)return"";
+    return `<h2>${g}</h2><div class="grid">${it.map(([f,t,,fin,b,s])=>`
+      <div class="card"><div class="thumb" style="background-image:url('thumbs/${f}.jpg')">${fin?'<span class="tag">Final</span>':""}<span class="dur">${tm(s)}</span></div>
+      <div class="info"><div class="t">${t}</div><div class="m">${f}.mp4 · ${mb(b)}</div>
+      <a class="dl" href="${BASE}${f}.mp4" download>Baixar</a></div></div>`).join("")}</div>`;
+  }).join("");
+}
+render();
+</script>
+</body>
+</html>
