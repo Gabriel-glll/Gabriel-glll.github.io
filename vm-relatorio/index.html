@@ -127,10 +127,11 @@ function render(janela, data) {
     <div class="rel-head">
       <div>
         <h1 class="display page-title">Relatório VM</h1>
-        <p class="muted">${fmtData(data.de)} – ${fmtData(data.ate)} · ${janela} dias</p>
+        <p class="muted">${fmtData(data.de)} – ${fmtData(data.ate)} · ${janela === 'geral' ? 'desde o início' : janela + ' dias'}</p>
       </div>
       <div class="rel-tabs">
         ${[7,14,30].map(d => `<button data-dias="${d}" class="${d===janela?'on':''}">${d}d</button>`).join('')}
+        <button data-dias="geral" class="${janela==='geral'?'on':''}">Geral</button>
       </div>
     </div>
     <div class="rel-grid">
@@ -172,8 +173,13 @@ function render(janela, data) {
       </div>` : ''}
       ${s.topProdutos?.length ? `
       <div class="rel-panel">
-        <h2>Mais vendidos no período</h2>
+        <h2>Mais vendidos (pagos)</h2>
         ${ranking(s.topProdutos.map(x => ({ label: x.nome.replace(/^Camiseta /, ''), n: x.qty, sufixo: x.qty === 1 ? 'peça' : 'peças' })))}
+      </div>` : ''}
+      ${s.produtosNoCarrinho?.length ? `
+      <div class="rel-panel">
+        <h2>Mais colocados no carrinho (pago ou não)</h2>
+        ${ranking(s.produtosNoCarrinho.map(x => ({ label: x.nome.replace(/^Camiseta /, ''), n: x.qty, sufixo: x.qty === 1 ? 'peça' : 'peças' })))}
       </div>` : ''}
       ${Object.keys(s.cupons || {}).length ? `
       <div class="rel-panel">
@@ -196,7 +202,7 @@ function render(janela, data) {
     </div>
     <p class="muted" style="margin-top:24px"><a href="#" id="trocarChave">trocar chave de acesso</a></p>
   `;
-  app.querySelectorAll('[data-dias]').forEach(b => b.addEventListener('click', () => carregar(Number(b.dataset.dias))));
+  app.querySelectorAll('[data-dias]').forEach(b => b.addEventListener('click', () => carregar(b.dataset.dias === 'geral' ? 'geral' : Number(b.dataset.dias))));
   document.getElementById('trocarChave').addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem(LS_KEY); location.reload(); });
 }
 
