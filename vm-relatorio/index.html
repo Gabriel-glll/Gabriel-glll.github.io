@@ -35,10 +35,19 @@ a { color: inherit; }
 .rel-panel h2 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); font-weight: 600; margin-bottom: 16px; }
 .rel-chart { width: 100%; height: auto; overflow: visible; }
 .rel-funil { display: grid; gap: 10px; }
-.rel-funil-row { display: grid; grid-template-columns: 96px 1fr 28px; align-items: center; gap: 10px; font-size: 13px; }
+.rel-funil-row { display: grid; grid-template-columns: minmax(80px, 1.4fr) 1fr auto; align-items: center; gap: 10px; font-size: 13px; }
 .rel-funil-bar { background: var(--ink-3); border-radius: 4px; height: 10px; overflow: hidden; }
 .rel-funil-bar div { height: 100%; border-radius: 4px; transition: width .3s; }
-.rel-funil-n { text-align: right; color: var(--mute); font-variant-numeric: tabular-nums; }
+.rel-funil-n { text-align: right; color: var(--mute); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rel-funil-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rel-panel-wide { grid-column: 1 / -1; }
+.rel-proj { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.rel-proj strong { font-size: 26px; }
+.rel-estoque { display: grid; gap: 2px; }
+.rel-estoque-row { display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.rel-estoque-row:last-child { border-bottom: 0; }
+.rel-estoque-row.baixo strong { color: #f0b429; }
+.rel-estoque-row.zerado strong { color: #ff4b3e; }
 .rel-state { padding: 40px 0; text-align: center; color: var(--mute); }
 .rel-key-gate { max-width: 360px; margin: 80px auto; text-align: center; }
 .rel-key-gate input { width: 100%; background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; color: var(--bone); font: inherit; margin: 16px 0; }
@@ -90,6 +99,16 @@ function barras(pontos, labels, cor, formatar, w=560, h=160, pad=28) {
   return `<svg viewBox="0 0 ${w} ${h}" class="rel-chart"><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="var(--line)"/>${bars}</svg>`;
 }
 
+function ranking(itens) {
+  const max = Math.max(1, ...itens.map(i => i.n));
+  return `<div class="rel-funil">${itens.map(i => `
+    <div class="rel-funil-row">
+      <span class="rel-funil-label" title="${i.label}">${i.label}</span>
+      <div class="rel-funil-bar"><div style="width:${(i.n/max)*100}%;background:var(--bone)"></div></div>
+      <span class="rel-funil-n">${i.n} ${i.sufixo}</span>
+    </div>`).join('')}</div>`;
+}
+
 function render(janela, data) {
   const s = data.stats;
   const emAberto = Math.max(0, s.carrinhosIniciados - s.pedidosPagos - s.carrinhosAbandonados - s.pagamentosRecusados);
@@ -101,6 +120,8 @@ function render(janela, data) {
   ];
   const max = Math.max(1, ...funil.map(i => i.n));
   const labels = data.serie.map(d => fmtData(d.data + "T12:00:00"));
+  const p = data.projecao;
+  const estoque = data.estoque;
 
   app.innerHTML = `
     <div class="rel-head">
@@ -117,7 +138,10 @@ function render(janela, data) {
       <div class="rel-tile"><p class="muted">Visitantes únicos</p><strong class="display">${s.visitantes}</strong></div>
       <div class="rel-tile"><p class="muted">Logins na conta</p><strong class="display">${s.logins}</strong></div>
       <div class="rel-tile"><p class="muted">Carrinhos iniciados</p><strong class="display">${s.carrinhosIniciados}</strong></div>
+      <div class="rel-tile"><p class="muted">Peças vendidas</p><strong class="display">${s.pecasVendidas}</strong></div>
+      <div class="rel-tile"><p class="muted">Pedidos pagos</p><strong class="display">${s.pedidosPagos}</strong></div>
       <div class="rel-tile rel-tile-wide"><p class="muted">Faturamento</p><strong class="display">${brl(s.faturamento)}</strong></div>
+      <div class="rel-tile"><p class="muted">Ticket médio</p><strong class="display">${brl(s.ticketMedio)}</strong></div>
       <div class="rel-tile"><p class="muted">Conversão</p><strong class="display">${s.conversao}%</strong></div>
     </div>
     <div class="rel-panels">
@@ -127,6 +151,7 @@ function render(janela, data) {
           ${funil.map(i => `<div class="rel-funil-row"><span>${i.label}</span><div class="rel-funil-bar"><div style="width:${(i.n/max)*100}%;background:${i.cor}"></div></div><span class="rel-funil-n">${i.n}</span></div>`).join('')}
           <p class="muted" style="margin-top:10px">${s.carrinhosIniciados} carrinhos no período</p>
         </div>
+        ${s.valorAbandonado > 0 ? `<p class="muted" style="margin-top:10px"><span style="color:var(--bone)">${brl(s.valorAbandonado)}</span> parados em carrinhos abandonados — é o que o cupom RETOMADA tenta recuperar</p>` : ''}
       </div>
       <div class="rel-panel">
         <h2>Visitas por dia</h2>
@@ -136,6 +161,38 @@ function render(janela, data) {
         <h2>Faturamento por dia</h2>
         ${barras(data.serie.map(d => d.faturamento), labels, 'var(--ok)', brl)}
       </div>
+      ${p ? `
+      <div class="rel-panel">
+        <h2>Projeção do mês</h2>
+        <div class="rel-proj">
+          <div><p class="muted">Já faturado</p><strong class="display">${brl(p.realizado)}</strong></div>
+          <div><p class="muted">Projeção até o fim do mês</p><strong class="display" style="color:var(--ok)">${brl(p.projecao)}</strong></div>
+        </div>
+        <p class="muted" style="margin-top:10px">Dia ${p.diaDoMes} de ${p.diasNoMes} · ritmo de ${brl(p.mediaDiaria)}/dia</p>
+      </div>` : ''}
+      ${s.topProdutos?.length ? `
+      <div class="rel-panel">
+        <h2>Mais vendidos no período</h2>
+        ${ranking(s.topProdutos.map(x => ({ label: x.nome.replace(/^Camiseta /, ''), n: x.qty, sufixo: x.qty === 1 ? 'peça' : 'peças' })))}
+      </div>` : ''}
+      ${Object.keys(s.cupons || {}).length ? `
+      <div class="rel-panel">
+        <h2>Cupons usados</h2>
+        ${ranking(Object.entries(s.cupons).map(([nome, c]) => ({ label: nome, n: c.n, sufixo: `· ${brl(c.desconto)} em desconto` })))}
+      </div>` : ''}
+      ${estoque ? `
+      <div class="rel-panel rel-panel-wide">
+        <h2>Estoque (Bling)</h2>
+        <div class="rel-estoque">
+          ${estoque.map(i => `
+            <div class="rel-estoque-row ${i.unidades === 0 ? 'zerado' : i.unidades <= 5 ? 'baixo' : ''}">
+              <span>${i.nome}</span>
+              <span class="muted">${i.esgotados > 0 ? `${i.esgotados}/${i.variacoes} esgotadas` : '—'}</span>
+              <strong>${i.unidades} un.</strong>
+            </div>`).join('')}
+        </div>
+      </div>` : `
+      <div class="rel-panel"><h2>Estoque</h2><p class="muted">Bling não conectado — sem dados de estoque agora.</p></div>`}
     </div>
     <p class="muted" style="margin-top:24px"><a href="#" id="trocarChave">trocar chave de acesso</a></p>
   `;
