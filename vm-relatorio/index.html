@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatório · VM</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a; --ink-2: #141414; --ink-3: #1d1d1d; --line: #262626;
+  --bone: #ece8e1; --mute: #8b8780; --red: #e8392d; --ok: #4ade80;
+  --pad: clamp(16px, 4vw, 48px); --max: 1100px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--ink); color: var(--bone); font-family: 'Inter Tight', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.display { font-family: 'Anton', Impact, sans-serif; font-weight: 400; text-transform: uppercase; line-height: .9; letter-spacing: -.005em; }
+.muted { color: var(--mute); font-size: 13px; }
+.section { max-width: var(--max); margin: 0 auto; padding: clamp(32px, 6vw, 72px) var(--pad); }
+.page-title { font-size: clamp(36px, 6vw, 72px); margin-bottom: 6px; }
+
+.rel-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; margin-bottom: 8px; }
+.rel-tabs { display: flex; gap: 4px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 99px; padding: 3px; }
+.rel-tabs button { font: inherit; cursor: pointer; background: none; border: 0; color: var(--mute); padding: 7px 16px; border-radius: 99px; font-size: 13px; }
+.rel-tabs button.on { background: var(--bone); color: var(--ink); font-weight: 700; }
+.rel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 24px; }
+.rel-tile { border: 1px solid var(--line); border-radius: 8px; background: var(--ink-2); padding: 18px 20px; }
+.rel-tile p { margin-bottom: 6px; }
+.rel-tile strong { font-size: 30px; }
+.rel-tile-wide { grid-column: span 2; }
+.rel-panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 14px; }
+.rel-panel { border: 1px solid var(--line); border-radius: 8px; background: var(--ink-2); padding: 20px 22px; min-height: 220px; }
+.rel-panel h2 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); font-weight: 600; margin-bottom: 16px; }
+.rel-chart { width: 100%; height: auto; overflow: visible; }
+.rel-funil { display: grid; gap: 10px; }
+.rel-funil-row { display: grid; grid-template-columns: 96px 1fr 28px; align-items: center; gap: 10px; font-size: 13px; }
+.rel-funil-bar { background: var(--ink-3); border-radius: 4px; height: 10px; overflow: hidden; }
+.rel-funil-bar div { height: 100%; border-radius: 4px; transition: width .3s; }
+.rel-funil-n { text-align: right; color: var(--mute); font-variant-numeric: tabular-nums; }
+.rel-state { padding: 40px 0; text-align: center; color: var(--mute); }
+.rel-key-gate { max-width: 360px; margin: 80px auto; text-align: center; }
+.rel-key-gate input { width: 100%; background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; color: var(--bone); font: inherit; margin: 16px 0; }
+.rel-key-gate button { width: 100%; background: var(--red); color: #fff; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 13px; border-radius: 4px; cursor: pointer; }
+</style>
+</head>
+<body>
+<section class="section" id="app">
+  <div class="rel-key-gate" id="gate">
+    <h1 class="display page-title">Relatório VM</h1>
+    <p class="muted">Cole a chave de acesso (REPORT_KEY) pra ver o painel. Fica salva só neste navegador.</p>
+    <input type="password" id="keyInput" placeholder="Chave de acesso" autocomplete="off">
+    <button id="enter">Entrar</button>
+  </div>
+</section>
+
+<script>
+const API = "https://vmoficial.com.br/api/relatorio/publico";
+const LS_KEY = "vm_report_key";
+const app = document.getElementById('app');
+
+function brl(v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+function fmtData(iso) { return new Date(iso).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' }); }
+
+function linha(pontos, labels, cor, w=560, h=160, pad=28) {
+  const max = Math.max(1, ...pontos);
+  const stepX = pontos.length > 1 ? (w - pad*2) / (pontos.length - 1) : 0;
+  const coord = (i,y) => [pad + i*stepX, h - pad - (y/max)*(h-pad*2-10)];
+  const path = pontos.map((y,i) => coord(i,y)).map(([x,y],i) => `${i===0?'M':'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+  const every = Math.max(1, Math.ceil(pontos.length / 7));
+  const pts = pontos.map((y,i) => {
+    const [x,yy]=coord(i,y);
+    const label = i % every === 0 ? `<text x="${x}" y="${h-8}" font-size="10" fill="var(--mute)" text-anchor="middle">${labels[i]}</text>` : '';
+    return `<circle cx="${x}" cy="${yy}" r="${y>0?3:0}" fill="${cor}"><title>${labels[i]}: ${y}</title></circle>${label}`;
+  }).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" class="rel-chart"><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="var(--line)"/><path d="${path}" fill="none" stroke="${cor}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${pts}</svg>`;
+}
+function barras(pontos, labels, cor, formatar, w=560, h=160, pad=28) {
+  const max = Math.max(1, ...pontos);
+  const bw = (w - pad*2) / pontos.length;
+  const every = Math.max(1, Math.ceil(pontos.length / 7));
+  const bars = pontos.map((y,i) => {
+    const hh = (y/max)*(h-pad*2-10);
+    const x = pad + i*bw + bw*0.15;
+    const yy = h - pad - hh;
+    const label = i % every === 0 ? `<text x="${x+bw*0.35}" y="${h-8}" font-size="10" fill="var(--mute)" text-anchor="middle">${labels[i]}</text>` : '';
+    return `<rect x="${x}" y="${yy}" width="${bw*0.7}" height="${Math.max(hh, y>0?2:0)}" rx="2" fill="${cor}"><title>${labels[i]}: ${formatar(y)}</title></rect>${label}`;
+  }).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" class="rel-chart"><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="var(--line)"/>${bars}</svg>`;
+}
+
+function render(janela, data) {
+  const s = data.stats;
+  const emAberto = Math.max(0, s.carrinhosIniciados - s.pedidosPagos - s.carrinhosAbandonados - s.pagamentosRecusados);
+  const funil = [
+    { label: "Pagos", n: s.pedidosPagos, cor: "var(--ok)" },
+    { label: "Abandonados", n: s.carrinhosAbandonados, cor: "var(--mute)" },
+    { label: "Recusados", n: s.pagamentosRecusados, cor: "var(--red)" },
+    { label: "Em andamento", n: emAberto, cor: "var(--ink-3)" },
+  ];
+  const max = Math.max(1, ...funil.map(i => i.n));
+  const labels = data.serie.map(d => fmtData(d.data + "T12:00:00"));
+
+  app.innerHTML = `
+    <div class="rel-head">
+      <div>
+        <h1 class="display page-title">Relatório VM</h1>
+        <p class="muted">${fmtData(data.de)} – ${fmtData(data.ate)} · ${janela} dias</p>
+      </div>
+      <div class="rel-tabs">
+        ${[7,14,30].map(d => `<button data-dias="${d}" class="${d===janela?'on':''}">${d}d</button>`).join('')}
+      </div>
+    </div>
+    <div class="rel-grid">
+      <div class="rel-tile"><p class="muted">Visitas ao site</p><strong class="display">${s.visitas}</strong></div>
+      <div class="rel-tile"><p class="muted">Visitantes únicos</p><strong class="display">${s.visitantes}</strong></div>
+      <div class="rel-tile"><p class="muted">Logins na conta</p><strong class="display">${s.logins}</strong></div>
+      <div class="rel-tile"><p class="muted">Carrinhos iniciados</p><strong class="display">${s.carrinhosIniciados}</strong></div>
+      <div class="rel-tile rel-tile-wide"><p class="muted">Faturamento</p><strong class="display">${brl(s.faturamento)}</strong></div>
+      <div class="rel-tile"><p class="muted">Conversão</p><strong class="display">${s.conversao}%</strong></div>
+    </div>
+    <div class="rel-panels">
+      <div class="rel-panel">
+        <h2>De onde vieram os carrinhos</h2>
+        <div class="rel-funil">
+          ${funil.map(i => `<div class="rel-funil-row"><span>${i.label}</span><div class="rel-funil-bar"><div style="width:${(i.n/max)*100}%;background:${i.cor}"></div></div><span class="rel-funil-n">${i.n}</span></div>`).join('')}
+          <p class="muted" style="margin-top:10px">${s.carrinhosIniciados} carrinhos no período</p>
+        </div>
+      </div>
+      <div class="rel-panel">
+        <h2>Visitas por dia</h2>
+        ${linha(data.serie.map(d => d.visitas), labels, 'var(--bone)')}
+      </div>
+      <div class="rel-panel">
+        <h2>Faturamento por dia</h2>
+        ${barras(data.serie.map(d => d.faturamento), labels, 'var(--ok)', brl)}
+      </div>
+    </div>
+    <p class="muted" style="margin-top:24px"><a href="#" id="trocarChave">trocar chave de acesso</a></p>
+  `;
+  app.querySelectorAll('[data-dias]').forEach(b => b.addEventListener('click', () => carregar(Number(b.dataset.dias))));
+  document.getElementById('trocarChave').addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem(LS_KEY); location.reload(); });
+}
+
+async function carregar(dias) {
+  const key = localStorage.getItem(LS_KEY);
+  app.innerHTML = '<div class="rel-state">Carregando…</div>';
+  try {
+    const r = await fetch(`${API}?key=${encodeURIComponent(key)}&dias=${dias}`);
+    if (r.status === 401) { localStorage.removeItem(LS_KEY); gate(); return; }
+    const data = await r.json();
+    if (data.error) { app.innerHTML = `<div class="rel-state">${data.error}</div>`; return; }
+    render(dias, data);
+  } catch {
+    app.innerHTML = '<div class="rel-state">Não consegui carregar agora. Atualize a página pra tentar de novo.</div>';
+  }
+}
+
+function gate() {
+  app.innerHTML = `
+    <div class="rel-key-gate">
+      <h1 class="display page-title">Relatório VM</h1>
+      <p class="muted">Cole a chave de acesso (REPORT_KEY) pra ver o painel. Fica salva só neste navegador.</p>
+      <input type="password" id="keyInput" placeholder="Chave de acesso" autocomplete="off">
+      <button id="enter">Entrar</button>
+    </div>`;
+  const go = () => {
+    const v = document.getElementById('keyInput').value.trim();
+    if (!v) return;
+    localStorage.setItem(LS_KEY, v);
+    carregar(7);
+  };
+  document.getElementById('enter').addEventListener('click', go);
+  document.getElementById('keyInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+}
+
+const saved = localStorage.getItem(LS_KEY);
+if (saved) carregar(7); else gate();
+</script>
+</body>
+</html>
