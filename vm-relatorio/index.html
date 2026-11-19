@@ -42,7 +42,9 @@ a { color: inherit; }
 .rel-funil-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rel-panel-wide { grid-column: 1 / -1; }
 .rel-proj { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.rel-proj-3 { grid-template-columns: repeat(3, 1fr); }
 .rel-proj strong { font-size: 26px; }
+@media (max-width: 700px) { .rel-proj-3 { grid-template-columns: 1fr; gap: 16px; } }
 .rel-estoque { display: grid; gap: 2px; }
 .rel-estoque-row { display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .rel-estoque-row:last-child { border-bottom: 0; }
@@ -162,15 +164,15 @@ function render(janela, data) {
         <h2>Faturamento por dia</h2>
         ${barras(data.serie.map(d => d.faturamento), labels, 'var(--ok)', brl)}
       </div>
-      ${p ? `
-      <div class="rel-panel">
-        <h2>Projeção do mês</h2>
-        <div class="rel-proj">
-          <div><p class="muted">Já faturado</p><strong class="display">${brl(p.realizado)}</strong></div>
-          <div><p class="muted">Projeção até o fim do mês</p><strong class="display" style="color:var(--ok)">${brl(p.projecao)}</strong></div>
+      <div class="rel-panel rel-panel-wide">
+        <h2>Projeção de faturamento</h2>
+        <div class="rel-proj rel-proj-3">
+          ${p ? `<div><p class="muted">Até o fim do mês (dia ${p.diaDoMes}/${p.diasNoMes})</p><strong class="display">${brl(p.projecao)}</strong></div>` : ''}
+          <div><p class="muted">Próximos 30 dias (ritmo desta janela)</p><strong class="display" style="color:var(--ok)">${brl(s.projecaoMensalRitmo)}</strong></div>
+          <div><p class="muted">Próximos 12 meses (ritmo desta janela)</p><strong class="display" style="color:var(--ok)">${brl(s.projecaoAnualRitmo)}</strong></div>
         </div>
-        <p class="muted" style="margin-top:10px">Dia ${p.diaDoMes} de ${p.diasNoMes} · ritmo de ${brl(p.mediaDiaria)}/dia</p>
-      </div>` : ''}
+        <p class="muted" style="margin-top:10px">${p ? `Mês atual: ritmo de ${brl(p.mediaDiaria)}/dia · ` : ''}Calculado a partir do faturamento desta janela</p>
+      </div>
       ${s.topProdutos?.length ? `
       <div class="rel-panel">
         <h2>Mais vendidos (pagos)</h2>
