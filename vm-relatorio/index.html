@@ -46,10 +46,25 @@ a { color: inherit; }
 .rel-proj strong { font-size: 26px; }
 @media (max-width: 700px) { .rel-proj-3 { grid-template-columns: 1fr; gap: 16px; } }
 .rel-estoque { display: grid; gap: 2px; }
-.rel-estoque-row { display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.rel-estoque-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 14px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+@media (max-width: 480px) { .rel-estoque-row { grid-template-columns: 1fr auto; } .rel-estoque-row .muted { display: none; } }
 .rel-estoque-row:last-child { border-bottom: 0; }
 .rel-estoque-row.baixo strong { color: #f0b429; }
 .rel-estoque-row.zerado strong { color: #ff4b3e; }
+.rel-lista { display: grid; gap: 2px; max-height: 420px; overflow-y: auto; }
+.rel-lista-row { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.rel-lista-row:last-child { border-bottom: 0; }
+.rel-pedidos { display: grid; gap: 8px; }
+.rel-pedido { border: 1px solid var(--line); border-radius: 6px; background: var(--ink-3); }
+.rel-pedido summary { display: grid; grid-template-columns: 1fr 120px 90px 110px; gap: 12px; align-items: center; padding: 12px 14px; cursor: pointer; font-size: 13px; list-style: none; }
+.rel-pedido summary::-webkit-details-marker { display: none; }
+.rel-pedido .st { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.rel-pedido.pago .st { color: var(--ok); }
+.rel-pedido.pendente .st { color: var(--mute); }
+.rel-pedido.cancelado .st { color: #ff4b3e; }
+.rel-pedido-body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 14px 14px; font-size: 13px; color: #cfcac2; line-height: 1.5; }
+.rel-pedido-body h4 { color: var(--bone); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+@media (max-width: 700px) { .rel-pedido summary { grid-template-columns: 1fr auto; } .rel-pedido summary span:nth-of-type(1) { display: none; } .rel-pedido-body { grid-template-columns: 1fr; } }
 .rel-state { padding: 40px 0; text-align: center; color: var(--mute); }
 .rel-key-gate { max-width: 360px; margin: 80px auto; text-align: center; }
 .rel-key-gate input { width: 100%; background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; color: var(--bone); font: inherit; margin: 16px 0; }
@@ -73,6 +88,8 @@ const app = document.getElementById('app');
 
 function brl(v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
 function fmtData(iso) { return new Date(iso).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' }); }
+function fmtHora(iso) { return new Date(iso).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); }
+const statusLabel = { pendente: 'pendente', pago: 'pago', cancelado: 'recusado' };
 
 function linha(pontos, labels, cor, w=560, h=160, pad=28) {
   const max = Math.max(1, ...pontos);
@@ -191,16 +208,52 @@ function render(janela, data) {
       ${estoque ? `
       <div class="rel-panel rel-panel-wide">
         <h2>Estoque (Bling)</h2>
+        <p class="muted" style="margin-bottom:14px">${estoque.unidadesTotais} peças em estoque · se vender tudo a preço cheio: <span style="color:var(--ok)">${brl(estoque.valorTotalEstoque)}</span></p>
         <div class="rel-estoque">
-          ${estoque.map(i => `
+          ${estoque.itens.map(i => `
             <div class="rel-estoque-row ${i.unidades === 0 ? 'zerado' : i.unidades <= 5 ? 'baixo' : ''}">
               <span>${i.nome}</span>
               <span class="muted">${i.esgotados > 0 ? `${i.esgotados}/${i.variacoes} esgotadas` : '—'}</span>
+              <span class="muted">${brl(i.valorPotencial)}</span>
               <strong>${i.unidades} un.</strong>
             </div>`).join('')}
         </div>
       </div>` : `
       <div class="rel-panel"><h2>Estoque</h2><p class="muted">Bling não conectado — sem dados de estoque agora.</p></div>`}
+
+      <div class="rel-panel">
+        <h2>Quem logou (${(data.logins || []).length})</h2>
+        ${!data.logins?.length ? '<p class="muted">Ninguém logou nesse período.</p>' : `
+        <div class="rel-lista">
+          ${data.logins.map(l => `<div class="rel-lista-row"><span>${l.email}</span><span class="muted">${fmtHora(l.em)}</span></div>`).join('')}
+        </div>`}
+      </div>
+
+      <div class="rel-panel rel-panel-wide">
+        <h2>Carrinhos e pedidos do período (${(data.pedidos || []).length})</h2>
+        ${!data.pedidos?.length ? '<p class="muted">Nenhum carrinho criado nesse período.</p>' : `
+        <div class="rel-pedidos">
+          ${data.pedidos.map(p => `
+            <details class="rel-pedido ${p.status}">
+              <summary>
+                <b>${p.nome}</b>
+                <span class="muted">${fmtHora(p.createdAt)}</span>
+                <span class="st">${statusLabel[p.status] || p.status}</span>
+                <strong>${brl(p.total)}</strong>
+              </summary>
+              <div class="rel-pedido-body">
+                <div><h4>Itens</h4><p>${p.itens}</p></div>
+                <div><h4>Contato</h4><p>${p.email}<br>${p.telefone}</p></div>
+                <div>
+                  <h4>Situação</h4>
+                  <p>Pagamento: ${p.pagamento ?? '—'}</p>
+                  <p>Estoque no Bling: ${p.estoqueBaixado ? `baixado (pedido nº ${p.blingNumero ?? '—'})` : p.blingErro ? `erro — ${p.blingErro}` : 'ainda não baixado'}</p>
+                  ${p.status === 'pendente' ? `<p>E-mail de recuperação: ${p.emailAbandonoEnviado ? `enviado em ${fmtHora(p.emailAbandonoEm)}` : 'ainda não enviado'}</p>` : ''}
+                </div>
+              </div>
+            </details>`).join('')}
+        </div>`}
+      </div>
     </div>
     <p class="muted" style="margin-top:24px"><a href="#" id="trocarChave">trocar chave de acesso</a></p>
   `;
