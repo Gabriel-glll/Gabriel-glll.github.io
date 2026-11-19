@@ -26,13 +26,6 @@
   },
 */
 window.MATERIAIS = {
-  "una-mansoes": {
-    "fotos": 18,
-    "book": {
-      "url": "materiais/una-mansoes/book.pdf",
-      "titulo": "Book Una Mansões"
-    }
-  },
   "luce-cambui": {
     "fotos": 16,
     "book": {
@@ -88,12 +81,7 @@ window.MATERIAIS = {
         "url": "materiais/freedom/tabela/tabela-freedom-2026-10.pdf",
         "titulo": "Tabela Out/2026"
       }
-    ],
-    "fotos": 18,
-    "book": {
-      "url": "materiais/freedom/book.pdf",
-      "titulo": "Book Freedom Mansões"
-    }
+    ]
   },
   "grand-paysage": {
     "tabela": [
@@ -248,12 +236,17 @@ window.MATERIAIS = {
     }
   },
   "spot": {
+    "fotos": 14,
     "tabela": [
       {
         "url": "materiais/spot/tabela/tabela-spot-2026-10.pdf",
         "titulo": "Tabela Out/2026"
       }
-    ]
+    ],
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/spot.pdf?v=1795100740",
+      "titulo": "Book Spot"
+    }
   },
   "swiss-garden": {
     "tabela": [
