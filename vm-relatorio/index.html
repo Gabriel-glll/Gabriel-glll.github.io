@@ -22,9 +22,11 @@ a { color: inherit; }
 .page-title { font-size: clamp(36px, 6vw, 72px); margin-bottom: 6px; }
 
 .rel-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; margin-bottom: 8px; }
-.rel-tabs { display: flex; gap: 4px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 99px; padding: 3px; }
-.rel-tabs button { font: inherit; cursor: pointer; background: none; border: 0; color: var(--mute); padding: 7px 16px; border-radius: 99px; font-size: 13px; }
-.rel-tabs button.on { background: var(--bone); color: var(--ink); font-weight: 700; }
+.rel-filtro { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rel-filtro label { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--mute); }
+.rel-filtro input[type="date"] { background: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; padding: 7px 10px; color: var(--bone); font: inherit; color-scheme: dark; }
+.rel-pill { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--ink-2); font: inherit; font-size: 13px; color: var(--mute); cursor: pointer; }
+.rel-pill.on { background: var(--bone); color: var(--ink); font-weight: 700; border-color: var(--bone); }
 .rel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 24px; }
 .rel-tile { border: 1px solid var(--line); border-radius: 8px; background: var(--ink-2); padding: 18px 20px; }
 .rel-tile p { margin-bottom: 6px; }
@@ -128,7 +130,9 @@ function ranking(itens) {
     </div>`).join('')}</div>`;
 }
 
-function render(janela, data) {
+function toInputDate(iso) { return new Date(iso).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }); }
+
+function render(data, customRange) {
   const s = data.stats;
   const emAberto = Math.max(0, s.carrinhosIniciados - s.pedidosPagos - s.carrinhosAbandonados - s.pagamentosRecusados);
   const funil = [
@@ -146,11 +150,13 @@ function render(janela, data) {
     <div class="rel-head">
       <div>
         <h1 class="display page-title">Relatório VM</h1>
-        <p class="muted">${fmtData(data.de)} – ${fmtData(data.ate)} · ${janela === 'geral' ? 'desde o início' : janela + ' dias'}</p>
+        <p class="muted">${fmtData(data.de)} – ${fmtData(data.ate)} · ${data.geral ? 'desde o início' : customRange ? 'período escolhido' : 'últimos 7 dias'}</p>
       </div>
-      <div class="rel-tabs">
-        ${[7,14,30].map(d => `<button data-dias="${d}" class="${d===janela?'on':''}">${d}d</button>`).join('')}
-        <button data-dias="geral" class="${janela==='geral'?'on':''}">Geral</button>
+      <div class="rel-filtro">
+        <label>De <input type="date" id="deInput" value="${toInputDate(data.de)}"></label>
+        <label>Até <input type="date" id="ateInput" value="${toInputDate(data.ate)}"></label>
+        <button class="rel-pill" id="filtrarBtn">Filtrar</button>
+        <button class="rel-pill ${data.geral ? 'on' : ''}" id="geralBtn">Geral</button>
       </div>
     </div>
     <div class="rel-grid">
@@ -173,6 +179,12 @@ function render(janela, data) {
         </div>
         ${s.valorAbandonado > 0 ? `<p class="muted" style="margin-top:10px"><span style="color:var(--bone)">${brl(s.valorAbandonado)}</span> parados em carrinhos abandonados — é o que o cupom RETOMADA tenta recuperar</p>` : ''}
       </div>
+      ${data.saida?.length ? `
+      <div class="rel-panel">
+        <h2>Por onde as pessoas saem do site</h2>
+        ${ranking(data.saida.map(x => ({ label: x.pagina, n: x.n, sufixo: `· ${x.pct}%` })))}
+        <p class="muted" style="margin-top:10px">Última página vista por cada visitante no dia — aproximação de onde ela parou</p>
+      </div>` : ''}
       <div class="rel-panel">
         <h2>Visitas por dia</h2>
         ${linha(data.serie.map(d => d.visitas), labels, 'var(--bone)')}
@@ -257,19 +269,25 @@ function render(janela, data) {
     </div>
     <p class="muted" style="margin-top:24px"><a href="#" id="trocarChave">trocar chave de acesso</a></p>
   `;
-  app.querySelectorAll('[data-dias]').forEach(b => b.addEventListener('click', () => carregar(b.dataset.dias === 'geral' ? 'geral' : Number(b.dataset.dias))));
+  document.getElementById('filtrarBtn').addEventListener('click', () => {
+    const de = document.getElementById('deInput').value;
+    const ate = document.getElementById('ateInput').value;
+    if (de && ate) carregar({ de, ate });
+  });
+  document.getElementById('geralBtn').addEventListener('click', () => carregar({ dias: 'geral' }));
   document.getElementById('trocarChave').addEventListener('click', (e) => { e.preventDefault(); localStorage.removeItem(LS_KEY); location.reload(); });
 }
 
-async function carregar(dias) {
+async function carregar(params) {
   const key = localStorage.getItem(LS_KEY);
   app.innerHTML = '<div class="rel-state">Carregando…</div>';
+  const qs = params.de ? `de=${params.de}&ate=${params.ate}` : `dias=${params.dias ?? 7}`;
   try {
-    const r = await fetch(`${API}?key=${encodeURIComponent(key)}&dias=${dias}`);
+    const r = await fetch(`${API}?key=${encodeURIComponent(key)}&${qs}`);
     if (r.status === 401) { localStorage.removeItem(LS_KEY); gate(); return; }
     const data = await r.json();
     if (data.error) { app.innerHTML = `<div class="rel-state">${data.error}</div>`; return; }
-    render(dias, data);
+    render(data, Boolean(params.de));
   } catch {
     app.innerHTML = '<div class="rel-state">Não consegui carregar agora. Atualize a página pra tentar de novo.</div>';
   }
@@ -287,14 +305,14 @@ function gate() {
     const v = document.getElementById('keyInput').value.trim();
     if (!v) return;
     localStorage.setItem(LS_KEY, v);
-    carregar(7);
+    carregar({ dias: 7 });
   };
   document.getElementById('enter').addEventListener('click', go);
   document.getElementById('keyInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
 }
 
 const saved = localStorage.getItem(LS_KEY);
-if (saved) carregar(7); else gate();
+if (saved) carregar({ dias: 7 }); else gate();
 </script>
 </body>
 </html>
