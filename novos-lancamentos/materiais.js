@@ -568,7 +568,13 @@ window.MATERIAIS = {
     "book": {
       "url": "https://zff-books.zffrealty.workers.dev/portal-jardim-de-antares.pdf?v=1792590394",
       "titulo": "Book Portal Jardim de Antares"
-    }
+    },
+    "tabela": [
+      {
+        "url": "materiais/portal-jardim-de-antares/tabela/tabela-portal-jardim-de-antares-2026-11.pdf",
+        "titulo": "Tabela — atualizada em 23/11/2026"
+      }
+    ]
   },
   "toplife-mansoes": {
     "fotos": 21,
