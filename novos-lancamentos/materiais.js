@@ -114,12 +114,17 @@ window.MATERIAIS = {
     }
   },
   "intento": {
+    "fotos": 21,
     "tabela": [
       {
         "url": "materiais/intento/tabela/tabela-intento-2026-10.pdf",
         "titulo": "Tabela Out/2026"
       }
-    ]
+    ],
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/intento.pdf?v=1795526885",
+      "titulo": "Book Intento"
+    }
   },
   "lake-louise-taquaral": {
     "tabela": [

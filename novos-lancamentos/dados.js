@@ -129,7 +129,12 @@ window.LANCAMENTOS = [
     lazer:["Piscina","Salão de festas","Academia","Coworking","Brinquedoteca"] },
 
   // ── CAMBUÍ ────────────────────────────────────────────
-  { n:"Intento", c:"Bild", b:"Cambuí", t:"apto", m:[90,120], d:[2,3], su:true, v:"2 e 3", e:"2027-02", p:[[90,1200],[120,1350]], vis:"torre" },
+  { n:"Intento", c:"Bild", b:"Cambuí", t:"apto", m:[90.80,120.11], d:[3,3], suite:true, v:"2 e 3", e:"2027-02", p:[[90,1200],[120,1350]], vis:"torre",
+    tip:"90,80 m²: 3 dorms (2 suítes) ou opção com 2 suítes + office · 120,11 m²: 3 suítes (1 master com closet) ou opção com cozinha aberta e living ampliado · 2 vagas por unidade (3 unidades com 3 vagas)",
+    end:"Rua Diogo Prado, 276 — Cambuí, Campinas/SP",
+    ficha:[["Terreno","2.067,37 m²"],["Torres","1"],["Pavimentos","Subsolo, térreo, sobressolo, 19 pavimentos tipo"],["Elevadores","3 (2 na torre + 1 de transferência para garagem)"],["Unidades","76 unidades tipo"],["Vagas","160 (2 por unidade + rotativas para carro e moto)"],["Arquitetura","Portela Arquitetura"],["Decoração","Bild"],["Paisagismo","DB Dillen"]],
+    lazer:["Pórtico de entrada com guarita climatizada","B.Locker","Lobby","Espaço gourmet climatizado (até 35 pessoas)","Apoio espaço gourmet","Espaço fitness climatizado","B.Cross","Brinquedoteca climatizada","Lobby e coworking (sala de reuniões climatizada)","B.Energy (carregador de carro elétrico)","Playground com piso emborrachado","Espaço Zen","Complexo de piscinas (adulto com raia de 17 m, infantil, deck molhado e solarium)","Family Grill com piscina privativa (até 15 pessoas)","Áreas comuns entregues equipadas e decoradas"],
+    cmp:{ter:"2.067,37 m²", tor:"1 (19 pavimentos tipo)", un:"76", el:"3 (2 na torre + 1 de transferência)", var:"Sim", dif:"Medidores individualizados de água, luz e gás · ponto de recarga para carro elétrico · esquadrias com persiana integrada nos dormitórios · Green Bild (certificação socioambiental)"} },
   { n:"Verter", c:"AZO", b:"Cambuí", t:"apto", m:[154.09,154.83,293.78], d:[2,3], su:true, v:"3 (penthouse: 4)", e:"2026-02", p:[[null,2300]], vis:"nenhum",
     tip:"Vërtër Cambuí · 154 m²: 3 suítes ou 2 suítes com amplos closets e espaço para adega · elevador privativo · depósito privativo · penthouse de 293,78 m² com varandas em todas as suítes, home theater e 4 vagas",
     end:"Rua Dr. Guilherme da Silva — Cambuí",
