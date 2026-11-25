@@ -587,5 +587,12 @@ window.MATERIAIS = {
       "url": "https://zff-books.zffrealty.workers.dev/toplife-mansoes.pdf?v=1792852708",
       "titulo": "Book TopLife Mansões"
     }
+  },
+  "atelie": {
+    "fotos": 10,
+    "book": {
+      "url": "https://zff-books.zffrealty.workers.dev/atelie.pdf?v=1795613279",
+      "titulo": "Book Ateliê"
+    }
   }
 };
