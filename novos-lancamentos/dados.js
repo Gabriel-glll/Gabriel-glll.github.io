@@ -86,7 +86,12 @@ window.LANCAMENTOS = [
     end:"Av. Ricardo Rocha Bonfim, 294 — Residencial Vila Bella D. Pedro",
     ficha:[["Unidades","164 em 3 torres: 112 de 94,70 m² (torres 1 e 2, 14 pavimentos) e 52 de 77,50 m² (torre 3, 13 pavimentos)"],["Garagem","Edifício-garagem com 2 níveis · 2 vagas cobertas por apartamento"],["Terreno","15.988,34 m² (condomínio clube)"],["Unidades","Infra para ar-condicionado na sala e dormitórios, persianas integradas, infra para recarga de carro elétrico"]],
     lazer:["Piscinas adulto e infantil","Salão de festas","Espaço gourmet","Churrasqueiras","Espaços fitness","Quadras de esportes","Fireplace e praça happy hour","Praça multiuso e praça dos esportes","Áreas kids e pet place","Coworking","Espaço delivery climatizado","Home market","Horta","Bicicletário"],
-    cmp:{ter:"15.988,34 m²", tor:"3 (13 e 14 pavimentos)", un:"164", var:"Sim — varanda gourmet com infra para churrasqueira a gás", dif:"Fechadura digital · persianas integradas · infra para ar-condicionado · entradas social e de serviço independentes (94,70 m²) · cozinha aberta com ilha"} },
+    cmp:{ter:"15.988,34 m²", tor:"3 (13 e 14 pavimentos)", un:"164", var:"Sim — varanda gourmet com infra para churrasqueira a gás", dif:"Fechadura digital · persianas integradas · infra para ar-condicionado · entradas social e de serviço independentes (94,70 m²) · cozinha aberta com ilha"},
+    en:{
+      tip:"77.50 m²: 2 suites, powder room and gourmet balcony · 94.70 m²: 3 bedrooms (1 suite), powder room, gourmet balcony and open kitchen with island · 2 covered parking spaces · gas barbecue hookup on the balcony · digital door lock",
+      ficha:[["Units","164 units in 3 towers: 112 of 94.70 m² (towers 1 and 2, 14 floors) and 52 of 77.50 m² (tower 3, 13 floors)"],["Garage","Two-level parking garage · 2 covered parking spaces per apartment"],["Land","15,988.34 m² (club-style condominium)"],["Units","Air-conditioning hookup in living room and bedrooms, integrated blinds, electric car charging hookup"]],
+      lazer:["Adult and kids' pools","Party hall","Gourmet space","Barbecue area","Fitness areas","Sports courts","Fireplace and happy-hour plaza","Multi-use plaza and sports plaza","Kids' and pet areas","Coworking space","Climate-controlled delivery room","Home market","Vegetable garden","Bike storage"]
+    } },
   { n:"Freedom", c:"Ytcon", b:"Mansões Santo Antônio", t:"apto", m:[66], d:[2,3], v:"1", e:"2028-03", p:[[null,640]], vis:"stand_dec" },
 
   // ── NOVA CAMPINAS ─────────────────────────────────────

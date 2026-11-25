@@ -73,3 +73,6 @@ window.LINKS_CLIENTE = {
  "portal-jardim-de-antares": "https://lancamentos.zffrealty.workers.dev/portal-jardim-de-antares-8a79d4/",
  "toplife-mansoes": "https://lancamentos.zffrealty.workers.dev/toplife-mansoes-d76b1c/"
 };
+window.LINKS_CLIENTE_EN = {
+ "wyn-residence": "https://lancamentos.zffrealty.workers.dev/wyn-residence-en-11689e/"
+};
